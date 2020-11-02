@@ -4,8 +4,6 @@
 \input{preamble/redac}
 \input{preamble/math_basics}
 \input{preamble/math_mine}
-%\input{preamble/draw}
-\input{preamble/jdoc}
 
 %I find these settings useful in draft mode. Should be removed for final versions.
 	%Which line breaks are chosen: accept worse lines, therefore reducing risk of overfull lines. Default = 200.
@@ -40,6 +38,7 @@ The preference $>$ is unknown a priori, and we will ask random questions to obta
 $E \subseteq \allalts × \allalts$: a set of oriented edges. It represents our knowledge of $>$.
 The possible sets of edges are all $E$ that are transitive and acyclic. 
 We can think of $E$ as a graph whose set of nodes is $\allalts$. We thus define a bijection that relates $E$ to $G = (\allalts, E)$, its corresponding graph, and talk interchangeably about a graph or a set of edges. This defines the possible graphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
+
 Let $E_t$ denote our knowledge after $t$ questions.
 Define $E_0 = \emptyset$ as our (empty) knowledge after zero questions.
 Example of $E_1 : \set{(a, b)}$.
