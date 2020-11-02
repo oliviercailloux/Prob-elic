@@ -1,0 +1,94 @@
+\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[version=3.21, pagesize, twoside=off, bibliography=totoc, DIV=calc, fontsize=12pt, a4paper]{scrartcl}
+\input{preamble/packages}
+\input{preamble/redac}
+\input{preamble/math_basics}
+\input{preamble/math_mine}
+%\input{preamble/draw}
+\input{preamble/jdoc}
+
+%I find these settings useful in draft mode. Should be removed for final versions.
+	%Which line breaks are chosen: accept worse lines, therefore reducing risk of overfull lines. Default = 200.
+		\tolerance=2000
+	%Accept overfull hbox up to...
+		\hfuzz=2cm
+	%Reduces verbosity about the bad line breaks.
+		\hbadness 5000
+	%Reduces verbosity about the underful vboxes.
+		\vbadness=1300
+
+\title{Probabilistic elicitation of preferences \thanks{Draft!}}
+\author{Nicolas Boria}
+\author{Olivier Cailloux}
+\affil{Université Paris-Dauphine, PSL Research University, CNRS, LAMSADE, 75016 PARIS, FRANCE\\
+	\href{mailto:olivier.cailloux@dauphine.fr}{olivier.cailloux@dauphine.fr}
+}
+
+\begin{document}
+\maketitle
+
+\section{Set up and goal}
+\begin{itemize}
+	\item $\allalts$ a set of objects. Example: $\allalts = {a, b, c}$.
+	\item $n = |\allalts|$. Example: $n = 3$.
+	\item $\linors$ the set of linear orders over $\allalts$, that is, of transitive and connected binary relations over $\allalts$ (a relation $>$ over $\allalts$ is connected iff $\forall i ≠ j \in \allalts: i > j \lor j > i$).
+	\item ${>} \in \linors$ a preference over $\allalts$. Example: $\set{(a, b), (a, c), (b, c)}$.
+\end{itemize}
+The preference $>$ is unknown a priori, and we will ask random questions to obtain information about it. We only know the probability distribution over $\linors$, from which $>$ is drawn. We are interested in evaluating the probabilistic evolution of our knowledge of $>$ as a function of the number of questions asked. 
+
+\section{Questioning to increase our knowledge}
+$E \subseteq \allalts × \allalts$: a set of oriented edges. It represents our knowledge of $>$.
+The possible sets of edges are all $E$ that are transitive and acyclic. 
+We can think of $E$ as a graph whose set of nodes is $\allalts$. We thus define a bijection that relates $E$ to $G = (\allalts, E)$, its corresponding graph, and talk interchangeably about a graph or a set of edges. This defines the possible graphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
+Let $E_t$ denote our knowledge after $t$ questions.
+Define $E_0 = \emptyset$ as our (empty) knowledge after zero questions.
+Example of $E_1 : \set{(a, b)}$.
+
+A question $q \in Q$ is a non-oriented edge, which formally we consider as two edges, inverse of each other. Let $q_{ij} = \set{(i, j), (j, i)}$ denote the question about ${i, j}$, with $i ≠ j \in \allalts$.
+Note that $q_{ij} = q_{ji}$.
+The set of possible questions is $Q = \set{q_{ij} \suchthat i ≠ j \in \allalts}$.
+It follows that $\card{Q} = \frac{n (n - 1)}{2}$. In our running example, $\card{Q} = 3$.
+
+Given $i ≠ j \in \allalts$, let $q_{ij}(>)$ represent, intuitively, the answer to the question $q_{ij}$ when the preference is $>$, that is, $q_{ij}(>)$ is the edge connecting $\set{i, j}$ that is in $>$, or formally, the element of the singleton ${>} \cap q_{ij}$.
+Define an addition operation over the possible graphs, representing our increase in knowledge after having obtained an answer to a question: we add the resulting edge, and compute the transitive closure. Formally, given $E$ and a question $q$, $E + q(>) = T(E \cup \set{q(>)})$, where $T$ denotes the irreflexive transitive closure. Example: $\set{(a, b)} + q_{bc}(>) = {>}$.
+
+Let $K_E = \set{\set{e, e^{-1}} \suchthat e \in E} \subseteq Q$ denote the questions whose answer is known in $E$. Note that $\card{K_E} = \card{E}$.
+Let $Q_E = Q \setminus K_E$ denote the questions remaining given $E$. Note that $\card{Q_E} = \card{Q} - \card{K_E}$.
+Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, our knowledge is complete: $Q_{E_{\card{Q}}} = 0$.
+
+\section{The probability distribution of interest}
+Let $\powerset{S}$ denote the set of subsets of $S$.
+Let $P: \powerset{\linors × Q^{\card{Q}}} → [0, 1]$ denote the probability distribution over the possible preferences and questions asked. Thus, if $\card{Q} = 3$, $P(>, q_1, q_2, q_3)$ denotes the probability that the preference is $>$ and that the questions asked were $q_1$, then $q_2$, and finally $q_3$.
+Let $\inQ$ denote the interval of integers between $1$ and $\card{Q}$.
+Let $P(>, (E_t)_{t \in \inQ}) = P(>, (q_t)_{t \in \intvl{1, \card{Q}}} \suchthat E_t = E_{t - 1} + q_t)$ denote the probability that the preference is $>$ and that the questions asked were questions $(q_t)$ that lead to a corresponding series of knowledge $(E_t)$.
+Example: $P(E_1 = \set{(a, b)}) = P(q_1 = q_{ab})$.
+Example: $P(E_2 = \set{(a, b), (c, b)}) = P(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \cap \set{(a, b), (c, b)} \subset {>})$.
+
+\section{Hypothesis}
+We want to study $P$ according to hypothesis on the distribution of $>$ and the way we ask questions. Let us start with equiprobability hypothesis and see if we can obtain interesting results.
+
+We suppose we know that $>$ is drawn equiprobably from $\linors$, thus, $P(>) = 1/\card{\linors}$.
+
+We also suppose that we draw a question, at each step, equiprobably from the set of remaining questions, or equiprobably from the set of possible questions if no question remain. Thus, $\forall t \in \intvl{1, \card{Q}}, i ≠ j \in \allalts$:
+\begin{equation}
+	P(q_t = q_{ij} \knowing E_{t - 1}) = \left\{
+	\begin{aligned}
+		&\left.
+		\begin{aligned}
+			&\frac{1}{\card{Q} - \card{K_{E_{t - 1}}}} && \text{ if } q_{ij} \notin K_{E_{t - 1}}\\
+			&\,0 && \text{ if } q_{ij} \in K_{E_{t - 1}}
+		\end{aligned}\right\} && \text{ if } \card{K_{E_{t - 1}}} ≠ \card{Q},\\
+		&\left.\frac{1}{\card{Q}}\right. && \text{ if } \card{K_{E_{t - 1}}} = \card{Q}.
+	\end{aligned}\right.
+\end{equation}
+
+These hypothesis define $P$.
+
+\section{Investigation}
+Define $P_t(i, j) = P(\set{i, j} \in E_t)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
+Can we obtain a nice formula for $P_t(i, j)$?
+
+%\bibliography{bibl}
+
+\end{document}
+
