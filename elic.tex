@@ -58,8 +58,9 @@ Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, 
 \section{The probability distribution of interest}
 Let $\powerset{S}$ denote the set of subsets of $S$.
 Let $P: \powerset{\linors × Q^{\card{Q}}} → [0, 1]$ denote the probability distribution over the possible preferences and questions asked. Thus, if $\card{Q} = 3$, $P(>, q_1, q_2, q_3)$ denotes the probability that the preference is $>$ and that the questions asked were $q_1$, then $q_2$, and finally $q_3$.
+
 Let $\inQ$ denote the interval of integers between $1$ and $\card{Q}$.
-Let $P(>, (E_t)_{t \in \inQ}) = P(>, (q_t)_{t \in \intvl{1, \card{Q}}} \suchthat E_t = E_{t - 1} + q_t)$ denote the probability that the preference is $>$ and that the questions asked were questions $(q_t)$ that lead to a corresponding series of knowledge $(E_t)$.
+Let $P(>, (E_t)_{t \in \inQ}) = P(>, (q_t)_{t \in \intvl{1, \card{Q}}} \suchthat E_t = E_{t - 1} + q_t)$ denote the probability that the preference is $>$ and that the questions asked lead to the sequence of graphs $(E_t)$.
 Example: $P(E_1 = \set{(a, b)}) = P(q_1 = q_{ab})$.
 Example: $P(E_2 = \set{(a, b), (c, b)}) = P(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \cap \set{(a, b), (c, b)} \subset {>})$.
 
