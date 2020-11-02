@@ -60,9 +60,36 @@ Let $\powerset{S}$ denote the set of subsets of $S$.
 Let $P: \powerset{\linors × Q^{\card{Q}}} → [0, 1]$ denote the probability distribution over the possible preferences and questions asked. Thus, if $\card{Q} = 3$, $P(>, q_1, q_2, q_3)$ denotes the probability that the preference is $>$ and that the questions asked were $q_1$, then $q_2$, and finally $q_3$.
 
 Let $\inQ$ denote the interval of integers between $1$ and $\card{Q}$.
-Let $P(>, (E_t)_{t \in \inQ}) = P(>, (q_t)_{t \in \intvl{1, \card{Q}}} \suchthat E_t = E_{t - 1} + q_t)$ denote the probability that the preference is $>$ and that the questions asked lead to the sequence of graphs $(E_t)$.
+Let $P(\set{(>, (E_t)_{t \in \inQ})}) = P(\set{(>, (q_t)_{t \in \inQ}) \suchthat \forall t \in \inQ: E_t = E_{t - 1} + q_t})$ denote the probability that the preference is $>$ and that the questions asked lead to the sequence of graphs $(E_t)_{t \in \inQ}$.
 Example: $P(E_1 = \set{(a, b)}) = P(q_1 = q_{ab})$.
-Example: $P(E_2 = \set{(a, b), (c, b)}) = P(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \cap \set{(a, b), (c, b)} \subset {>})$.
+Example: $P(E_2 = \set{(a, b), (c, b)}) = P\big((\set{q_1, q_2} = \set{q_{ab}, q_{bc}}) \text{ and } a > b \text{ and } c > b\big)$.
+
+Given $i ≠ j \in \allalts$, define $P_t(i > j) = P(\set{i, j} \in E_t)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
+Define $P_t(\set{i, j}) = P(q_{ij} \in K_{E_t}) = 2 P_t(i > j)$ as the probability that the question about $\set{i, j}$ be answered after $t$ questions.
+
+\section{Some useful results}
+We include here some results that do not require the hypothesis that we will work with in the subsequent sections.
+
+Let $i ≥_E i' ⇔ i = i' \lor (i, i') \in E$ denote that $i$ is known to be at least as good as $i'$ in $E$.
+
+Note that $T(E \cup \set{(i, j)}) = E \cup \set{(i', j') \suchthat i' ≥_E i \land j ≥_E j'}$.
+Therefore:
+\begin{equation}
+	\label{eq:trans}
+	(i', j') \in T(E \cup \set{(i, j)}) \setminus E ⇒ [(i' ≥_E i) \land (j ≥_E j')].
+\end{equation}
+
+Say that a question $q \in Q$ may lead from $E_t$ to $E_{t + 1}$ iff $\exists {>} \in \linors \suchthat E_{t + 1} = T(E_t \cup \set{q(>)})$.
+The following proposition shows that only one question, at most, permits to lead from any graph $E_t$ to any graph $E_{t + 1}$. 
+\begin{proposition}
+	Given two possible graphs $E_{t + 1} ≠ E_t$ and any two questions $q, q' \in Q$, if both $q$ and $q'$ may lead from $E_t$ to $E_{t + 1}$, then $q = q'$.
+\end{proposition}
+\begin{proof}
+	By hypothesis, two orders ${>}, {>'} \in \linors$ exist such that $E_{t + 1} = T(E_t \cup \set{q(>)}) = T(E_t \cup \set{q'(>')})$.
+	Thus, both $q(>)$ and $q'(>')$ are in $E_{t + 1}$, and none is in $E_t$ (otherwise $E_t = E_{t + 1}$).
+	Define $q(>) = (i, j)$ and $q'(>') = (i', j')$.
+	Therefore, \cref{eq:trans} applies twice, with $E_t$ instead of $E$ (it applies as written above and it applies with the roles of $(i, j)$ and $(i', j')$ inverted), and we obtain $(i' ≥_{E_t} i) \land (j ≥_{E_t} j') \land (i ≥_{E_t} i') \land (j' ≥_{E_t} j)$. By acyclicity of $E_t$, we conclude that $i = i'$ and $j = j'$, or equivalently, that $q = q'$.
+\end{proof}
 
 \section{Hypothesis}
 We want to study $P$ according to hypothesis on the distribution of $>$ and the way we ask questions. Let us start with equiprobability hypothesis and see if we can obtain interesting results.
@@ -85,8 +112,16 @@ We also suppose that we draw a question, at each step, equiprobably from the set
 These hypothesis define $P$.
 
 \section{Investigation}
-Define $P_t(i, j) = P(\set{i, j} \in E_t)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
 Can we obtain a nice formula for $P_t(i, j)$?
+
+When $\card{E_1} = 1$, $P(E_1) = \frac{1}{\card{Q}} \frac{1}{2}$.
+Note that $P(\card{E_1} = 1) = 1$, thus, $P(E_2) = P(E_2 \knowing \card{E_1} = 1)$.
+
+When $\card{E_2} = 2$, evaluate $P(E_2)$.
+We may pick a question one end of which we know something about. There’s $2 (n - 2)$ such questions ($n - 2$ for each object in $E_1$). If so, we need the answer to be oriented in a certain way to prevent transitive closure to bring anything new. Otherwise, we may pick a question whose two ends are yet unknown. There’s $n - 2$ choose $2$ such questions. Indeed, in total, there remains $2 (n - 2) + \frac{(n - 2) (n - 3)}{2} = \frac{(n - 2) (n + 1)}{2} = \frac{n (n - 1)}{2} - 1$ questions given $E_1$.
+Thus, $P(E_2) = \frac{n - 1}{n + 1}$.
+
+When $\card{E_2} = 3$, $P(E_2) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
 
 %\bibliography{bibl}
 
