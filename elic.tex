@@ -29,7 +29,7 @@
 \begin{itemize}
 	\item $\allalts$ a set of objects. Example: $\allalts = {a, b, c}$.
 	\item $n = |\allalts|$. Example: $n = 3$.
-	\item $\linors$ the set of linear orders over $\allalts$, that is, of transitive and connected binary relations over $\allalts$ (a relation $>$ over $\allalts$ is connected iff $\forall i ≠ j \in \allalts: i > j \lor j > i$).
+	\item $\linors$ the set of linear orders over $\allalts$, that is, of transitive, connected and irreflexive binary relations over $\allalts$ (a relation $>$ over $\allalts$ is connected iff $\forall i ≠ j \in \allalts: i > j \lor j > i$). \commentOC{Check if must be reflexive.}
 	\item ${>} \in \linors$ a preference over $\allalts$. Example: $\set{(a, b), (a, c), (b, c)}$.
 \end{itemize}
 The preference $>$ is unknown a priori, and we will ask random questions to obtain information about it. We only know the probability distribution over $\linors$, from which $>$ is drawn. We are interested in evaluating the probabilistic evolution of our knowledge of $>$ as a function of the number of questions asked. 
@@ -87,7 +87,7 @@ The following proposition shows that only one question, at most, permits to lead
 \begin{proof}
 	By hypothesis, two orders ${>}, {>'} \in \linors$ exist such that $E_{t + 1} = T(E_t \cup \set{q(>)}) = T(E_t \cup \set{q'(>')})$.
 	Thus, both $q(>)$ and $q'(>')$ are in $E_{t + 1}$, and none is in $E_t$ (otherwise $E_t = E_{t + 1}$).
-	Define $q(>) = (i, j)$ and $q'(>') = (i', j')$.
+	Define $q(>) = (i, j)$ and $q'(>') = (i', j')$. 
 	Therefore, \cref{eq:trans} applies twice, with $E_t$ instead of $E$ (it applies as written above and it applies with the roles of $(i, j)$ and $(i', j')$ inverted), and we obtain $(i' ≥_{E_t} i) \land (j ≥_{E_t} j') \land (i ≥_{E_t} i') \land (j' ≥_{E_t} j)$. By acyclicity of $E_t$, we conclude that $i = i'$ and $j = j'$, or equivalently, that $q = q'$.
 \end{proof}
 
@@ -122,6 +122,13 @@ We may pick a question one end of which we know something about. There’s $2 (n
 Thus, $P(E_2) = \frac{n - 1}{n + 1}$.
 
 When $\card{E_2} = 3$, $P(E_2) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
+
+\section{Analysis for 4}
+To take a different starting point, say we may ask 3 questions and $n = 4$. Which questions should we ask to maximise the average number of resulting edges?
+
+Start with $q_1 = a \relq b$, wlog. Assume $a > b$, wlog.
+
+Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c \relq d$. $a > b > c > d$: 1 order VS $a > b > c$ and $d > c$: 3 orders. And so on.
 
 %\bibliography{bibl}
 
