@@ -124,30 +124,60 @@ Thus, $P(E_2 \knowing \card{E_2} = 2) = \frac{n - 1}{n + 1}$.
 
 And $P(E_2 \knowing \card{E_2} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
 
+\section{Best possible number of edges}
+Assume we are the luckiest possible: we can choose the orientation of edges (the answers to questions) so as to maximise the number of resulting edges.
+
+Define the \emph{original graph} as the graph $G$ containing the edge $(a, b)$ iff the question $a \relq b$ was asked and answered with $a > b$. After $k$ questions, $G$ has $k$ edges at best.
+Define $T_G$ as the transitive closure of $G$.
+
+\begin{proposition}
+	Say we can choose the $k$ edges freely in $G$. To maximise the number of edges in $T_G$, it is necessary and sufficient to choose any $k + 1$ vertices and connect them.
+\end{proposition}
+\begin{proof}[Folklore?]
+	In general, $G$ has components having $k_1$, $k_2$, … edges, with $\sum_i k_i = k$ (in a component, there is a non-oriented path linking any two vertices of the component, and any two components are disconnected). 
+	Its transitive closure $T_G$ has at most $\sum_i \binom{k_i + 1}{2}$ edges. 
+	The best one can do is one component having $k$ edges, leading to $T_G$ having $\binom{k + 1}{2}$ edges.
+	That’s because $\binom{k + 1}{2} ≥ \sum_i \binom{k_i + 1}{2}$. 
+	Indeed, the left hand side is half of $(k + 1) k = (\sum_i k_i + 1) \sum_i k_i = (\sum_i k_i)^2 + \sum_i k_i ≥ \sum_i k_i^2 + \sum_i k_i$, with equality iff there is only one component; whereas the right hand side is half of $\sum_i (k_i + 1) k_i = \sum_i k_i^2 + \sum_i k_i$.
+\end{proof}
+
 \section{Analysis for 4}
-To take a different starting point, say we may ask 3 questions and $n = 4$. Which questions should we ask to maximise the average number of resulting edges?
+Taking a different starting point, say we may ask 3 questions and $n = 4$. Which questions should we ask to maximise the average number of resulting edges?
 
 Start with $q_1 = a \relq b$, wlog. Assume $a > b$, wlog.
 
 Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c \relq d$. $a > b > c > d$: 1 order VS $a > b > c$ and $d > c$: 3 orders. And so on. See \cref{fig:m4}.
 
 \begin{figure}
+	\NewDocumentCommand{\pgfres}{}{\num[round-mode=places,round-precision=1]{\pgfmathresult}}
+	\NewDocumentCommand{\pgfcalc}{m}{\pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
+	\NewDocumentCommand{\esp}{m}{E[.] = \pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
 	\begin{tikzpicture}
 		\path (-10mm, -9mm) coordinate (offsetL);
 		\path (10mm, -9mm) coordinate (offsetR);
 		\path (0, -4mm) coordinate (offsetG);
-		\path node (root0) {$a \relq b$}
+		\path node (root0) {$a \relq b$, \esp{(4.5 * 4 + 4 * 8) / 12}}
 			[sibling distance = 6cm, level 2/.style = {sibling distance = 2cm}, level 3/.style = {sibling distance = 1cm}]
 			child {
 				node {$a > b$}
 				child[sibling distance = 3cm] {
-					node {$b \relq c$}
+					node {$b \relq c$, \esp{(4.5 * 4 + 4 * 8) / 12}}
 					[sibling distance = 2cm]
-					child[sibling distance = 2cm] {
-						node {$a > b > c$}
+					child[sibling distance = 2cm, align = left, anchor = north] {
+						node {
+							\tiny $a > b > c$, \esp{4.5}\\
+							$dabc$\\
+							$adbc$\\
+							$abdc$\\
+							$abcd$
+						}
 					}
-					child[sibling distance = 2cm] {
-						node {$\set{a, c} > b$}
+					child[sibling distance = 2cm, align = left, anchor = north] {
+						node {
+							$\set{a, c} > b$, \esp{4}\\
+							$cab$ × 4\\
+							$acb$ × 4
+						}
 					}
 				}
 				child {
@@ -190,10 +220,10 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 		;
 		\path node[fit = (root0) (root0-1-1.south west) (root0-2-3.south east) (root0-2-2-2.south east)] (tree0) {};
 		
-		\path (tree0.south) ++ (0, -1cm) node[anchor = north] (root abc) {$a > b > c$, E[] = \pgfmathparse{(6 * 2 + 4 * 10) / 12}\pgfmathresult}
+		\path (tree0.south) ++ (0, -1cm) node[anchor = north] (root abc) {$a > b > c$, \esp{4.5}}
 			[sibling distance = 4cm, level 2/.style = {sibling distance = 2cm, align = left, anchor = north}]
 			child {
-				node {$c \relq d$}
+				node {$c \relq d$, \esp{(6 * 1 + 4 * 3) / 4}}
 				child {
 					node {
 						6 edges\\
@@ -210,7 +240,7 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 				}
 			}
 			child {
-				node {$b \relq d$}
+				node {$b \relq d$, \esp{4}}
 				child {
 					node {
 						4 edges\\
@@ -227,7 +257,7 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 				}
 			}
 			child {
-				node {$a \relq d$}
+				node {$a \relq d$, \esp{(6 * 1 + 4 * 3) / 4}}
 				child {
 					node {
 						4 edges\\
@@ -254,9 +284,9 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 			\path graph[use existing nodes] {a -- b -- c -- d};
 		\end{scope}
 
-		\path (root abc) ++ (0, -5.5cm) [sibling distance = 3cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] (root ac b) {$\set{a, c} > b$}
+		\path (root abc) ++ (0, -5.5cm) [sibling distance = 3cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] (root ac b) {$\set{a, c} > b$, \esp{4}}
 			child {
-				node {$a \relq c$}
+				node {$a \relq c$, \esp{3}}
 				child {
 					node {
 						3 edges\\
@@ -277,7 +307,7 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 				}
 			}
 			child {
-				node {$a \relq d$}
+				node {$a \relq d$, \esp{4}}
 				child {
 					node {
 						4 edges\\
@@ -294,7 +324,7 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 				}
 			}
 			child {
-				node {$c \relq d$}
+				node {\tiny $c \relq d$, \esp{(3 * 4 + 4 * 3) / 7}}
 				child {
 					node {
 						3 edges\\
@@ -314,7 +344,7 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 				}
 			}
 			child {
-				node {$b \relq d$}
+				node {$b \relq d$, \esp{(4 * 3 + 3 * 6) / 9}}
 				child {
 					node {
 						4 edges\\
