@@ -245,28 +245,16 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 			}
 		;
 		\begin{scope}
-			\path (root abc-1) ++ (offsetL) ++ (0mm, 7mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(offsetG) node (c) {$c$} ++ (offsetG) node (d) {$d$};
+			\path[anchor=base] (root abc-1) ++ (offsetL) ++ (0mm, 7mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(offsetG) node (c) {$c$} ++ (offsetG) node (d) {$d$};
 			\path graph[use existing nodes] {a -- b -- c -- d};
 		\end{scope}
-%		\path[anchor=base] (root abc-1) ++ (offsetR) ++ (-1mm, 4mm) node {$a$} ++(offsetG) node {$b$} ++(offsetG) node {$c$} ++(3mm, 4mm) node {$d$};
-%		\begin{scope}[shift = {($(root abc-1) + (offsetL) + (0mm, 7mm)$)}]
-%			\path graph[branch down = 4mm, math nodes] {
-%				a,
-%				b,
-%				c,
-%				d
-%			};
-%			\path graph[use existing nodes] {a -- b -- c -- d};
-%		\end{scope} 
-%		\begin{scope}[shift = {($(root abc-1) + (offsetR) + (0mm, 7mm)$)}]
-%			\path graph[branch down = 4mm] {
-%				a,
-%				b d,
-%				c
-%			};
-%		\end{scope} 
+		\begin{scope}
+			\path (0, -6mm) coordinate (offsetG);
+			\path[anchor=base] (root abc-1) ++ (offsetR) ++ (-1mm, 6mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(offsetG) node (c) {$c$} ++(3mm, 6mm) node (d) {$d$};
+			\path graph[use existing nodes] {a -- b -- c -- d};
+		\end{scope}
 
-		\path (root abc) ++ (0, -6cm) [sibling distance = 3cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] (root ac b) {$\set{a, c} > b$}
+		\path (root abc) ++ (0, -5.5cm) [sibling distance = 3cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] (root ac b) {$\set{a, c} > b$}
 			child {
 				node {$a \relq c$}
 				child {
@@ -309,16 +297,19 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 				node {$c \relq d$}
 				child {
 					node {
-						 edges\\
-						$adbc$\\
-						$abdc$\\
-						$abcd$
+						3 edges\\
+						$cadb$\\
+						$cabd$\\
+						$acbd$\\
+						$acdb$
 					}
 				}
 				child {
 					node {
-						 edges\\
-						$dabc$
+						 4 edges\\
+						$dcab$\\
+						$dacb$\\
+						$adcb$
 					}
 				}
 			}
@@ -326,20 +317,45 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 				node {$b \relq d$}
 				child {
 					node {
-						 edges\\
-						$adbc$\\
-						$abdc$\\
+						4 edges\\
+						$cabd$\\
+						$acbd$\\
 						$abcd$
 					}
 				}
 				child {
 					node {
-						 edges\\
-						$dabc$
+						3 edges\\
+						$acdb$\\
+						$adcb$\\
+						$cadb$\\
+						$cdab$\\
+						$dacb$\\
+						$dcab$
 					}
 				}
 			}
 		;
+		\begin{scope}
+			\path (0, -8mm) coordinate (offsetG);
+			\path[anchor=base] (root ac b-3) ++ (offsetL) ++ (-1mm, 4mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(3mm, 8mm) node (c) {$c$} ++(offsetG) node (d) {$d$};
+			\path graph[use existing nodes] {a -- b -- c -- d};
+		\end{scope}
+		\begin{scope}
+			\path (0, -7mm) coordinate (offsetG);
+			\path[anchor=base] (root ac b-3) ++ (offsetR) ++ (-2mm, 2mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(3mm, 7mm) node (c) {$c$} ++(0, 6mm) node (d) {$d$};
+			\path graph[use existing nodes] {a -- b -- c -- d};
+		\end{scope}
+		\begin{scope}
+			\path (0, -5mm) coordinate (offsetG);
+			\path[anchor=base] (root ac b-4) ++ (offsetL) ++ (2mm, 3mm) node (a) {$a$} ++(offsetG) node (b) {$b$} +(3mm, 5mm) node (c) {$c$} ++(offsetG) node (d) {$d$};
+			\path graph[use existing nodes] {a -- b -- {c, d}};
+		\end{scope}
+		\begin{scope}
+			\path (0, -5mm) coordinate (offsetG);
+			\path[anchor=base] (root ac b-4) ++ (offsetR) ++ (-1mm, 3mm) node (a) {$a$} ++(offsetG) node (b) {$b$} +(3mm, 5mm) node (c) {$c$} ++(-3mm, 5mm) node (d) {$d$};
+			\path graph[use existing nodes] {a -- b -- {c, d}};
+		\end{scope}
 	\end{tikzpicture}
 	\caption{The case $m = 4$, three questions.}
 	\label{fig:m4}
