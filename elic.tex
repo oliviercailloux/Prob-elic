@@ -120,7 +120,9 @@ Note that $P(\card{E_1} = 1) = 1$, thus, $P(E_2) = P(E_2 \knowing \card{E_1} = 1
 
 Let’s now evaluate $P(E_2 \knowing \card{E_2} = 2)$.
 We may pick a question one end of which we know something about. There’s $2 (n - 2)$ such questions ($n - 2$ for each object in $E_1$). If so, we need the answer to be oriented in a certain way to prevent transitive closure to bring anything new. Otherwise, we may pick a question whose two ends are yet unknown. There’s $n - 2$ choose $2$ such questions. Indeed, in total, there remains $2 (n - 2) + \frac{(n - 2) (n - 3)}{2} = \frac{(n - 2) (n + 1)}{2} = \frac{n (n - 1)}{2} - 1$ questions given $E_1$.
-Thus, $P(E_2 \knowing \card{E_2} = 2) = \frac{n - 1}{n + 1}$.
+Thus, $P(E_2 \knowing \card{E_2} = 2) = \frac{n - 1}{n + 1}$
+(by noticing that $|Q_{E_2}|=\frac{n(n-1)}{2}-1=\frac{(n-2)(n+1)}{2}$)
+.
 
 And $P(E_2 \knowing \card{E_2} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
 
@@ -390,8 +392,6 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 	\caption{The case $m = 4$, three questions.}
 	\label{fig:m4}
 \end{figure}
-
-(by noticing that $|Q_{E_2}|=\frac{n(n-1)}{2}-1=\frac{(n-2)(n+1)}{2}$)
 
 %\bibliography{bibl}
 
