@@ -190,7 +190,7 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 		;
 		\path node[fit = (root0) (root0-1-1.south west) (root0-2-3.south east) (root0-2-2-2.south east)] (tree0) {};
 		
-		\path (tree0.south) ++ (0, -1cm) node[anchor = north] (root abc) {$a > b > c$}
+		\path (tree0.south) ++ (0, -1cm) node[anchor = north] (root abc) {$a > b > c$, E[] = \pgfmathparse{(6 * 2 + 4 * 10) / 12}\pgfmathresult}
 			[sibling distance = 4cm, level 2/.style = {sibling distance = 2cm, align = left, anchor = north}]
 			child {
 				node {$c \relq d$}
