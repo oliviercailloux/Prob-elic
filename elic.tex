@@ -115,20 +115,235 @@ These hypothesis define $P$.
 Can we obtain a nice formula for $P_t(i, j)$?
 
 When $\card{E_1} = 1$, $P(E_1) = \frac{1}{\card{Q}} \frac{1}{2}$.
+
 Note that $P(\card{E_1} = 1) = 1$, thus, $P(E_2) = P(E_2 \knowing \card{E_1} = 1)$.
 
-When $\card{E_2} = 2$, evaluate $P(E_2)$.
+Let’s now evaluate $P(E_2 \knowing \card{E_2} = 2)$.
 We may pick a question one end of which we know something about. There’s $2 (n - 2)$ such questions ($n - 2$ for each object in $E_1$). If so, we need the answer to be oriented in a certain way to prevent transitive closure to bring anything new. Otherwise, we may pick a question whose two ends are yet unknown. There’s $n - 2$ choose $2$ such questions. Indeed, in total, there remains $2 (n - 2) + \frac{(n - 2) (n - 3)}{2} = \frac{(n - 2) (n + 1)}{2} = \frac{n (n - 1)}{2} - 1$ questions given $E_1$.
-Thus, $P(E_2) = \frac{n - 1}{n + 1}$.
+Thus, $P(E_2 \knowing \card{E_2} = 2) = \frac{n - 1}{n + 1}$.
 
-When $\card{E_2} = 3$, $P(E_2) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
+And $P(E_2 \knowing \card{E_2} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
 
 \section{Analysis for 4}
 To take a different starting point, say we may ask 3 questions and $n = 4$. Which questions should we ask to maximise the average number of resulting edges?
 
 Start with $q_1 = a \relq b$, wlog. Assume $a > b$, wlog.
 
-Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c \relq d$. $a > b > c > d$: 1 order VS $a > b > c$ and $d > c$: 3 orders. And so on.
+Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c \relq d$. $a > b > c > d$: 1 order VS $a > b > c$ and $d > c$: 3 orders. And so on. See \cref{fig:m4}.
+
+\begin{figure}
+	\begin{tikzpicture}
+		\path (-10mm, -9mm) coordinate (offsetL);
+		\path (10mm, -9mm) coordinate (offsetR);
+		\path (0, -4mm) coordinate (offsetG);
+		\path node (root0) {$a \relq b$}
+			[sibling distance = 6cm, level 2/.style = {sibling distance = 2cm}, level 3/.style = {sibling distance = 1cm}]
+			child {
+				node {$a > b$}
+				child[sibling distance = 3cm] {
+					node {$b \relq c$}
+					[sibling distance = 2cm]
+					child[sibling distance = 2cm] {
+						node {$a > b > c$}
+					}
+					child[sibling distance = 2cm] {
+						node {$\set{a, c} > b$}
+					}
+				}
+				child {
+					node {$b \relq d$}
+					child {
+						node {…}
+					}
+					child {
+						node {…}
+					}
+				}
+				child[sibling distance = 1.5cm] {
+					node {…}
+				}
+			}
+			child {
+				node {$b > a$}
+				child[sibling distance = 3cm] {
+					node {$b \relq c$}
+					child[sibling distance = 2cm] {
+						node {$b > \set{a, c}$}
+					}
+					child[sibling distance = 2cm] {
+						node {$c > b > a$}
+					}
+				}
+				child {
+					node {$b \relq d$}
+					child {
+						node {…}
+					}
+					child {
+						node {…}
+					}
+				}
+				child[sibling distance = 1.5cm] {
+					node {…}
+				}
+			}
+		;
+		\path node[fit = (root0) (root0-1-1.south west) (root0-2-3.south east) (root0-2-2-2.south east)] (tree0) {};
+		
+		\path (tree0.south) ++ (0, -1cm) node[anchor = north] (root abc) {$a > b > c$}
+			[sibling distance = 4cm, level 2/.style = {sibling distance = 2cm, align = left, anchor = north}]
+			child {
+				node {$c \relq d$}
+				child {
+					node {
+						6 edges\\
+						$abcd$
+					}
+				}
+				child {
+					node {
+						4 edges\\
+						$abdc$\\
+						$adbc$\\
+						$dabc$
+					}
+				}
+			}
+			child {
+				node {$b \relq d$}
+				child {
+					node {
+						4 edges\\
+						$abcd$\\
+						$abdc$
+					}
+				}
+				child {
+					node {
+						4 edges\\
+						$adbc$\\
+						$dabc$
+					}
+				}
+			}
+			child {
+				node {$a \relq d$}
+				child {
+					node {
+						4 edges\\
+						$adbc$\\
+						$abdc$\\
+						$abcd$
+					}
+				}
+				child {
+					node {
+						6 edges\\
+						$dabc$
+					}
+				}
+			}
+		;
+		\begin{scope}
+			\path (root abc-1) ++ (offsetL) ++ (0mm, 7mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(offsetG) node (c) {$c$} ++ (offsetG) node (d) {$d$};
+			\path graph[use existing nodes] {a -- b -- c -- d};
+		\end{scope}
+%		\path[anchor=base] (root abc-1) ++ (offsetR) ++ (-1mm, 4mm) node {$a$} ++(offsetG) node {$b$} ++(offsetG) node {$c$} ++(3mm, 4mm) node {$d$};
+%		\begin{scope}[shift = {($(root abc-1) + (offsetL) + (0mm, 7mm)$)}]
+%			\path graph[branch down = 4mm, math nodes] {
+%				a,
+%				b,
+%				c,
+%				d
+%			};
+%			\path graph[use existing nodes] {a -- b -- c -- d};
+%		\end{scope} 
+%		\begin{scope}[shift = {($(root abc-1) + (offsetR) + (0mm, 7mm)$)}]
+%			\path graph[branch down = 4mm] {
+%				a,
+%				b d,
+%				c
+%			};
+%		\end{scope} 
+
+		\path (root abc) ++ (0, -6cm) [sibling distance = 3cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] (root ac b) {$\set{a, c} > b$}
+			child {
+				node {$a \relq c$}
+				child {
+					node {
+						3 edges\\
+						$dacb$\\
+						$adcb$\\
+						$acdb$\\
+						$acbd$
+					}
+				}
+				child {
+					node {
+						3 edges\\
+						$c$\\
+						$c$\\
+						$c$\\
+						$c$
+					}
+				}
+			}
+			child {
+				node {$a \relq d$}
+				child {
+					node {
+						4 edges\\
+						$abcd$\\
+						$abdc$
+					}
+				}
+				child {
+					node {
+						4 edges\\
+						$adbc$\\
+						$dabc$
+					}
+				}
+			}
+			child {
+				node {$c \relq d$}
+				child {
+					node {
+						 edges\\
+						$adbc$\\
+						$abdc$\\
+						$abcd$
+					}
+				}
+				child {
+					node {
+						 edges\\
+						$dabc$
+					}
+				}
+			}
+			child {
+				node {$b \relq d$}
+				child {
+					node {
+						 edges\\
+						$adbc$\\
+						$abdc$\\
+						$abcd$
+					}
+				}
+				child {
+					node {
+						 edges\\
+						$dabc$
+					}
+				}
+			}
+		;
+	\end{tikzpicture}
+	\caption{The case $m = 4$, three questions.}
+	\label{fig:m4}
+\end{figure}
 
 %\bibliography{bibl}
 
