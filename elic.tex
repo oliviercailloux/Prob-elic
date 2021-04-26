@@ -443,5 +443,9 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 
 %\bibliography{bibl}
 
+\section{Example context}
+$N$ the voters (reviewers), $\card{N} = n$; $X$ the items (articles submitted to a conference), $\card{X} = m$. $PO(X)$ the partially ordered sets over $X$. Let $Q \in PO(X)^N$ represent some partial knowledge of the voters preferences. Consider $f: PO(X)^N → \powersetz{X}$ an enlarged voting rule, that selects winning items on the basis of partial knowledge of the preferences of the voters. Define $f(Q) = \min_{x \in X} \max_{y \in X, (>_{i \in N}) \in compl(Q)} s(y, (>_{i \in N})) - s(x, (>_{i \in N}))$ as selecting the alternatives that minimize the worst regret, where $s$ is the Borda scoring rule (attributing to an alternative at a profile as many points as that alternative beats other alternatives, summed over all voters).
+
+We are interested in asking questions so as to let the regret diminish as fast as possible.
 \end{document}
 
