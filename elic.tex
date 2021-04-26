@@ -184,7 +184,7 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 					}
 				}
 				child {
-					node {$b \relq d$}
+					node {$c \relq d$}
 					child {
 						node {…}
 					}
@@ -302,10 +302,10 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 				child {
 					node {
 						3 edges\\
-						$c$\\
-						$c$\\
-						$c$\\
-						$c$
+						$dcab$\\
+						$cdab$\\
+						$cadb$\\
+						$cabd$
 					}
 				}
 			}
@@ -392,6 +392,53 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 	\end{tikzpicture}
 	\caption{The case $m = 4$, three questions.}
 	\label{fig:m4}
+\end{figure}
+
+\begin{figure}
+	\NewDocumentCommand{\pgfres}{}{\num[round-mode=places,round-precision=1]{\pgfmathresult}}
+	\NewDocumentCommand{\pgfcalc}{m}{\pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
+	\NewDocumentCommand{\esp}{m}{E[.] = \pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
+	\begin{tikzpicture}
+		\path (-10mm, -9mm) coordinate (offsetL);
+		\path (10mm, -9mm) coordinate (offsetR);
+		\path (0, -4mm) coordinate (offsetG);
+		\path [sibling distance = 8cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] {$a > b, c > d$, \esp{(4 * 6 + 3.5 * 1) / 7}}
+			child {
+				node {$a \relq c$ (or $b \relq d$), \esp{4}}
+				child {
+					node {
+						4 edges\\
+						3 orders
+					}
+				}
+				child {
+					node {
+						4 edges\\
+						3 orders
+					}
+				}
+			}
+			child {
+				node {$a \relq d$ (or $b \relq c$), \esp{(3 * 5 + 6 * 1) / 6}}
+				child {
+					node {
+						3 edges\\
+						$ca$ × 2\\
+						$ac$ × 2\\
+						$abcd$
+					}
+				}
+				child {
+					node {
+						6 edges\\
+						1 order
+					}
+				}
+			}
+		;
+	\end{tikzpicture}
+	\caption{The case $m = 4$, three questions, continued.}
+	\label{fig:m4Cont}
 \end{figure}
 
 %\bibliography{bibl}
