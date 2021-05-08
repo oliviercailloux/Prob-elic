@@ -31,18 +31,20 @@
 	\item $\allalts$ a set of objects. Example: $\allalts = {a, b, c}$.
 	\item $n = |\allalts|$. Example: $n = 3$.
 	\item $\linors$ the set of linear orders over $\allalts$, that is, of transitive, connected and irreflexive binary relations over $\allalts$ (a relation $>$ over $\allalts$ is connected iff $\forall i ≠ j \in \allalts: i > j \lor j > i$). \commentOC{Check if must be reflexive.}
-	\item ${>} \in \linors$ a preference over $\allalts$. Example: $\set{(a, b), (a, c), (b, c)}$.
+	\item ${\pref} \in \linors$ a preference over $\allalts$. Example: $\set{(a, b), (a, c), (b, c)}$. Let ${\prefeq} = {\pref} \cup {=}$ denote the weak preference relation corresponding to $\pref$.
 \end{itemize}
-The preference $>$ is unknown a priori, and we will ask random questions to obtain information about it. We only know the probability distribution over $\linors$, from which $>$ is drawn. We are interested in evaluating the probabilistic evolution of our knowledge of $>$ as a function of the number of questions asked. 
+The preference $\pref$ is a priori unknown.
+We only know the probability distribution over $\linors$, from which $\pref$ is drawn. 
+We can ask questions to obtain information about $\pref$. 
+We are interested in evaluating the probabilistic evolution of our knowledge of $\pref$ as a function of the number of questions asked. 
 
 \section{Questioning to increase our knowledge}
-$E \subseteq \allalts × \allalts$: a set of oriented edges. It represents our knowledge of $>$.
-The possible sets of edges are all $E$ that are transitive and acyclic. 
-We can think of $E$ as a graph whose set of nodes is $\allalts$. We thus define a bijection that relates $E$ to $G = (\allalts, E)$, its corresponding graph, and talk interchangeably about a graph or a set of edges. This defines the possible graphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
+Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\ppref} \subseteq \allalts × \allalts$ is a transitive and acyclic relation.
+It represents our knowledge of $\pref$.
 
-Let $E_t$ denote our knowledge after $t$ questions.
-Define $E_0 = \emptyset$ as our (empty) knowledge after zero questions.
-Example of $E_1 : \set{(a, b)}$.
+Let $\ppref_t$ denote our knowledge after $t$ questions.
+Define ${\ppref_0} = \emptyset$ as our (empty) knowledge after zero questions.
+Example of $\ppref_1 : \set{(a, b)}$.
 
 A question $q \in Q$ is a non-oriented edge, which formally we consider as two edges, inverse of each other. Let $q_{ij} = \set{(i, j), (j, i)}$ denote the question about ${i, j}$, with $i ≠ j \in \allalts$.
 Note that $q_{ij} = q_{ji}$.
@@ -50,47 +52,72 @@ The set of possible questions is $Q = \set{q_{ij} \suchthat i ≠ j \in \allalts
 It follows that $\card{Q} = \frac{n (n - 1)}{2}$. In our running example, $\card{Q} = 3$.
 
 Given $i ≠ j \in \allalts$, let $q_{ij}(>)$ represent, intuitively, the answer to the question $q_{ij}$ when the preference is $>$, that is, $q_{ij}(>)$ is the edge connecting $\set{i, j}$ that is in $>$, or formally, the element of the singleton ${>} \cap q_{ij}$.
-Define an addition operation over the possible graphs, representing our increase in knowledge after having obtained an answer to a question: we add the resulting edge, and compute the transitive closure. Formally, given $E$ and a question $q$, $E + q(>) = T(E \cup \set{q(>)})$, where $T$ denotes the irreflexive transitive closure. Example: $\set{(a, b)} + q_{bc}(>) = {>}$.
+Define an addition operation over the possible graphs, representing our increase in knowledge after having obtained an answer to a question: we add the resulting edge, and compute the transitive closure. Formally, given $\ppref$ and a question $q$, ${\ppref} + q(>) = T({\ppref} \cup \set{q(>)})$, where $T$ denotes the irreflexive transitive closure. Example: $\set{(a, b)} + q_{bc}(>) = {>}$.
 
-Let $K_E = \set{\set{e, e^{-1}} \suchthat e \in E} \subseteq Q$ denote the questions whose answer is known in $E$. Note that $\card{K_E} = \card{E}$.
-Let $Q_E = Q \setminus K_E$ denote the questions remaining given $E$. Note that $\card{Q_E} = \card{Q} - \card{K_E}$.
-Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, our knowledge is complete: $Q_{E_{\card{Q}}} = 0$.
+Let $K_\ppref = \set{\set{e, e^{-1}} \suchthat e \in {\ppref}} \subseteq Q$ denote the questions whose answer is known in $\ppref$. Note that $\card{K_\ppref} = \card{\ppref}$.
+Let $Q_\ppref = Q \setminus K_\ppref$ denote the questions remaining given $\ppref$. Note that $\card{Q_\ppref} = \card{Q} - \card{K_\ppref}$.
+Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, our knowledge is complete: $Q_{\ppref_{\card{Q}}} = \emptyset$.
+
+\subsection{Sequences of questions, of partial orders, and of graphs}
+There is a bijection between sequences of questions, sequences of partial orders, and sequences of graphs.
+
+Define the upper contour set of $x \in X$ as ${≥^{-1}}(x) = \set{y \in X \suchthat y ≥ x}$, thus, as the set of objects that are at least as good as $x$.
+Towards showing the equivalence between a sequence of questions and a sequence of partial orders, we observe that an upper contour set is the upper contour set of a unique object.
+\begin{proposition}[Folklore?]
+	\label{th:ucs}
+	Let $x, y \in X$ such that ${≥^{-1}}(x) = {≥^{-1}}(y)$. Then, $x = y$.
+\end{proposition}
+\begin{proof}
+	Define $S = {≥^{-1}}(x) = {≥^{-1}}(y)$. Thus, $x \in S$, and $\forall s \in S: s ≥ y$. Thus, $x ≥ y$.
+	By a symmetrical observation, $y ≥ x$.
+	Because $≥$ is a weak order, this implies $x = y$.
+\end{proof}
+
+Given $\ppref, \ppref' \in \POs$, say that the transition from $\ppref$ to $\ppref'$ is legal iff $\exists q \in Q \suchthat {\ppref'} = {\ppref} + q(\pref)$.
+Given $k \in \N$, let $\intvl{1, k}$ denote the interval of integers between $1$ and $k$.
+Say that a sequence of partial orders $(\ppref_t) \in \POs^k$ is legal iff the transition from $\ppref_t$ to $\ppref_{t + 1}$ is legal $\forall t \in \intvl{1, k - 1}$.
+
+Any legal sequence of partial orders defines uniquely a corresponding sequence of questions.
+\begin{proposition}
+	Given ${\ppref} \in \POs$ and $q, q' \in Q$, if ${\ppref} + q(\pref) = {\ppref} + q'(\pref)$, then $q = q'$.
+\end{proposition}
+\begin{proof}
+	Let $N = ({\pprefeq} + q(\prefeq)) \setminus {\pprefeq}$ be the set of pairs brought thanks to the question $q$. The claim is that $\pprefeq$ and $N$ together determine the question uniquely. Let $q = q_{ij}$. By definition of $+$, $N \subseteq \set{(a, b) \suchthat a ≥ i \land j ≥ b}$. Let $L = N^{-1}(\allalts)$ be the left projection of $N$. 
+	
+	This approach seems hopeless: the new set is only a subset of an UCS.
+\end{proof}
+
+%Note that $T(E \cup \set{(i, j)}) = E \cup \set{(i', j') \suchthat i' ≥_E i \land j ≥_E j'}$.
+%Therefore:
+%\begin{equation}
+%	\label{eq:trans}
+%	(i', j') \in T(E \cup \set{(i, j)}) \setminus E ⇒ [(i' ≥_E i) \land (j ≥_E j')].
+%\end{equation}
+%
+%Say that a question $q \in Q$ may lead from $\ppref_t$ to $\ppref_{t + 1}$ iff $\exists {>} \in \linors \suchthat \ppref_{t + 1} = T(\ppref_t \cup \set{q(>)})$.
+%The following proposition shows that only one question, at most, permits to lead from any graph $\ppref_t$ to any graph $\ppref_{t + 1}$. 
+%\begin{proposition}
+%	Given two possible graphs $\ppref_{t + 1} ≠ \ppref_t$ and any two questions $q, q' \in Q$, if both $q$ and $q'$ may lead from $\ppref_t$ to $\ppref_{t + 1}$, then $q = q'$.
+%\end{proposition}
+%\begin{proof}
+%	By hypothesis, two orders ${>}, {>'} \in \linors$ exist such that $\ppref_{t + 1} = T(\ppref_t \cup \set{q(>)}) = T(\ppref_t \cup \set{q'(>')})$.
+%	Thus, both $q(>)$ and $q'(>')$ are in $\ppref_{t + 1}$, and none is in $\ppref_t$ (otherwise $\ppref_t = \ppref_{t + 1}$).
+%	Define $q(>) = (i, j)$ and $q'(>') = (i', j')$. 
+%	Therefore, \cref{eq:trans} applies twice, with $\ppref_t$ instead of $E$ (it applies as written above and it applies with the roles of $(i, j)$ and $(i', j')$ inverted), and we obtain $(i' ≥_{\ppref_t} i) \land (j ≥_{\ppref_t} j') \land (i ≥_{\ppref_t} i') \land (j' ≥_{\ppref_t} j)$. By acyclicity of $\ppref_t$, we conclude that $i = i'$ and $j = j'$, or equivalently, that $q = q'$.
+%\end{proof}
+
+We can also think of $\ppref$ as a graph whose set of nodes is $\allalts$. We thus define a bijection that relates $\ppref$ to $G = (\allalts, \ppref)$, its corresponding graph, and talk interchangeably about a graph or a set of edges or a partial order. This defines the possible graphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
 
 \section{The probability distribution of interest}
 Let $\powerset{S}$ denote the set of subsets of $S$.
 Let $P: \powerset{\linors × Q^{\card{Q}}} → [0, 1]$ denote the probability distribution over the possible preferences and questions asked. Thus, if $\card{Q} = 3$, $P(>, q_1, q_2, q_3)$ denotes the probability that the preference is $>$ and that the questions asked were $q_1$, then $q_2$, and finally $q_3$.
 
-Let $\inQ$ denote the interval of integers between $1$ and $\card{Q}$.
-Let $P(\set{(>, (E_t)_{t \in \inQ})}) = P(\set{(>, (q_t)_{t \in \inQ}) \suchthat \forall t \in \inQ: E_t = E_{t - 1} + q_t})$ denote the probability that the preference is $>$ and that the questions asked lead to the sequence of graphs $(E_t)_{t \in \inQ}$.
-Example: $P(E_1 = \set{(a, b)}) = P(q_1 = q_{ab})$.
-Example: $P(E_2 = \set{(a, b), (c, b)}) = P\big((\set{q_1, q_2} = \set{q_{ab}, q_{bc}}) \text{ and } a > b \text{ and } c > b\big)$.
+Let $P(\set{(>, (\ppref_t)_{t \in \inQ})}) = P(\set{(>, (q_t)_{t \in \inQ}) \suchthat \forall t \in \inQ: \ppref_t = \ppref_{t - 1} + q_t})$ denote the probability that the preference is $>$ and that the questions asked lead to the sequence of graphs $(\ppref_t)_{t \in \inQ}$.
+Example: $P(\ppref_1 = \set{(a, b)}) = P(q_1 = q_{ab})$.
+Example: $P(\ppref_2 = \set{(a, b), (c, b)}) = P\big((\set{q_1, q_2} = \set{q_{ab}, q_{bc}}) \text{ and } a > b \text{ and } c > b\big)$.
 
-Given $i ≠ j \in \allalts$, define $P_t(i > j) = P(\set{i, j} \in E_t)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
-Define $P_t(\set{i, j}) = P(q_{ij} \in K_{E_t}) = 2 P_t(i > j)$ as the probability that the question about $\set{i, j}$ be answered after $t$ questions.
-
-\section{Some useful results}
-We include here some results that do not require the hypothesis that we will work with in the subsequent sections.
-
-Let $i ≥_E i' ⇔ i = i' \lor (i, i') \in E$ denote that $i$ is known to be at least as good as $i'$ in $E$.
-
-Note that $T(E \cup \set{(i, j)}) = E \cup \set{(i', j') \suchthat i' ≥_E i \land j ≥_E j'}$.
-Therefore:
-\begin{equation}
-	\label{eq:trans}
-	(i', j') \in T(E \cup \set{(i, j)}) \setminus E ⇒ [(i' ≥_E i) \land (j ≥_E j')].
-\end{equation}
-
-Say that a question $q \in Q$ may lead from $E_t$ to $E_{t + 1}$ iff $\exists {>} \in \linors \suchthat E_{t + 1} = T(E_t \cup \set{q(>)})$.
-The following proposition shows that only one question, at most, permits to lead from any graph $E_t$ to any graph $E_{t + 1}$. 
-\begin{proposition}
-	Given two possible graphs $E_{t + 1} ≠ E_t$ and any two questions $q, q' \in Q$, if both $q$ and $q'$ may lead from $E_t$ to $E_{t + 1}$, then $q = q'$.
-\end{proposition}
-\begin{proof}
-	By hypothesis, two orders ${>}, {>'} \in \linors$ exist such that $E_{t + 1} = T(E_t \cup \set{q(>)}) = T(E_t \cup \set{q'(>')})$.
-	Thus, both $q(>)$ and $q'(>')$ are in $E_{t + 1}$, and none is in $E_t$ (otherwise $E_t = E_{t + 1}$).
-	Define $q(>) = (i, j)$ and $q'(>') = (i', j')$. 
-	Therefore, \cref{eq:trans} applies twice, with $E_t$ instead of $E$ (it applies as written above and it applies with the roles of $(i, j)$ and $(i', j')$ inverted), and we obtain $(i' ≥_{E_t} i) \land (j ≥_{E_t} j') \land (i ≥_{E_t} i') \land (j' ≥_{E_t} j)$. By acyclicity of $E_t$, we conclude that $i = i'$ and $j = j'$, or equivalently, that $q = q'$.
-\end{proof}
+Given $i ≠ j \in \allalts$, define $P_t(i > j) = P(\set{i, j} \in \ppref_t)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
+Define $P_t(\set{i, j}) = P(q_{ij} \in K_{\ppref_t}) = 2 P_t(i > j)$ as the probability that the question about $\set{i, j}$ be answered after $t$ questions.
 
 \section{Hypothesis}
 We want to study $P$ according to hypothesis on the distribution of $>$ and the way we ask questions. Let us start with equiprobability hypothesis and see if we can obtain interesting results.
@@ -99,14 +126,14 @@ We suppose we know that $>$ is drawn equiprobably from $\linors$, thus, $P(>) = 
 
 We also suppose that we draw a question, at each step, equiprobably from the set of remaining questions, or equiprobably from the set of possible questions if no question remain. Thus, $\forall t \in \intvl{1, \card{Q}}, i ≠ j \in \allalts$:
 \begin{equation}
-	P(q_t = q_{ij} \knowing E_{t - 1}) = \left\{
+	P(q_t = q_{ij} \knowing \ppref_{t - 1}) = \left\{
 	\begin{aligned}
 		&\left.
 		\begin{aligned}
-			&\frac{1}{\card{Q} - \card{K_{E_{t - 1}}}} && \text{ if } q_{ij} \notin K_{E_{t - 1}}\\
-			&\,0 && \text{ if } q_{ij} \in K_{E_{t - 1}}
-		\end{aligned}\right\} && \text{ if } \card{K_{E_{t - 1}}} ≠ \card{Q},\\
-		&\left.\frac{1}{\card{Q}}\right. && \text{ if } \card{K_{E_{t - 1}}} = \card{Q}.
+			&\frac{1}{\card{Q} - \card{K_{\ppref_{t - 1}}}} && \text{ if } q_{ij} \notin K_{\ppref_{t - 1}}\\
+			&\,0 && \text{ if } q_{ij} \in K_{\ppref_{t - 1}}
+		\end{aligned}\right\} && \text{ if } \card{K_{\ppref_{t - 1}}} ≠ \card{Q},\\
+		&\left.\frac{1}{\card{Q}}\right. && \text{ if } \card{K_{\ppref_{t - 1}}} = \card{Q}.
 	\end{aligned}\right.
 \end{equation}
 
@@ -115,17 +142,17 @@ These hypothesis define $P$.
 \section{Investigation}
 Can we obtain a nice formula for $P_t(i, j)$?
 
-When $\card{E_1} = 1$, $P(E_1) = \frac{1}{\card{Q}} \frac{1}{2}$.
+When $\card{\ppref_1} = 1$, $P(\ppref_1) = \frac{1}{\card{Q}} \frac{1}{2}$.
 
-Note that $P(\card{E_1} = 1) = 1$, thus, $P(E_2) = P(E_2 \knowing \card{E_1} = 1)$.
+Note that $P(\card{\ppref_1} = 1) = 1$, thus, $P(\ppref_2) = P(\ppref_2 \knowing \card{\ppref_1} = 1)$.
 
-Let’s now evaluate $P(E_2 \knowing \card{E_2} = 2)$.
-We may pick a question one end of which we know something about. There’s $2 (n - 2)$ such questions ($n - 2$ for each object in $E_1$). If so, we need the answer to be oriented in a certain way to prevent transitive closure to bring anything new. Otherwise, we may pick a question whose two ends are yet unknown. There’s $n - 2$ choose $2$ such questions. Indeed, in total, there remains $2 (n - 2) + \frac{(n - 2) (n - 3)}{2} = \frac{(n - 2) (n + 1)}{2} = \frac{n (n - 1)}{2} - 1$ questions given $E_1$.
-Thus, $P(E_2 \knowing \card{E_2} = 2) = \frac{n - 1}{n + 1}$
-(by noticing that $|Q_{E_2}|=\frac{n(n-1)}{2}-1=\frac{(n-2)(n+1)}{2}$)
+Let’s now evaluate $P(\ppref_2 \knowing \card{\ppref_2} = 2)$.
+We may pick a question one end of which we know something about. There’s $2 (n - 2)$ such questions ($n - 2$ for each object in $\ppref_1$). If so, we need the answer to be oriented in a certain way to prevent transitive closure to bring anything new. Otherwise, we may pick a question whose two ends are yet unknown. There’s $n - 2$ choose $2$ such questions. Indeed, in total, there remains $2 (n - 2) + \frac{(n - 2) (n - 3)}{2} = \frac{(n - 2) (n + 1)}{2} = \frac{n (n - 1)}{2} - 1$ questions given $\ppref_1$.
+Thus, $P(\ppref_2 \knowing \card{\ppref_2} = 2) = \frac{n - 1}{n + 1}$
+(by noticing that $|Q_{\ppref_2}|=\frac{n(n-1)}{2}-1=\frac{(n-2)(n+1)}{2}$)
 .
 
-And $P(E_2 \knowing \card{E_2} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
+And $P(\ppref_2 \knowing \card{\ppref_2} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
 
 \section{Best possible number of edges}
 Assume we are the luckiest possible: we can choose the orientation of edges (the answers to questions) so as to maximise the number of resulting edges.

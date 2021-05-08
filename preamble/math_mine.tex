@@ -1,3 +1,10 @@
+%Pref
+\NewDocumentCommand{\pref}{}{\bm{>^c}}
+\NewDocumentCommand{\prefeq}{}{\bm{≥^c}}
+\NewDocumentCommand{\ppref}{}{>}
+\NewDocumentCommand{\pprefeq}{}{≥}
+\NewDocumentCommand{\POs}{}{\mathit{PO}(X)}
+
 %Prob
 \NewDocumentCommand{\inQ}{}{\intvl{1, \card{Q}}}
 %Decision Theory (MCDA and SC)
@@ -8,8 +15,8 @@
 \NewDocumentCommand{\allF}{}{\mathscr{F}}
 \NewDocumentCommand{\allvoters}{}{\mathscr{N}}
 \NewDocumentCommand{\voters}{}{N}
-\NewDocumentCommand{\allprofs}{}{\boldsymbol{\mathcal{R}}}
-\NewDocumentCommand{\prof}{}{\boldsymbol{R}}
+\NewDocumentCommand{\allprofs}{}{\bm{\mathcal{R}}}
+\NewDocumentCommand{\prof}{}{\bm{R}}
 \NewDocumentCommand{\linors}{}{\mathscr{L}(\allalts)}
 %Thanks to https://tex.stackexchange.com/q/154549
 	%\makeatletter
