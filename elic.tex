@@ -41,6 +41,7 @@ We are interested in evaluating the probabilistic evolution of our knowledge of 
 \section{Questioning to increase our knowledge}
 Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\ppref} \subseteq \allalts × \allalts$ is a transitive and acyclic relation.
 It represents our knowledge of $\pref$.
+Let ${\pprefeq} = {\ppref} \cup {=}$ denote the corresponding weak partial preference.
 
 Let $\ppref_t$ denote our knowledge after $t$ questions.
 Define ${\ppref_0} = \emptyset$ as our (empty) knowledge after zero questions.
@@ -51,8 +52,8 @@ Note that $q_{ij} = q_{ji}$.
 The set of possible questions is $Q = \set{q_{ij} \suchthat i ≠ j \in \allalts}$.
 It follows that $\card{Q} = \frac{n (n - 1)}{2}$. In our running example, $\card{Q} = 3$.
 
-Given $i ≠ j \in \allalts$, let $q_{ij}(>)$ represent, intuitively, the answer to the question $q_{ij}$ when the preference is $>$, that is, $q_{ij}(>)$ is the edge connecting $\set{i, j}$ that is in $>$, or formally, the element of the singleton ${>} \cap q_{ij}$.
-Define an addition operation over the possible graphs, representing our increase in knowledge after having obtained an answer to a question: we add the resulting edge, and compute the transitive closure. Formally, given $\ppref$ and a question $q$, ${\ppref} + q(>) = T({\ppref} \cup \set{q(>)})$, where $T$ denotes the irreflexive transitive closure. Example: $\set{(a, b)} + q_{bc}(>) = {>}$.
+Given $i ≠ j \in \allalts$, let $q_{ij}(\pref)$ represent, intuitively, the answer to the question $q_{ij}$ when the preference is $\pref$, that is, $q_{ij}(\pref)$ is the edge connecting $\set{i, j}$ that is in $\pref$, or formally, the element of the singleton ${\pref} \cap q_{ij}$.
+Define an addition operation representing our increase in knowledge after having obtained an answer to a question: we add the resulting pair, and compute the transitive closure. Formally, given $\ppref$ and a question $q$, ${\ppref} + q(\pref) = T({\ppref} \cup \set{q(\pref)})$, where $T$ denotes the irreflexive transitive closure ($T(p) = \bigcup_{k \in N^*} p^k$). Example: $\set{(a, b)} + q_{bc}(\pref) = {\pref}$.
 
 Let $K_\ppref = \set{\set{e, e^{-1}} \suchthat e \in {\ppref}} \subseteq Q$ denote the questions whose answer is known in $\ppref$. Note that $\card{K_\ppref} = \card{\ppref}$.
 Let $Q_\ppref = Q \setminus K_\ppref$ denote the questions remaining given $\ppref$. Note that $\card{Q_\ppref} = \card{Q} - \card{K_\ppref}$.
@@ -73,38 +74,34 @@ Towards showing the equivalence between a sequence of questions and a sequence o
 	Because $≥$ is a weak order, this implies $x = y$.
 \end{proof}
 
-Given $\ppref, \ppref' \in \POs$, say that the transition from $\ppref$ to $\ppref'$ is legal iff $\exists q \in Q \suchthat {\ppref'} = {\ppref} + q(\pref)$.
+Given $\ppref, \ppref' \in \POs$ and $i, j \in \allalts$, say that the question $q_{ij} \in Q$ may lead from $\ppref$ to $\ppref'$ iff ${\ppref'} = {\ppref} + (i, j) \lor{\ppref'} = {\ppref} + (j, i)$.
+
+Given $\ppref, \ppref' \in \POs$, say that the transition from $\ppref$ to $\ppref'$ is legal iff some question may lead from $\ppref$ to $\ppref'$.
 Given $k \in \N$, let $\intvl{1, k}$ denote the interval of integers between $1$ and $k$.
 Say that a sequence of partial orders $(\ppref_t) \in \POs^k$ is legal iff the transition from $\ppref_t$ to $\ppref_{t + 1}$ is legal $\forall t \in \intvl{1, k - 1}$.
 
 Any legal sequence of partial orders defines uniquely a corresponding sequence of questions.
+Equivalently, 
+the following proposition shows that only one question, at most, permits to lead from any partial order $\ppref$ to any partial order $\ppref'$. 
 \begin{proposition}
-	Given ${\ppref} \in \POs$ and $q, q' \in Q$, if ${\ppref} + q(\pref) = {\ppref} + q'(\pref)$, then $q = q'$.
+	Given ${\ppref} \in \POs$ and $i, j, i', j' \in \allalts$, if ${\ppref} + (i, j) = {\ppref} + (i', j')$, then $i = i' \land j = j'$.
 \end{proposition}
 \begin{proof}
-	Let $N = ({\pprefeq} + q(\prefeq)) \setminus {\pprefeq}$ be the set of pairs brought thanks to the question $q$. The claim is that $\pprefeq$ and $N$ together determine the question uniquely. Let $q = q_{ij}$. By definition of $+$, $N \subseteq \set{(a, b) \suchthat a ≥ i \land j ≥ b}$. Let $L = N^{-1}(\allalts)$ be the left projection of $N$. 
+	We show that given two possible graphs $\ppref_{t + 1} ≠ \ppref_t$ and any two questions $q, q' \in Q$, if both $q$ and $q'$ may lead from $\ppref_t$ to $\ppref_{t + 1}$, then $q = q'$.
 	
-	This approach seems hopeless: the new set is only a subset of an UCS.
-\end{proof}
+	Note that $T(E \cup \set{(i, j)}) = E \cup \set{(i', j') \suchthat i' ≥_E i \land j ≥_E j'}$.
+Therefore:
+\begin{equation}
+	\label{eq:trans}
+	T(E \cup \set{(i, j)}) \setminus E \subseteq \set{(i', j') \suchthat [(i' ≥_E i) \land (j ≥_E j')]}.
+\end{equation}
 
-%Note that $T(E \cup \set{(i, j)}) = E \cup \set{(i', j') \suchthat i' ≥_E i \land j ≥_E j'}$.
-%Therefore:
-%\begin{equation}
-%	\label{eq:trans}
-%	(i', j') \in T(E \cup \set{(i, j)}) \setminus E ⇒ [(i' ≥_E i) \land (j ≥_E j')].
-%\end{equation}
-%
-%Say that a question $q \in Q$ may lead from $\ppref_t$ to $\ppref_{t + 1}$ iff $\exists {>} \in \linors \suchthat \ppref_{t + 1} = T(\ppref_t \cup \set{q(>)})$.
-%The following proposition shows that only one question, at most, permits to lead from any graph $\ppref_t$ to any graph $\ppref_{t + 1}$. 
-%\begin{proposition}
-%	Given two possible graphs $\ppref_{t + 1} ≠ \ppref_t$ and any two questions $q, q' \in Q$, if both $q$ and $q'$ may lead from $\ppref_t$ to $\ppref_{t + 1}$, then $q = q'$.
-%\end{proposition}
-%\begin{proof}
-%	By hypothesis, two orders ${>}, {>'} \in \linors$ exist such that $\ppref_{t + 1} = T(\ppref_t \cup \set{q(>)}) = T(\ppref_t \cup \set{q'(>')})$.
-%	Thus, both $q(>)$ and $q'(>')$ are in $\ppref_{t + 1}$, and none is in $\ppref_t$ (otherwise $\ppref_t = \ppref_{t + 1}$).
-%	Define $q(>) = (i, j)$ and $q'(>') = (i', j')$. 
-%	Therefore, \cref{eq:trans} applies twice, with $\ppref_t$ instead of $E$ (it applies as written above and it applies with the roles of $(i, j)$ and $(i', j')$ inverted), and we obtain $(i' ≥_{\ppref_t} i) \land (j ≥_{\ppref_t} j') \land (i ≥_{\ppref_t} i') \land (j' ≥_{\ppref_t} j)$. By acyclicity of $\ppref_t$, we conclude that $i = i'$ and $j = j'$, or equivalently, that $q = q'$.
-%\end{proof}
+	By hypothesis, two orders ${>}, {>'} \in \linors$ exist such that $\ppref_{t + 1} = T(\ppref_t \cup \set{q(>)}) = T(\ppref_t \cup \set{q'(>')})$.
+	Thus, both $q(>)$ and $q'(>')$ are in $\ppref_{t + 1}$, and none is in $\ppref_t$ (otherwise $\ppref_t = \ppref_{t + 1}$).
+	Define $q(>) = (i, j)$ and $q'(>') = (i', j')$. 
+	Therefore, \cref{eq:trans} applies twice, with $\ppref_t$ instead of $E$ (it applies as written above and it applies with the roles of $(i, j)$ and $(i', j')$ inverted), and we obtain $(i' ≥_{\ppref_t} i) \land (j ≥_{\ppref_t} j') \land (i ≥_{\ppref_t} i') \land (j' ≥_{\ppref_t} j)$. By acyclicity of $\ppref_t$, we conclude that $i = i'$ and $j = j'$, or equivalently, that $q = q'$.
+	\commentOC{TODO adapt to new notations and improve.}
+\end{proof}
 
 We can also think of $\ppref$ as a graph whose set of nodes is $\allalts$. We thus define a bijection that relates $\ppref$ to $G = (\allalts, \ppref)$, its corresponding graph, and talk interchangeably about a graph or a set of edges or a partial order. This defines the possible graphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
 
