@@ -75,6 +75,7 @@ There is a bijection between sequences of questions, sequences of partial orders
 
 Define the upper contour set of $x \in X$ as ${≥^{-1}}(x) = \set{y \in X \suchthat y ≥ x}$, thus, as the set of objects that are at least as good as $x$.
 Towards showing the equivalence between a sequence of questions and a sequence of partial orders, we observe that a subset of an upper contour set that includes an object of which it is the upper contour set is the upper contour set of a unique object.
+(A similar results holds for lower contour sets.)
 \begin{proposition}[Folklore?]
 	\label{th:ucs}
 	Let $\set{x, y} \subseteq S \subseteq X$ such that $S \subseteq {≥^{-1}}(x)$ and $S \subseteq {≥^{-1}}(y)$. Then, $x = y$.
@@ -84,7 +85,6 @@ Towards showing the equivalence between a sequence of questions and a sequence o
 	By a symmetrical observation, $y ≥ x$.
 	Because $>$ is asymmetric and ${≥} = {>} \cup {=}$, this implies $x = y$.
 \end{proof}
-By symmetry, a similar results holds for lower contour sets.
 
 Given ${\ppref}, {\ppref'} \in \POs$ and $i, j \in \allalts$, say that the question $q_{ij} \in Q$ may lead from $\ppref$ to $\ppref'$ iff ${\ppref'} = {\ppref} + (i, j) \lor{\ppref'} = {\ppref} + (j, i)$.
 
@@ -92,46 +92,55 @@ Given ${\ppref}, {\ppref'} \in \POs$, say that the transition from $\ppref$ to $
 Given $k \in \N$, let $\intvl{1, k}$ denote the interval of integers between $1$ and $k$.
 Say that a sequence of partial orders $(\ppref_t) \in \POs^k$ is legal iff the transition from $\ppref_t$ to $\ppref_{t + 1}$ is legal $\forall t \in \intvl{1, k - 1}$.
 
-Any legal sequence of partial orders defines uniquely a corresponding sequence of questions.
-Equivalently, 
-the following proposition shows that only one question, at most, permits to lead from any partial order $\ppref$ to any partial order $\ppref'$. 
+Any legal sequence of partial orders defines uniquely a corresponding sequence of questions. The following proposition shows that any two adjacent partial orders in a legal sequence together define uniquely the left member of the answer that was added. As a similar result holds, by symmetry, for the right member, this proves the point.
 \begin{proposition}
-	Given ${\ppref} \in \POs$ and $q_1, q_2, q'_1, q'_2 \in \allalts$, if ${\ppref} + (q_1, q_2) = {\ppref} + (q'_1, q'_2)$, then $q_1 = q'_1 \land q_2 = q'_2$.
+	Given ${\ppref}, {\ppref'} \in \POs$ and $i, j \in X$ such that ${\ppref'} = {\ppref} + (i, j)$, $i$ is determined uniquely by ${\ppref}$ and ${\ppref'}$.
 \end{proposition}
 \begin{proof}
-	We show that given two possible graphs $\ppref_{t + 1} ≠ \ppref_t$ and any two questions $q, q' \in Q$, if both $q$ and $q'$ may lead from $\ppref_t$ to $\ppref_{t + 1}$, then $q = q'$.
+	Let $N = {\ppref'} \setminus {\ppref}$ be the set of pairs brought thanks to the answer $(i, j)$. Suffices to prove that $N$ determine $i$ uniquely. 
 	
-	Note that $T({\ppref} \cup \set{(i, j)}) = {\ppref} \cup \set{(i', j') \suchthat i' \pprefeq i \land j \pprefeq j'}$.
-Therefore:
-\begin{equation}
-	\label{eq:trans}
-	T({\ppref} \cup \set{(i, j)}) \setminus {\ppref} \subseteq \set{(i', j') \suchthat [(i' \pprefeq i) \land (j \pprefeq j')]}.
-\end{equation}
-
-	$(q_1, q_2) \in {\ppref'}$, $(q'_1, q'_2) \in {\ppref'}$, $(q_1, q_2) \notin {\ppref}$, $(q'_1, q'_2) \notin {\ppref}$.
-	
-	By hypothesis, two orders ${>}, {>'} \in \linors$ exist such that $\ppref_{t + 1} = T(\ppref_t \cup \set{q(>)}) = T(\ppref_t \cup \set{q'(>')})$.
-	Thus, both $q(>)$ and $q'(>')$ are in $\ppref_{t + 1}$, and none is in $\ppref_t$ (otherwise $\ppref_t = \ppref_{t + 1}$).
-	Define $q(>) = (i, j)$ and $q'(>') = (i', j')$. 
-	Therefore, \cref{eq:trans} applies twice, with $\ppref_t$ instead of $E$ (it applies as written above and it applies with the roles of $(i, j)$ and $(i', j')$ inverted), and we obtain $(i' ≥_{\ppref_t} i) \land (j ≥_{\ppref_t} j') \land (i ≥_{\ppref_t} i') \land (j' ≥_{\ppref_t} j)$. By acyclicity of $\ppref_t$, we conclude that $i = i'$ and $j = j'$, or equivalently, that $q = q'$.
-	\commentOC{TODO adapt to new notations and improve.}
+	Consider $M = (N \cup {=})$, the reflexive relation equivalent to $N$.
+	By definition of $+$, $M \subseteq \set{(i', j') \suchthat i' ≥ i \land j ≥ j'}$. 
+	Let $L = M^{-1}(\allalts)$ be the left projection of $M$. 
+	We see that $L$ includes $i$ and is a subset of the upper contour set of $i$. 
+	\Cref{th:ucs} thus concludes.
 \end{proof}
 
-We can also think of $\ppref$ as a graph whose set of nodes is $\allalts$. We thus define a bijection that relates $\ppref$ to $G = (\allalts, \ppref)$, its corresponding graph, and talk interchangeably about a graph or a set of edges or a partial order. This defines the possible graphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
+We can also think of $\ppref$ as a graph whose set of nodes is $\allalts$. We thus define a bijection that relates $\ppref$ to $G = (\allalts, \ppref)$, its corresponding graph, and talk interchangeably about a graph or a set of edges or a partial order. This bijection defines the possible graphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
 
-\section{Probability distributions over the preferences and the questions}
-Define a questioning strategy as a function $s$ that given ${\ppref} \in \POs$ returns a probability distribution over the set of possible questions $Q$.
+\section{Questioning strategies and probability distributions}
+Define a questioning strategy as a function $s$ that given a current knowledge state ${\ppref} \in \POs$ returns a probability distribution over the set of possible questions $Q$. We write $P^\mathit{questions}(q \knowing {\ppref})$ for $s(\ppref)(q)$.
 
-Together with the probability distribution $P$ over the possible preferences, this defines a joint probability distribution $P^s: \powerset{\linors × Q^{\card{Q}}} → [0, 1]$ over the possible preferences and questions asked.
+Define the probability of asking a sequence of questions $(q_t)_{t \in \N^*}$ when following the strategy $s$ and when the real preference is ${\pref} \in \linors$ as $P^s((q_t)_{t \in \N^*} \knowing {\pref}) = \prod_{t \in \N^*} P^\mathit{questions}((q_t \knowing {\ppref_{t - 1}})$, where ${\ppref_0} = \emptyset$ and ${\ppref_t} = {\ppref_{t - 1}} + q_t(\pref)$.
 
-Thus, if $\card{Q} = 3$, $P(\pref, q_1, q_2, q_3)$ denotes the probability that the preference is $\pref$ and that the questions asked were $q_1$, then $q_2$, and finally $q_3$.
+Together with the probability distribution $P$ over the possible preferences, this defines a joint probability distribution $P^s: \powerset{\linors × Q^{\N^*}} → [0, 1]$ over the possible preferences and questions asked, defined as $P^s(\pref, (q_t)_{t \in \N^*}) = P(\pref) P^s(q_t \knowing {\pref})$ (with an abuse of notation as we reuse the previously defined letter $P^s$ to define the joint probability distribution, which we can do as these usages coincide).
+We also write $P$ instead of $P^\mathit{questions}$ as this introduces no ambiguity.
 
-Given $k \in \N$, let $P(\set{(\pref, (\ppref_t)_{t \in \intvl{1, k}})}) = P(\set{(\pref, (q_t)_{t \in \intvl{1, k}}) \suchthat \forall t \in \intvl{1, k}: {\ppref_t} = {\ppref_{t - 1}} + q_t})$ denote the probability that the preference is $\pref$ and that the questions asked lead to the sequence of graphs $(\ppref_t)_{t \in \intvl{1, k}}$.
-Example: $P(\ppref_1 = \set{(a, b)}) = P(q_1 = q_{ab})$.
-Example: $P(\ppref_2 = \set{(a, b), (c, b)}) = P\big((\set{q_1, q_2} = \set{q_{ab}, q_{bc}}) \text{ and } a \pref b \text{ and } c \pref b\big)$.
+Thus, if $\card{Q} = 3$, $P^s(\pref, q_1, q_2, q_3)$ denotes the probability that the preference is $\pref$ and that the questions, chosen according to the strategy $s$, were $q_1$, then $q_2$, and finally $q_3$.
+As the sequence of questions determines the sequence of partial orders, we can also consider $P^s$ as a probability distribution over sequences of partial orders. 
+Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
+Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
 
-Given $i, j \in \allalts$, define $P_t((i, j)) = P(i \ppref_t j)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
+Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $P^\mathit{eq}(\pref) = 1/\card{\linors}$.
+
+Given $i, j \in \allalts$, $t \in \N$, define $P_t((i, j)) = P(i \ppref_t j)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
 Define $P_t(\set{i, j}) = P(q_{ij} \in K_{\ppref_t}) = 2 P_t(i > j)$ as the probability that the answer to the question about $\set{i, j}$ be known after $t$ questions.
+
+Can we obtain a nice formula for $P_t(i, j)$?
+
+\subsection{Random questions without repetition}
+The random strategy without repetition draws a question, at each step, equiprobably from the set of remaining questions, or equiprobably from the set of possible questions if no question remain. Thus, $\forall {\ppref} \in \POs, i ≠ j \in \allalts$:
+\begin{equation}
+	P^\mathit{rd}(q_{ij} \knowing {\ppref}) = \left\{
+	\begin{aligned}
+		&\left.
+		\begin{aligned}
+			&\frac{1}{\card{Q} - \card{K_{\ppref}}} && \text{ if } q_{ij} \notin K_{\ppref}\\
+			&\,0 && \text{ if } q_{ij} \in K_{\ppref}
+		\end{aligned}\right\} && \text{ if } \card{K_{\ppref}} ≠ \card{Q},\\
+		&\left.\frac{1}{\card{Q}}\right. && \text{ if } \card{K_{\ppref}} = \card{Q}.
+	\end{aligned}\right.
+\end{equation}
 
 \subsection{Questioning by sorting a subset of objects}
 Given a budget of $k$ questions, we can adopt the following questioning strategy. Fix $l$ objects such that they can be sorted by asking at most $k$ questions (thus $l$ something like order of $\frac{k}{\log k}$?). Ask questions so as to sort them. We obtain $\card{{\ppref}} = \binom{l}{2}$.
@@ -147,28 +156,10 @@ We obtain $\card{{\ppref}} = \frac{l^2}{4}$.
 Thus, $\card{{\ppref}}$ order of $\frac{k^ 2}{4}$.
 TODO: be more precise.
 
-\section{Hypothesis}
-We want to study $P$ according to hypothesis on the distribution of $>$ and the way we ask questions. Let us start with equiprobability hypothesis and see if we can obtain interesting results.
+\section{The random strategy and equiprobable distribution}
+Here we consider $P = P^\mathit{eq}$ and $s$ the random strategy without repetition. We also write $P$ instead of $P^s$.
 
-We suppose we know that $>$ is drawn equiprobably from $\linors$, thus, $P(>) = 1/\card{\linors}$.
-
-We also suppose that we draw a question, at each step, equiprobably from the set of remaining questions, or equiprobably from the set of possible questions if no question remain. Thus, $\forall t \in \intvl{1, \card{Q}}, i ≠ j \in \allalts$:
-\begin{equation}
-	P(q_t = q_{ij} \knowing \ppref_{t - 1}) = \left\{
-	\begin{aligned}
-		&\left.
-		\begin{aligned}
-			&\frac{1}{\card{Q} - \card{K_{\ppref_{t - 1}}}} && \text{ if } q_{ij} \notin K_{\ppref_{t - 1}}\\
-			&\,0 && \text{ if } q_{ij} \in K_{\ppref_{t - 1}}
-		\end{aligned}\right\} && \text{ if } \card{K_{\ppref_{t - 1}}} ≠ \card{Q},\\
-		&\left.\frac{1}{\card{Q}}\right. && \text{ if } \card{K_{\ppref_{t - 1}}} = \card{Q}.
-	\end{aligned}\right.
-\end{equation}
-
-These hypothesis define $P$.
-
-\section{Investigation}
-Can we obtain a nice formula for $P_t(i, j)$?
+\commentOC{We should rewrite this section to follow new notations and clarify (and continue)…}
 
 When $\card{{\ppref_1}} = 1$, $P(\ppref_1) = \frac{1}{\card{Q}} \frac{1}{2}$.
 
@@ -177,34 +168,13 @@ Note that $P(\card{{\ppref_1}} = 1) = 1$, thus, $P(\ppref_2) = P(\ppref_2 \knowi
 Let’s now evaluate $P(\ppref_2 \knowing \card{{\ppref_2}} = 2)$.
 We may pick a question one end of which we know something about. There’s $2 (n - 2)$ such questions ($n - 2$ for each object in $\ppref_1$). If so, we need the answer to be oriented in a certain way to prevent transitive closure to bring anything new. Otherwise, we may pick a question whose two ends are yet unknown. There’s $n - 2$ choose $2$ such questions. Indeed, in total, there remains $2 (n - 2) + \frac{(n - 2) (n - 3)}{2} = \frac{(n - 2) (n + 1)}{2} = \frac{n (n - 1)}{2} - 1$ questions given $\ppref_1$.
 Thus, $P(\ppref_2 \knowing \card{{\ppref_2}} = 2) = \frac{n - 1}{n + 1}$
-(by noticing that $|Q_{\ppref_2}|=\frac{n(n-1)}{2}-1=\frac{(n-2)(n+1)}{2}$)
-.
+(by noticing that $\card{Q_{\ppref_2}} = \frac{n(n-1)}{2}-1=\frac{(n-2)(n+1)}{2}$).
 
 And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
 
-\section{Best possible number of edges}
-Assume we are the luckiest possible: we can choose the orientation of edges (the answers to questions) so as to maximise the number of resulting edges.
-
-Define the \emph{original graph} as the graph $G$ containing the edge $(a, b)$ iff the question $a \relq b$ was asked and answered with $a > b$. After $k$ questions, $G$ has $k$ edges at best.
-Define $T_G$ as the transitive closure of $G$.
-
-\begin{proposition}
-	Say we can choose the $k$ edges freely in $G$. To maximise the number of edges in $T_G$, it is necessary and sufficient to choose any $k + 1$ vertices and connect them.
-\end{proposition}
-\begin{proof}[Folklore?]
-	In general, $G$ has components having $k_1$, $k_2$, … edges, with $\sum_i k_i = k$ (in a component, there is a non-oriented path linking any two vertices of the component, and any two components are disconnected). 
-	Its transitive closure $T_G$ has at most $\sum_i \binom{k_i + 1}{2}$ edges. 
-	The best one can do is one component having $k$ edges, leading to $T_G$ having $\binom{k + 1}{2}$ edges.
-	That’s because $\binom{k + 1}{2} ≥ \sum_i \binom{k_i + 1}{2}$. 
-	Indeed, the left hand side is half of $(k + 1) k = (\sum_i k_i + 1) \sum_i k_i = (\sum_i k_i)^2 + \sum_i k_i ≥ \sum_i k_i^2 + \sum_i k_i$, with equality iff there is only one component; whereas the right hand side is half of $\sum_i (k_i + 1) k_i = \sum_i k_i^2 + \sum_i k_i$.
-\end{proof}
-
 \section{Analysis for 4}
 Taking a different starting point, say we may ask 3 questions and $n = 4$. Which questions should we ask to maximise the average number of resulting edges?
-
-Start with $q_1 = a \relq b$, wlog. Assume $a > b$, wlog.
-
-Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c \relq d$. $a > b > c > d$: 1 order VS $a > b > c$ and $d > c$: 3 orders. And so on. See \cref{fig:m4}.
+See \cref{fig:m4,fig:m4Cont}.
 
 \begin{figure}
 	\NewDocumentCommand{\pgfres}{}{\num[round-mode=places,round-precision=1]{\pgfmathresult}}
@@ -214,12 +184,12 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 		\path (-10mm, -9mm) coordinate (offsetL);
 		\path (10mm, -9mm) coordinate (offsetR);
 		\path (0, -4mm) coordinate (offsetG);
-		\path node (root0) {$a \relq b$, \esp{(4.5 * 4 + 4 * 8) / 12}}
+		\path node (root0) {$a \relq b$, \esp{4}}
 			[sibling distance = 6cm, level 2/.style = {sibling distance = 2cm}, level 3/.style = {sibling distance = 1cm}]
 			child {
-				node {$a > b$}
+				node {$a > b$, \esp{4}}
 				child[sibling distance = 3cm] {
-					node {$b \relq c$, \esp{(4.5 * 4 + 4 * 8) / 12}}
+					node {$b \relq c$, \esp{(4.5 * 4 + 3 * 5 + 4 * 3) / 12}}
 					[sibling distance = 2cm]
 					child[sibling distance = 2cm, align = left, anchor = north] {
 						node {
@@ -232,14 +202,14 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 					}
 					child[sibling distance = 2cm, align = left, anchor = north] {
 						node {
-							$\set{a, c} > b$, \esp{4}\\
+							$\set{a, c} > b$, \esp{(3 * 5 + 4 * 3) / 8}\\
 							$cab$ × 4\\
 							$acb$ × 4
 						}
 					}
 				}
 				child {
-					node {$c \relq d$}
+					node {$c \relq d$, \esp{4}}
 					child {
 						node {…}
 					}
@@ -440,7 +410,7 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 		\path (-10mm, -9mm) coordinate (offsetL);
 		\path (10mm, -9mm) coordinate (offsetR);
 		\path (0, -4mm) coordinate (offsetG);
-		\path [sibling distance = 8cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] {$a > b, c > d$, \esp{(4 * 6 + 3.5 * 1) / 7}}
+		\path [sibling distance = 8cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] {$a > b, c > d$, \esp{4}}
 			child {
 				node {$a \relq c$ (or $b \relq d$), \esp{4}}
 				child {
@@ -480,6 +450,21 @@ Assume $q_2 = b \relq c$, we obtain $b > c$ (thus $a > b > c$). Assume $q_3 = c 
 \end{figure}
 
 %\bibliography{bibl}
+
+\appendix
+\section{Best possible number of edges}
+Assume we are the luckiest possible: we can choose the orientation of edges (the answers to questions) so as to maximise the number of resulting edges.
+
+Define the \emph{original graph} as the graph $G$ containing the edge $(a, b)$ iff the question $a \relq b$ was asked and answered with $a > b$. Consider $k < n$. After $k$ questions, $G$ has $k$ edges at best.
+The following proposition shows that to maximise the number of edges, it is necessary and sufficient to choose any $k + 1$ vertices and connect them. Note that any graph $G$ with $k$ edges can be uniquely decomposed into components having $k_1$, $k_2$, … edges, with $\sum_i k_i = k$ (in a component, there is a non-oriented path linking any two vertices of the component, and any two components are disconnected).
+\begin{proposition}
+	Let $G = (\allalts, E)$ be an oriented acyclic graph (not necessarily closed transitively) composed of components having $k_1$, $k_2$, … edges, with $\sum_i k_i = k$.
+	Then, its transitive closure $T_G$ has $\binom{k + 1}{2}$ edges iff there is only one component having $k$ edges; otherwise, $T_G$ has less than $\binom{k + 1}{2}$ edges.
+\end{proposition}
+\begin{proof}[Folklore?]
+	In general, $T_G$ has at most $\sum_i \binom{k_i + 1}{2}$ edges. The claim holds because $\binom{k + 1}{2} ≥ \sum_i \binom{k_i + 1}{2}$, with equality iff there is only one component.
+	Indeed, the left hand side is half of $(k + 1) k = (\sum_i k_i + 1) \sum_i k_i = (\sum_i k_i)^2 + \sum_i k_i ≥ \sum_i k_i^2 + \sum_i k_i$, with equality iff there is only one component; whereas the right hand side is half of $\sum_i (k_i + 1) k_i = \sum_i k_i^2 + \sum_i k_i$.
+\end{proof}
 
 \section{Example context}
 $N$ the voters (reviewers), $\card{N} = n$; $X$ the items (articles submitted to a conference), $\card{X} = m$. $PO(X)$ the partially ordered sets over $X$. Let $Q \in PO(X)^N$ represent some partial knowledge of the voters preferences. Consider $f: PO(X)^N → \powersetz{X}$ an enlarged voting rule, that selects winning items on the basis of partial knowledge of the preferences of the voters. Define $f(Q) = \min_{x \in X} \max_{y \in X, (>_{i \in N}) \in compl(Q)} s(y, (>_{i \in N})) - s(x, (>_{i \in N}))$ as selecting the alternatives that minimize the worst regret, where $s$ is the Borda scoring rule (attributing to an alternative at a profile as many points as that alternative beats other alternatives, summed over all voters).
