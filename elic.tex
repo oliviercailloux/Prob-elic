@@ -74,20 +74,21 @@ Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, 
 There is a bijection between sequences of questions, sequences of partial orders, and sequences of graphs.
 
 Define the upper contour set of $x \in X$ as ${≥^{-1}}(x) = \set{y \in X \suchthat y ≥ x}$, thus, as the set of objects that are at least as good as $x$.
-Towards showing the equivalence between a sequence of questions and a sequence of partial orders, we observe that an upper contour set is the upper contour set of a unique object.
+Towards showing the equivalence between a sequence of questions and a sequence of partial orders, we observe that a subset of an upper contour set that includes an object of which it is the upper contour set is the upper contour set of a unique object.
 \begin{proposition}[Folklore?]
 	\label{th:ucs}
-	Let $x, y \in X$ such that ${≥^{-1}}(x) = {≥^{-1}}(y)$. Then, $x = y$.
+	Let $\set{x, y} \subseteq S \subseteq X$ such that $S \subseteq {≥^{-1}}(x)$ and $S \subseteq {≥^{-1}}(y)$. Then, $x = y$.
 \end{proposition}
 \begin{proof}
-	Define $S = {≥^{-1}}(x) = {≥^{-1}}(y)$. Thus, $x \in S$, and $\forall s \in S: s ≥ y$. Thus, $x ≥ y$.
+	By hypothesis, $x \in S$, and $\forall s \in S: s ≥ y$. Thus, $x ≥ y$.
 	By a symmetrical observation, $y ≥ x$.
-	Because $≥$ is a weak order, this implies $x = y$.
+	Because $>$ is asymmetric and ${≥} = {>} \cup {=}$, this implies $x = y$.
 \end{proof}
+By symmetry, a similar results holds for lower contour sets.
 
-Given $\ppref, \ppref' \in \POs$ and $i, j \in \allalts$, say that the question $q_{ij} \in Q$ may lead from $\ppref$ to $\ppref'$ iff ${\ppref'} = {\ppref} + (i, j) \lor{\ppref'} = {\ppref} + (j, i)$.
+Given ${\ppref}, {\ppref'} \in \POs$ and $i, j \in \allalts$, say that the question $q_{ij} \in Q$ may lead from $\ppref$ to $\ppref'$ iff ${\ppref'} = {\ppref} + (i, j) \lor{\ppref'} = {\ppref} + (j, i)$.
 
-Given $\ppref, \ppref' \in \POs$, say that the transition from $\ppref$ to $\ppref'$ is legal iff some question may lead from $\ppref$ to $\ppref'$.
+Given ${\ppref}, {\ppref'} \in \POs$, say that the transition from $\ppref$ to $\ppref'$ is legal iff some question may lead from $\ppref$ to $\ppref'$.
 Given $k \in \N$, let $\intvl{1, k}$ denote the interval of integers between $1$ and $k$.
 Say that a sequence of partial orders $(\ppref_t) \in \POs^k$ is legal iff the transition from $\ppref_t$ to $\ppref_{t + 1}$ is legal $\forall t \in \intvl{1, k - 1}$.
 
@@ -95,18 +96,20 @@ Any legal sequence of partial orders defines uniquely a corresponding sequence o
 Equivalently, 
 the following proposition shows that only one question, at most, permits to lead from any partial order $\ppref$ to any partial order $\ppref'$. 
 \begin{proposition}
-	Given ${\ppref} \in \POs$ and $i, j, i', j' \in \allalts$, if ${\ppref} + (i, j) = {\ppref} + (i', j')$, then $i = i' \land j = j'$.
+	Given ${\ppref} \in \POs$ and $q_1, q_2, q'_1, q'_2 \in \allalts$, if ${\ppref} + (q_1, q_2) = {\ppref} + (q'_1, q'_2)$, then $q_1 = q'_1 \land q_2 = q'_2$.
 \end{proposition}
 \begin{proof}
 	We show that given two possible graphs $\ppref_{t + 1} ≠ \ppref_t$ and any two questions $q, q' \in Q$, if both $q$ and $q'$ may lead from $\ppref_t$ to $\ppref_{t + 1}$, then $q = q'$.
 	
-	Note that $T(E \cup \set{(i, j)}) = E \cup \set{(i', j') \suchthat i' ≥_E i \land j ≥_E j'}$.
+	Note that $T({\ppref} \cup \set{(i, j)}) = {\ppref} \cup \set{(i', j') \suchthat i' \pprefeq i \land j \pprefeq j'}$.
 Therefore:
 \begin{equation}
 	\label{eq:trans}
-	T(E \cup \set{(i, j)}) \setminus E \subseteq \set{(i', j') \suchthat [(i' ≥_E i) \land (j ≥_E j')]}.
+	T({\ppref} \cup \set{(i, j)}) \setminus {\ppref} \subseteq \set{(i', j') \suchthat [(i' \pprefeq i) \land (j \pprefeq j')]}.
 \end{equation}
 
+	$(q_1, q_2) \in {\ppref'}$, $(q'_1, q'_2) \in {\ppref'}$, $(q_1, q_2) \notin {\ppref}$, $(q'_1, q'_2) \notin {\ppref}$.
+	
 	By hypothesis, two orders ${>}, {>'} \in \linors$ exist such that $\ppref_{t + 1} = T(\ppref_t \cup \set{q(>)}) = T(\ppref_t \cup \set{q'(>')})$.
 	Thus, both $q(>)$ and $q'(>')$ are in $\ppref_{t + 1}$, and none is in $\ppref_t$ (otherwise $\ppref_t = \ppref_{t + 1}$).
 	Define $q(>) = (i, j)$ and $q'(>') = (i', j')$. 
@@ -132,7 +135,7 @@ Define $P_t(\set{i, j}) = P(q_{ij} \in K_{\ppref_t}) = 2 P_t(i > j)$ as the prob
 
 \subsection{Questioning by sorting a subset of objects}
 Given a budget of $k$ questions, we can adopt the following questioning strategy. Fix $l$ objects such that they can be sorted by asking at most $k$ questions (thus $l$ something like order of $\frac{k}{\log k}$?). Ask questions so as to sort them. We obtain $\card{{\ppref}} = \binom{l}{2}$.
-Thus, perhaps, order of $\card{{\ppref}} = \binom{k / \log k}{2}$.
+Thus, perhaps, $\card{{\ppref}}$ is order of $\binom{k / \log k}{2}$.
 TODO: be more precise.
 
 \subsection{Median strategy}
@@ -141,7 +144,7 @@ Given a budget of $k$ questions, we can adopt the following questioning strategy
 Fix $l$ objects.
 Ask questions so as to: 1) determine their median in $\pref$ (“this can be done with O(l) comparisons deterministically”) and 2) partition the subset of $l$ objects among $\frac{l}{2}$ objects preferred to the median and $\frac{l}{2}$ other ones.
 We obtain $\card{{\ppref}} = \frac{l^2}{4}$.
-Thus, order of $\card{{\ppref}} = \frac{k^ 2}{4}$.
+Thus, $\card{{\ppref}}$ order of $\frac{k^ 2}{4}$.
 TODO: be more precise.
 
 \section{Hypothesis}
