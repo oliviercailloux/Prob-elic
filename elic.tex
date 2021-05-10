@@ -39,22 +39,22 @@ An example of an application of the sorts of results we seek is in social choice
 \begin{itemize}
 	\item $\allalts$ a set of objects. Example: $\allalts = {a, b, c}$.
 	\item $n = |\allalts|$. Example: $n = 3$.
-	\item $\linors$ the set of linear orders over $\allalts$, that is, of transitive, connected and irreflexive binary relations over $\allalts$ (a relation $>$ over $\allalts$ is connected iff $\forall i ≠ j \in \allalts: i > j \lor j > i$). \commentOC{Check if must be reflexive.}
-	\item ${\pref} \in \linors$ a preference over $\allalts$. Example: $\set{(a, b), (a, c), (b, c)}$. Let ${\prefeq} = ({\pref} \cup {=})$ denote the weak preference relation corresponding to $\pref$.
+	\item $\linors$ the set of linear orders over $\allalts$, that is, of transitive and complete binary relations over $\allalts$ (a relation $\prefeq$ over $\allalts$ is complete iff $\forall i, j \in \allalts: i \pref j \lor j \pref i$).
+	\item ${\prefeq} \in \linors$ a preference over $\allalts$. Example: $\set{(a, b), (a, c), (b, c)}$. Let $\pref$ be the irreflexive part of $\prefeq$, thus, ${\prefeq} = ({\pref} \cup {=})$.
 	\item Let $\powerset{S}$ denote the set of subsets of $S$.
 Let $P: \powerset{\linors} → [0, 1]$ denote a probability distribution over the possible preferences.
 \end{itemize}
-The preference $\pref$ is a priori unknown.
-We only know the probability distribution over $\linors$, from which $\pref$ is drawn. 
-We can ask questions to obtain information about $\pref$. 
-We are interested in comparing questioning strategies and in evaluating the probabilistic evolution of our knowledge of $\pref$ as a function of the number of questions asked, for various strategies. 
+The preference $\prefeq$ is a priori unknown.
+We only know the probability distribution over $\linors$, from which $\prefeq$ is drawn. 
+We can ask questions to obtain information about $\prefeq$. 
+We are interested in comparing questioning strategies and in evaluating the probabilistic evolution of our knowledge of $\prefeq$ as a function of the number of questions asked, for various strategies. 
 
 \section{Questioning to increase our knowledge}
-Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\ppref} \subseteq \allalts × \allalts$ is a transitive and acyclic relation.
+Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\pprefeq} \subseteq \allalts × \allalts$ is a transitive, reflexive and antisymmetric relation.
 It represents our knowledge of $\pref$.
-Let ${\pprefeq} = ({\ppref} \cup {=})$ denote the corresponding weak partial preference.
+Let $\ppref$ be the irreflexive part of $\pprefeq$, thus, ${\pprefeq} = ({\ppref} \cup {=})$.
 
-Let $\ppref_t$ denote our knowledge after $t$ questions.
+Let $\pprefeq_t$ denote our knowledge after $t$ questions (or $\ppref_t$ for its irreflexive part).
 Define ${\ppref_0} = \emptyset$ as our (empty) knowledge after zero questions.
 Example of $\ppref_1 : \set{(a, b)}$.
 
@@ -111,7 +111,7 @@ We can also think of $\ppref$ as a directed graph, or digraph, whose set of node
 \section{Questioning strategies and probability distributions}
 Define a questioning strategy as a function $s$ that given a current knowledge state ${\ppref} \in \POs$ returns a probability distribution over the set of possible questions $Q$. We write $P^\mathit{questions}(q \knowing {\ppref})$ for $s(\ppref)(q)$.
 
-Define the probability of asking a sequence of questions $(q_t)_{t \in \N^*}$ when following the strategy $s$ and when the real preference is ${\pref} \in \linors$ as $P^s((q_t)_{t \in \N^*} \knowing {\pref}) = \prod_{t \in \N^*} P^\mathit{questions}((q_t \knowing {\ppref_{t - 1}})$, where ${\ppref_0} = \emptyset$ and ${\ppref_t} = {\ppref_{t - 1}} + q_t(\pref)$.
+Define the probability of asking a sequence of questions $(q_t)_{t \in \N^*}$ when following the strategy $s$ and when the real preference is ${\prefeq} \in \linors$ as $P^s((q_t)_{t \in \N^*} \knowing {\prefeq}) = \prod_{t \in \N^*} P^\mathit{questions}((q_t \knowing {\pprefeq_{t - 1}})$, where ${\ppref_0} = \emptyset$ and ${\ppref_t} = {\ppref_{t - 1}} + q_t(\pref)$.
 
 Together with the probability distribution $P$ over the possible preferences, this defines a joint probability distribution $P^s: \powerset{\linors × Q^{\N^*}} → [0, 1]$ over the possible preferences and questions asked, defined as $P^s(\pref, (q_t)_{t \in \N^*}) = P(\pref) P^s(q_t \knowing {\pref})$ (with an abuse of notation as we reuse the previously defined letter $P^s$ to define the joint probability distribution, which we can do as these usages coincide).
 We also write $P$ instead of $P^\mathit{questions}$ as this introduces no ambiguity.
@@ -121,7 +121,7 @@ As the sequence of questions determines the sequence of partial orders, we can a
 Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
 
-Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $P^\mathit{eq}(\pref) = 1/\card{\linors}$.
+Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $P^\mathit{eq}(\prefeq) = 1/\card{\linors}$.
 
 Given $i, j \in \allalts$, $t \in \N$, define $P_t((i, j)) = P(i \ppref_t j)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
 Define $P_t(\set{i, j}) = P(q_{ij} \in K_{\ppref_t}) = 2 P_t(i > j)$ as the probability that the answer to the question about $\set{i, j}$ be known after $t$ questions.
