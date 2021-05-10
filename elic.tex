@@ -40,7 +40,7 @@ An example of an application of the sorts of results we seek is in social choice
 	\item $\allalts$ a set of objects. Example: $\allalts = {a, b, c}$.
 	\item $n = |\allalts|$. Example: $n = 3$.
 	\item $\linors$ the set of linear orders over $\allalts$, that is, of transitive, connected and irreflexive binary relations over $\allalts$ (a relation $>$ over $\allalts$ is connected iff $\forall i ≠ j \in \allalts: i > j \lor j > i$). \commentOC{Check if must be reflexive.}
-	\item ${\pref} \in \linors$ a preference over $\allalts$. Example: $\set{(a, b), (a, c), (b, c)}$. Let ${\prefeq} = {\pref} \cup {=}$ denote the weak preference relation corresponding to $\pref$.
+	\item ${\pref} \in \linors$ a preference over $\allalts$. Example: $\set{(a, b), (a, c), (b, c)}$. Let ${\prefeq} = ({\pref} \cup {=})$ denote the weak preference relation corresponding to $\pref$.
 	\item Let $\powerset{S}$ denote the set of subsets of $S$.
 Let $P: \powerset{\linors} → [0, 1]$ denote a probability distribution over the possible preferences.
 \end{itemize}
@@ -52,8 +52,7 @@ We are interested in comparing questioning strategies and in evaluating the prob
 \section{Questioning to increase our knowledge}
 Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\ppref} \subseteq \allalts × \allalts$ is a transitive and acyclic relation.
 It represents our knowledge of $\pref$.
-Let ${\pprefeq} = {\ppref} \cup {=}$ denote the corresponding weak partial preference.
-\commentMP{directed graph or digraph}
+Let ${\pprefeq} = ({\ppref} \cup {=})$ denote the corresponding weak partial preference.
 
 Let $\ppref_t$ denote our knowledge after $t$ questions.
 Define ${\ppref_0} = \emptyset$ as our (empty) knowledge after zero questions.
@@ -144,7 +143,7 @@ The random strategy without repetition draws a question, at each step, equiproba
 \end{equation}
 
 \subsection{Questioning by sorting a subset of objects}
-Given a budget of $k$ questions, we can adopt the following questioning strategy. Fix $l$ objects such that they can be sorted by asking at most $k$ questions (thus $l$ something like order of $\frac{k}{\log k}$?). Ask questions so as to sort them. We obtain $\card{{\ppref}} = \binom{l}{2}$.
+Given a budget of $k$ questions, we can adopt the following questioning strategy. Fix $l$ objects such that they can be sorted by asking at most $k$ questions (thus $l$ greater than order of $\frac{k}{\log k}$?). Ask questions so as to sort them. We obtain $\card{{\ppref}} = \binom{l}{2}$.
 Thus, perhaps, $\card{{\ppref}}$ is order of $\binom{k / \log k}{2}$.
 TODO: be more precise.
 
