@@ -4,7 +4,7 @@
 \input{preamble/redac}
 \input{preamble/math_basics}
 \input{preamble/math_mine}
-
+\newcommand{\commentMP}[1]{\textcolor{green}{[MP:#1]}}
 %I find these settings useful in draft mode. Should be removed for final versions.
 	%Which line breaks are chosen: accept worse lines, therefore reducing risk of overfull lines. Default = 200.
 		\tolerance=2000
@@ -27,7 +27,7 @@
 \maketitle
 
 \section{Introduction}
-Many studies have investigated the computational complexity of (variants of) sorting decision problems. The usual implicit hypothesis is that the number of objects to be sorted is large, and that we are mostly interested in order of magnitudes of number of comparisons required to achieve some desired state of knowledge, rather than exact number of comparisons.
+Many studies have investigated the computational complexity of (variants of) sorting problems. The usual implicit hypothesis is that the number of objects to be sorted is large, and that we are mostly interested in order of magnitudes of number of comparisons required to achieve some desired state of knowledge, rather than exact number of comparisons.
 
 This article focuses on a different use case: obtaining preference information from an individual over a small set of objects. We assume furthermore that determining her preference among objects of the set is cognitively difficult for the individual. For example, one may be interested in determining (part of) someone’s preferences over a set of political candidates; or some juror “preferences” over competitors in some contest.
 
@@ -53,6 +53,7 @@ We are interested in comparing questioning strategies and in evaluating the prob
 Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\ppref} \subseteq \allalts × \allalts$ is a transitive and acyclic relation.
 It represents our knowledge of $\pref$.
 Let ${\pprefeq} = {\ppref} \cup {=}$ denote the corresponding weak partial preference.
+\commentMP{directed graph or digraph}
 
 Let $\ppref_t$ denote our knowledge after $t$ questions.
 Define ${\ppref_0} = \emptyset$ as our (empty) knowledge after zero questions.
@@ -70,8 +71,8 @@ Let $K_\ppref = \set{\set{e, e^{-1}} \suchthat e \in {\ppref}} \subseteq Q$ deno
 Let $Q_\ppref = Q \setminus K_\ppref$ denote the questions remaining given $\ppref$. Note that $\card{Q_\ppref} = \card{Q} - \card{K_\ppref}$.
 Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, our knowledge is complete: $Q_{\ppref_{\card{Q}}} = \emptyset$.
 
-\subsection{Sequences of questions, of partial orders, and of graphs}
-There is a bijection between sequences of questions, sequences of partial orders, and sequences of graphs.
+\subsection{Sequences of questions, of partial orders, and of digraphs}
+There is a bijection between sequences of questions, sequences of partial orders, and sequences of digraphs.
 
 Define the upper contour set of $x \in X$ as ${≥^{-1}}(x) = \set{y \in X \suchthat y ≥ x}$, thus, as the set of objects that are at least as good as $x$.
 Towards showing the equivalence between a sequence of questions and a sequence of partial orders, we observe that a subset of an upper contour set that includes an object of which it is the upper contour set is the upper contour set of a unique object.
@@ -106,7 +107,7 @@ Any legal sequence of partial orders defines uniquely a corresponding sequence o
 	\Cref{th:ucs} thus concludes.
 \end{proof}
 
-We can also think of $\ppref$ as a graph whose set of nodes is $\allalts$. We thus define a bijection that relates $\ppref$ to $G = (\allalts, \ppref)$, its corresponding graph, and talk interchangeably about a graph or a set of edges or a partial order. This bijection defines the possible graphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
+We can also think of $\ppref$ as a directed graph, or digraph, whose set of nodes is $\allalts$. We thus define a bijection that relates $\ppref$ to $G = (\allalts, \ppref)$, its corresponding digraph, and talk interchangeably about a digraph or a set of edges or a partial order. This bijection defines the possible digraphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
 
 \section{Questioning strategies and probability distributions}
 Define a questioning strategy as a function $s$ that given a current knowledge state ${\ppref} \in \POs$ returns a probability distribution over the set of possible questions $Q$. We write $P^\mathit{questions}(q \knowing {\ppref})$ for $s(\ppref)(q)$.
