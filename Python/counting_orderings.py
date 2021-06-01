@@ -61,9 +61,9 @@ class Elic_node:
       self._known_answers=f_node._f_node._known_answers.copy()
       self._known_answers.append((x1,x2))
       for answer in self._known_answers:
-        if answer[0]==x2:
+        if answer[0]==x2 and (x1,answer[1]) not in self._known_answers:
           self._known_answers.append((x1,answer[1]))
-        if answer[1]==x1:
+        if answer[1]==x1 and ((answer[0],x2)) not in self._known_answers:
           self._known_answers.append((answer[0],x2))
       self._num_compat=sum(self._mask)
       self._long_description=self._descriptor+','+str(self._num_compat)+','+str(len(self._known_answers))
