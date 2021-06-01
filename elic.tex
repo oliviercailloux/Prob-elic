@@ -189,11 +189,11 @@ See \cref{fig:m4,fig:m4Cont}.
 			child {
 				node {$a > b$, \esp{4}}
 				child[sibling distance = 3cm] {
-					node {$b \relq c$, \esp{(4.5 * 4 + 5 * 2 + 3 * 6) / 12}}
+					node {$b \relq c$, \esp{(5 * 4 + 5 * 2 + 3 * 6) / 12}}
 					[sibling distance = 2cm]
 					child[sibling distance = 2cm, align = left, anchor = north] {
 						node {
-							\tiny $a > b > c$, \esp{4.5}\\
+							\tiny $a > b > c$, \esp{5}\\
 							$dabc$\\
 							$adbc$\\
 							$abdc$\\
@@ -248,7 +248,7 @@ See \cref{fig:m4,fig:m4Cont}.
 		;
 		\path node[fit = (root0) (root0-1-1.south west) (root0-2-3.south east) (root0-2-2-2.south east)] (tree0) {};
 		
-		\path (tree0.south) ++ (0, -1cm) node[anchor = north] (root abc) {$a > b > c$, \esp{4.5}}
+		\path (tree0.south) ++ (0, -1cm) node[anchor = north] (root abc) {$a > b > c$, \esp{5}}
 			[sibling distance = 4cm, level 2/.style = {sibling distance = 2cm, align = left, anchor = north}]
 			child {
 				node {$c \relq d$, \esp{(6 * 1 + 4 * 3) / 4}}
@@ -268,17 +268,17 @@ See \cref{fig:m4,fig:m4Cont}.
 				}
 			}
 			child {
-				node {$b \relq d$, \esp{4}}
+				node {$b \relq d$, \esp{5}}
 				child {
 					node {
-						4 edges\\
+						5 edges\\
 						$abcd$\\
 						$abdc$
 					}
 				}
 				child {
 					node {
-						4 edges\\
+						5 edges\\
 						$adbc$\\
 						$dabc$
 					}
