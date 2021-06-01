@@ -12,6 +12,7 @@ from itertools import permutations
 from itertools import combinations
 from itertools import compress
 from itertools import filterfalse
+!pip install anytree
 from anytree import Node, RenderTree
 from anytree.dotexport import RenderTreeGraph
 from anytree import dotexport
