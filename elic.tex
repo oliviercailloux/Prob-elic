@@ -189,7 +189,7 @@ See \cref{fig:m4,fig:m4Cont}.
 			child {
 				node {$a > b$, \esp{4}}
 				child[sibling distance = 3cm] {
-					node {$b \relq c$, \esp{(4.5 * 4 + 3 * 5 + 4 * 3) / 12}}
+					node {$b \relq c$, \esp{(4.5 * 4 + 5 * 2 + 3 * 6) / 12}}
 					[sibling distance = 2cm]
 					child[sibling distance = 2cm, align = left, anchor = north] {
 						node {
@@ -202,7 +202,7 @@ See \cref{fig:m4,fig:m4Cont}.
 					}
 					child[sibling distance = 2cm, align = left, anchor = north] {
 						node {
-							$\set{a, c} > b$, \esp{(3 * 5 + 4 * 3) / 8}\\
+							$\set{a, c} > b$, \esp{(5 * 2 + 3 * 6) / 8}\\
 							$cab$ × 4\\
 							$acb$ × 4
 						}
@@ -312,7 +312,7 @@ See \cref{fig:m4,fig:m4Cont}.
 			\path graph[use existing nodes] {a -- b -- c -- d};
 		\end{scope}
 
-		\path (root abc) ++ (0, -5.5cm) [sibling distance = 3cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] (root ac b) {$\set{a, c} > b$, \esp{(3 * 5 + 4 * 3) / 8}}
+		\path (root abc) ++ (0, -5.5cm) [sibling distance = 3cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] (root ac b) {$\set{a, c} > b$, \esp{(5 * 2 + 3 * 6) / 8}}
 			child {
 				node {$a \relq c$, \esp{3}}
 				child {
@@ -356,10 +356,10 @@ See \cref{fig:m4,fig:m4Cont}.
 				}
 			}
 			child {
-				node {$b \relq d$, \esp{(4 * 2 + 3 * 6) / 8}}
+				node {$b \relq d$, \esp{(5 * 2 + 3 * 6) / 8}}
 				child {
 					node {
-						4 edges\\
+						5 edges\\
 						$cabd$\\
 						$acbd$
 					}
