@@ -156,6 +156,16 @@ We obtain $\card{{\ppref}} = \frac{l^2}{4}$.
 Thus, $\card{{\ppref}}$ order of $\frac{k^ 2}{4}$.
 TODO: be more precise. See \hrefblue{https://en.wikipedia.org/wiki/Median_of_medians\#Proof_of_O(n)_running_time}{Median of medians}; Knuth, Sorting and Searching, vol. 3; Cormen, Intro to algorithms…
 
+Here is an algorithm to select a median of $n$ elements, with worst case complexity $O(n^2)$ and average complexity $O(n)$ (the lower or the upper median are both acceptable results).
+Select a pivot element randomly (equiprobably). Compare every other elements to the pivot. Run again on either the lower elements or the higher elements, depending on where the median lies, or stop if a median has been found. 
+
+Let $V(n)$ be the number of comparisons required to run this algorithm, and let us compute an upper bound for $E[V(n)]$.
+Because of our equiprobable pivot draw, we have $1/n$ chances to pick a pivot that will turn out the be the $k$ th element (in order). Assume, pessimistically, that we always recurse on the biggest partition. If we picked a pivot that is the first or last element (that happens with odds $2/n$), we recurse on a partition of size $n - 1$. And so on (if $n$ is odd, one of the terms appears only once instead of twice). We obtain $E[V(n)] ≤ \frac{2}{n} \sum_{k = \floor{n/2}}^{n - 1} E[V(k)] + (n - 1)$.
+
+A classical result is that $E[V(n)] \in O(n)$ [Cormen et al.].
+
+That bound is tight for $1 ≤ n ≤ 2$, as $V(1) = 0$ and $V(2) = 1$. Also, $E[V(3)] = 2 + \frac{2}{3}$ and $E[V(4)] = 3 + \frac{1}{2}E[V(3)] = 4 + \frac{1}{3}$.
+
 \section{The random strategy and equiprobable distribution}
 Here we consider $P = P^\mathit{eq}$ and $s$ the random strategy without repetition. We also write $P$ instead of $P^s$.
 
@@ -448,6 +458,9 @@ See \cref{fig:m4,fig:m4Cont}.
 	\caption{The case $m = 4$, three questions, continued.}
 	\label{fig:m4Cont}
 \end{figure}
+
+\section{Conjecture}
+Computer experiments (to be checked) suggest that the following is the optimal strategy when $k = 4$. Start, obviously, by using two questions to order $\set{a, b, c}$. If we obtain a linear order (say, $a > b > c$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, b} > c$), disconnect temporarily by asking about $d$ and $e$, then connect the two components.
 
 %\bibliography{bibl}
 
