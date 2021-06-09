@@ -51,7 +51,7 @@ We are interested in comparing questioning strategies and in evaluating the prob
 
 \section{Questioning to increase our knowledge}
 Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\pprefeq} \subseteq \allalts × \allalts$ is a transitive, reflexive and antisymmetric relation.
-It represents our knowledge of $\pref$.
+It represents our knowledge of $\prefeq$.
 Let $\ppref$ be the irreflexive part of $\pprefeq$, thus, ${\pprefeq} = ({\ppref} \cup {=})$.
 
 Let $\pprefeq_t$ denote our knowledge after $t$ questions (or $\ppref_t$ for its irreflexive part).
@@ -63,12 +63,14 @@ Note that $q_{ij} = q_{ji}$.
 The set of possible questions is $Q = \set{q_{ij} \suchthat i ≠ j \in \allalts}$.
 It follows that $\card{Q} = \binom{n}{2} = \frac{n (n - 1)}{2}$. In our running example, $\card{Q} = 3$.
 
-Given $i ≠ j \in \allalts$, ${\pref} \cap q_{ij}$ is a singleton that contains, intuitively, the answer to the question $q_{ij}$ when the preference is $\pref$, that is, the edge connecting $i$ to $j$ that is in $\pref$.
+Given $i ≠ j \in \allalts$, ${\pref} \cap q_{ij}$ is a singleton that contains the answer to the question $q_{ij}$ when the preference is $\pref$, that is, the edge connecting $i$ to $j$ that is in $\pref$.
 Define an addition operation representing our increase in knowledge after having obtained an answer to a question: we add the resulting pair, and compute the transitive closure. Formally, given $\ppref$ and a question $q$, ${\ppref} + ({\pref} \cap q) = T({\ppref} \cup ({\pref} \cap q))$, where $T$ denotes the irreflexive transitive closure ($T(p) = \bigcup_{k \in N^*} p^k$). Example: $\set{(a, b)} + ({\pref} \cap q_{bc}) = {\pref}$.
 
-Let $K_\ppref = \set{\set{e, e^{-1}} \suchthat e \in {\ppref}} \subseteq Q$ denote the questions whose answer is known in $\ppref$. Note that $\card{K_\ppref} = \card{{\ppref}}$.
-Let $Q_\ppref = Q \setminus K_\ppref$ denote the questions remaining given $\ppref$. Note that $\card{Q_\ppref} = \card{Q} - \card{K_\ppref}$.
-Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, our knowledge is complete: $Q_{\ppref_{\card{Q}}} = \emptyset$.
+Let ${\ppref^{±1}} = {\ppref} \cup {\ppref^{-1}}$ denote the set of pairs known in $\ppref$, thus, $q \subseteq {\ppref^{±1}}$ iff the answer to the question $q$ is known in $\ppref$.
+
+%Let $K_\ppref = \set{\set{e, e^{-1}} \suchthat e \in {\ppref}} \subseteq Q$ denote the questions whose answer is known in $\ppref$. Note that $\card{K_\ppref} = \card{{\ppref}}$.
+%Let $Q_\ppref = Q \setminus K_\ppref$ denote the questions remaining given $\ppref$. Note that $\card{Q_\ppref} = \card{Q} - \card{K_\ppref}$.
+%Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, our knowledge is complete: $Q_{\ppref_{\card{Q}}} = \emptyset$.
 
 \subsection{Sequences of questions, of partial orders, and of digraphs}
 There is a bijection between sequences of questions, sequences of partial orders, and sequences of digraphs.
@@ -109,38 +111,40 @@ Any legal sequence of partial orders defines uniquely a corresponding sequence o
 We can also think of $\ppref$ as a directed graph, or digraph, whose set of nodes is $\allalts$. We thus define a bijection that relates $\ppref$ to $G = (\allalts, \ppref)$, its corresponding digraph, and talk interchangeably about a digraph or a set of edges or a partial order. This bijection defines the possible digraphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
 
 \section{Questioning strategies and probability distributions}
-Define a questioning strategy as a function $s$ that given a current knowledge state ${\ppref} \in \POs$ returns a probability distribution over the set of possible questions $Q$. We write $P^\mathit{questions}(q \knowing {\ppref})$ for $s(\ppref)(q)$.
+Define a questioning strategy as a function $s: \POs \setminus \linors → [0, 1]^Q$ that given a current knowledge state ${\ppref} \in \POs \setminus \linors$ returns a probability distribution over the set of possible questions $Q$. 
 
-Define the probability of asking a sequence of questions $(q_t)_{t \in \N^*}$ when following the strategy $s$ and when the real preference is ${\prefeq} \in \linors$ as $P^s((q_t)_{t \in \N^*} \knowing {\prefeq}) = \prod_{t \in \N^*} P^\mathit{questions}((q_t \knowing {\pprefeq_{t - 1}})$, where ${\ppref_0} = \emptyset$ and ${\ppref_t} = {\ppref_{t - 1}} + q_t(\pref)$.
+The probability distribution $P$ over the possible preferences and a strategy $s$ determine in a natural way the following probability distribution over $\linors × \cup_{k \in \N^*} Q^k$. Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$, define $P^s(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
+\begin{equation}
+	P^s(\prefeq, (q_t)_{t \in \intvl{1, k}}) = 
+	\begin{cases}
+		P(\prefeq)  \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t) & \text{if } {\ppref_{k - 1}} \notin \linors,\\
+		0 & \text{otherwise},
+	\end{cases}
+\end{equation}
+where ${\ppref_0} = \emptyset$ and ${\ppref_t} = {\ppref_{t - 1}} + ({\pref} \cap q_t) = T(\cup_{q \in \set{q_1, …, q_t}} ({\pref} \cap q))$. Note that ${\ppref_{k - 1}} \notin \linors ⇒ \forall t \in \intvl{1, k - 1}: {\ppref_t} \notin \linors$.
 
-Together with the probability distribution $P$ over the possible preferences, this defines a joint probability distribution $P^s: \powerset{\linors × Q^{\N^*}} → [0, 1]$ over the possible preferences and questions asked, defined as $P^s(\pref, (q_t)_{t \in \N^*}) = P(\pref) P^s(q_t \knowing {\pref})$ (with an abuse of notation as we reuse the previously defined letter $P^s$ to define the joint probability distribution, which we can do as these usages coincide).
-We also write $P$ instead of $P^\mathit{questions}$ as this introduces no ambiguity.
+Thus, if $\card{Q} = 3$, $P^s(\prefeq, q_1, q_2, q_3)$ denotes the probability that the preference is $\prefeq$ and that the questions, chosen according to the strategy $s$, were $q_1$, then $q_2$, and finally $q_3$.
 
-Thus, if $\card{Q} = 3$, $P^s(\pref, q_1, q_2, q_3)$ denotes the probability that the preference is $\pref$ and that the questions, chosen according to the strategy $s$, were $q_1$, then $q_2$, and finally $q_3$.
 As the sequence of questions determines the sequence of partial orders, we can also consider $P^s$ as a probability distribution over sequences of partial orders. 
 Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
 
-Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $\forall {\prefeq} \in \linors: P^\mathit{eq}(\prefeq) = 1/\card{\linors}$.
+Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $\forall {\pref} \in \linors: P^\mathit{eq}(\pref) = 1/\card{\linors}$.
 
-Given $i, j \in \allalts$, $t \in \N$, define $P_t((i, j)) = P(i \ppref_t j)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
-Define $P_t(\set{i, j}) = P(q_{ij} \in K_{\ppref_t}) = 2 P_t(i > j)$ as the probability that the answer to the question about $\set{i, j}$ be known after $t$ questions.
+Given $i, j \in \allalts$, $k \in \N$, let $P^s(i \ppref_k j) = P^s((i, j) \in {\ppref_k})$ denote the probability that the edge $(i, j)$ be known after $k$ questions. (Under reasonable conditions of symmetry on $P$ and $s$, this will be half of $P^s(q_{ij} \subseteq {\ppref^{±1}_k})$, the probability that the answer to the question $q_{ij}$ be known after $k$ questions.)
 
-Can we obtain a nice formula for $P_t(i, j)$?
+Can we obtain a nice formula for $P^s(i \ppref_k j)$?
 
 \subsection{Random questions without repetition}
-The random strategy without repetition draws a question, at each step, equiprobably from the set of remaining questions, or equiprobably from the set of possible questions if no question remain. Thus, $\forall {\ppref} \in \POs, i ≠ j \in \allalts$:
+The random strategy without repetition $s^\mathit{rm}$ draws a question equiprobably from the set of remaining questions. Thus, $\forall {\ppref} \in \POs \setminus \linors, i ≠ j \in \allalts$:
 \begin{equation}
-	P^\mathit{rd}(q_{ij} \knowing {\ppref}) = \left\{
-	\begin{aligned}
-		&\left.
-		\begin{aligned}
-			&\frac{1}{\card{Q} - \card{K_{\ppref}}} && \text{ if } q_{ij} \notin K_{\ppref}\\
-			&\,0 && \text{ if } q_{ij} \in K_{\ppref}
-		\end{aligned}\right\} && \text{ if } \card{K_{\ppref}} ≠ \card{Q},\\
-		&\left.\frac{1}{\card{Q}}\right. && \text{ if } \card{K_{\ppref}} = \card{Q}.
-	\end{aligned}\right.
+	s^\mathit{rm}(\ppref)(q_{ij}) = 
+	\begin{cases}
+		\frac{1}{\card{(X^2 \setminus {\pprefeq}^{±1})} / 2} & \text{ if } q_{ij} \nsubseteq {\ppref^{±1}},\\
+		0 & \text{ if } q_{ij} \subseteq {\ppref^{±1}},
+	\end{cases}
 \end{equation}
+where $\card{(X^2 \setminus {\pprefeq}^{±1})} / 2$ represents the number of questions remaining when knowing $\ppref$.
 
 \subsection{Questioning by sorting a subset of objects}
 Given a budget of $k$ questions, we can adopt the following questioning strategy. Fix $l$ objects such that they can be sorted by asking at most $k$ questions (thus $l$ greater than order of $\frac{k}{\log k}$?). Ask questions so as to sort them. We obtain $\card{{\ppref}} = \binom{l}{2}$.
@@ -170,7 +174,7 @@ That bound is tight for $1 ≤ n ≤ 2$, as $V(1) = 0$ and $V(2) = 1$. Also, $E[
 Here we consider $P = P^\mathit{eq}$. 
 
 \subsection{Some probabilities}
-Given a partial order $\ppref$, we write $P(\ppref) = P(\set{{\pref} \suchthat {\ppref} \subseteq {\pref}})$ for the probability that the real preference be compatible with $\ppref$.
+Given a partial order $\ppref$, we write $P(\ppref) = P(\set{{\pref} \in \linors \suchthat {\ppref} \subseteq {\pref}})$ for the probability that the real preference be compatible with $\ppref$.
 
 \begin{proposition}
 	Consider any $X' \subseteq X$ and any ${\ppref} \in \linors[X']$. $P(\ppref) = 1 / (\card{X'})!$.
@@ -204,14 +208,14 @@ Thus, $P(\ppref_2 \knowing \card{{\ppref_2}} = 2) = \frac{n - 1}{n + 1}$
 
 And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
 
-\section{Analysis for 3 questions}
-Consider $k = 3$, $n = 4$, and let $s$ denote an optimal strategy.
+\section{Optimal strategy for 3 questions}
+Consider $k = 3$, $n = 4$, and let us be interested in maximizing the number of edges after $3$ questions, thus, in $E[\card{{\ppref}_3}]$.
 
 We write $cd$ instead of $c \pref d$, $abc$ instead of $a \pref b \pref c$, and so on.
 
 The following shows that when $abc$ is known after two questions, it is strictly optimal to ask $q_{bd}$.
 \begin{itemize}
-	\item $P(cd \knowing abc) = \frac{P(abcd)}{P(abc)} = \frac{3!}{4!} = 1/4$. Gain: 2. Otherwise, gain: 0. E: 1/2.
+	\item $P(cd \knowing abc) = \frac{P(abcd)}{P(abc)} = \frac{3!}{4!} = 1/4$. Edges gained if $cd$: 2. Otherwise: 0. $E[\card{{\ppref}_3} - \card{{\ppref}_2} \knowing {\ppref}_2 = abc, q_3 = q_{cd}] = 1/2$.
 	\item Asking $q_{bd}$ knowing $abc$ yields a sure gain of 1.
 \end{itemize}
 
