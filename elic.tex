@@ -63,8 +63,8 @@ Note that $q_{ij} = q_{ji}$.
 The set of possible questions is $Q = \set{q_{ij} \suchthat i ≠ j \in \allalts}$.
 It follows that $\card{Q} = \binom{n}{2} = \frac{n (n - 1)}{2}$. In our running example, $\card{Q} = 3$.
 
-Given $i ≠ j \in \allalts$, let $q_{ij}(\pref)$ represent, intuitively, the answer to the question $q_{ij}$ when the preference is $\pref$, that is, $q_{ij}(\pref)$ is the edge connecting $\set{i, j}$ that is in $\pref$, or formally, the element of the singleton ${\pref} \cap q_{ij}$.
-Define an addition operation representing our increase in knowledge after having obtained an answer to a question: we add the resulting pair, and compute the transitive closure. Formally, given $\ppref$ and a question $q$, ${\ppref} + q(\pref) = T({\ppref} \cup \set{q(\pref)})$, where $T$ denotes the irreflexive transitive closure ($T(p) = \bigcup_{k \in N^*} p^k$). Example: $\set{(a, b)} + q_{bc}(\pref) = {\pref}$.
+Given $i ≠ j \in \allalts$, ${\pref} \cap q_{ij}$ is a singleton that contains, intuitively, the answer to the question $q_{ij}$ when the preference is $\pref$, that is, the edge connecting $i$ to $j$ that is in $\pref$.
+Define an addition operation representing our increase in knowledge after having obtained an answer to a question: we add the resulting pair, and compute the transitive closure. Formally, given $\ppref$ and a question $q$, ${\ppref} + ({\pref} \cap q) = T({\ppref} \cup ({\pref} \cap q))$, where $T$ denotes the irreflexive transitive closure ($T(p) = \bigcup_{k \in N^*} p^k$). Example: $\set{(a, b)} + ({\pref} \cap q_{bc}) = {\pref}$.
 
 Let $K_\ppref = \set{\set{e, e^{-1}} \suchthat e \in {\ppref}} \subseteq Q$ denote the questions whose answer is known in $\ppref$. Note that $\card{K_\ppref} = \card{{\ppref}}$.
 Let $Q_\ppref = Q \setminus K_\ppref$ denote the questions remaining given $\ppref$. Note that $\card{Q_\ppref} = \card{Q} - \card{K_\ppref}$.
@@ -170,7 +170,7 @@ That bound is tight for $1 ≤ n ≤ 2$, as $V(1) = 0$ and $V(2) = 1$. Also, $E[
 Here we consider $P = P^\mathit{eq}$. 
 
 \subsection{Some probabilities}
-Given a partial order $\ppref$, we write $P(\ppref) = P(\set{{\pref} \suchthat {\ppref} \subseteq {\pref}})$ for the probability that the real preference is compatible with $\ppref$.
+Given a partial order $\ppref$, we write $P(\ppref) = P(\set{{\pref} \suchthat {\ppref} \subseteq {\pref}})$ for the probability that the real preference be compatible with $\ppref$.
 
 \begin{proposition}
 	Consider any $X' \subseteq X$ and any ${\ppref} \in \linors[X']$. $P(\ppref) = 1 / (\card{X'})!$.
