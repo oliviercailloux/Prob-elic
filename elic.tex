@@ -121,7 +121,7 @@ As the sequence of questions determines the sequence of partial orders, we can a
 Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
 
-Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $P^\mathit{eq}(\prefeq) = 1/\card{\linors}$.
+Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $\forall {\prefeq} \in \linors: P^\mathit{eq}(\prefeq) = 1/\card{\linors}$.
 
 Given $i, j \in \allalts$, $t \in \N$, define $P_t((i, j)) = P(i \ppref_t j)$ as the probability that the edge $(i, j)$ be known after $t$ questions.
 Define $P_t(\set{i, j}) = P(q_{ij} \in K_{\ppref_t}) = 2 P_t(i > j)$ as the probability that the answer to the question about $\set{i, j}$ be known after $t$ questions.
@@ -157,19 +157,41 @@ Thus, $\card{{\ppref}}$ order of $\frac{k^ 2}{4}$.
 TODO: be more precise. See \hrefblue{https://en.wikipedia.org/wiki/Median_of_medians\#Proof_of_O(n)_running_time}{Median of medians}; Knuth, Sorting and Searching, vol. 3; Cormen, Intro to algorithms…
 
 Here is an algorithm to select a median of $n$ elements, with worst case complexity $O(n^2)$ and average complexity $O(n)$ (the lower or the upper median are both acceptable results).
-Select a pivot element randomly (equiprobably). Compare every other elements to the pivot. Run again on either the lower elements or the higher elements, depending on where the median lies, or stop if a median has been found. 
+Select a pivot element randomly (equiprobably). Compare the $n - 1$ other elements to the pivot. Run again on either the lower elements or the higher elements, depending on where the median lies, or stop if a median has been found. 
 
-Let $V(n)$ be the number of comparisons required to run this algorithm, and let us compute an upper bound for $E[V(n)]$.
+Let $V_[m_1, m_2](n)$ be the number of comparisons required to find the $m_1$th or $m_2$th element among $n$, $V_m(n)$ for $V_[m, m](n)$, $V(n)$ for $V_[\floor{\frac{n}{2}}](n)$, and let us compute an upper bound for $E[V(n)]$.
 Because of our equiprobable pivot draw, we have $1/n$ chances to pick a pivot that will turn out the be the $k$ th element (in order). Assume, pessimistically, that we always recurse on the biggest partition. If we picked a pivot that is the first or last element (that happens with odds $2/n$), we recurse on a partition of size $n - 1$. And so on (if $n$ is odd, one of the terms appears only once instead of twice). We obtain $E[V(n)] ≤ \frac{2}{n} \sum_{k = \floor{n/2}}^{n - 1} E[V(k)] + (n - 1)$.
 
 A classical result is that $E[V(n)] \in O(n)$ [Cormen et al.].
 
-That bound is tight for $1 ≤ n ≤ 2$, as $V(1) = 0$ and $V(2) = 1$. Also, $E[V(3)] = 2 + \frac{2}{3}$ and $E[V(4)] = 3 + \frac{1}{2}E[V(3)] = 4 + \frac{1}{3}$.
+That bound is tight for $1 ≤ n ≤ 2$, as $V(1) = 0$ and $V(2) = 1$. Also, $E[V(3)] = 2 + \frac{2}{3}$ and $E[V(4)] = 3 + \frac{1}{2}E[V(3, [1, 2])] = 4 + \frac{1}{3}$.
 
-\section{The random strategy and equiprobable distribution}
-Here we consider $P = P^\mathit{eq}$ and $s$ the random strategy without repetition. We also write $P$ instead of $P^s$.
+\section{The equiprobable distribution}
+Here we consider $P = P^\mathit{eq}$. 
 
-\commentOC{We should rewrite this section to follow new notations and clarify (and continue)…}
+\subsection{Some probabilities}
+Given a partial order $\ppref$, we write $P(\ppref) = P(\set{{\pref} \suchthat {\ppref} \subseteq {\pref}})$ for the probability that the real preference is compatible with $\ppref$.
+
+\begin{proposition}
+	Consider any $X' \subseteq X$ and any ${\ppref} \in \linors[X']$. $P(\ppref) = 1 / (\card{X'})!$.
+\end{proposition}
+\begin{proof}
+	Consider any ${\ppref}, {\ppref'} \in \linors[X']$. We have that $P(\ppref) = P(\ppref')$.
+	We also know that the set of all possible linear orderings over $X'$ represents a sure event, thus, $P(\linors[X']) = 1$, and that $\ppref$ and $\ppref'$ are disjoint events. 
+	Thus, $\sum_{{\ppref} \in \linors[X']} P(\ppref) = 1$.
+	The result follows.
+\end{proof}
+\begin{proposition}
+	Consider any $X' \subseteq X$ and any partial order $\ppref$ over $X'$. Its probability $P(\ppref)$ is independent of $n$.
+\end{proposition}
+\begin{proof}
+	$P(\ppref) = \sum_{{\ppref'} \in \linors[X'] \suchthat {\ppref} \subseteq {\ppref'}} P(\ppref') = x / (\card{X'})!$, where $x$ is the number of linear orderings over $X'$ that extend $\ppref'$. This quantity does not depend on $n$.
+\end{proof}
+
+\subsection{The random strategy}
+Here we consider $P = P^\mathit{eq}$ and $s$ the random strategy without repetition. 
+We write $P$ instead of $P^s$.
+\commentOC{We shouldn’t do that. We should rewrite this section to follow new notations and clarify (and continue)…}
 
 When $\card{{\ppref_1}} = 1$, $P(\ppref_1) = \frac{1}{\card{Q}} \frac{1}{2}$.
 
@@ -182,8 +204,31 @@ Thus, $P(\ppref_2 \knowing \card{{\ppref_2}} = 2) = \frac{n - 1}{n + 1}$
 
 And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
 
-\section{Analysis for 4}
-Taking a different starting point, say we may ask 3 questions and $n = 4$. Which questions should we ask to maximise the average number of resulting edges?
+\section{Analysis for 3 questions}
+Consider $k = 3$, $n = 4$, and let $s$ denote an optimal strategy.
+
+We write $cd$ instead of $c \pref d$, $abc$ instead of $a \pref b \pref c$, and so on.
+
+The following shows that when $abc$ is known after two questions, it is strictly optimal to ask $q_{bd}$.
+\begin{itemize}
+	\item $P(cd \knowing abc) = \frac{P(abcd)}{P(abc)} = \frac{3!}{4!} = 1/4$. Gain: 2. Otherwise, gain: 0. E: 1/2.
+	\item Asking $q_{bd}$ knowing $abc$ yields a sure gain of 1.
+\end{itemize}
+
+The following shows that when $ab, cb$ is known after two questions, it is strictly optimal to ask $q_{bd}$.
+\begin{itemize}
+	\item $P(bd \knowing ab, cb) = P(ac \knowing ab, cb) P(bd \knowing acb) + P(ca \knowing ab, cb) P(bd \knowing cab) = 1/2 P(bd \knowing acb) + 1/2 P(bd \knowing cab) = 1/4$. Gain: $2$. Otherwise, gain: $0$. $E$: $1/2$.
+	\item $P(da \knowing ab, cb) = 1/2 P(da \knowing acb) + 1/2 P(da \knowing cab) = 1/2 P(dacb \knowing acb) + 1/2 P(dab, cab \knowing cab) = 1/2 (1/4) + 1/2 (2/4) = 3/8$. Gain if $da$: $1$. Otherwise: $0$. $E$: $3/8$.
+	\item Asking $q_{ac}$ knowing $ab, cb$ certainly yields a gain of 0.
+\end{itemize}
+
+The following shows that when $ab, cd$ is known after two questions, it is optimal to ask $q_{ac}$.
+\begin{itemize}
+	\item $P(ac \knowing ab, cd) = P(ac \knowing ab, cb) P(bd \knowing acb) + P(ca \knowing ab, cb) P(bd \knowing cab) = 1/2 P(bd \knowing acb) + 1/2 P(bd \knowing cab) = 1/4$. Gain: $2$. Otherwise, gain: $0$. $E$: $1/2$.
+	\item $P(da \knowing ab, cb) = 1/2 P(da \knowing acb) + 1/2 P(da \knowing cab) = 1/2 P(dacb \knowing acb) + 1/2 P(dab, cab \knowing cab) = 1/2 (1/4) + 1/2 (2/4) = 3/8$. Gain if $da$: $1$. Otherwise: $0$. $E$: $3/8$.
+	\item Asking $q_{ac}$ knowing $ab, cb$ certainly yields a gain of 0.
+\end{itemize}
+
 See \cref{fig:m4,fig:m4Cont}.
 
 \begin{figure}
@@ -478,6 +523,10 @@ The following proposition shows that to maximise the number of edges, it is nece
 	In general, $T_G$ has at most $\sum_i \binom{k_i + 1}{2}$ edges. The claim holds because $\binom{k + 1}{2} ≥ \sum_i \binom{k_i + 1}{2}$, with equality iff there is only one component.
 	Indeed, the left hand side is half of $(k + 1) k = (\sum_i k_i + 1) \sum_i k_i = (\sum_i k_i)^2 + \sum_i k_i ≥ \sum_i k_i^2 + \sum_i k_i$, with equality iff there is only one component; whereas the right hand side is half of $\sum_i (k_i + 1) k_i = \sum_i k_i^2 + \sum_i k_i$.
 \end{proof}
+
+Idea: if I have two components, I must not attach to any of them a $k+2$nd element, otherwise, I have no hope of joining the components.
+
+Idea2: Hyp, optimal strategies with $k-1$ questions or less are all connex. Prove that opt str with $k$ questions is connex. I know that $E^k > E^{k - 1} + 1$, where $E^k$ is the expected nm of edges with opt strat.
 
 \section{Example context}
 $N$ the voters (reviewers), $\card{N} = n$; $X$ the items (articles submitted to a conference), $\card{X} = m$. $PO(X)$ the partially ordered sets over $X$. Let $Q \in PO(X)^N$ represent some partial knowledge of the voters preferences. Consider $f: PO(X)^N → \powersetz{X}$ an enlarged voting rule, that selects winning items on the basis of partial knowledge of the preferences of the voters. Define $f(Q) = \min_{x \in X} \max_{y \in X, (>_{i \in N}) \in compl(Q)} s(y, (>_{i \in N})) - s(x, (>_{i \in N}))$ as selecting the alternatives that minimize the worst regret, where $s$ is the Borda scoring rule (attributing to an alternative at a profile as many points as that alternative beats other alternatives, summed over all voters).
