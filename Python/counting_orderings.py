@@ -10,8 +10,8 @@ Original file is located at
 import numpy as np
 from itertools import permutations
 from itertools import combinations
-from itertools import compress
-from itertools import filterfalse
+#from itertools import compress
+#from itertools import filterfalse
 from anytree import Node, RenderTree
 from anytree.dotexport import RenderTreeGraph
 from anytree import dotexport
@@ -34,7 +34,7 @@ class Elic_node:
       A=list(range(n))
       self._perms=np.array(list(permutations(A)))
       self._descriptor=''
-      self._mask=np.ones((self._perms.shape[0]))
+      self._mask=np.ones((self._perms.shape[0]),dtype=np.bool_)
       self._depth=0
       self._items=[]
       self._f_node=None
@@ -46,8 +46,9 @@ class Elic_node:
       self._isquestion=False
       x1=question[0]
       x2=question[1]
-      self._mask=np.array(list(map(lambda x:x[x1]>x[x2],r_node._perms)))
-      self._mask=np.minimum(self._mask,f_node._f_node._mask)
+      new_cases=np.array(list(map(lambda x:x[x1]>x[x2],r_node._perms[f_node._f_node._mask])),dtype=np.bool_)
+      self._mask=f_node._f_node._mask.copy()
+      self._mask[self._mask]=new_cases
       self._descriptor=f_node._f_node._descriptor+'('+str(x1)+'>'+str(x2)+')'
       self._items=f_node._f_node._items.copy()
       if not(x1 in self._items):
@@ -59,12 +60,7 @@ class Elic_node:
       self._x1=x1
       self._x2=x2
       self._known_answers=f_node._f_node._known_answers.copy()
-      self._known_answers.append((x1,x2))
-      for answer in self._known_answers:
-        if answer[0]==x2 and (x1,answer[1]) not in self._known_answers:
-          self._known_answers.append((x1,answer[1]))
-        if answer[1]==x1 and ((answer[0],x2)) not in self._known_answers:
-          self._known_answers.append((answer[0],x2))
+      self.add_known_answer(x1,x2)
       self._num_compat=sum(self._mask)
       self._long_description=self._descriptor+','+str(self._num_compat)+','+str(len(self._known_answers))
     else:
@@ -89,19 +85,21 @@ class Elic_node:
     else:
       print(self._descriptor)
       if self._isquestion:
-        print ('question node')
+        print(self._long_description)
       else:
         print(self._num_compat, 'compatible orders, ',len(self._known_answers), 'preferences known.' )
-
-R_node=Elic_node(n)
-R_node.describe()
-
-node12=Elic_node(n,R_node,[0,1],R_node)
-node12.describe()
-node123=Elic_node(n,R_node,[1,2],node12)
-node123.describe()
+  
+  def add_known_answer(self,x1,x2):
+      self._known_answers.append((x1,x2))
+      for answer in self._known_answers:
+        if answer[0]==x2 and (x1,answer[1]) not in self._known_answers:
+          self.add_known_answer(x1,answer[1])
+        if answer[1]==x1 and ((answer[0],x2)) not in self._known_answers:
+          self.add_known_answer(answer[0],x2)
+      
 
 class Elic_Tree:
+    
   def __init__(self,n,k):
     #n : number of items
     #k: number of questions
@@ -124,7 +122,6 @@ class Elic_Tree:
       items.append(max_item+1)
     questions=set(combinations(items,2))
     to_remove=set({})
-    to_add=set({})
     for question in questions:
       if question in node._known_answers or (question[1],question[0]) in node._known_answers:
         to_remove.add(question)
@@ -170,6 +167,8 @@ class Elic_Tree:
     for i, node in reversed(list(enumerate(self._nodes))):
       if node._isquestion:
         son_indices=[idx+1 for idx in range(len(self._parents)) if self._parents[idx] == i]
+        if node._num_compat==0:
+            print('0 cases:'+node._long_description+' with father'+node._f_node._long_description)
         node._EV=sum(self._nodes[son_index]._EV*self._nodes[son_index]._num_compat for son_index in son_indices)/node._num_compat
         if node._issymquestion:
           node._EV=node._EV*2
@@ -210,8 +209,6 @@ class Elic_Tree:
     for pre, fill, node in RenderTree(Nodes[0]):
       print("%s%s" % (pre, node.name))
 
-
-
   def render(self):
     Nodes=[Node(self._nodes[0]._long_description)]
     for i in range(len(self._nodes)-1):
@@ -240,7 +237,7 @@ class Elic_Tree:
 
     
 
-tree=Elic_Tree(4,3)
+tree=Elic_Tree(5,4)
 tree.build_whole_tree()
 #tree.render()
 tree.compute_expected_values()
