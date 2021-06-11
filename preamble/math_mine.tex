@@ -17,7 +17,7 @@
 \NewDocumentCommand{\voters}{}{N}
 \NewDocumentCommand{\allprofs}{}{\bm{\mathcal{R}}}
 \NewDocumentCommand{\prof}{}{\bm{R}}
-\NewDocumentCommand{\linors}{}{\mathscr{L}(\allalts)}
+\NewDocumentCommand{\linors}{O{X}}{\mathscr{L}(#1)}
 %Thanks to https://tex.stackexchange.com/q/154549
 	%\makeatletter
 	%\def\@myRgood@#1#2{\mathrel{R^X_{#2}}}
