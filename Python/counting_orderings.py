@@ -27,7 +27,7 @@ n=6
 # A node is an answer to a question
 
 class Elic_node:
-  def __init__(self,n,r_node=None,question=None,f_node=None,sym_question=False):
+  def __init__(self,n,r_node=None,question=None,f_node=None,sym_question=False,index=None):
     #f_node = father node
     #sym_question = True if question has symmetrical answers, else False
     if r_node is None:
@@ -40,8 +40,10 @@ class Elic_node:
       self._f_node=None
       self._known_answers=[]
       self._isquestion=False
-      self._num_compat=sum(self._mask)
+      self._num_compat=self._perms.shape[0]
       self._long_description=self._descriptor+','+str(self._num_compat)+','+str(len(self._known_answers))
+      self._child_indices=[]
+      self._index=0
     elif f_node._isquestion == True:
       self._isquestion=False
       x1=question[0]
@@ -61,8 +63,12 @@ class Elic_node:
       self._x2=x2
       self._known_answers=f_node._f_node._known_answers.copy()
       self.add_known_answer(x1,x2)
-      self._num_compat=sum(self._mask)
+      #self._num_compat=sum(self._mask)
+      self._num_compat=np.count_nonzero(self._mask)
       self._long_description=self._descriptor+','+str(self._num_compat)+','+str(len(self._known_answers))
+      self._child_indices=[]
+      self._index=index
+      self._f_node._child_indices.append(index)
     else:
       x1=question[0]
       x2=question[1]
@@ -77,6 +83,9 @@ class Elic_node:
       self._issymquestion=sym_question
       self._num_compat=self._f_node._num_compat
       self._known_answers=None
+      self._child_indices=[]
+      self._index=index
+      self._f_node._child_indices.append(index)
       
 
   def describe(self):
@@ -136,28 +145,27 @@ class Elic_Tree:
     if self._nodes[node_index]._isquestion==False:
       questions=self.next_questions(node_index)
       for i,question in enumerate(questions):
+        new_node_index=len(self._nodes)
         if type(question)==tuple:
-          self._nodes.append(Elic_node(n,self._nodes[0],question,self._nodes[node_index]))
+          self._nodes.append(Elic_node(n,self._nodes[0],question,self._nodes[node_index],False,new_node_index))
           self._parents.append(node_index)
-          new_node_index=len(self._nodes)-1
           if self._nodes[new_node_index]._depth<self._k:
             self._open_nodes.append(new_node_index)
         else:
-          self._nodes.append(Elic_node(n,self._nodes[0],[question,question+1],self._nodes[node_index],True))
+          self._nodes.append(Elic_node(n,self._nodes[0],[question,question+1],self._nodes[node_index],True,new_node_index))
           self._parents.append(node_index)
-          new_node_index=len(self._nodes)-1
           if self._nodes[new_node_index]._depth<self._k:
             self._open_nodes.append(new_node_index)
 
     else:
+      new_node_index=len(self._nodes)
       question=[self._nodes[node_index]._x1,self._nodes[node_index]._x2]
-      self._nodes.append(Elic_node(n,self._nodes[0],question,self._nodes[node_index]))
+      self._nodes.append(Elic_node(n,self._nodes[0],question,self._nodes[node_index],False,new_node_index))
       self._parents.append(node_index)
-      new_node_index=len(self._nodes)-1
       if self._nodes[new_node_index]._depth<self._k:
         self._open_nodes.append(new_node_index)
       if not self._nodes[node_index]._issymquestion:
-        self._nodes.append(Elic_node(n,self._nodes[0],[question[1],question[0]],self._nodes[node_index]))
+        self._nodes.append(Elic_node(n,self._nodes[0],[question[1],question[0]],self._nodes[node_index],False,new_node_index+1))
         self._parents.append(node_index)
         new_node_index=len(self._nodes)-1
         if self._nodes[new_node_index]._depth<self._k:
@@ -166,7 +174,7 @@ class Elic_Tree:
   def compute_expected_values(self):
     for i, node in reversed(list(enumerate(self._nodes))):
       if node._isquestion:
-        son_indices=[idx+1 for idx in range(len(self._parents)) if self._parents[idx] == i]
+        son_indices=node._child_indices
         if node._num_compat==0:
             print('0 cases:'+node._long_description+' with father'+node._f_node._long_description)
         node._EV=sum(self._nodes[son_index]._EV*self._nodes[son_index]._num_compat for son_index in son_indices)/node._num_compat
@@ -177,7 +185,7 @@ class Elic_Tree:
           node._EV=len(node._known_answers)
           node._best_sons=[]
         else:
-          son_indices=[idx+1 for idx in range(len(self._parents)) if self._parents[idx] == i]
+          son_indices=node._child_indices
           node._EV=max([self._nodes[son_index]._EV for son_index in son_indices])
           node._best_sons=[son_index for son_index in son_indices if self._nodes[son_index]._EV==node._EV]
   
@@ -237,7 +245,7 @@ class Elic_Tree:
 
     
 
-tree=Elic_Tree(5,4)
+tree=Elic_Tree(7,6)
 tree.build_whole_tree()
 #tree.render()
 tree.compute_expected_values()
