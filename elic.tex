@@ -522,11 +522,11 @@ Computer experiments show that the following is the strategy that maximizes $E^s
 Start, wlog, by using two questions to order $\set{a, b, c}$. 
 
 \begin{itemize}
-	\item Assume that $>_2$ is a linear order (say, $abc$).
+	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$ and $q_{bf}$.
 	\item Say, $>_2 = \set{a, c} > b$. Then two optimal strategies follow.
 	\begin{itemize}
-		\item Disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$. If $b > e$ then we obtain $>_4 = \set{a, c} > b > e, d > e$. We can exploit the chain of three elements and end up with $q_{bf}$. Otherwise, $eb$, we obtain $>_4 = \set{a, c} > b, d > e > b$. AND?
-		\item Ask $bd$. If $\set{a, c, d} > b$, disconnect; say $ef$, then $q_{bf}$. Otherwise, $\set{a, c} > b > d$, and ask $q_{be}$ then $q_{bf}$.
+		\item Disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$. If $b > e$ then we obtain $>_4 = \set{a, c} > b > e, d > e$. We can exploit the chain of three elements and end up with $q_{bf}$. Otherwise, $eb$, we obtain $>_4 = \set{a, c} > b, d > e > b$. We can exploit the chain of three elements and end up with $q_{ef}$. 
+		\item Ask $bd$. If $>_3 = \set{a, c, d} > b$, disconnect; say $ef$, then $q_{bf}$. Otherwise, $>_3 = \set{a, c} > b > d$, and ask $q_{be}$ then $q_{bf}$.
 	\end{itemize}
 \end{itemize}
 
