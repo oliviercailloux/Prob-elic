@@ -219,28 +219,12 @@ Here we consider $P = P^\mathit{eq}$.
 	$P(\ppref) = \sum_{{\ppref'} \in \linors[X'] \suchthat {\ppref} \subseteq {\ppref'}} P(\ppref') = x / (\card{X'})!$, where $x$ is the number of linear orderings over $X'$ that extend $\ppref'$. This quantity does not depend on $n$.
 \end{proof}
 
-\subsection{The random strategy}
-Here we consider $P = P^\mathit{eq}$ and $s$ the random strategy without repetition. 
-We write $P$ instead of $P^s$.
-\commentOC{We shouldn’t do that. We should rewrite this section to follow new notations and clarify (and continue)…}
-
-When $\card{{\ppref_1}} = 1$, $P(\ppref_1) = \frac{1}{\card{Q}} \frac{1}{2}$.
-
-Note that $P(\card{{\ppref_1}} = 1) = 1$, thus, $P(\ppref_2) = P(\ppref_2 \knowing \card{{\ppref_1}} = 1)$.
-
-Let’s now evaluate $P(\ppref_2 \knowing \card{{\ppref_2}} = 2)$.
-We may pick a question one end of which we know something about. There’s $2 (n - 2)$ such questions ($n - 2$ for each object in $\ppref_1$). If so, we need the answer to be oriented in a certain way to prevent transitive closure to bring anything new. Otherwise, we may pick a question whose two ends are yet unknown. There’s $n - 2$ choose $2$ such questions. Indeed, in total, there remains $2 (n - 2) + \frac{(n - 2) (n - 3)}{2} = \frac{(n - 2) (n + 1)}{2} = \frac{n (n - 1)}{2} - 1$ questions given $\ppref_1$.
-Thus, $P(\ppref_2 \knowing \card{{\ppref_2}} = 2) = \frac{n - 1}{n + 1}$
-(by noticing that $\card{Q_{\ppref_2}} = \frac{n(n-1)}{2}-1=\frac{(n-2)(n+1)}{2}$).
-
-And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
-
-\section{Optimal strategy for 3 questions}
-Consider $k = 3$, $n = 4$, and let us consider a strategy that maximizes the average number of edges known after $3$ questions, thus, $E[\card{{\ppref}_3}]$.
+\subsection{Optimal strategies for 3 questions}
+Consider $n ≥ 4$ and let us determine the strategies that maximize the expected number of edges known after $3$ questions, thus, $E^s[\card{{\ppref}_3}]$.
 
 We write $cd$ instead of $\set{(c, d)}$, $abc$ instead of $\set{(a, b), (b, c), (a, c)}$, and so on.
 
-The following summary shows that there are two tied optimal strategies (plus the obvious symmetries). After $q_{ab}$, one asks about $q_{cd}$, then joins the two disconnected components by asking about the top ones of each component; and the other one asks about $q_{bc}$, then, if obtaining a linear order over $\set{a, b, c}$, asks about the median one and $d$, and otherwise, asks about the one connected to the two other ones and $d$.
+The following computations (assuming $P = P^\text{eq}$ and independent of $s$) show that there are two tied optimal strategies (plus the obvious symmetries). One optimal strategy, after $q_{ab}$, asks about $q_{cd}$, then joins the two disconnected components by asking about the top ones of each component; and the other one, after $q_{ab}$, asks about $q_{bc}$, then, if obtaining a linear order over $\set{a, b, c}$, asks about the median one and $d$, and otherwise, asks about the one connected to the two other ones and $d$.
 \begin{itemize}
 	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} \knowing {\ppref}_2 = abc, q_3 = q_{cd}] = 1/2$. {\tiny $P(cd \knowing abc) = \frac{P(abcd)}{P(abc)} = \frac{3!}{4!} = 1/4$. Edges gained if $cd$: 2. Otherwise: 0.}
 	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} \knowing {\ppref}_2 = abc, q_3 = \bm{q_{bd}}] = 1$.
@@ -528,8 +512,25 @@ See \cref{fig:m4,fig:m4Cont}.
 	\label{fig:m4Cont}
 \end{figure}
 
-\section{Conjecture}
-Computer experiments (to be checked) suggest that the following is the optimal strategy when $k = 4$. Start, obviously, by using two questions to order $\set{a, b, c}$. If we obtain a linear order (say, $a > b > c$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, b} > c$), disconnect temporarily by asking about $d$ and $e$, then connect the two components.
+\subsection{Conjecture for 4 questions}
+Computer experiments (to be checked) suggest that the following is the strategy that maximizes $E^s[\card{{\ppref}_4}]$ (assuming $n ≥ 5$). 
+Start, wlog, by using two questions to order $\set{a, b, c}$. If $>_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, b} > c$), disconnect temporarily by asking $q_{de}$, then connect the two components.
+
+\subsection{The random strategy}
+Here we consider $P = P^\mathit{eq}$ and $s$ the random strategy without repetition. 
+We write $P$ instead of $P^s$.
+\commentOC{We shouldn’t do that. We should rewrite this section to follow new notations and clarify (and continue)…}
+
+When $\card{{\ppref_1}} = 1$, $P(\ppref_1) = \frac{1}{\card{Q}} \frac{1}{2}$.
+
+Note that $P(\card{{\ppref_1}} = 1) = 1$, thus, $P(\ppref_2) = P(\ppref_2 \knowing \card{{\ppref_1}} = 1)$.
+
+Let’s now evaluate $P(\ppref_2 \knowing \card{{\ppref_2}} = 2)$.
+We may pick a question one end of which we know something about. There’s $2 (n - 2)$ such questions ($n - 2$ for each object in $\ppref_1$). If so, we need the answer to be oriented in a certain way to prevent transitive closure to bring anything new. Otherwise, we may pick a question whose two ends are yet unknown. There’s $n - 2$ choose $2$ such questions. Indeed, in total, there remains $2 (n - 2) + \frac{(n - 2) (n - 3)}{2} = \frac{(n - 2) (n + 1)}{2} = \frac{n (n - 1)}{2} - 1$ questions given $\ppref_1$.
+Thus, $P(\ppref_2 \knowing \card{{\ppref_2}} = 2) = \frac{n - 1}{n + 1}$
+(by noticing that $\card{Q_{\ppref_2}} = \frac{n(n-1)}{2}-1=\frac{(n-2)(n+1)}{2}$).
+
+And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
 
 %\bibliography{bibl}
 
