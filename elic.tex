@@ -116,19 +116,45 @@ Given a partial order $\ppref$, we write $P(\ppref) = P(\set{{\pref} \in \linors
 
 Define a questioning strategy as a function $s: \POs \setminus \linors → [0, 1]^Q$ that given a current knowledge state ${\ppref} \in \POs \setminus \linors$ returns a probability distribution over the set of possible questions $Q$. 
 
-The probability distribution $P$ over the possible preferences and a strategy $s$ determine in a natural way the following probability distribution over $\linors × \cup_{k \in \N^*} Q^k$. Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$, define $P^s(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
+The probability distribution $P$ over the possible preferences and a strategy $s$ determine in a natural way several probability distributions. 
+
+Given ${\pref} \in \linors$ and a sequence of questions $(q_t)_{t \in \intvl{1, k}} \in Q^k$ of length $k \in \N^*$, define the corresponding sequence of partial orders $({\ppref}_t)_{t \in \intvl{1, k}} \in \POs^k$ as ${\ppref_0} = \emptyset$ and ${\ppref_t} = {\ppref_{t - 1}} + ({\pref} \cap q_t) = T(\cup_{q \in \set{q_1, …, q_t}} ({\pref} \cap q))$.
+Note that if the relation was not complete at step $k - 1$, it also was incomplete before: ${\ppref_{k - 1}} \notin \linors ⇒ \forall t \in \intvl{1, k - 1}: {\ppref_t} \notin \linors$. 
+
+Given ${\prefeq} \in \linors$, define $Q^{\prefeq} = \cup_{k \in \N^*} \set{(q_t)_{t \in \intvl{1, k}} \in Q^k \suchthat {\ppref_{k - 1}} \notin \linors \land {\ppref_k} \in \linors}$ as the set of finite sequences of questions that lead to a linear order just after the last question and not before. 
+
+Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^{\prefeq}$, define $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
+\begin{equation}
+	P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}}) = 
+	P(\prefeq)  \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t).
+\end{equation}
+
+For example, $P^{\prime s}(\prefeq, q_1, q_2, q_3)$ denotes the probability that the preference is $\prefeq$ and that the questions, chosen according to the strategy $s$, were $q_1$, then $q_2$, and finally $q_3$.
+
+Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$, let $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ denote $P^{\prime s}(\prefeq, \set{(q'_t)_{t \in \intvl{1, k'}} \in Q^{\prefeq} \suchthat k' ≥ k \land \restr{q'_t}{\intvl{1, k}} = q_t})$, the probability that the real preference be $\prefeq$ and that the strategy $s$ asks any sequence of questions in $Q^{\prefeq}$ that completes $q_t$.
+
+Given $k \in \N^*$, ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$ such that ${\ppref}_{k - 1} \notin \linors$, define $P^s(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
 \begin{equation}
 	P^s(\prefeq, (q_t)_{t \in \intvl{1, k}}) = 
-	\begin{cases}
-		P(\prefeq)  \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t) & \text{if } {\ppref_{k - 1}} \notin \linors,\\
-		0 & \text{otherwise},
-	\end{cases}
+	P(\prefeq)  \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t).
 \end{equation}
-where ${\ppref_0} = \emptyset$ and ${\ppref_t} = {\ppref_{t - 1}} + ({\pref} \cap q_t) = T(\cup_{q \in \set{q_1, …, q_t}} ({\pref} \cap q))$. Note that ${\ppref_{k - 1}} \notin \linors ⇒ \forall t \in \intvl{1, k - 1}: {\ppref_t} \notin \linors$.
 
-Thus, if $\card{Q} = 3$, $P^s(\prefeq, q_1, q_2, q_3)$ denotes the probability that the preference is $\prefeq$ and that the questions, chosen according to the strategy $s$, were $q_1$, then $q_2$, and finally $q_3$.
+\begin{proposition}
+	$P^s = P^{\prime s}$.
+\end{proposition}
+\begin{proof}
+	This follows from the corresponding definitions.
+\end{proof}
 
-As the sequence of questions determines the sequence of partial orders, we can also consider $P^s$ as a probability distribution over sequences of partial orders. 
+\begin{remark}
+	We can view $s$ as the conditional probabilities given by $P^s$, as follows.
+	\begin{itemize}
+		\item $P^s(q_1 | >_c) = P^s(>_c, q_1) / P^s(>_c) = P^s(>_c) s(\emptyset)(q_1) / P(>_c) = s(\emptyset)(q_1)$.
+		\item $P^s(q_2 | >_c, q_1) = P^s(>_c, q_1, q_2) / P^s(>_c, q_1) = P^s(>_c, q_1, q_2) / [s(\emptyset)(q_1)P(>_c)] = s(\emptyset)(q_1) s(>_1)(q_2) / s(\emptyset)(q_1) = s(>_1)(q_2).$
+	\end{itemize}
+\end{remark}
+
+As the sequence of questions determines the sequence of partial orders, we can also consider $P^s$ as a probability distribution over (parts of) sequences of partial orders. 
 Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
 
