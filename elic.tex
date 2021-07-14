@@ -243,9 +243,6 @@ See \cref{fig:k3a}.
 \newlength{\ordown}
 \setlength{\ordown}{2mm}
 \begin{figure}
-	\NewDocumentCommand{\pgfres}{}{\num[round-mode=places,round-precision=1]{\pgfmathresult}}
-	\NewDocumentCommand{\pgfcalc}{m}{\pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
-	\NewDocumentCommand{\esp}{m}{E[.] = \pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
 	\begin{tikzpicture}
 		\path node (ab-a) {$a$};
 		\path (ab-a.south) ++(0, -\ordown) node[anchor=north] (ab-b) {$b$};
