@@ -236,9 +236,8 @@ The following computations (assuming $P = P^\text{eq}$ and independent of $s$) s
 	\item $E^s[\card{{\ppref}_3} - \card{{\ppref}_1} - 2 \knowing {\ppref}_1 = ab, q_2 = \bm{q_{cd}}] = 1$.
 	\item $E^s[\card{{\ppref}_3} - \card{{\ppref}_1} - 2 \knowing {\ppref}_1 = ab, q_2 = \bm{q_{bc}}] = 1$. {\tiny $P(bc \knowing ab) = \frac{2!}{3!} = 1/3$. Immediate gain if $bc$: $1$. $E$ total gain if $bc$: $2$. Otherwise, immediate gain is $0$ and total gain is $1/2$. Thus, $E$ total gain: $1/3 × 2 + 2/3 × 1/2 = 1$.}
 \end{itemize}
-\commentOC{Draw the optimal strategies in two trees.}
 
-See \cref{fig:k3a}.
+See \cref{fig:k3a,fig:k3b}.
 
 \newlength{\ordown}
 \setlength{\ordown}{2mm}
@@ -253,6 +252,7 @@ See \cref{fig:k3a}.
 		\path (abc-a.south) ++(0, -\ordown) node[anchor=north] (abc-b) {$b$};
 		\path (abc-b.south) ++(0, -\ordown) node[anchor=north] (abc-c) {$c$};
 		\path [draw] (abc-a) -- (abc-b) -- (abc-c);
+		\path [draw, color=red] (abc-a) to[out=-45, in=45] (abc-c);
 
 		\path (ab-b.south) ++(2cm, -1cm) coordinate (ab-cb);
 		\path (ab-cb) ++(-3mm, -\ordown) node[anchor=north] (ab-cb-a) {$a$};
@@ -260,24 +260,26 @@ See \cref{fig:k3a}.
 		\path (ab-cb-a.south) ++(6mm, 0) node[anchor=south] (ab-cb-c) {$c$};
 		\path [draw] (ab-cb-a) -- (ab-cb-b) -- (ab-cb-c);
 
-		\path (ab-b.south)  edge node[above left] {$b > c$} (abc);
+		\path (ab-b.south)  edge node[left, align = right] {$b > c$\\\tiny P(bc \knowing ab) = 1/3} (abc);
 		\path (ab-b.south) edge node[above right] {$c > b$} (ab-cb);
 
 		\path (abc-c.south) ++(-1cm, -1cm) coordinate (abc-bd);
 		\path (abc-bd) node[anchor=north] (abc-bd-a) {$a$};
 		\path (abc-bd-a.south) ++(0, -\ordown) node[anchor=north] (abc-bd-b) {$b$};
 		\path (abc-bd-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-bd-c) {$c$};
-		\path (abc-bd-c.base) ++(6mm, 0) node[anchor=base, inner sep=0] (abc-bd-d) {$d$};
+		\path (abc-bd-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-bd-d) {$d$};
 		\path [draw] (abc-bd-a) -- (abc-bd-b) -- (abc-bd-c);
 		\path [draw] (abc-bd-b) -- (abc-bd-d);
+		\path [draw, color=red] (abc-bd-a) to[out=-45, in=45] (abc-bd-d);
 
 		\path (abc-c.south) ++(1cm, -1cm) coordinate (abc-db);
-		\path (abc-db) ++(-3mm, 0) node[anchor=north] (abc-bd-a) {$a$};
-		\path (abc-bd-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-bd-b) {$b$};
-		\path (abc-bd-b.south) ++(0, -\ordown) node[anchor=north] (abc-bd-c) {$c$};
-		\path (abc-bd-a.south) ++(6mm, 0) node[anchor=south] (abc-bd-d) {$d$};
-		\path [draw] (abc-bd-a) -- (abc-bd-b) -- (abc-bd-c);
-		\path [draw] (abc-bd-d) -- (abc-bd-b);
+		\path (abc-db) ++(-3mm, 0) node[anchor=north] (abc-db-a) {$a$};
+		\path (abc-db-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-db-b) {$b$};
+		\path (abc-db-b.south) ++(0, -\ordown) node[anchor=north] (abc-db-c) {$c$};
+		\path (abc-db-a.south) ++(6mm, 0) node[anchor=south] (abc-db-d) {$d$};
+		\path [draw] (abc-db-a) -- (abc-db-b) -- (abc-db-c);
+		\path [draw] (abc-db-d) -- (abc-db-b);
+		\path [draw, color=red] (abc-db-d) to[out=-45, in=45] (abc-db-c);
 
 		\path (abc-c.south)  edge node[above left] {$b > d$} (abc-bd);
 		\path (abc-c.south) edge node[above right] {$d > b$} (abc-db);
@@ -290,6 +292,8 @@ See \cref{fig:k3a}.
 		\path (abd-cb-b.south) ++(0, -\ordown) node[anchor=north] (abd-cb-d) {$d$};
 		\path [draw] (abd-cb-a) -- (abd-cb-b) -- (abd-cb-d);
 		\path [draw] (abd-cb-c) -- (abd-cb-b);
+		\path [draw, color=red] (abd-cb-a) to[out=-110, in=135] (abd-cb-d);
+		\path [draw, color=red] (abd-cb-c) to[out=-70, in=45] (abd-cb-d);
 
 		\path (ab-cb-south) ++(1cm, -1cm) coordinate (ab-cb-db);
 		\path (ab-cb-db) ++(-4mm, 0) node[anchor=north] (ab-cb-db-a) {$a$};
@@ -300,16 +304,162 @@ See \cref{fig:k3a}.
 		\path [draw] (ab-cb-db-c) -- (ab-cb-db-b);
 		\path [draw] (ab-cb-db-d) -- (ab-cb-db-b);
 
-		\path (ab-cb-south)  edge node[above left] {$b > d$} (abd-cb);
+		\path (ab-cb-south)  edge node[left, align=right] {$b > d$\\\tiny $P(bd \knowing ab, cb) = 1/4$} (abd-cb);
 		\path (ab-cb-south) edge node[above right] {$d > b$} (ab-cb-db);		
 	\end{tikzpicture}
-	\caption{An optimal strategy for three questions}
+	\caption{The “connected” optimal strategy for three questions}
 	\label{fig:k3a}
+\end{figure}
+\begin{figure}
+	\begin{tikzpicture}
+		\path node (ab-a) {$a$};
+		\path (ab-a.south) ++(0, -\ordown) node[anchor=north] (ab-b) {$b$};
+		\path [draw] (ab-a) -- (ab-b);
+		
+		\path (ab-b.south) ++(-1cm, -1cm) coordinate (ab-cd);
+		\path (ab-cd) ++(-3mm, -\ordown) node[anchor=north] (ab-cd-a) {$a$};
+		\path (ab-cd-a.south) ++(0, -\ordown) node[anchor=north] (ab-cd-b) {$b$};
+		\path (ab-cd-a.base) ++(6mm, 0) node[anchor=base] (ab-cd-c) {$c$};
+		\path (ab-cd-c.south) ++(0, -\ordown) node[anchor=north] (ab-cd-d) {$d$};
+		\path [draw] (ab-cd-a) -- (ab-cd-b);
+		\path [draw] (ab-cd-c) -- (ab-cd-d);
+
+		\path (ab-b.south) ++(1cm, -1cm) coordinate (ab-dc);
+
+		\path (ab-b.south)  edge node[above left] {$c > d$} (ab-cd);
+		\path (ab-b.south)  edge node[above right] {$d > c$} (ab-dc);
+
+		\path node [fit={(ab-cd-a) (ab-cd-d)}] (ab-cd-node) {};
+		
+		\path (ab-cd-node.south) ++(-1cm, -1cm) coordinate (ab-acd);
+		\path (ab-acd) node[anchor=north] (ab-acd-a) {$a$};
+		\path (ab-acd-a.south) ++(-3mm, -\ordown - 3mm) node[anchor=base, inner sep=0] (ab-acd-b) {$b$};
+		\path (ab-acd-a.south) ++(3mm, -\ordown - 3mm) node[anchor=base] (ab-acd-c) {$c$};
+		\path (ab-acd-c.south) ++(0, -\ordown) node[anchor=north] (ab-acd-d) {$d$};
+		\path [draw] (ab-acd-a) -- (ab-acd-b);
+		\path [draw] (ab-acd-a) -- (ab-acd-c) -- (ab-acd-d);
+		\path [draw, color=red] (ab-acd-a) to[out=-30, in=45] (ab-acd-d);
+
+		\path (ab-cd-node.south) ++(1cm, -1cm) coordinate (cab-cd);
+
+		\path (ab-cd-node.south)  edge node[above left] {$a > c$} (ab-acd);
+		\path (ab-cd-node.south)  edge node[above right] {$c > a$} (cab-cd);
+	\end{tikzpicture}
+	\caption{The “disconnecting” optimal strategy for three questions}
+	\label{fig:k3b}
 \end{figure}
 
 \subsection{Optimum for 4 questions}
 Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_4}]$ (assuming $n ≥ 5$). 
-Start, wlog, by using two questions to order $\set{a, b, c}$. If $>_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, c} > b$), disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$.
+Start by using two questions to order $\set{a, b, c}$ \commentOC{not wlog!}. If $>_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, c} > b$), disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$.
+
+See \cref{fig:k4}.
+
+\begin{figure}
+	\begin{tikzpicture}
+		\path node (ab-a) {$a$};
+		\path (ab-a.south) ++(0, -\ordown) node[anchor=north] (ab-b) {$b$};
+		\path [draw] (ab-a) -- (ab-b);
+		
+		\path (ab-b.south) ++(-4cm, -1cm) coordinate (abc);
+		\path (abc) node[anchor=north] (abc-a) {$a$};
+		\path (abc-a.south) ++(0, -\ordown) node[anchor=north] (abc-b) {$b$};
+		\path (abc-b.south) ++(0, -\ordown) node[anchor=north] (abc-c) {$c$};
+		\path [draw] (abc-a) -- (abc-b) -- (abc-c);
+		\path [draw, color=red] (abc-a) to[out=-45, in=45] (abc-c);
+
+		\path (ab-b.south) ++(4cm, -1cm) coordinate (ab-cb);
+		\path (ab-cb) ++(-3mm, -\ordown) node[anchor=north] (ab-cb-a) {$a$};
+		\path (ab-cb-a.south) ++(3mm, -\ordown) node[anchor=north] (ab-cb-b) {$b$};
+		\path (ab-cb-a.south) ++(6mm, 0) node[anchor=south] (ab-cb-c) {$c$};
+		\path [draw] (ab-cb-a) -- (ab-cb-b) -- (ab-cb-c);
+
+		\path (ab-b.south)  edge node[left, align = right] {$b > c$\\\tiny P(bc \knowing ab) = 1/3} (abc);
+		\path (ab-b.south) edge node[above right] {$c > b$} (ab-cb);
+
+		\path (abc-c.south) ++(-16mm, -1cm) coordinate (abc-bd);
+		\path (abc-bd) node[anchor=north] (abc-bd-a) {$a$};
+		\path (abc-bd-a.south) ++(0, -\ordown) node[anchor=north] (abc-bd-b) {$b$};
+		\path (abc-bd-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-bd-c) {$c$};
+		\path (abc-bd-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-bd-d) {$d$};
+		\path [draw] (abc-bd-a) -- (abc-bd-b) -- (abc-bd-c);
+		\path [draw] (abc-bd-b) -- (abc-bd-d);
+		\path [draw, color=red] (abc-bd-a) to[out=-45, in=45] (abc-bd-d);
+		\path node [fit={(abc-bd-a) (abc-bd-c) (abc-bd-d)}, inner sep=0] (abc-bd-node) {};
+
+		\path (abc-c.south) ++(16mm, -1cm) coordinate (abc-db);
+		\path (abc-db) ++(-3mm, 0) node[anchor=north] (abc-db-a) {$a$};
+		\path (abc-db-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-db-b) {$b$};
+		\path (abc-db-b.south) ++(0, -\ordown) node[anchor=north] (abc-db-c) {$c$};
+		\path (abc-db-a.south) ++(6mm, 0) node[anchor=south] (abc-db-d) {$d$};
+		\path [draw] (abc-db-a) -- (abc-db-b) -- (abc-db-c);
+		\path [draw] (abc-db-d) -- (abc-db-b);
+		\path [draw, color=red] (abc-db-d) to[out=-45, in=45] (abc-db-c);
+		\path node [fit={(abc-db-a) (abc-db-c) (abc-db-d)}, inner sep=0] (abc-db-node) {};
+
+		\path (abc-c.south)  edge node[above left] {$b > d$} (abc-bd);
+		\path (abc-c.south) edge node[above right] {$d > b$} (abc-db);
+		
+		\path (abc-c.south -| ab-cb-b) coordinate (ab-cb-south);
+		\path (ab-cb-south) ++(-16mm, -1cm) coordinate (ab-cb-de);
+		\path (ab-cb-de) ++(0, -\ordown) node[anchor=north] (ab-cb-de-c) {$c$};
+		\path (ab-cb-de-c.south) ++(-6mm, 0) node[anchor=south] (ab-cb-de-a) {$a$};
+		\path (ab-cb-de-a.south) ++(3mm, -\ordown) node[anchor=north] (ab-cb-de-b) {$b$};
+		\path (ab-cb-de-c.base) ++(6mm, 0) node[anchor=base] (ab-cb-de-d) {$d$};
+		\path (ab-cb-de-d.south) ++(0, -\ordown) node[anchor=north] (ab-cb-de-e) {$e$};
+		\path [draw] (ab-cb-de-a) -- (ab-cb-de-b);
+		\path [draw] (ab-cb-de-c) -- (ab-cb-de-b);
+		\path [draw] (ab-cb-de-d) -- (ab-cb-de-e);
+		\path (abc-db-c.south -| ab-cb-de) coordinate (ab-cb-de-south);
+
+		\path (ab-cb-south) ++(16mm, -1cm) coordinate (ab-cb-ed);
+
+		\path (ab-cb-south)  edge node[above left] {$d > e$} (ab-cb-de);
+		\path (ab-cb-south) edge node[above right] {$e > d$} (ab-cb-ed);		
+		
+		\path (abc-bd-node.south) ++(-7mm, -1cm) coordinate (abc-bd-be);
+		\path (abc-bd-be) node[anchor=north] (abc-bd-be-a) {$a$};
+		\path (abc-bd-be-a.south) ++(0, -\ordown) node[anchor=north] (abc-bd-be-b) {$b$};
+		\path (abc-bd-be-b.south) ++(-6mm, -\ordown) node[anchor=north] (abc-bd-be-c) {$c$};
+		\path (abc-bd-be-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-bd-be-d) {$d$};
+		\path (abc-bd-be-c.base) ++(12mm, 0) node[anchor=base] (abc-bd-be-e) {$e$};
+		\path [draw] (abc-bd-be-a) -- (abc-bd-be-b) -- (abc-bd-be-c);
+		\path [draw] (abc-bd-be-b) -- (abc-bd-be-d);
+		\path [draw] (abc-bd-be-b) -- (abc-bd-be-e);
+		\path [draw, color=red] (abc-bd-be-a) to[out=-45, in=60] (abc-bd-be-e);
+		
+		\path (abc-bd-node.south) ++(7mm, -1cm) coordinate (abc-bd-eb);
+		\path (abc-bd-eb) ++(-3mm, 0) node[anchor=north] (abc-bd-eb-a) {$a$};
+		\path (abc-bd-eb-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-bd-eb-b) {$b$};
+		\path (abc-bd-eb-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-bd-eb-c) {$c$};
+		\path (abc-bd-eb-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-bd-eb-d) {$d$};
+		\path (abc-bd-eb-a.base) ++(6mm, 0) node[anchor=base] (abc-bd-eb-e) {$e$};
+		\path [draw] (abc-bd-eb-a) -- (abc-bd-eb-b) -- (abc-bd-eb-c);
+		\path [draw] (abc-bd-eb-b) -- (abc-bd-eb-d);
+		\path [draw] (abc-bd-eb-e) -- (abc-bd-eb-b);
+		\path [draw, color=red] (abc-bd-eb-e) to[out=-90, in=60] (abc-bd-eb-c);
+		\path [draw, color=red] (abc-bd-eb-e) to[out=-45, in=60] (abc-bd-eb-d);
+
+		\path (abc-bd-node.south)  edge node[left] {$b > e$} (abc-bd-be);
+		\path (abc-bd-node.south) edge node[right] {$e > b$} (abc-bd-eb);		
+		
+		\path (abc-db-node.south) ++(7mm, -1cm) coordinate (abc-db-eb);
+		
+		\path (abc-db-node.south) ++(-7mm, -1cm) coordinate (abc-db-be);
+
+		\path (abc-db-node.south)  edge node[left] {$b > e$} (abc-db-be);
+		\path (abc-db-node.south) edge node[right] {$e > b$} (abc-db-eb);	
+		
+		\path (ab-cb-de-south) ++(-7mm, -1cm) coordinate (abe-cb-de);
+
+		\path (ab-cb-de-south) ++(7mm, -1cm) coordinate (ab-cb-deb);
+
+		\path (ab-cb-de-south)  edge node[left] {$b > e$} (abe-cb-de);
+		\path (ab-cb-de-south) edge node[right] {$e > b$} (ab-cb-deb);	
+	\end{tikzpicture}
+	\caption{The optimal strategy for four questions}
+	\label{fig:k4}
+\end{figure}
 
 \subsection{Optimum for 5 questions}
 Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_5}]$ (assuming $n ≥ 6$). 
