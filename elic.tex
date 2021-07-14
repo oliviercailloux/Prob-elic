@@ -242,21 +242,43 @@ See \cref{fig:k3}.
 
 \begin{figure}
 	\newlength{\ordown}
-	\setlength{\ordown}{3mm}
+	\setlength{\ordown}{2mm}
 	\NewDocumentCommand{\pgfres}{}{\num[round-mode=places,round-precision=1]{\pgfmathresult}}
 	\NewDocumentCommand{\pgfcalc}{m}{\pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
 	\NewDocumentCommand{\esp}{m}{E[.] = \pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
 	\begin{tikzpicture}
-		\path node (aba) {$a$};
-		\path (aba.south) ++(0, -\ordown) node[anchor=north] (abb) {$b$};
-		\path [draw] (aba) -- (abb);
-		\path [fit={(aba) (abb)}] coordinate (ab);
+		\path node (ab-a) {$a$};
+		\path (ab-a.south) ++(0, -\ordown) node[anchor=north] (ab-b) {$b$};
+		\path [draw] (ab-a) -- (ab-b);
+		\path  node [fit={(ab-a) (ab-b)}, inner sep=0] (ab) {};
+		
+		\path (ab-b.south) ++(-1cm, -1cm) node[anchor=north] (abc-a) {$a$};
+		\path (abc-a.south) ++(0, -\ordown) node[anchor=north] (abc-b) {$b$};
+		\path (abc-b.south) ++(0, -\ordown) node[anchor=north] (abc-c) {$c$};
+		\path [draw] (abc-a) -- (abc-b) -- (abc-c);
+		\path  node [fit={(abc-a) (abc-b) (abc-c)}, inner sep=0] (abc) {};
 
-		\path (abb.south) ++(-1cm, -1cm) node[anchor=north] (abca) {$a$};
-		\path (abca.south) ++(0, -\ordown) node[anchor=north] (abcb) {$b$};
-		\path (abcb.south) ++(0, -\ordown) node[anchor=north] (abcc) {$c$};
-		\path [draw] (abca) -- (abcb) -- (abcc);
-		\path [fit={(abca) (abcb) (abcc)}] coordinate (abc);
+		\path (ab-b.south) ++(1cm, -1cm) node[anchor=north] (ab-cb-a) {$a$};
+		\path (ab-cb-a.south) ++(3mm, -\ordown) node[anchor=north] (ab-cb-b) {$b$};
+		\path (ab-cb-a.south) ++(6mm, 0) node[anchor=south] (ab-cb-c) {$c$};
+		\path [draw] (ab-cb-a) -- (ab-cb-b) -- (ab-cb-c);
+		\path  node [fit={(ab-cb-a) (ab-cb-b) (ab-cb-c)}, inner sep=0] (ab-cb) {};
+
+		\path [draw] (ab.south) -- (abc.north);
+		\path [draw] (ab.south) -- (ab-cb.north);
+
+		\path (abc-c.south) ++(-1cm, -1cm) node[anchor=north] (abcd-a) {$a$};
+		\path (abcd-a.south) ++(0, -\ordown) node[anchor=north] (abcd-b) {$b$};
+		\path (abcd-b.south) ++(0, -\ordown) node[anchor=north] (abcd-c) {$c$};
+		\path (abcd-c.south) ++(0, -\ordown) node[anchor=north] (abcd-d) {$d$};
+		\path [draw] (abcd-a) -- (abcd-b) -- (abcd-c) -- (abcd-d);
+
+		\path (abc-c.south) ++(1cm, -1cm) node[anchor=north] (abc-bd-a) {$a$};
+		\path (abc-bd-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-bd-b) {$b$};
+		\path (abc-bd-b.south) ++(0, -\ordown) node[anchor=north] (abc-bd-c) {$c$};
+		\path (abc-bd-a.south) ++(6mm, 0) node[anchor=south] (abc-bd-d) {$d$};
+		\path [draw] (abc-bd-a) -- (abc-bd-b) -- (abc-bd-c);
+		\path [draw] (abc-bd-d) -- (abc-bd-b);
 	\end{tikzpicture}
 	\caption{The strategy for three questions}
 	\label{fig:k3}
