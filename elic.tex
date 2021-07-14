@@ -233,16 +233,16 @@ The following computations (assuming $P = P^\text{eq}$ and independent of $s$) s
 	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = \set{ab, cb}, q_3 = q_{ac}] = 0$.
 	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = \set{ab, cd}, q_3 = q_{da}] = 1/2$. {\tiny $P(da \knowing ab, cd) = P(cdab \knowing ab, cd) = \frac{4}{4!} = 1/6$. Gain if $da$: $3$. Otherwise: $0$.}
 	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = \set{ab, cd}, q_3 = \bm{q_{ac}}] = 1$.
-	\item $E^s[\card{{\ppref}_3} - \card{{\ppref}_1} \knowing {\ppref}_1 = ab, q_2 = \bm{q_{cd}}] = 1$. \commentOC{Think again!}
-	\item $E^s[\card{{\ppref}_3} - \card{{\ppref}_1} \knowing {\ppref}_1 = ab, q_2 = \bm{q_{bc}}] = 1$. {\tiny $P(bc \knowing ab) = \frac{2!}{3!} = 1/3$. Immediate gain if $bc$: $1$. $E$ total gain if $bc$: $2$. Otherwise, immediate gain is $0$ and total gain is $1/2$. Thus, $E$ total gain: $1/3 × 2 + 2/3 × 1/2 = 1$.}
+	\item $E^s[\card{{\ppref}_3} - \card{{\ppref}_1} - 2 \knowing {\ppref}_1 = ab, q_2 = \bm{q_{cd}}] = 1$.
+	\item $E^s[\card{{\ppref}_3} - \card{{\ppref}_1} - 2 \knowing {\ppref}_1 = ab, q_2 = \bm{q_{bc}}] = 1$. {\tiny $P(bc \knowing ab) = \frac{2!}{3!} = 1/3$. Immediate gain if $bc$: $1$. $E$ total gain if $bc$: $2$. Otherwise, immediate gain is $0$ and total gain is $1/2$. Thus, $E$ total gain: $1/3 × 2 + 2/3 × 1/2 = 1$.}
 \end{itemize}
 \commentOC{Draw the optimal strategies in two trees.}
 
-See \cref{fig:k3}.
+See \cref{fig:k3a}.
 
+\newlength{\ordown}
+\setlength{\ordown}{2mm}
 \begin{figure}
-	\newlength{\ordown}
-	\setlength{\ordown}{2mm}
 	\NewDocumentCommand{\pgfres}{}{\num[round-mode=places,round-precision=1]{\pgfmathresult}}
 	\NewDocumentCommand{\pgfcalc}{m}{\pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
 	\NewDocumentCommand{\esp}{m}{E[.] = \pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
@@ -250,38 +250,64 @@ See \cref{fig:k3}.
 		\path node (ab-a) {$a$};
 		\path (ab-a.south) ++(0, -\ordown) node[anchor=north] (ab-b) {$b$};
 		\path [draw] (ab-a) -- (ab-b);
-		\path  node [fit={(ab-a) (ab-b)}, inner sep=0] (ab) {};
 		
-		\path (ab-b.south) ++(-1cm, -1cm) node[anchor=north] (abc-a) {$a$};
+		\path (ab-b.south) ++(-2cm, -1cm) coordinate (abc);
+		\path (abc) node[anchor=north] (abc-a) {$a$};
 		\path (abc-a.south) ++(0, -\ordown) node[anchor=north] (abc-b) {$b$};
 		\path (abc-b.south) ++(0, -\ordown) node[anchor=north] (abc-c) {$c$};
 		\path [draw] (abc-a) -- (abc-b) -- (abc-c);
-		\path  node [fit={(abc-a) (abc-b) (abc-c)}, inner sep=0] (abc) {};
 
-		\path (ab-b.south) ++(1cm, -1cm) node[anchor=north] (ab-cb-a) {$a$};
+		\path (ab-b.south) ++(2cm, -1cm) coordinate (ab-cb);
+		\path (ab-cb) ++(-3mm, -\ordown) node[anchor=north] (ab-cb-a) {$a$};
 		\path (ab-cb-a.south) ++(3mm, -\ordown) node[anchor=north] (ab-cb-b) {$b$};
 		\path (ab-cb-a.south) ++(6mm, 0) node[anchor=south] (ab-cb-c) {$c$};
 		\path [draw] (ab-cb-a) -- (ab-cb-b) -- (ab-cb-c);
-		\path  node [fit={(ab-cb-a) (ab-cb-b) (ab-cb-c)}, inner sep=0] (ab-cb) {};
 
-		\path [draw] (ab.south) -- (abc.north);
-		\path [draw] (ab.south) -- (ab-cb.north);
+		\path (ab-b.south)  edge node[above left] {$b > c$} (abc);
+		\path (ab-b.south) edge node[above right] {$c > b$} (ab-cb);
 
-		\path (abc-c.south) ++(-1cm, -1cm) node[anchor=north] (abcd-a) {$a$};
-		\path (abcd-a.south) ++(0, -\ordown) node[anchor=north] (abcd-b) {$b$};
-		\path (abcd-b.south) ++(0, -\ordown) node[anchor=north] (abcd-c) {$c$};
-		\path (abcd-c.south) ++(0, -\ordown) node[anchor=north] (abcd-d) {$d$};
-		\path [draw] (abcd-a) -- (abcd-b) -- (abcd-c) -- (abcd-d);
+		\path (abc-c.south) ++(-1cm, -1cm) coordinate (abc-bd);
+		\path (abc-bd) node[anchor=north] (abc-bd-a) {$a$};
+		\path (abc-bd-a.south) ++(0, -\ordown) node[anchor=north] (abc-bd-b) {$b$};
+		\path (abc-bd-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-bd-c) {$c$};
+		\path (abc-bd-c.base) ++(6mm, 0) node[anchor=base, inner sep=0] (abc-bd-d) {$d$};
+		\path [draw] (abc-bd-a) -- (abc-bd-b) -- (abc-bd-c);
+		\path [draw] (abc-bd-b) -- (abc-bd-d);
 
-		\path (abc-c.south) ++(1cm, -1cm) node[anchor=north] (abc-bd-a) {$a$};
+		\path (abc-c.south) ++(1cm, -1cm) coordinate (abc-db);
+		\path (abc-db) ++(-3mm, 0) node[anchor=north] (abc-bd-a) {$a$};
 		\path (abc-bd-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-bd-b) {$b$};
 		\path (abc-bd-b.south) ++(0, -\ordown) node[anchor=north] (abc-bd-c) {$c$};
 		\path (abc-bd-a.south) ++(6mm, 0) node[anchor=south] (abc-bd-d) {$d$};
 		\path [draw] (abc-bd-a) -- (abc-bd-b) -- (abc-bd-c);
 		\path [draw] (abc-bd-d) -- (abc-bd-b);
+
+		\path (abc-c.south)  edge node[above left] {$b > d$} (abc-bd);
+		\path (abc-c.south) edge node[above right] {$d > b$} (abc-db);
+		
+		\path (abc-c.south -| ab-cb-b) coordinate (ab-cb-south);
+		\path (ab-cb-south) ++(-1cm, -1cm) coordinate (abd-cb);
+		\path (abd-cb) ++(-3mm, 0) node[anchor=north] (abd-cb-a) {$a$};
+		\path (abd-cb-a.south) ++(3mm, -\ordown) node[anchor=north] (abd-cb-b) {$b$};
+		\path (abd-cb-a.south) ++(6mm, 0) node[anchor=south] (abd-cb-c) {$c$};
+		\path (abd-cb-b.south) ++(0, -\ordown) node[anchor=north] (abd-cb-d) {$d$};
+		\path [draw] (abd-cb-a) -- (abd-cb-b) -- (abd-cb-d);
+		\path [draw] (abd-cb-c) -- (abd-cb-b);
+
+		\path (ab-cb-south) ++(1cm, -1cm) coordinate (ab-cb-db);
+		\path (ab-cb-db) ++(-4mm, 0) node[anchor=north] (ab-cb-db-a) {$a$};
+		\path (ab-cb-db-a.south) ++(4mm, -\ordown) node[anchor=north] (ab-cb-db-b) {$b$};
+		\path (ab-cb-db-a.base) ++(4mm, 0) node[anchor=base] (ab-cb-db-c) {$c$};
+		\path (ab-cb-db-c.base) ++(4mm, 0) node[anchor=base] (ab-cb-db-d) {$d$};
+		\path [draw] (ab-cb-db-a) -- (ab-cb-db-b);
+		\path [draw] (ab-cb-db-c) -- (ab-cb-db-b);
+		\path [draw] (ab-cb-db-d) -- (ab-cb-db-b);
+
+		\path (ab-cb-south)  edge node[above left] {$b > d$} (abd-cb);
+		\path (ab-cb-south) edge node[above right] {$d > b$} (ab-cb-db);		
 	\end{tikzpicture}
-	\caption{The strategy for three questions}
-	\label{fig:k3}
+	\caption{An optimal strategy for three questions}
+	\label{fig:k3a}
 \end{figure}
 
 \subsection{Optimum for 4 questions}
@@ -290,7 +316,7 @@ Start, wlog, by using two questions to order $\set{a, b, c}$. If $>_2$ is a line
 
 \subsection{Optimum for 5 questions}
 Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_5}]$ (assuming $n ≥ 6$). 
-Start, wlog, by using two questions to order $\set{a, b, c}$. 
+Start by using two questions to order $\set{a, b, c}$. \commentOC{Not wlog!}
 
 \begin{itemize}
 	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$ and $q_{bf}$.
@@ -303,7 +329,7 @@ Start, wlog, by using two questions to order $\set{a, b, c}$.
 
 \subsection{Optimum for 6 questions}
 Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_6}]$ (assuming $n ≥ 7$). 
-Start, wlog, by using two questions to order $\set{a, b, c}$. 
+Start by using two questions to order $\set{a, b, c}$. \commentOC{Not wlog!}
 
 \begin{itemize}
 	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$, $q_{bf}$ and $q_{bg}$.
