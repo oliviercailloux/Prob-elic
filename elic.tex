@@ -219,6 +219,9 @@ Here we consider $P = P^\mathit{eq}$.
 	$P(\ppref) = \sum_{{\ppref'} \in \linors[X'] \suchthat {\ppref} \subseteq {\ppref'}} P(\ppref') = x / (\card{X'})!$, where $x$ is the number of linear orderings over $X'$ that extend $\ppref'$. This quantity does not depend on $n$.
 \end{proof}
 
+\subsection{Should we always exploit the median?}
+We might attempt to answer analytically the following question: should we always ask $b$ VS everything else when we know a chain $abc$? Thus, when $\prefeq$ includes $abc$, and $q_{be}$, $q_{bf}$, … has been answered, should we ask $q_{bg}$? (That’s what every optimal strategy that we found do.) It’s a bit strange that it seems not optimal to systematically strive for a chain of three (see $k = 5$).
+
 \subsection{Optimal strategies for 3 questions}
 Consider $n ≥ 4$ and let us determine the strategies that maximize the expected number of edges known after $3$ questions, thus, $E^s[\card{{\ppref}_3}]$.
 
