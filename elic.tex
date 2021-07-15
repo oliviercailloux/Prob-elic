@@ -380,7 +380,7 @@ See \cref{fig:k3a,fig:k3b}.
 
 \subsection{Optimum for 4 questions}
 Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_4}]$ (assuming $n ≥ 5$). 
-Start by using two questions to order $\set{a, b, c}$ \commentOC{not wlog!}. If $>_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, c} > b$), disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$.
+Start by using two questions to order $\set{a, b, c}$. If $>_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, c} > b$), disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$.
 
 See \cref{fig:k4}.
 
@@ -457,20 +457,20 @@ See \cref{fig:k4}.
 		\path [draw] (abc-bd-be-b) -- (abc-bd-be-e);
 		\path [draw, color=red] (abc-bd-be-a) to[out=-45, in=60] (abc-bd-be-e);
 		
-		\path (abc-bd-node.south) ++(1cm, -1cm) coordinate (abc-bd-eb);
-		\path (abc-bd-eb) ++(-3mm, 0) node[anchor=north] (abc-bd-eb-a) {$a$};
-		\path (abc-bd-eb-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-bd-eb-b) {$b$};
-		\path (abc-bd-eb-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-bd-eb-c) {$c$};
-		\path (abc-bd-eb-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-bd-eb-d) {$d$};
-		\path (abc-bd-eb-a.base) ++(6mm, 0) node[anchor=base] (abc-bd-eb-e) {$e$};
-		\path [draw] (abc-bd-eb-a) -- (abc-bd-eb-b) -- (abc-bd-eb-c);
-		\path [draw] (abc-bd-eb-b) -- (abc-bd-eb-d);
-		\path [draw] (abc-bd-eb-e) -- (abc-bd-eb-b);
-		\path [draw, color=red] (abc-bd-eb-e) to[out=-90, in=60] (abc-bd-eb-c);
-		\path [draw, color=red] (abc-bd-eb-e) to[out=-45, in=60] (abc-bd-eb-d);
+		\path (abc-bd-node.south) ++(1cm, -1cm) coordinate (abc-ebd);
+		\path (abc-ebd) ++(-3mm, 0) node[anchor=north] (abc-ebd-a) {$a$};
+		\path (abc-ebd-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-ebd-b) {$b$};
+		\path (abc-ebd-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-ebd-c) {$c$};
+		\path (abc-ebd-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-ebd-d) {$d$};
+		\path (abc-ebd-a.base) ++(6mm, 0) node[anchor=base] (abc-ebd-e) {$e$};
+		\path [draw] (abc-ebd-a) -- (abc-ebd-b) -- (abc-ebd-c);
+		\path [draw] (abc-ebd-b) -- (abc-ebd-d);
+		\path [draw] (abc-ebd-e) -- (abc-ebd-b);
+		\path [draw, color=red] (abc-ebd-e) to[out=-90, in=60] (abc-ebd-c);
+		\path [draw, color=red] (abc-ebd-e) to[out=-45, in=60] (abc-ebd-d);
 
 		\path (abc-bd-node.south)  edge node[left] {$b > e$} (abc-bd-be);
-		\path (abc-bd-node.south) edge node[right] {$e > b$} (abc-bd-eb);		
+		\path (abc-bd-node.south) edge node[right] {$e > b$} (abc-ebd);		
 		
 		\path (ab-cb-de-south) ++(-1cm, -1cm) coordinate (abe-cb-de);
 		\path (abe-cb-de) node[anchor=north] (abe-cb-de-c) {$c$};
@@ -504,7 +504,7 @@ See \cref{fig:k4}.
 
 \subsection{Optimum for 5 questions}
 Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_5}]$ (assuming $n ≥ 6$). 
-Start by using two questions to order $\set{a, b, c}$. \commentOC{Not wlog!}
+Start by using two questions to order $\set{a, b, c}$.
 
 \begin{itemize}
 	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$ and $q_{bf}$.
@@ -517,7 +517,7 @@ Start by using two questions to order $\set{a, b, c}$. \commentOC{Not wlog!}
 
 \subsection{Optimum for 6 questions}
 Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_6}]$ (assuming $n ≥ 7$). 
-Start by using two questions to order $\set{a, b, c}$. \commentOC{Not wlog!}
+Start by using two questions to order $\set{a, b, c}$.
 
 \begin{itemize}
 	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$, $q_{bf}$ and $q_{bg}$.
