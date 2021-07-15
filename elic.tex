@@ -18,7 +18,7 @@
 \title{Probabilistic elicitation of preferences \thanks{Draft!}}
 \author{Nicolas Boria}
 \author{Olivier Cailloux}
-\author{Ararat Harutyunyan}
+\author{Marc Pirlot}
 \affil{Université Paris-Dauphine, PSL Research University, CNRS, LAMSADE, 75016 PARIS, FRANCE\\
 	\href{mailto:olivier.cailloux@dauphine.fr}{olivier.cailloux@dauphine.fr}
 }
@@ -242,10 +242,12 @@ Assume > has a single connex component, and every undirected path has at most th
 	We know that $P(f > b \knowing >) > P(f > a \knowing >)$, because the event $f > b$ includes the event $f > a$ and the probability of the difference is not null.
 	
 	I suspect that this is true even when replacing ${>}^{-1}(b)$ with 1, a proof of which would suffice to prove the claim (because this replacement is unfavorable to $E[q_{bf}]$). Because $P(f > a \knowing >) + P(f > b \knowing >) − 1 < 2 P(f > b \knowing >) − 1$, we would thus have to prove:
-	\[[P(f > b \knowing >) - P(f > a \knowing >)] {>}(b) ≥ 2 P(f > b \knowing >) − 1.\]
+	\[[P(a > f > b \knowing >)] {>}(b) ≥ 2 P(f > b \knowing >) − 1.\]
 	
 	I also believe that:
 	\[[P(f > b \knowing >) = \frac{(1 + {>}(b))! {>}^{-1}(b)!}{P(>)}.\]
+	
+	To be continued…
 \end{proof}
 
 \newlength{\ordown}
