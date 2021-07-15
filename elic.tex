@@ -232,8 +232,8 @@ Assume > has a single connex component, and every undirected path has at most th
 \end{conjecture}
 \begin{proof}
 	Let’s check first that this is myopically optimal. Consider a chain $abc$.
-	\[E[q_{af}] = P(f > a \knowing >) ({>}(b) + 1),\]
-	\[E[q_{bf}] = P(f > b \knowing >) {>}(b) + P(b > f \knowing >) {>}^{-1}(b).\]
+	\[E[\card{T({>} \cup (\pref \cap q_{af}))} - \card{{>}} - 1 \knowing >] = P(f > a \knowing >) ({>}(b) + 1),\]
+	\[E[\card{T({>} \cup (\pref \cap q_{bf}))} - \card{{>}} - 1 \knowing >] = P(f > b \knowing >) {>}(b) + P(b > f \knowing >) {>}^{-1}(b).\]
 	Thus, we need to prove:
 	\[P(f > b \knowing >) >(b) + P(b > f \knowing >) {>}^{-1}(b) > P(f > a \knowing >) {>}(b) + P(f > a \knowing >),\]
 	or equivalently:
@@ -446,7 +446,7 @@ See \cref{fig:k4}.
 		\path (ab-cb-south)  edge node[above left] {$d > e$} (ab-cb-de);
 		\path (ab-cb-south) edge node[above right] {$e > d$} (ab-cb-ed);		
 		
-		\path (abc-bd-node.south) ++(-7mm, -1cm) coordinate (abc-bd-be);
+		\path (abc-bd-node.south) ++(-1cm, -1cm) coordinate (abc-bd-be);
 		\path (abc-bd-be) node[anchor=north] (abc-bd-be-a) {$a$};
 		\path (abc-bd-be-a.south) ++(0, -\ordown) node[anchor=north] (abc-bd-be-b) {$b$};
 		\path (abc-bd-be-b.south) ++(-6mm, -\ordown) node[anchor=north] (abc-bd-be-c) {$c$};
@@ -457,7 +457,7 @@ See \cref{fig:k4}.
 		\path [draw] (abc-bd-be-b) -- (abc-bd-be-e);
 		\path [draw, color=red] (abc-bd-be-a) to[out=-45, in=60] (abc-bd-be-e);
 		
-		\path (abc-bd-node.south) ++(7mm, -1cm) coordinate (abc-bd-eb);
+		\path (abc-bd-node.south) ++(1cm, -1cm) coordinate (abc-bd-eb);
 		\path (abc-bd-eb) ++(-3mm, 0) node[anchor=north] (abc-bd-eb-a) {$a$};
 		\path (abc-bd-eb-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-bd-eb-b) {$b$};
 		\path (abc-bd-eb-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-bd-eb-c) {$c$};
@@ -472,9 +472,28 @@ See \cref{fig:k4}.
 		\path (abc-bd-node.south)  edge node[left] {$b > e$} (abc-bd-be);
 		\path (abc-bd-node.south) edge node[right] {$e > b$} (abc-bd-eb);		
 		
-		\path (ab-cb-de-south) ++(-7mm, -1cm) coordinate (abe-cb-de);
+		\path (ab-cb-de-south) ++(-1cm, -1cm) coordinate (abe-cb-de);
+		\path (abe-cb-de) node[anchor=north] (abe-cb-de-c) {$c$};
+		\path (abe-cb-de-c.south) ++(-6mm, 0) node[anchor=south] (abe-cb-de-a) {$a$};
+		\path (abe-cb-de-a.south) ++(3mm, -\ordown) node[anchor=north] (abe-cb-de-b) {$b$};
+		\path (abe-cb-de-b.base) ++(6mm, 0) node[anchor=base] (abe-cb-de-d) {$d$};
+		\path (abe-cb-de-b.south) ++(3mm, -\ordown) node[anchor=north] (abe-cb-de-e) {$e$};
+		\path [draw] (abe-cb-de-a) -- (abe-cb-de-b) -- (abe-cb-de-e);
+		\path [draw] (abe-cb-de-c) -- (abe-cb-de-b);
+		\path [draw] (abe-cb-de-d) -- (abe-cb-de-e);
+		\path [draw, color=red] (abe-cb-de-a) to[out = -120, in = -180] (abe-cb-de-e);
+		\path [draw, color=red] (abe-cb-de-c) -- (abe-cb-de-e);
 
-		\path (ab-cb-de-south) ++(7mm, -1cm) coordinate (ab-cb-deb);
+		\path (ab-cb-de-south) ++(1cm, -1cm) coordinate (ab-cb-deb);
+		\path (ab-cb-deb) ++(6mm, 0) node[anchor=north] (ab-cb-deb-d) {$d$};
+		\path (ab-cb-deb-d.south) ++(-6mm, -\ordown) node[anchor=north] (ab-cb-deb-c) {$c$};
+		\path (ab-cb-deb-c.base) ++(-6mm, 0) node[anchor=base] (ab-cb-deb-a) {$a$};
+		\path (ab-cb-deb-c.south) ++(0, -\ordown) node[anchor=north] (ab-cb-deb-b) {$b$};
+		\path (ab-cb-deb-c.base) ++(6mm, 0) node[anchor=base] (ab-cb-deb-e) {$e$};
+		\path [draw] (ab-cb-deb-a) -- (ab-cb-deb-b) -- (ab-cb-deb-e);
+		\path [draw] (ab-cb-deb-c) -- (ab-cb-deb-b);
+		\path [draw] (ab-cb-deb-d) -- (ab-cb-deb-e);
+		\path [draw, color=red] (ab-cb-deb-d) -- (ab-cb-deb-b);
 
 		\path (ab-cb-de-south)  edge node[left] {$b > e$} (abe-cb-de);
 		\path (ab-cb-de-south) edge node[right] {$e > b$} (ab-cb-deb);	
