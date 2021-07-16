@@ -219,6 +219,27 @@ Here we consider $P = P^\mathit{eq}$.
 	$P(\ppref) = \sum_{{\ppref'} \in \linors[X'] \suchthat {\ppref} \subseteq {\ppref'}} P(\ppref') = x / (\card{X'})!$, where $x$ is the number of linear orderings over $X'$ that extend $\ppref'$. This quantity does not depend on $n$.
 \end{proof}
 
+\begin{proposition}[draft!]
+	\label{th:indep}
+	Given $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connex component containing only uncomparable elements better than $b$ and uncomparable elements below $b$, and $a, b \in X$ such that $q_{ab} \cap {\ppref} = \emptyset$: 
+	\[P(a > b \knowing {\ppref}) = \frac{1 + {\ppref}(b)}{1 + {\ppref}(b) + 1 + {\ppref}^{-1}(b)}.\]
+	In particular, it is independent of the relative ordering of the elements below $b$.
+	\footnote{This is also equal to:
+		\[P(a > b \knowing {\ppref}) = \frac{(1 + {\ppref}(b))! {\ppref}^{-1}(b)!}{(1 + {\ppref}(b))! {\ppref}^{-1}(b)! + {\ppref}(b)! (1 + {\ppref}^{-1}(b))!}.\] 
+	}
+\end{proposition}
+\begin{proof}
+	Assume some set $E \subseteq \powerset{\linors}$ is such that $\cup E$ is a sure event and for any two elements $e, e' \in E$: $\set{{\ppref'} \subseteq {\ppref} \suchthat a \ppref' b, {\ppref'} \in e}$ is in bijection with $\set{{\ppref'} \subseteq {\ppref} \suchthat a \ppref' b, {\ppref'} \in e'}$, and $\set{{\ppref'} \subseteq {\ppref} \suchthat {\ppref'} \in e}$ is in bijection with $\set{{\ppref'} \subseteq {\ppref} \suchthat {\ppref'} \in e'}$. It follows that $P(e \knowing {\ppref}) = P(e' \knowing {\ppref})$ and that $P(a > b \knowing {\ppref}, e) = P(a > b \knowing {\ppref}, e')$.
+	
+	Thus:
+	$P(a > b \knowing {\ppref}) = \sum_{e \in E} P(a > b \knowing {\ppref}, e) P(e \knowing \ppref)$, 
+	and with any $e \in E$: 
+	$P(a > b \knowing {\ppref}) = \card{E} P(a > b \knowing {\ppref}, e) \frac{1}{\card{E}} = P(a > b \knowing {\ppref}, e)$.
+	
+	This shows that we can fix (as $e$) the relative ordering of the elements above $b$, and of the elements below $b$.
+	The result now follows from $P(a > b \knowing {\ppref}) = \frac{P(a > b, {\ppref}, e)}{P({\ppref}, e)} = \frac{P(a > b, {\ppref}, e)}{P(a > b, {\ppref}, e) + P(b > a, {\ppref}, e)}$.
+\end{proof}
+
 \subsection{Should we always exploit the median?}
 We might attempt to answer analytically the following question: should we always ask $b$ VS everything else when we know a chain $abc$? Thus, when $\prefeq$ includes $abc$, and $q_{be}$, $q_{bf}$, … has been answered, should we ask $q_{bg}$? (That’s what every optimal strategy that we found do.) It’s a bit strange that it seems not optimal to systematically strive for a chain of three (see $k = 5$).
 
@@ -244,10 +265,7 @@ Assume > has a single connex component, and every undirected path has at most th
 	I suspect that this is true even when replacing ${>}^{-1}(b)$ with 1, a proof of which would suffice to prove the claim (because this replacement is unfavorable to $E[q_{bf}]$). Because $P(f > a \knowing >) + P(f > b \knowing >) − 1 < 2 P(f > b \knowing >) − 1$, we would thus have to prove:
 	\[[P(a > f > b \knowing >)] {>}(b) ≥ 2 P(f > b \knowing >) − 1.\]
 	
-	I also believe that:
-	\[[P(f > b \knowing >) = \frac{(1 + {>}(b))! {>}^{-1}(b)!}{P(>)}.\]
-	
-	To be continued…
+	Perhaps this can be done using \cref{th:indep}…
 \end{proof}
 
 \newlength{\ordown}
