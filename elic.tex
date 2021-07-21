@@ -221,7 +221,7 @@ Here we consider $P = P^\mathit{eq}$.
 
 \begin{proposition}[draft!]
 	\label{th:indep}
-	Given $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connex component containing only uncomparable elements better than $b$ and uncomparable elements below $b$, and $a, b \in X$ such that $q_{ab} \cap {\ppref} = \emptyset$: 
+	Given $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only incomparable elements better than $b$ and incomparable elements below $b$, and $a, b \in X$ such that $q_{ab} \cap {\ppref} = \emptyset$: 
 	\[P(a > b \knowing {\ppref}) = \frac{1 + {\ppref}(b)}{1 + {\ppref}(b) + 1 + {\ppref}^{-1}(b)}.\]
 	In particular, it is independent of the relative ordering of the elements below $b$.
 	\footnote{This is also equal to:
@@ -249,7 +249,7 @@ Assume $>$ has a single connected component, and the maximal size of a chain is 
 I’d say this is probably true but difficult to prove because of the complicated shapes such as ${abc, be, dc}$. Let’s start with something simpler.
 
 \begin{conjecture}
-Assume > has a single connected component, and every undirected path has at most three objects. Assume $b$ is the middle element of every chains of size 3, and some element $f$ is not part of the component. Then asking $q_{bf}$ is an optimal strategy.
+Assume > has a single connected component, and every undirected path has at most three objects. Assume $b$ is the middle element of every chain of size 3, and some element $f$ is not part of the component. Then asking $q_{bf}$ is an optimal strategy.
 \end{conjecture}
 \begin{proof}
 	Let’s check first that this is myopically optimal. Consider a chain $abc$.
