@@ -229,7 +229,7 @@ Here we consider $P = P^\mathit{eq}$.
 	}
 \end{proposition}
 \begin{proof}
-	Assume some set $E \subseteq \powerset{\linors}$ is such that $\cup E$ is a sure event and for any two elements $e, e' \in E$: $\set{{\ppref'} \subseteq {\ppref} \suchthat a \ppref' b, {\ppref'} \in e}$ is in bijection with $\set{{\ppref'} \subseteq {\ppref} \suchthat a \ppref' b, {\ppref'} \in e'}$, and $\set{{\ppref'} \subseteq {\ppref} \suchthat {\ppref'} \in e}$ is in bijection with $\set{{\ppref'} \subseteq {\ppref} \suchthat {\ppref'} \in e'}$. It follows that $P(e \knowing {\ppref}) = P(e' \knowing {\ppref})$ and that $P(a > b \knowing {\ppref}, e) = P(a > b \knowing {\ppref}, e')$.
+	Assume some set $E \subseteq \powerset{\linors}$ is such that $\cup E$ is a sure event,  for any two elements $e, e' \in E$, $e \cap e' = \emptyset$, and for any two elements $e, e' \in E$: $\set{{\ppref} \subseteq {\ppref'} \in e \suchthat a \ppref' b}$ is in bijection with $\set{{\ppref} \subseteq {\ppref'} \in e' \suchthat a \ppref' b}$, and $\set{{\ppref} \subseteq {\ppref'} \in e}$ is in bijection with $\set{{\ppref} \subseteq {\ppref'} \in e'}$. It follows that $P(e \knowing {\ppref}) = P(e' \knowing {\ppref})$ and that $P(a > b \knowing {\ppref}, e) = P(a > b \knowing {\ppref}, e')$.
 	
 	Thus:
 	$P(a > b \knowing {\ppref}) = \sum_{e \in E} P(a > b \knowing {\ppref}, e) P(e \knowing \ppref)$, 
