@@ -18,7 +18,7 @@
 \title{Probabilistic elicitation of preferences \thanks{Draft!}}
 \author{Nicolas Boria}
 \author{Olivier Cailloux}
-\author{Ararat Harutyunyan}
+\author{Marc Pirlot}
 \affil{Université Paris-Dauphine, PSL Research University, CNRS, LAMSADE, 75016 PARIS, FRANCE\\
 	\href{mailto:olivier.cailloux@dauphine.fr}{olivier.cailloux@dauphine.fr}
 }
@@ -33,7 +33,7 @@ This article focuses on a different use case: obtaining preference information f
 
 This problem can be viewed as a variant of a sorting task, where the ordering relation is the one determined by the individual’s preference. Querying for her preference is akin to a comparison in a sorting task. In such a setting, however, contrary to the implicit hypothesis in sorting tasks, it is important to focus on precise bounds on the number of comparisons, not just asymptotic orders of magnitude. This is for two reasons. First, the set of objects should generally be supposed to be small. That is because individuals will not accept to answer hundreds of comparison questions. Furthermore, when such comparison questions is cognitively difficult, a gain of a constant factor in terms of number of comparisons is important.
 
-An example of an application of the sorts of results we seek is in social choice. In social choice, one typically assumes that the voters preferences are known, and studies focus on merits of aggregation rules. However, in many cases, the preferences must be elicited. A typical case is the one of a recrutment committee. Our results aim at indicating how to obtain (partial) information about the preferences of the members of the committee over the set of candidates. This can then be used, for example, to compute necessary or possible winner information.
+An example of an application of the sorts of results we seek is in social choice. In social choice, one typically assumes that the voters preferences are known, and studies focus on merits of aggregation rules. However, in many cases, the preferences must be elicited. A typical case is the one of a recrutment committee. Our results aim at indicating how to obtain (partial) information about the preferences of the members of the committee over the set of candidates. This can then be used, for example, to compute necessary or possible winners.
 
 \section{Set up and goal}
 \begin{itemize}
@@ -73,10 +73,11 @@ Let ${\ppref^{±1}} = {\ppref} \cup {\ppref^{-1}}$ denote the set of pairs known
 %Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, our knowledge is complete: $Q_{\ppref_{\card{Q}}} = \emptyset$.
 
 \subsection{Sequences of questions, of partial orders, and of digraphs}
-There is a bijection between sequences of questions, sequences of partial orders, and sequences of digraphs.
+Sequences of questions can be related to sequences of partial orders and to sequences of digraphs.
+This section shows that if a sequence of partial orders corresponds to a sequence of questions, it corresponds to a unique sequence of questions.
 
 Define the upper contour set of $x \in X$ as ${≥^{-1}}(x) = \set{y \in X \suchthat y ≥ x}$, thus, as the set of objects that are at least as good as $x$.
-Towards showing the equivalence between a sequence of questions and a sequence of partial orders, we observe that a subset of an upper contour set that includes an object of which it is the upper contour set is the upper contour set of a unique object.
+We first observe that a subset of an upper contour set that includes an object of which it is the upper contour set is the upper contour set of a unique object.
 (A similar results holds for lower contour sets.)
 \begin{proposition}[Folklore?]
 	\label{th:ucs}
@@ -111,21 +112,49 @@ Any legal sequence of partial orders defines uniquely a corresponding sequence o
 We can also think of $\ppref$ as a directed graph, or digraph, whose set of nodes is $\allalts$. We thus define a bijection that relates $\ppref$ to $G = (\allalts, \ppref)$, its corresponding digraph, and talk interchangeably about a digraph or a set of edges or a partial order. This bijection defines the possible digraphs: those having nodes $\allalts$ and a transitive and acyclic set of edges.
 
 \section{Questioning strategies and probability distributions}
+Given a partial order $\ppref$, we write $P(\ppref) = P(\set{{\pref} \in \linors \suchthat {\ppref} \subseteq {\pref}})$ for the probability that the real preference be compatible with $\ppref$.
+
 Define a questioning strategy as a function $s: \POs \setminus \linors → [0, 1]^Q$ that given a current knowledge state ${\ppref} \in \POs \setminus \linors$ returns a probability distribution over the set of possible questions $Q$. 
 
-The probability distribution $P$ over the possible preferences and a strategy $s$ determine in a natural way the following probability distribution over $\linors × \cup_{k \in \N^*} Q^k$. Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$, define $P^s(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
+The probability distribution $P$ over the possible preferences and a strategy $s$ determine in a natural way several probability distributions. 
+
+Given ${\pref} \in \linors$ and a sequence of questions $(q_t)_{t \in \intvl{1, k}} \in Q^k$ of length $k \in \N^*$, define the corresponding sequence of partial orders $({\ppref}_t)_{t \in \intvl{1, k}} \in \POs^k$ as ${\ppref_0} = \emptyset$ and ${\ppref_t} = {\ppref_{t - 1}} + ({\pref} \cap q_t) = T(\cup_{q \in \set{q_1, …, q_t}} ({\pref} \cap q))$.
+Note that if the relation was not complete at step $k - 1$, it also was incomplete before: ${\ppref_{k - 1}} \notin \linors ⇒ \forall t \in \intvl{1, k - 1}: {\ppref_t} \notin \linors$. 
+
+Given ${\prefeq} \in \linors$, define $Q^{\prefeq} = \cup_{k \in \N^*} \set{(q_t)_{t \in \intvl{1, k}} \in Q^k \suchthat {\ppref_{k - 1}} \notin \linors \land {\ppref_k} \in \linors}$ as the set of finite sequences of questions that lead to a linear order just after the last question and not before. 
+
+Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^{\prefeq}$, define $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
+\begin{equation}
+	P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}}) = 
+	P(\prefeq)  \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t).
+\end{equation}
+
+For example, $P^{\prime s}(\prefeq, q_1, q_2, q_3)$ denotes the probability that the preference is $\prefeq$ and that the questions, chosen according to the strategy $s$, were $q_1$, then $q_2$, and finally $q_3$.
+
+Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$, let $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ denote $P^{\prime s}(\prefeq, \set{(q'_t)_{t \in \intvl{1, k'}} \in Q^{\prefeq} \suchthat k' ≥ k \land \restr{q'_t}{\intvl{1, k}} = q_t})$, the probability that the real preference be $\prefeq$ and that the strategy $s$ asks any sequence of questions in $Q^{\prefeq}$ that completes $q_t$.
+
+Given $k \in \N^*$, ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$ such that ${\ppref}_{k - 1} \notin \linors$, define $P^s(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
 \begin{equation}
 	P^s(\prefeq, (q_t)_{t \in \intvl{1, k}}) = 
-	\begin{cases}
-		P(\prefeq)  \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t) & \text{if } {\ppref_{k - 1}} \notin \linors,\\
-		0 & \text{otherwise},
-	\end{cases}
+	P(\prefeq)  \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t).
 \end{equation}
-where ${\ppref_0} = \emptyset$ and ${\ppref_t} = {\ppref_{t - 1}} + ({\pref} \cap q_t) = T(\cup_{q \in \set{q_1, …, q_t}} ({\pref} \cap q))$. Note that ${\ppref_{k - 1}} \notin \linors ⇒ \forall t \in \intvl{1, k - 1}: {\ppref_t} \notin \linors$.
 
-Thus, if $\card{Q} = 3$, $P^s(\prefeq, q_1, q_2, q_3)$ denotes the probability that the preference is $\prefeq$ and that the questions, chosen according to the strategy $s$, were $q_1$, then $q_2$, and finally $q_3$.
+\begin{proposition}
+	$P^s = P^{\prime s}$.
+\end{proposition}
+\begin{proof}
+	This follows from the corresponding definitions.
+\end{proof}
 
-As the sequence of questions determines the sequence of partial orders, we can also consider $P^s$ as a probability distribution over sequences of partial orders. 
+\begin{remark}
+	We can view $s$ as the conditional probabilities given by $P^s$, as these examples show for the cases of one and two questions (which can be generalized naturally).
+	\begin{itemize}
+		\item $P^s(q_1 | >_c) = P^s(>_c, q_1) / P^s(>_c) = P^s(>_c) s(\emptyset)(q_1) / P(>_c) = s(\emptyset)(q_1)$.
+		\item $P^s(q_2 | >_c, q_1) = P^s(>_c, q_1, q_2) / P^s(>_c, q_1) = P^s(>_c, q_1, q_2) / [s(\emptyset)(q_1)P(>_c)] = s(\emptyset)(q_1) s(>_1)(q_2) / s(\emptyset)(q_1) = s(>_1)(q_2).$
+	\end{itemize}
+\end{remark}
+
+As the sequence of questions determines the sequence of partial orders, we can also consider $P^s$ as a probability distribution over (parts of) sequences of partial orders. 
 Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
 
@@ -174,8 +203,6 @@ That bound is tight for $1 ≤ n ≤ 2$, as $V(1) = 0$ and $V(2) = 1$. Also, $E[
 Here we consider $P = P^\mathit{eq}$. 
 
 \subsection{Some probabilities}
-Given a partial order $\ppref$, we write $P(\ppref) = P(\set{{\pref} \in \linors \suchthat {\ppref} \subseteq {\pref}})$ for the probability that the real preference be compatible with $\ppref$.
-
 \begin{proposition}
 	Consider any $X' \subseteq X$ and any ${\ppref} \in \linors[X']$. $P(\ppref) = 1 / (\card{X'})!$.
 \end{proposition}
@@ -192,6 +219,331 @@ Given a partial order $\ppref$, we write $P(\ppref) = P(\set{{\pref} \in \linors
 	$P(\ppref) = \sum_{{\ppref'} \in \linors[X'] \suchthat {\ppref} \subseteq {\ppref'}} P(\ppref') = x / (\card{X'})!$, where $x$ is the number of linear orderings over $X'$ that extend $\ppref'$. This quantity does not depend on $n$.
 \end{proof}
 
+\begin{proposition}[draft!]
+	\label{th:indep}
+	Given $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only incomparable elements better than $b$ and incomparable elements below $b$, and $a, b \in X$ such that $q_{ab} \cap {\ppref} = \emptyset$: 
+	\[P(a > b \knowing {\ppref}) = \frac{1 + {\ppref}(b)}{1 + {\ppref}(b) + 1 + {\ppref}^{-1}(b)}.\]
+	In particular, it is independent of the relative ordering of the elements below $b$.
+	\footnote{This is also equal to:
+		\[P(a > b \knowing {\ppref}) = \frac{(1 + {\ppref}(b))! {\ppref}^{-1}(b)!}{(1 + {\ppref}(b))! {\ppref}^{-1}(b)! + {\ppref}(b)! (1 + {\ppref}^{-1}(b))!}.\] 
+	}
+\end{proposition}
+\begin{proof}
+	Assume some set $E \subseteq \powerset{\linors}$ is such that $\cup E$ is a sure event and for any two elements $e, e' \in E$: $\set{{\ppref'} \subseteq {\ppref} \suchthat a \ppref' b, {\ppref'} \in e}$ is in bijection with $\set{{\ppref'} \subseteq {\ppref} \suchthat a \ppref' b, {\ppref'} \in e'}$, and $\set{{\ppref'} \subseteq {\ppref} \suchthat {\ppref'} \in e}$ is in bijection with $\set{{\ppref'} \subseteq {\ppref} \suchthat {\ppref'} \in e'}$. It follows that $P(e \knowing {\ppref}) = P(e' \knowing {\ppref})$ and that $P(a > b \knowing {\ppref}, e) = P(a > b \knowing {\ppref}, e')$.
+	
+	Thus:
+	$P(a > b \knowing {\ppref}) = \sum_{e \in E} P(a > b \knowing {\ppref}, e) P(e \knowing \ppref)$, 
+	and with any $e \in E$: 
+	$P(a > b \knowing {\ppref}) = \card{E} P(a > b \knowing {\ppref}, e) \frac{1}{\card{E}} = P(a > b \knowing {\ppref}, e)$.
+	
+	This shows that we can fix (as $e$) the relative ordering of the elements above $b$, and of the elements below $b$.
+	The result now follows from $P(a > b \knowing {\ppref}) = \frac{P(a > b, {\ppref}, e)}{P({\ppref}, e)} = \frac{P(a > b, {\ppref}, e)}{P(a > b, {\ppref}, e) + P(b > a, {\ppref}, e)}$.
+\end{proof}
+
+\subsection{Should we always exploit the median?}
+We might attempt to answer analytically the following question: should we always ask $b$ VS everything else when we know a chain $abc$? Thus, when $\prefeq$ includes $abc$, and $q_{be}$, $q_{bf}$, … has been answered, should we ask $q_{bg}$? (That’s what every optimal strategy that we found do.) It’s a bit strange that it seems not optimal to systematically strive for a chain of three (see $k = 5$).
+
+\begin{conjecture}
+Assume $>$ has a single connected component, and the maximal size of a chain is 3. Assume $b$ is the middle element of every chain of size 3. Then the optimal strategy asks $b$ with a new element.
+\end{conjecture}
+I’d say this is probably true but difficult to prove because of the complicated shapes such as ${abc, be, dc}$. Let’s start with something simpler.
+
+\begin{conjecture}
+Assume > has a single connected component, and every undirected path has at most three objects. Assume $b$ is the middle element of every chain of size 3, and some element $f$ is not part of the component. Then asking $q_{bf}$ is an optimal strategy.
+\end{conjecture}
+\begin{proof}
+	Let’s check first that this is myopically optimal. Consider a chain $abc$.
+	\[E[\card{T({>} \cup (\pref \cap q_{af}))} - \card{{>}} - 1 \knowing >] = P(f > a \knowing >) ({>}(b) + 1),\]
+	\[E[\card{T({>} \cup (\pref \cap q_{bf}))} - \card{{>}} - 1 \knowing >] = P(f > b \knowing >) {>}(b) + P(b > f \knowing >) {>}^{-1}(b).\]
+	Thus, we need to prove:
+	\[P(f > b \knowing >) >(b) + P(b > f \knowing >) {>}^{-1}(b) > P(f > a \knowing >) {>}(b) + P(f > a \knowing >),\]
+	or equivalently:
+	\[[P(f > b \knowing >) - P(f > a \knowing >)] {>}(b) > P(f > a \knowing >) + P(f > b \knowing >) {>}^{-1}(b) − {>}^{-1}(b).\]
+	
+	We know that $P(f > b \knowing >) > P(f > a \knowing >)$, because the event $f > b$ includes the event $f > a$ and the probability of the difference is not null.
+	
+	I suspect that this is true even when replacing ${>}^{-1}(b)$ with 1, a proof of which would suffice to prove the claim (because this replacement is unfavorable to $E[q_{bf}]$). Because $P(f > a \knowing >) + P(f > b \knowing >) − 1 < 2 P(f > b \knowing >) − 1$, we would thus have to prove:
+	\[[P(a > f > b \knowing >)] {>}(b) ≥ 2 P(f > b \knowing >) − 1.\]
+	
+	Perhaps this can be done using \cref{th:indep}…
+\end{proof}
+
+\newlength{\ordown}
+\setlength{\ordown}{2mm}
+\begin{figure}
+	\begin{tikzpicture}
+		\path node (ab-a) {$a$};
+		\path (ab-a.south) ++(0, -\ordown) node[anchor=north] (ab-b) {$b$};
+		\path [draw] (ab-a) -- (ab-b);
+		
+		\path (ab-b.south) ++(-2cm, -1cm) coordinate (abc);
+		\path (abc) node[anchor=north] (abc-a) {$a$};
+		\path (abc-a.south) ++(0, -\ordown) node[anchor=north] (abc-b) {$b$};
+		\path (abc-b.south) ++(0, -\ordown) node[anchor=north] (abc-c) {$c$};
+		\path [draw] (abc-a) -- (abc-b) -- (abc-c);
+		\path [draw, color=red] (abc-a) to[out=-45, in=45] (abc-c);
+
+		\path (ab-b.south) ++(2cm, -1cm) coordinate (ab-cb);
+		\path (ab-cb) ++(-3mm, -\ordown) node[anchor=north] (ab-cb-a) {$a$};
+		\path (ab-cb-a.south) ++(3mm, -\ordown) node[anchor=north] (ab-cb-b) {$b$};
+		\path (ab-cb-a.south) ++(6mm, 0) node[anchor=south] (ab-cb-c) {$c$};
+		\path [draw] (ab-cb-a) -- (ab-cb-b) -- (ab-cb-c);
+
+		\path (ab-b.south)  edge node[left, align = right] {$b > c$\\\tiny P(bc \knowing ab) = 1/3} (abc);
+		\path (ab-b.south) edge node[above right] {$c > b$} (ab-cb);
+
+		\path (abc-c.south) ++(-1cm, -1cm) coordinate (abc-bd);
+		\path (abc-bd) node[anchor=north] (abc-bd-a) {$a$};
+		\path (abc-bd-a.south) ++(0, -\ordown) node[anchor=north] (abc-bd-b) {$b$};
+		\path (abc-bd-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-bd-c) {$c$};
+		\path (abc-bd-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-bd-d) {$d$};
+		\path [draw] (abc-bd-a) -- (abc-bd-b) -- (abc-bd-c);
+		\path [draw] (abc-bd-b) -- (abc-bd-d);
+		\path [draw, color=red] (abc-bd-a) to[out=-45, in=45] (abc-bd-d);
+
+		\path (abc-c.south) ++(1cm, -1cm) coordinate (abc-db);
+		\path (abc-db) ++(-3mm, 0) node[anchor=north] (abc-db-a) {$a$};
+		\path (abc-db-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-db-b) {$b$};
+		\path (abc-db-b.south) ++(0, -\ordown) node[anchor=north] (abc-db-c) {$c$};
+		\path (abc-db-a.south) ++(6mm, 0) node[anchor=south] (abc-db-d) {$d$};
+		\path [draw] (abc-db-a) -- (abc-db-b) -- (abc-db-c);
+		\path [draw] (abc-db-d) -- (abc-db-b);
+		\path [draw, color=red] (abc-db-d) to[out=-45, in=45] (abc-db-c);
+
+		\path (abc-c.south)  edge node[above left] {$b > d$} (abc-bd);
+		\path (abc-c.south) edge node[above right] {$d > b$} (abc-db);
+		
+		\path (abc-c.south -| ab-cb-b) coordinate (ab-cb-south);
+		\path (ab-cb-south) ++(-1cm, -1cm) coordinate (abd-cb);
+		\path (abd-cb) ++(-3mm, 0) node[anchor=north] (abd-cb-a) {$a$};
+		\path (abd-cb-a.south) ++(3mm, -\ordown) node[anchor=north] (abd-cb-b) {$b$};
+		\path (abd-cb-a.south) ++(6mm, 0) node[anchor=south] (abd-cb-c) {$c$};
+		\path (abd-cb-b.south) ++(0, -\ordown) node[anchor=north] (abd-cb-d) {$d$};
+		\path [draw] (abd-cb-a) -- (abd-cb-b) -- (abd-cb-d);
+		\path [draw] (abd-cb-c) -- (abd-cb-b);
+		\path [draw, color=red] (abd-cb-a) to[out=-110, in=135] (abd-cb-d);
+		\path [draw, color=red] (abd-cb-c) to[out=-70, in=45] (abd-cb-d);
+
+		\path (ab-cb-south) ++(1cm, -1cm) coordinate (ab-cb-db);
+		\path (ab-cb-db) ++(-4mm, 0) node[anchor=north] (ab-cb-db-a) {$a$};
+		\path (ab-cb-db-a.south) ++(4mm, -\ordown) node[anchor=north] (ab-cb-db-b) {$b$};
+		\path (ab-cb-db-a.base) ++(4mm, 0) node[anchor=base] (ab-cb-db-c) {$c$};
+		\path (ab-cb-db-c.base) ++(4mm, 0) node[anchor=base] (ab-cb-db-d) {$d$};
+		\path [draw] (ab-cb-db-a) -- (ab-cb-db-b);
+		\path [draw] (ab-cb-db-c) -- (ab-cb-db-b);
+		\path [draw] (ab-cb-db-d) -- (ab-cb-db-b);
+
+		\path (ab-cb-south)  edge node[left, align=right] {$b > d$\\\tiny $P(bd \knowing ab, cb) = 1/4$} (abd-cb);
+		\path (ab-cb-south) edge node[above right] {$d > b$} (ab-cb-db);		
+	\end{tikzpicture}
+	\caption{The “connected” optimal strategy for three questions}
+	\label{fig:k3a}
+\end{figure}
+\begin{figure}
+	\begin{tikzpicture}
+		\path node (ab-a) {$a$};
+		\path (ab-a.south) ++(0, -\ordown) node[anchor=north] (ab-b) {$b$};
+		\path [draw] (ab-a) -- (ab-b);
+		
+		\path (ab-b.south) ++(-1cm, -1cm) coordinate (ab-cd);
+		\path (ab-cd) ++(-3mm, -\ordown) node[anchor=north] (ab-cd-a) {$a$};
+		\path (ab-cd-a.south) ++(0, -\ordown) node[anchor=north] (ab-cd-b) {$b$};
+		\path (ab-cd-a.base) ++(6mm, 0) node[anchor=base] (ab-cd-c) {$c$};
+		\path (ab-cd-c.south) ++(0, -\ordown) node[anchor=north] (ab-cd-d) {$d$};
+		\path [draw] (ab-cd-a) -- (ab-cd-b);
+		\path [draw] (ab-cd-c) -- (ab-cd-d);
+
+		\path (ab-b.south) ++(1cm, -1cm) coordinate (ab-dc);
+
+		\path (ab-b.south)  edge node[above left] {$c > d$} (ab-cd);
+		\path (ab-b.south)  edge node[above right] {$d > c$} (ab-dc);
+
+		\path node [fit={(ab-cd-a) (ab-cd-d)}] (ab-cd-node) {};
+		
+		\path (ab-cd-node.south) ++(-1cm, -1cm) coordinate (ab-acd);
+		\path (ab-acd) node[anchor=north] (ab-acd-a) {$a$};
+		\path (ab-acd-a.south) ++(-3mm, -\ordown - 3mm) node[anchor=base, inner sep=0] (ab-acd-b) {$b$};
+		\path (ab-acd-a.south) ++(3mm, -\ordown - 3mm) node[anchor=base] (ab-acd-c) {$c$};
+		\path (ab-acd-c.south) ++(0, -\ordown) node[anchor=north] (ab-acd-d) {$d$};
+		\path [draw] (ab-acd-a) -- (ab-acd-b);
+		\path [draw] (ab-acd-a) -- (ab-acd-c) -- (ab-acd-d);
+		\path [draw, color=red] (ab-acd-a) to[out=-30, in=45] (ab-acd-d);
+
+		\path (ab-cd-node.south) ++(1cm, -1cm) coordinate (cab-cd);
+
+		\path (ab-cd-node.south)  edge node[above left] {$a > c$} (ab-acd);
+		\path (ab-cd-node.south)  edge node[above right] {$c > a$} (cab-cd);
+	\end{tikzpicture}
+	\caption{The “disconnecting” optimal strategy for three questions}
+	\label{fig:k3b}
+\end{figure}
+
+\subsection{Optimal strategies for 3 questions}
+Consider $n ≥ 4$ and let us determine the strategies that maximize the expected number of edges known after $3$ questions, thus, $E^s[\card{{\ppref}_3}]$.
+
+We write $cd$ instead of $\set{(c, d)}$, $abc$ instead of $\set{(a, b), (b, c), (a, c)}$, and so on.
+
+The following computations (assuming $P = P^\text{eq}$ and independent of $s$) show that there are two tied optimal strategies (plus the obvious symmetries). One optimal strategy, after $q_{ab}$, asks about $q_{cd}$, then joins the two disconnected components by asking about the top ones of each component; and the other one, after $q_{ab}$, asks about $q_{bc}$, then, if obtaining a linear order over $\set{a, b, c}$, asks about the median one and $d$, and otherwise, asks about the one connected to the two other ones and $d$.
+\begin{itemize}
+	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = abc, q_3 = q_{cd}] = 1/2$. {\tiny $P(cd \knowing abc) = \frac{P(abcd)}{P(abc)} = \frac{3!}{4!} = 1/4$. Edges gained if $cd$: 2. Otherwise: 0.}
+	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = abc, q_3 = \bm{q_{bd}}] = 1$.
+	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = \set{ab, cb}, q_3 = \bm{q_{bd}}] = 1/2$. {\tiny $P(bd \knowing ab, cb) = P(ac \knowing ab, cb) P(bd \knowing acb) + P(ca \knowing ab, cb) P(bd \knowing cab) = 1/2 P(bd \knowing acb) + 1/2 P(bd \knowing cab) = 1/4$. Gain: $2$. Otherwise, gain: $0$.}
+	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = \set{ab, cb}, q_3 = q_{da}] = 3/8$. {\tiny $P(da \knowing ab, cb) = 1/2 P(da \knowing acb) + 1/2 P(da \knowing cab) = 1/2 P(dacb \knowing acb) + 1/2 P(dab, cab \knowing cab) = 1/2 (1/4) + 1/2 (2/4) = 3/8$. Gain if $da$: $1$. Otherwise: $0$.}
+	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = \set{ab, cb}, q_3 = q_{ac}] = 0$.
+	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = \set{ab, cd}, q_3 = q_{da}] = 1/2$. {\tiny $P(da \knowing ab, cd) = P(cdab \knowing ab, cd) = \frac{4}{4!} = 1/6$. Gain if $da$: $3$. Otherwise: $0$.}
+	\item $E[\card{{\ppref}_3} - \card{{\ppref}_2} - 1 \knowing {\ppref}_2 = \set{ab, cd}, q_3 = \bm{q_{ac}}] = 1$.
+	\item $E^s[\card{{\ppref}_3} - \card{{\ppref}_1} - 2 \knowing {\ppref}_1 = ab, q_2 = \bm{q_{cd}}] = 1$.
+	\item $E^s[\card{{\ppref}_3} - \card{{\ppref}_1} - 2 \knowing {\ppref}_1 = ab, q_2 = \bm{q_{bc}}] = 1$. {\tiny $P(bc \knowing ab) = \frac{2!}{3!} = 1/3$. Immediate gain if $bc$: $1$. $E$ total gain if $bc$: $2$. Otherwise, immediate gain is $0$ and total gain is $1/2$. Thus, $E$ total gain: $1/3 × 2 + 2/3 × 1/2 = 1$.}
+\end{itemize}
+
+See \cref{fig:k3a,fig:k3b}.
+
+\subsection{Optimum for 4 questions}
+Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_4}]$ (assuming $n ≥ 5$). 
+Start by using two questions to order $\set{a, b, c}$. If $>_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, c} > b$), disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$.
+
+See \cref{fig:k4}.
+
+\begin{figure}
+	\begin{tikzpicture}
+		\path node (ab-a) {$a$};
+		\path (ab-a.south) ++(0, -\ordown) node[anchor=north] (ab-b) {$b$};
+		\path [draw] (ab-a) -- (ab-b);
+		
+		\path (ab-b.south) ++(-4cm, -1cm) coordinate (abc);
+		\path (abc) node[anchor=north] (abc-a) {$a$};
+		\path (abc-a.south) ++(0, -\ordown) node[anchor=north] (abc-b) {$b$};
+		\path (abc-b.south) ++(0, -\ordown) node[anchor=north] (abc-c) {$c$};
+		\path [draw] (abc-a) -- (abc-b) -- (abc-c);
+		\path [draw, color=red] (abc-a) to[out=-45, in=45] (abc-c);
+
+		\path (ab-b.south) ++(4cm, -1cm) coordinate (ab-cb);
+		\path (ab-cb) ++(-3mm, -\ordown) node[anchor=north] (ab-cb-a) {$a$};
+		\path (ab-cb-a.south) ++(3mm, -\ordown) node[anchor=north] (ab-cb-b) {$b$};
+		\path (ab-cb-a.south) ++(6mm, 0) node[anchor=south] (ab-cb-c) {$c$};
+		\path [draw] (ab-cb-a) -- (ab-cb-b) -- (ab-cb-c);
+
+		\path (ab-b.south)  edge node[left, align = right] {$b > c$\\\tiny P(bc \knowing ab) = 1/3} (abc);
+		\path (ab-b.south) edge node[above right] {$c > b$} (ab-cb);
+
+		\path (abc-c.south) ++(-16mm, -1cm) coordinate (abc-bd);
+		\path (abc-bd) node[anchor=north] (abc-bd-a) {$a$};
+		\path (abc-bd-a.south) ++(0, -\ordown) node[anchor=north] (abc-bd-b) {$b$};
+		\path (abc-bd-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-bd-c) {$c$};
+		\path (abc-bd-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-bd-d) {$d$};
+		\path [draw] (abc-bd-a) -- (abc-bd-b) -- (abc-bd-c);
+		\path [draw] (abc-bd-b) -- (abc-bd-d);
+		\path [draw, color=red] (abc-bd-a) to[out=-45, in=45] (abc-bd-d);
+		\path node [fit={(abc-bd-a) (abc-bd-c) (abc-bd-d)}, inner sep=0] (abc-bd-node) {};
+
+		\path (abc-c.south) ++(16mm, -1cm) coordinate (abc-db);
+		\path (abc-db) ++(-3mm, 0) node[anchor=north] (abc-db-a) {$a$};
+		\path (abc-db-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-db-b) {$b$};
+		\path (abc-db-b.south) ++(0, -\ordown) node[anchor=north] (abc-db-c) {$c$};
+		\path (abc-db-a.south) ++(6mm, 0) node[anchor=south] (abc-db-d) {$d$};
+		\path [draw] (abc-db-a) -- (abc-db-b) -- (abc-db-c);
+		\path [draw] (abc-db-d) -- (abc-db-b);
+		\path [draw, color=red] (abc-db-d) to[out=-45, in=45] (abc-db-c);
+		\path node [fit={(abc-db-a) (abc-db-c) (abc-db-d)}, inner sep=0] (abc-db-node) {};
+
+		\path (abc-c.south)  edge node[above left] {$b > d$} (abc-bd);
+		\path (abc-c.south) edge node[above right] {$d > b$} (abc-db);
+		
+		\path (abc-c.south -| ab-cb-b) coordinate (ab-cb-south);
+		\path (ab-cb-south) ++(-16mm, -1cm) coordinate (ab-cb-de);
+		\path (ab-cb-de) ++(0, -\ordown) node[anchor=north] (ab-cb-de-c) {$c$};
+		\path (ab-cb-de-c.south) ++(-6mm, 0) node[anchor=south] (ab-cb-de-a) {$a$};
+		\path (ab-cb-de-a.south) ++(3mm, -\ordown) node[anchor=north] (ab-cb-de-b) {$b$};
+		\path (ab-cb-de-c.base) ++(6mm, 0) node[anchor=base] (ab-cb-de-d) {$d$};
+		\path (ab-cb-de-d.south) ++(0, -\ordown) node[anchor=north] (ab-cb-de-e) {$e$};
+		\path [draw] (ab-cb-de-a) -- (ab-cb-de-b);
+		\path [draw] (ab-cb-de-c) -- (ab-cb-de-b);
+		\path [draw] (ab-cb-de-d) -- (ab-cb-de-e);
+		\path (abc-db-c.south -| ab-cb-de) coordinate (ab-cb-de-south);
+
+		\path (ab-cb-south) ++(16mm, -1cm) coordinate (ab-cb-ed);
+
+		\path (ab-cb-south)  edge node[above left] {$d > e$} (ab-cb-de);
+		\path (ab-cb-south) edge node[above right] {$e > d$} (ab-cb-ed);		
+		
+		\path (abc-bd-node.south) ++(-1cm, -1cm) coordinate (abc-bd-be);
+		\path (abc-bd-be) node[anchor=north] (abc-bd-be-a) {$a$};
+		\path (abc-bd-be-a.south) ++(0, -\ordown) node[anchor=north] (abc-bd-be-b) {$b$};
+		\path (abc-bd-be-b.south) ++(-6mm, -\ordown) node[anchor=north] (abc-bd-be-c) {$c$};
+		\path (abc-bd-be-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-bd-be-d) {$d$};
+		\path (abc-bd-be-c.base) ++(12mm, 0) node[anchor=base] (abc-bd-be-e) {$e$};
+		\path [draw] (abc-bd-be-a) -- (abc-bd-be-b) -- (abc-bd-be-c);
+		\path [draw] (abc-bd-be-b) -- (abc-bd-be-d);
+		\path [draw] (abc-bd-be-b) -- (abc-bd-be-e);
+		\path [draw, color=red] (abc-bd-be-a) to[out=-45, in=60] (abc-bd-be-e);
+		
+		\path (abc-bd-node.south) ++(1cm, -1cm) coordinate (abc-ebd);
+		\path (abc-ebd) ++(-3mm, 0) node[anchor=north] (abc-ebd-a) {$a$};
+		\path (abc-ebd-a.south) ++(3mm, -\ordown) node[anchor=north] (abc-ebd-b) {$b$};
+		\path (abc-ebd-b.south) ++(-3mm, -\ordown) node[anchor=north] (abc-ebd-c) {$c$};
+		\path (abc-ebd-c.base) ++(6mm, 0) node[anchor=base, inner sep=2pt] (abc-ebd-d) {$d$};
+		\path (abc-ebd-a.base) ++(6mm, 0) node[anchor=base] (abc-ebd-e) {$e$};
+		\path [draw] (abc-ebd-a) -- (abc-ebd-b) -- (abc-ebd-c);
+		\path [draw] (abc-ebd-b) -- (abc-ebd-d);
+		\path [draw] (abc-ebd-e) -- (abc-ebd-b);
+		\path [draw, color=red] (abc-ebd-e) to[out=-90, in=60] (abc-ebd-c);
+		\path [draw, color=red] (abc-ebd-e) to[out=-45, in=60] (abc-ebd-d);
+
+		\path (abc-bd-node.south)  edge node[left] {$b > e$} (abc-bd-be);
+		\path (abc-bd-node.south) edge node[right] {$e > b$} (abc-ebd);		
+		
+		\path (ab-cb-de-south) ++(-1cm, -1cm) coordinate (abe-cb-de);
+		\path (abe-cb-de) node[anchor=north] (abe-cb-de-c) {$c$};
+		\path (abe-cb-de-c.south) ++(-6mm, 0) node[anchor=south] (abe-cb-de-a) {$a$};
+		\path (abe-cb-de-a.south) ++(3mm, -\ordown) node[anchor=north] (abe-cb-de-b) {$b$};
+		\path (abe-cb-de-b.base) ++(6mm, 0) node[anchor=base] (abe-cb-de-d) {$d$};
+		\path (abe-cb-de-b.south) ++(3mm, -\ordown) node[anchor=north] (abe-cb-de-e) {$e$};
+		\path [draw] (abe-cb-de-a) -- (abe-cb-de-b) -- (abe-cb-de-e);
+		\path [draw] (abe-cb-de-c) -- (abe-cb-de-b);
+		\path [draw] (abe-cb-de-d) -- (abe-cb-de-e);
+		\path [draw, color=red] (abe-cb-de-a) to[out = -120, in = -180] (abe-cb-de-e);
+		\path [draw, color=red] (abe-cb-de-c) -- (abe-cb-de-e);
+
+		\path (ab-cb-de-south) ++(1cm, -1cm) coordinate (ab-cb-deb);
+		\path (ab-cb-deb) ++(6mm, 0) node[anchor=north] (ab-cb-deb-d) {$d$};
+		\path (ab-cb-deb-d.south) ++(-6mm, -\ordown) node[anchor=north] (ab-cb-deb-c) {$c$};
+		\path (ab-cb-deb-c.base) ++(-6mm, 0) node[anchor=base] (ab-cb-deb-a) {$a$};
+		\path (ab-cb-deb-c.south) ++(0, -\ordown) node[anchor=north] (ab-cb-deb-b) {$b$};
+		\path (ab-cb-deb-c.base) ++(6mm, 0) node[anchor=base] (ab-cb-deb-e) {$e$};
+		\path [draw] (ab-cb-deb-a) -- (ab-cb-deb-b) -- (ab-cb-deb-e);
+		\path [draw] (ab-cb-deb-c) -- (ab-cb-deb-b);
+		\path [draw] (ab-cb-deb-d) -- (ab-cb-deb-e);
+		\path [draw, color=red] (ab-cb-deb-d) -- (ab-cb-deb-b);
+
+		\path (ab-cb-de-south)  edge node[left] {$b > e$} (abe-cb-de);
+		\path (ab-cb-de-south) edge node[right] {$e > b$} (ab-cb-deb);	
+	\end{tikzpicture}
+	\caption{The optimal strategy for four questions}
+	\label{fig:k4}
+\end{figure}
+
+\subsection{Optimum for 5 questions}
+Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_5}]$ (assuming $n ≥ 6$). 
+Start by using two questions to order $\set{a, b, c}$.
+
+\begin{itemize}
+	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$ and $q_{bf}$.
+	\item Say, ${>_2} = \set{a, c} > b$. Then two optimal strategies follow.
+	\begin{itemize}
+		\item Disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$. If $b > e$ then we obtain $>_4 = \set{a, c} > b > e, d > e$. We can exploit the chain of three elements and end up with $q_{bf}$. Otherwise, $eb$, we obtain ${>_4} = \set{a, c} > b, d > e > b$. We can exploit the chain of three elements and end up with $q_{ef}$. 
+		\item Ask $bd$. If ${>_3} = \set{a, c, d} > b$, disconnect; say $ef$, then $q_{bf}$. Otherwise, ${>_3} = \set{a, c} > b > d$, and ask $q_{be}$ then $q_{bf}$.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Optimum for 6 questions}
+Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_6}]$ (assuming $n ≥ 7$). 
+Start by using two questions to order $\set{a, b, c}$.
+
+\begin{itemize}
+	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$, $q_{bf}$ and $q_{bg}$.
+	\item Say, ${>_2} = \set{a, c} > b$. Then $q_{ac}$. Say, wlog: ${>_3} = acb$. Then ask $q_{cd}$, $q_{ce}$ and $q_{cf}$.
+\end{itemize}
+
 \subsection{The random strategy}
 Here we consider $P = P^\mathit{eq}$ and $s$ the random strategy without repetition. 
 We write $P$ instead of $P^s$.
@@ -207,309 +559,6 @@ Thus, $P(\ppref_2 \knowing \card{{\ppref_2}} = 2) = \frac{n - 1}{n + 1}$
 (by noticing that $\card{Q_{\ppref_2}} = \frac{n(n-1)}{2}-1=\frac{(n-2)(n+1)}{2}$).
 
 And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2) (n + 1)} = \frac{2}{n + 1}$.
-
-\section{Optimal strategy for 3 questions}
-Consider $k = 3$, $n = 4$, and let us be interested in maximizing the number of edges after $3$ questions, thus, in $E[\card{{\ppref}_3}]$.
-
-We write $cd$ instead of $c \pref d$, $abc$ instead of $a \pref b \pref c$, and so on.
-
-The following shows that when $abc$ is known after two questions, it is strictly optimal to ask $q_{bd}$.
-\begin{itemize}
-	\item $P(cd \knowing abc) = \frac{P(abcd)}{P(abc)} = \frac{3!}{4!} = 1/4$. Edges gained if $cd$: 2. Otherwise: 0. $E[\card{{\ppref}_3} - \card{{\ppref}_2} \knowing {\ppref}_2 = abc, q_3 = q_{cd}] = 1/2$.
-	\item Asking $q_{bd}$ knowing $abc$ yields a sure gain of 1.
-\end{itemize}
-
-The following shows that when $ab, cb$ is known after two questions, it is strictly optimal to ask $q_{bd}$.
-\begin{itemize}
-	\item $P(bd \knowing ab, cb) = P(ac \knowing ab, cb) P(bd \knowing acb) + P(ca \knowing ab, cb) P(bd \knowing cab) = 1/2 P(bd \knowing acb) + 1/2 P(bd \knowing cab) = 1/4$. Gain: $2$. Otherwise, gain: $0$. $E$: $1/2$.
-	\item $P(da \knowing ab, cb) = 1/2 P(da \knowing acb) + 1/2 P(da \knowing cab) = 1/2 P(dacb \knowing acb) + 1/2 P(dab, cab \knowing cab) = 1/2 (1/4) + 1/2 (2/4) = 3/8$. Gain if $da$: $1$. Otherwise: $0$. $E$: $3/8$.
-	\item Asking $q_{ac}$ knowing $ab, cb$ certainly yields a gain of 0.
-\end{itemize}
-
-The following shows that when $ab, cd$ is known after two questions, it is optimal to ask $q_{ac}$.
-\begin{itemize}
-	\item $P(ac \knowing ab, cd) = P(ac \knowing ab, cb) P(bd \knowing acb) + P(ca \knowing ab, cb) P(bd \knowing cab) = 1/2 P(bd \knowing acb) + 1/2 P(bd \knowing cab) = 1/4$. Gain: $2$. Otherwise, gain: $0$. $E$: $1/2$.
-	\item $P(da \knowing ab, cb) = 1/2 P(da \knowing acb) + 1/2 P(da \knowing cab) = 1/2 P(dacb \knowing acb) + 1/2 P(dab, cab \knowing cab) = 1/2 (1/4) + 1/2 (2/4) = 3/8$. Gain if $da$: $1$. Otherwise: $0$. $E$: $3/8$.
-	\item Asking $q_{ac}$ knowing $ab, cb$ certainly yields a gain of 0.
-\end{itemize}
-
-See \cref{fig:m4,fig:m4Cont}.
-
-\begin{figure}
-	\NewDocumentCommand{\pgfres}{}{\num[round-mode=places,round-precision=1]{\pgfmathresult}}
-	\NewDocumentCommand{\pgfcalc}{m}{\pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
-	\NewDocumentCommand{\esp}{m}{E[.] = \pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
-	\begin{tikzpicture}
-		\path (-10mm, -9mm) coordinate (offsetL);
-		\path (10mm, -9mm) coordinate (offsetR);
-		\path (0, -4mm) coordinate (offsetG);
-		\path node (root0) {$a \relq b$, \esp{4}}
-			[sibling distance = 6cm, level 2/.style = {sibling distance = 2cm}, level 3/.style = {sibling distance = 1cm}]
-			child {
-				node {$a > b$, \esp{4}}
-				child[sibling distance = 3cm] {
-					node {$b \relq c$, \esp{(5 * 4 + 5 * 2 + 3 * 6) / 12}}
-					[sibling distance = 2cm]
-					child[sibling distance = 2cm, align = left, anchor = north] {
-						node {
-							\tiny $a > b > c$, \esp{5}\\
-							$dabc$\\
-							$adbc$\\
-							$abdc$\\
-							$abcd$
-						}
-					}
-					child[sibling distance = 2cm, align = left, anchor = north] {
-						node {
-							$\set{a, c} > b$, \esp{(5 * 2 + 3 * 6) / 8}\\
-							$cab$ × 4\\
-							$acb$ × 4
-						}
-					}
-				}
-				child {
-					node {$c \relq d$, \esp{4}}
-					child {
-						node {…}
-					}
-					child {
-						node {…}
-					}
-				}
-				child[sibling distance = 1.5cm] {
-					node {…}
-				}
-			}
-			child {
-				node {$b > a$}
-				child[sibling distance = 3cm] {
-					node {$b \relq c$}
-					child[sibling distance = 2cm] {
-						node {$b > \set{a, c}$}
-					}
-					child[sibling distance = 2cm] {
-						node {$c > b > a$}
-					}
-				}
-				child {
-					node {$b \relq d$}
-					child {
-						node {…}
-					}
-					child {
-						node {…}
-					}
-				}
-				child[sibling distance = 1.5cm] {
-					node {…}
-				}
-			}
-		;
-		\path node[fit = (root0) (root0-1-1.south west) (root0-2-3.south east) (root0-2-2-2.south east)] (tree0) {};
-		
-		\path (tree0.south) ++ (0, -1cm) node[anchor = north] (root abc) {$a > b > c$, \esp{5}}
-			[sibling distance = 4cm, level 2/.style = {sibling distance = 2cm, align = left, anchor = north}]
-			child {
-				node {$c \relq d$, \esp{(6 * 1 + 4 * 3) / 4}}
-				child {
-					node {
-						6 edges\\
-						$abcd$
-					}
-				}
-				child {
-					node {
-						4 edges\\
-						$abdc$\\
-						$adbc$\\
-						$dabc$
-					}
-				}
-			}
-			child {
-				node {$b \relq d$, \esp{5}}
-				child {
-					node {
-						5 edges\\
-						$abcd$\\
-						$abdc$
-					}
-				}
-				child {
-					node {
-						5 edges\\
-						$adbc$\\
-						$dabc$
-					}
-				}
-			}
-			child {
-				node {$a \relq d$, \esp{(6 * 1 + 4 * 3) / 4}}
-				child {
-					node {
-						4 edges\\
-						$adbc$\\
-						$abdc$\\
-						$abcd$
-					}
-				}
-				child {
-					node {
-						6 edges\\
-						$dabc$
-					}
-				}
-			}
-		;
-		\begin{scope}
-			\path[anchor=base] (root abc-1) ++ (offsetL) ++ (0mm, 7mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(offsetG) node (c) {$c$} ++ (offsetG) node (d) {$d$};
-			\path graph[use existing nodes] {a -- b -- c -- d};
-		\end{scope}
-		\begin{scope}
-			\path (0, -6mm) coordinate (offsetG);
-			\path[anchor=base] (root abc-1) ++ (offsetR) ++ (-1mm, 6mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(offsetG) node (c) {$c$} ++(3mm, 6mm) node (d) {$d$};
-			\path graph[use existing nodes] {a -- b -- c -- d};
-		\end{scope}
-
-		\path (root abc) ++ (0, -5.5cm) [sibling distance = 3cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] (root ac b) {$\set{a, c} > b$, \esp{(5 * 2 + 3 * 6) / 8}}
-			child {
-				node {$a \relq c$, \esp{3}}
-				child {
-					node {
-						3 edges\\
-						$dacb$\\
-						$adcb$\\
-						$acdb$\\
-						$acbd$
-					}
-				}
-				child {
-					node {
-						3 edges\\
-						$dcab$\\
-						$cdab$\\
-						$cadb$\\
-						$cabd$
-					}
-				}
-			}
-			child {
-				node {$a \relq d$, \esp{(3 * 5 + 4 * 3) / 8}}
-				child {
-					node {
-						3 edges\\
-						$adcb$\\
-						$acdb$\\
-						$acbd$\\
-						$cadb$\\
-						$cabd$
-					}
-				}
-				child {
-					node {
-						4 edges\\
-						$cdab$\\
-						$dcab$\\
-						$dacb$
-					}
-				}
-			}
-			child {
-				node {$b \relq d$, \esp{(5 * 2 + 3 * 6) / 8}}
-				child {
-					node {
-						5 edges\\
-						$cabd$\\
-						$acbd$
-					}
-				}
-				child {
-					node {
-						3 edges\\
-						$acdb$\\
-						$adcb$\\
-						$cadb$\\
-						$cdab$\\
-						$dacb$\\
-						$dcab$
-					}
-				}
-			}
-		;
-%		\begin{scope}
-%			\path (0, -8mm) coordinate (offsetG);
-%			\path[anchor=base] (root ac b-3) ++ (offsetL) ++ (-1mm, 4mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(3mm, 8mm) node (c) {$c$} ++(offsetG) node (d) {$d$};
-%			\path graph[use existing nodes] {a -- b -- c -- d};
-%		\end{scope}
-%		\begin{scope}
-%			\path (0, -7mm) coordinate (offsetG);
-%			\path[anchor=base] (root ac b-3) ++ (offsetR) ++ (-2mm, 2mm) node (a) {$a$} ++(offsetG) node (b) {$b$} ++(3mm, 7mm) node (c) {$c$} ++(0, 6mm) node (d) {$d$};
-%			\path graph[use existing nodes] {a -- b -- c -- d};
-%		\end{scope}
-%		\begin{scope}
-%			\path (0, -5mm) coordinate (offsetG);
-%			\path[anchor=base] (root ac b-4) ++ (offsetL) ++ (2mm, 3mm) node (a) {$a$} ++(offsetG) node (b) {$b$} +(3mm, 5mm) node (c) {$c$} ++(offsetG) node (d) {$d$};
-%			\path graph[use existing nodes] {a -- b -- {c, d}};
-%		\end{scope}
-%		\begin{scope}
-%			\path (0, -5mm) coordinate (offsetG);
-%			\path[anchor=base] (root ac b-4) ++ (offsetR) ++ (-1mm, 3mm) node (a) {$a$} ++(offsetG) node (b) {$b$} +(3mm, 5mm) node (c) {$c$} ++(-3mm, 5mm) node (d) {$d$};
-%			\path graph[use existing nodes] {a -- b -- {c, d}};
-%		\end{scope}
-	\end{tikzpicture}
-	\caption{The case $m = 4$, three questions.}
-	\label{fig:m4}
-\end{figure}
-
-\begin{figure}
-	\NewDocumentCommand{\pgfres}{}{\num[round-mode=places,round-precision=1]{\pgfmathresult}}
-	\NewDocumentCommand{\pgfcalc}{m}{\pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
-	\NewDocumentCommand{\esp}{m}{E[.] = \pgfmathparse{#1}\num[round-mode=places,round-precision=1]{\pgfmathresult}}
-	\begin{tikzpicture}
-		\path (-10mm, -9mm) coordinate (offsetL);
-		\path (10mm, -9mm) coordinate (offsetR);
-		\path (0, -4mm) coordinate (offsetG);
-		\path [sibling distance = 8cm, level 2/.style = {sibling distance = 1.5cm, align = left, anchor = north}] node[anchor=north] {$a > b, c > d$, \esp{4}}
-			child {
-				node {$a \relq c$ (or $b \relq d$), \esp{4}}
-				child {
-					node {
-						4 edges\\
-						3 orders
-					}
-				}
-				child {
-					node {
-						4 edges\\
-						3 orders
-					}
-				}
-			}
-			child {
-				node {$a \relq d$ (or $b \relq c$), \esp{(3 * 5 + 6 * 1) / 6}}
-				child {
-					node {
-						3 edges\\
-						$ca$ × 2\\
-						$ac$ × 2\\
-						$abcd$
-					}
-				}
-				child {
-					node {
-						6 edges\\
-						1 order
-					}
-				}
-			}
-		;
-	\end{tikzpicture}
-	\caption{The case $m = 4$, three questions, continued.}
-	\label{fig:m4Cont}
-\end{figure}
-
-\section{Conjecture}
-Computer experiments (to be checked) suggest that the following is the optimal strategy when $k = 4$. Start, obviously, by using two questions to order $\set{a, b, c}$. If we obtain a linear order (say, $a > b > c$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, b} > c$), disconnect temporarily by asking about $d$ and $e$, then connect the two components.
 
 %\bibliography{bibl}
 
