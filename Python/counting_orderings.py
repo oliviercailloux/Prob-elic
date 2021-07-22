@@ -15,7 +15,7 @@ from itertools import combinations
 from anytree import Node, RenderTree
 from anytree.dotexport import RenderTreeGraph
 from anytree import dotexport
-
+import time
 # V2 now creates question nodes in the rendered tree, and computes
 # expected values for question nodes
 
@@ -44,7 +44,7 @@ class Elic_node:
       self._long_description=self._descriptor+','+str(self._num_compat)+','+str(len(self._known_answers))
       self._child_indices=[]
       self._index=0
-    elif f_node._isquestion == True:
+    elif f_node._isquestion == True: #answer node
       self._isquestion=False
       x1=question[0]
       x2=question[1]
@@ -69,7 +69,7 @@ class Elic_node:
       self._child_indices=[]
       self._index=index
       self._f_node._child_indices.append(index)
-    else:
+    else: #question node
       x1=question[0]
       x2=question[1]
       self._f_node=f_node
@@ -240,8 +240,34 @@ class Elic_Tree:
     e.to_dotfile(str(self._n)+'-'+str(self._k)+'.dot')
     
   def build_whole_tree(self):
+    tic=time.time()
+    current_level=0
+    current_isquestion=False
+    current_state='questions'
+    previous_state='answer'
+    in_step_number=1
+    next_level_len=1
     while len(self._open_nodes)>0:
+      if self._nodes[self._open_nodes[0]]._isquestion != current_isquestion:
+          current_isquestion= not(current_isquestion)
+          if current_isquestion:
+              current_state='questions'
+              previous_state='answer'
+          else:
+              current_state='answers'
+              previous_state='question'
+          tac=time.time()
+          print('\n',previous_state, ' level ', current_level, 'completed in', tac-tic, 'seconds')
+          tic=tac
+          next_level_len= len(self._open_nodes)
+          print('next level has',next_level_len , current_state )
+          print(' ')
+          current_level+=1
+          in_step_number=1
+      if in_step_number%100==0:    
+          print('\r opening ',current_state, ' ... ' , in_step_number , '/', next_level_len, end='' )
       self.open_first_node()
+      in_step_number+=1
 
     
 
