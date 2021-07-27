@@ -295,10 +295,10 @@ The following proposition is a corollary of the previous lemma.
 \begin{proposition}[draft!]
 	\label{th:indep}
 	Given $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only incomparable elements better than $b$ and incomparable elements below $b$, and $a, b \in X$ such that $q_{ab} \cap {\ppref} = \emptyset$: 
-	\[P(a > b \knowing {\ppref}) = \frac{1 + {\ppref}(b)}{1 + {\ppref}(b) + 1 + {\ppref}^{-1}(b)}.\]
+	\[P(a > b \knowing {\ppref}) = \frac{1 + {\ppref^{-1}}(b)}{1 + {\ppref^{-1}}(b) + 1 + {\ppref}(b)}.\]
 	In particular, it is independent of the relative ordering of the elements below $b$.
 	\footnote{This is also equal to:
-		\[P(a > b \knowing {\ppref}) = \frac{(1 + {\ppref}(b))! {\ppref}^{-1}(b)!}{(1 + {\ppref}(b))! {\ppref}^{-1}(b)! + {\ppref}(b)! (1 + {\ppref}^{-1}(b))!}.\] 
+		\[P(a > b \knowing {\ppref}) = \frac{(1 + {\ppref^{-1}}(b))! {\ppref}(b)!}{(1 + {\ppref^{-1}}(b))! {\ppref}(b)! + {\ppref^{-1}}(b)! (1 + {\ppref}(b))!}.\] 
 	}
 \end{proposition}
 \begin{proof}
@@ -313,18 +313,18 @@ The following proposition is a corollary of the previous lemma.
 	The result now follows from $P(a > b \knowing {\ppref}) = \frac{P(a > b, {\ppref}, e)}{P({\ppref}, e)} = \frac{P(a > b, {\ppref}, e)}{P(a > b, {\ppref}, e) + P(b > a, {\ppref}, e)}$.
 \end{proof}
 
-\begin{proof} Another proof. I replace $a$ by $d$ in the Proposition. We try to assess $P(d > b \knowing {\ppref})$. We have that $X'= A \cup \set{b} \cup C$, where $A = {\ppref}(b)$, $C = {\ppref^{-1}}(b)$ and $\restr{{\ppref}}{A} = \emptyset = \restr{{\ppref}}{C}$. Let $X^{\prime\prime} = X' \cup \set{d}$.
-By \cref{le:probaPartialOrder}, we have :
+\begin{proof} Another proof. I replace $a$ by $d$ in the Proposition. We try to assess $P(d > b \knowing {\ppref})$. We have that $X'= A \cup \set{b} \cup C$, where $A = {\ppref^{-1}}(b)$, $C = {\ppref}(b)$ and $\restr{{\ppref}}{A} = \emptyset = \restr{{\ppref}}{C}$.
+By \cref{le:probaPartialOrder}, we have:
 $$
 P({\ppref}) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!} = \frac{|A|! \cdot |C|!}{(|A|+|C|+1)!}
 $$
-and, by applying \cref{le:probaPartialOrder} to $X^{\prime\prime}$, 
+and, by applying \cref{le:probaPartialOrder} to $X^{\prime\prime} = X' \cup \set{d}$, 
 $$
-P({\ppref} \cup \set{(d,b)}) = \frac{|A|! \cdot |C|! \cdot (|A|+1)}{(|A|+|C|+2)!}. 
+P\big(T({\ppref} \cup \set{(d,b)})\big) = \frac{|A|! \cdot |C|! \cdot (|A|+1)}{(|A|+|C|+2)!}. 
 $$
 We thus have:
 $$
-P(d \ppref b \knowing {\ppref}) = \frac{P({\ppref} \cup \set{(d,b)})}{P({\ppref})} = \frac{|A|+1}{|A|+|C|+2}. 
+P(d \ppref b \knowing {\ppref}) = \frac{P\big(T({\ppref} \cup \set{(d,b)})\big)}{P({\ppref})} = \frac{|A|+1}{|A|+|C|+2}. 
 $$
 \end{proof}
 
@@ -341,19 +341,26 @@ Assume > has a single connected component, and every undirected path has at most
 \end{conjecture}
 \begin{proof}
 	Let’s check first that this is myopically optimal. Consider a chain $abc$.
-	\[E[\card{T({>} \cup (\pref \cap q_{af}))} - \card{{>}} - 1 \knowing >] = P(f > a \knowing >) ({>}(b) + 1),\]
-	\[E[\card{T({>} \cup (\pref \cap q_{bf}))} - \card{{>}} - 1 \knowing >] = P(f > b \knowing >) {>}(b) + P(b > f \knowing >) {>}^{-1}(b).\]
+	\[E[\card{T({>} \cup (\pref \cap q_{af}))} - \card{{>}} - 1 \knowing >] = P(f > a \knowing >) (\card{{\ppref}(b)} + 1),\]
+	\[E[\card{T({>} \cup (\pref \cap q_{bf}))} - \card{{>}} - 1 \knowing >] = P(f > b \knowing >) \card{{\ppref}(b)} + P(b > f \knowing >) \card{{\ppref}^{-1}(b)}.\]
 	Thus, we need to prove:
-	\[P(f > b \knowing >) >(b) + P(b > f \knowing >) {>}^{-1}(b) > P(f > a \knowing >) {>}(b) + P(f > a \knowing >),\]
+	\[P(f > b \knowing >) \card{{\ppref}(b)} + P(b > f \knowing >) \card{{\ppref}^{-1}(b)} > P(f > a \knowing >) \card{{\ppref}(b)} + P(f > a \knowing >),\]
 	or equivalently:
-	\[[P(f > b \knowing >) - P(f > a \knowing >)] {>}(b) > P(f > a \knowing >) + P(f > b \knowing >) {>}^{-1}(b) − {>}^{-1}(b).\]
+	\[[P(f > b \knowing >) - P(f > a \knowing >)] \card{{\ppref}(b)} > P(f > a \knowing >) + P(f > b \knowing >) \card{{\ppref}^{-1}(b)} − \card{{\ppref}^{-1}(b)},\]
+	or equivalently:
+	\[P(a > f > b \knowing >) \card{{\ppref}(b)} > P(f > a \knowing >) + P(f > b \knowing >) \card{{\ppref}^{-1}(b)} − \card{{\ppref}^{-1}(b)}.\]
 	
-	We know that $P(f > b \knowing >) > P(f > a \knowing >)$, because the event $f > b$ includes the event $f > a$ and the probability of the difference is not null.
+	Consider $x_1 = a$ to $x_k$ above $b$ above $\card{{\ppref}(b)}$ elements. 
+	$P(f > a \knowing \ppref, \card{{\pprefeqinv}(a)} = r) = r / (k + 2 + \card{{\ppref}(b)})$. 
+	Thus, $P(f > a \knowing \ppref) = (1 + k) / 2 / (k + 2 + \card{{\ppref}(b)})$.
+	Whereas $P(f > b \knowing \ppref) = (1 + k) / (k + 2 + \card{{\ppref}(b)})$.
+	Thus, the inequality holds.
 	
-	I suspect that this is true even when replacing ${>}^{-1}(b)$ with 1, a proof of which would suffice to prove the claim (because this replacement is unfavorable to $E[q_{bf}]$). Because $P(f > a \knowing >) + P(f > b \knowing >) − 1 < 2 P(f > b \knowing >) − 1$, we would thus have to prove:
-	\[[P(a > f > b \knowing >)] {>}(b) ≥ 2 P(f > b \knowing >) − 1.\]
 	
-	Perhaps this can be done using \cref{th:indep}…
+	\footnote{I thought that this would be true even when replacing $\card{{\ppref}^{-1}(b)}$ with 1, a proof of which would suffice to prove the claim (because this replacement is unfavorable to $E[q_{bf}]$). Because $P(f > a \knowing >) + P(f > b \knowing >) − 1 < 2 P(f > b \knowing >) − 1$, we would thus have to prove:
+	$[P(a > f > b \knowing >)] \card{{\ppref}(b)} ≥ 2 P(f > b \knowing >) − 1$. But this is false. Consider $a, d, e, g$ better than $b$ better than $c$. $P(f > b \knowing >) = 5/7$. RHS = $3/7$ > LHS = $P(a > f > b \knowing >) = 2.5 / 7$.}
+	
+	
 \end{proof}
 
 \newlength{\ordown}
