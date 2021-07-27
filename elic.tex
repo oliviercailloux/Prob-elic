@@ -213,9 +213,9 @@ We shall use the following notation:
 Let $X' \subseteq X$ and $\ppref, \ppref' \in \linors[X']$. We have $P(\ppref) = P(\ppref')$.
 \end{lemma}
 \begin{proof}
-By definition, $P(\ppref) = P(Y)$, where $Y = \{\ppref^{''} \in \linors[X]: \ppref^{''}_{|X'}= \ppref\})$.  Similarly,  $P(\ppref')= P(Y')$, where $Y' = \{\ppref^{''} \in \linors[X]: \ppref^{''}_{|X'}= \ppref'\})$.
+By definition, $P(\ppref) = P(Y)$, where $Y = \{\ppref^{\prime\prime} \in \linors[X]: \ppref^{\prime\prime}_{|X'}= \ppref\})$.  Similarly,  $P(\ppref')= P(Y')$, where $Y' = \{\ppref^{\prime\prime} \in \linors[X]: \ppref^{\prime\prime}_{|X'}= \ppref'\})$.
 
-The distribution being uniform on all linear orders on $X$, the sets $Y$ and $Y'$ have equal probability because they have the same cardinality. This is intuitively clear. To be sure, we establish a bijection between these two sets. Every linear order $\ppref^{''} \in \linors[X]$ uniquely corresponds to a bijection $\sigma: X \rightarrow \{1, \ldots, n\}$ such that $a \ppref^{''} b $ iff $\sigma(a) > \sigma(b)$ (where $>$ denotes the order on the natural numbers). We can interpret $\sigma$ as the \emph{rank} function (the larger the rank, the better). Assume that $\ppref^{''} \in Y$ and $\sigma$ is the associated rank function. The set $\sigma(X')$ is the set of ranks of the elements in $X'$ w.r.t. the order $\ppref$ on $X'$ (since $\ppref^{''} \in Y$). Let $\tau: X' \rightarrow X'$ be the permutation that maps the  element of rank $i$ w.r.t.\ $\ppref$ onto the element of same rank $i$ w.r.t.\  $\ppref'$. We have, for all $a,b \in X'$, $a \ppref b$ iff $\tau(a) \ppref' \tau(b')$. Each element $\ppref^{''} \in Y$ is uniquely associated to the element $\ppref^{'''} \in Y'$, which is defined as follows by its rank function $\sigma'$: $\sigma'(a) = \sigma (a)$, for all $a\in X\setminus{X'}$ and $\sigma'(a) = \sigma(\tau^{-1}(a)$, for all $a \in X'$. It is easily checked that this correspondence is bijective.   
+The distribution being uniform on all linear orders on $X$, the sets $Y$ and $Y'$ have equal probability because they have the same cardinality. This is intuitively clear. To be sure, we establish a bijection between these two sets. Every linear order $\ppref^{\prime\prime} \in \linors[X]$ uniquely corresponds to a bijection $\sigma: X \rightarrow \{1, \ldots, n\}$ such that $a \ppref^{\prime\prime} b $ iff $\sigma(a) > \sigma(b)$ (where $>$ denotes the order on the natural numbers). We can interpret $\sigma$ as the \emph{rank} function (the larger the rank, the better). Assume that $\ppref^{\prime\prime} \in Y$ and $\sigma$ is the associated rank function. The set $\sigma(X')$ is the set of ranks of the elements in $X'$ w.r.t. the order $\ppref$ on $X'$ (since $\ppref^{\prime\prime} \in Y$). Let $\tau: X' \rightarrow X'$ be the permutation that maps the  element of rank $i$ w.r.t.\ $\ppref$ onto the element of same rank $i$ w.r.t.\  $\ppref'$. We have, for all $a,b \in X'$, $a \ppref b$ iff $\tau(a) \ppref' \tau(b')$. Each element $\ppref^{\prime\prime} \in Y$ is uniquely associated to the element $\ppref^{\prime\prime\prime} \in Y'$, which is defined as follows by its rank function $\sigma'$: $\sigma'(a) = \sigma (a)$, for all $a\in X\setminus{X'}$ and $\sigma'(a) = \sigma(\tau^{-1}(a)$, for all $a \in X'$. It is easily checked that this correspondence is bijective.   
 
 \end{proof}
 \begin{proposition}\label{prop:probaLinearOrder}
@@ -236,13 +236,13 @@ $$P(\ppref) = \frac{|\{\ppref' \in \linors[X']: \ppref' \supseteq \ppref\}|}{|X'
 $$
 \end{lemma}
 \begin{proof}
-$P(\ppref) = P(\{\ppref^{''} \in \linors[X]: \ppref^{''} \supseteq \ppref\})$. We have that 
+$P(\ppref) = P(\{\ppref^{\prime\prime} \in \linors[X]: \ppref^{\prime\prime} \supseteq \ppref\})$. We have that 
 $$
-\{\ppref^{''} \in \linors[X]: \ppref^{''} \supseteq \ppref\} = \bigcup_{\ppref' \in \linors[X']: \ppref' \supseteq \ppref} \{\ppref^{''} \in \linors[X]: \ppref^{''}_{|X'} = \ppref'\}.
+\{\ppref^{\prime\prime} \in \linors[X]: \ppref^{\prime\prime} \supseteq \ppref\} = \bigcup_{\ppref' \in \linors[X']: \ppref' \supseteq \ppref} \{\ppref^{\prime\prime} \in \linors[X]: \ppref^{\prime\prime}_{|X'} = \ppref'\}.
 $$   
 The latter union is disjoint. Therefore, 
 $$
-\{\ppref^{''} \in \linors[X]: \ppref^{''} \supseteq \ppref\}= \sum_{\ppref' \in \linors[X']: \ppref' \supseteq \ppref} P(\ppref').
+\{\ppref^{\prime\prime} \in \linors[X]: \ppref^{\prime\prime} \supseteq \ppref\}= \sum_{\ppref' \in \linors[X']: \ppref' \supseteq \ppref} P(\ppref').
 $$
 Using Proposition \ref{prop:probaLinearOrder}, we get the result.
 \end{proof}
@@ -277,12 +277,12 @@ The following proposition is a corollary of the previous lemma (no need for a pr
 	The result now follows from $P(a > b \knowing {\ppref}) = \frac{P(a > b, {\ppref}, e)}{P({\ppref}, e)} = \frac{P(a > b, {\ppref}, e)}{P(a > b, {\ppref}, e) + P(b > a, {\ppref}, e)}$.
 \end{proof}
 
-\begin{proof} Another proof. I replace $a$ by $d$ in the Proposition. We try to assess $P(d > b \knowing {\ppref})$. We have that $X'= A \cup \{b\} \cup C$, where $A=\ {\ppref}(b)$, $C=\ {\ppref^{-1}}(b)$ and $\ppref_{|A} = \emptyset =\ \ppref_{|C}$. Let $X'' = X' \cup \{d\}$.
+\begin{proof} Another proof. I replace $a$ by $d$ in the Proposition. We try to assess $P(d > b \knowing {\ppref})$. We have that $X'= A \cup \{b\} \cup C$, where $A=\ {\ppref}(b)$, $C=\ {\ppref^{-1}}(b)$ and $\ppref_{|A} = \emptyset =\ \ppref_{|C}$. Let $X^{\prime\prime} = X' \cup \{d\}$.
 By Lemma \ref{le:probaPartialOrder}, we have :
 $$
 P(\ppref) = \frac{|\{\ppref' \in \linors[X']: \ppref' \supseteq \ppref\}|}{|X'|!} = \frac{|A|! \cdot |C|!}{(|A|+|C|+1)!}
 $$
-and, by applying Lemma \ref{le:probaPartialOrder} to $X''$, 
+and, by applying Lemma \ref{le:probaPartialOrder} to $X^{\prime\prime}$, 
 $$
 P(\ppref \cup \{(d,b)\}) = \frac{|A|! \cdot |C|! \cdot (|A|+1)}{(|A|+|C|+2)!}. 
 $$
