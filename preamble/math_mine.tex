@@ -1,6 +1,6 @@
 %Pref
-\NewDocumentCommand{\pref}{}{\bm{>^c}}
-\NewDocumentCommand{\prefeq}{}{\bm{≥^c}}
+\NewDocumentCommand{\pref}{O{\mathit{c}}}{\bm{>^{#1}}}
+\NewDocumentCommand{\prefeq}{O{\mathit{c}}}{\bm{≥^{#1}}}
 \NewDocumentCommand{\ppref}{}{>}
 \NewDocumentCommand{\pprefeq}{}{≥}
 \NewDocumentCommand{\POs}{O{X}}{\mathit{PO}(#1)}

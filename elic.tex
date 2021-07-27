@@ -210,12 +210,19 @@ We shall use the following notation:
 \end{itemize}
 
 \begin{lemma}\label{le:equalProba}
-Let $X' \subseteq X$ and $\ppref, \ppref' \in \linors[X']$. We have $P(\ppref) = P(\ppref')$.
+Let $X' \subseteq X$ and ${\ppref}, {\ppref'} \in \linors[X']$. We have $P(\ppref) = P(\ppref')$.
 \end{lemma}
 \begin{proof}
-By definition, $P(\ppref) = P(Y)$, where $Y = \set{{\ppref^{\prime\prime}} \in \linors[X]: \restr{{\ppref^{\prime\prime}}}{X'} = {\ppref}})$.  Similarly,  $P(\ppref')= P(Y')$, where $Y' = \set{{\ppref^{\prime\prime}} \in \linors: \restr{{\ppref^{\prime\prime}}}{X'} = {\ppref'}})$.
+By definition, $P(\ppref) = P(Y)$, where $Y = \set{{\pref[e]} \in \linors[X]: \restr{{\pref[e]}}{X'} = {\ppref}})$.  Similarly,  $P(\ppref')= P(Y')$, where $Y' = \set{{\pref[\prime e]} \in \linors: \restr{{\pref[\prime e]}}{X'} = {\ppref'}})$.
 
-The distribution being uniform on all linear orders on $X$, the sets $Y$ and $Y'$ have equal probability because they have the same cardinality. This is intuitively clear. To be sure, we establish a bijection between these two sets. Every linear order ${\ppref^{\prime\prime}} \in \linors$ uniquely corresponds to a bijection $\sigma: X \rightarrow \{1, \ldots, n\}$ such that $a \ppref^{\prime\prime} b $ iff $\sigma(a) > \sigma(b)$ (where $>$ denotes the order on the natural numbers). We can interpret $\sigma$ as the \emph{rank} function (the larger the rank, the better). Assume that ${\ppref^{\prime\prime}} \in Y$ and $\sigma$ is the associated rank function. The set $\sigma(X')$ is the set of ranks of the elements in $X'$ w.r.t. the order $\ppref$ on $X'$ (since ${\ppref^{\prime\prime}} \in Y$). Let $\tau: X' \rightarrow X'$ be the permutation that maps the  element of rank $i$ w.r.t.\ $\ppref$ onto the element of same rank $i$ w.r.t.\  $\ppref'$. We have, for all $a,b \in X'$, $a \ppref b$ iff $\tau(a) \ppref' \tau(b')$. Each element ${\ppref^{\prime\prime}} \in Y$ is uniquely associated to the element ${\ppref^{\prime\prime\prime}} \in Y'$, which is defined as follows by its rank function $\sigma'$: $\sigma'(a) = \sigma (a)$, for all $a\in X\setminus{X'}$ and $\sigma'(a) = \sigma(\tau^{-1}(a)$, for all $a \in X'$. It is easily checked that this correspondence is bijective.   
+The distribution being uniform on all linear orders on $X$, the sets $Y$ and $Y'$ have equal probability because they have the same cardinality. This is intuitively clear. To be sure, we establish a bijection between these two sets. Consider any element ${\pref[e]} \in Y$, and let us associate to it the following element ${\pref[\prime e]} \in Y'$.
+
+Every linear order ${\pref[c]} \in \linors$ uniquely corresponds to a bijection $\sigma: X \rightarrow \set{1, …, n}$ such that $a \pref[c] b $ iff $\sigma(a) > \sigma(b)$ (where $>$ denotes the order on the natural numbers). 
+\commentOC{Can we write: … such that $\sigma(a) = \card{{\prefeq[c]}(a)} = \card{\set{b \in X \suchthat a \prefeq[c] b}}$?}
+We can interpret $\sigma$ as the \emph{rank} function (the larger the rank, the better). 
+
+Let $\sigma$ denote the rank function associated to $\pref[e]$. 
+The set $\sigma(X')$ is the set of ranks of the elements in $X'$ w.r.t. the order $\ppref$ on $X'$ (since ${\pref[e]} \in Y$). Let $\tau: X' \rightarrow X'$ be the permutation that maps the  element of rank $i$ w.r.t.\ $\ppref$ onto the element of same rank $i$ w.r.t.\  $\ppref'$. We have, for all $a,b \in X'$, $a \ppref b$ iff $\tau(a) \ppref' \tau(b')$. Each element ${\pref[e]} \in Y$ is uniquely associated to the element ${\pref[\prime e]} \in Y'$, which is defined as follows by its rank function $\sigma'$: $\sigma'(a) = \sigma (a)$, for all $a\in X\setminus{X'}$ and $\sigma'(a) = \sigma(\tau^{-1}(a)$, for all $a \in X'$. It is easily checked that this correspondence is bijective.   
 
 \end{proof}
 \begin{proposition}\label{prop:probaLinearOrder}
