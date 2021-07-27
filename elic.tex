@@ -210,58 +210,87 @@ We shall use the following notation:
 \end{itemize}
 
 \begin{lemma}\label{le:equalProba}
+	\label{th:equalProba}
 Let $X' \subseteq X$ and ${\ppref}, {\ppref'} \in \linors[X']$. We have $P(\ppref) = P(\ppref')$.
 \end{lemma}
 \begin{proof}
 By definition, $P(\ppref) = P(Y)$, where $Y = \set{{\pref[e]} \in \linors[X]: \restr{{\pref[e]}}{X'} = {\ppref}})$.  Similarly,  $P(\ppref')= P(Y')$, where $Y' = \set{{\pref[\prime e]} \in \linors: \restr{{\pref[\prime e]}}{X'} = {\ppref'}})$.
 
-The distribution being uniform on all linear orders on $X$, the sets $Y$ and $Y'$ have equal probability because they have the same cardinality. This is intuitively clear. To be sure, we establish a bijection between these two sets. Consider any element ${\pref[e]} \in Y$, and let us associate to it the following element ${\pref[\prime e]} \in Y'$.
+The distribution being uniform on all linear orders on $X$, the sets $Y$ and $Y'$ have equal probability because they have the same cardinality. This is intuitively clear. To be sure, we establish a bijection between these two sets. Considering any element ${\pref[e]} \in Y$, we will associate to it an element ${\pref[\prime e]} \in Y'$, thanks to the following concept of a rank function.
 
 Every linear order ${\pref[c]} \in \linors$ uniquely corresponds to a bijection $\sigma: X \rightarrow \set{1, …, n}$ such that $a \pref[c] b $ iff $\sigma(a) > \sigma(b)$ (where $>$ denotes the order on the natural numbers). 
-\commentOC{Can we write: … such that $\sigma(a) = \card{{\prefeq[c]}(a)} = \card{\set{b \in X \suchthat a \prefeq[c] b}}$?}
+\commentOC{Can we write: … such that $\sigma(a) = \card{{\pref[c]}(a)} = \card{\set{b \in X \suchthat a \pref[c] b}}$?}
 We can interpret $\sigma$ as the \emph{rank} function (the larger the rank, the better). 
 
 Let $\sigma$ denote the rank function associated to $\pref[e]$. 
 The set $\sigma(X')$ is the set of ranks of the elements in $X'$ w.r.t. the order $\ppref$ on $X'$ (since ${\pref[e]} \in Y$). Let $\tau: X' \rightarrow X'$ be the permutation that maps the  element of rank $i$ w.r.t.\ $\ppref$ onto the element of same rank $i$ w.r.t.\  $\ppref'$. We have, for all $a,b \in X'$, $a \ppref b$ iff $\tau(a) \ppref' \tau(b')$. Each element ${\pref[e]} \in Y$ is uniquely associated to the element ${\pref[\prime e]} \in Y'$, which is defined as follows by its rank function $\sigma'$: $\sigma'(a) = \sigma (a)$, for all $a\in X\setminus{X'}$ and $\sigma'(a) = \sigma(\tau^{-1}(a)$, for all $a \in X'$. It is easily checked that this correspondence is bijective.   
-
 \end{proof}
+\begin{proof}[Alternative, with lower contour sets]
+	Same first two paragraphs.
+	
+	Define a bijection $\tau: X' → X'$ that associates to an element $a \in X'$ of rank $i$ in $\ppref$ the element that has rank $i$ in ${\ppref'}$. Extend it to a bijection $t: X → X$ defined as $t = \tau \cup \restr{{=}}{X \setminus X'}$, thus, that associates the elements of $X$ not in $X'$ to themselves.
+	
+	Define the transformation from ${\pref[e]} \in Y$ to ${\pref[\prime e]} \in Y'$ as ${\pref[\prime e]} = t \circ {\pref[e]} \circ t^{-1}$, by which we mean that ${\pref[\prime e]}(a)$, the lower contour set of $a$ in $\pref[\prime e]$, equals the lower contour set of $t^{-1}(a)$ in $\pref[e]$ transformed by $t$. As $t$ is a bijection, this transformation is a bijection. See \cref{fig:equalProba}.
+\end{proof}
+\begin{figure}
+	\begin{tikzpicture}
+		\path node (>) {$\ppref$};
+		\path (>) ++(0, -5mm) node (a) {$a$};
+		\path (a) ++(0, -5mm) node (c) {$c$};
+		\path (c) ++(0, -5mm) node (b) {$b$};
+		\path (>) ++(2cm, 0) node (>') {$\ppref'$};
+		\path (>') ++(0, -5mm) node (c') {$c$};
+		\path (c') ++(0, -5mm) node (b') {$b$};
+		\path (b') ++(0, -5mm) node (a') {$a$};
+		\path [draw, ->] (c) edge node {$\tau$} (b');
+
+		\path (b) ++(0, -2cm) node (>e) {$\pref[e]$};
+		\path (>e) ++(0, -5mm) node (xe) {$x$};
+		\path (xe) ++(0, -5mm) node (ae) {$a$};
+		\path (ae) ++(0, -5mm) node (ce) {$c$};
+		\path (ce) ++(0, -5mm) node (be) {$b$};
+		\path (be) ++(0, -5mm) node (ye) {$y$};
+		\path (ye) ++(0, -5mm) node (ze) {$z$};
+		\path (>e) ++(2cm, 0) node (>e') {$\pref[\prime e]$};
+		\path (>e') ++(0, -5mm) node (xe') {$x$};
+		\path (xe') ++(0, -5mm) node (ce') {$c$};
+		\path (ce') ++(0, -5mm) node (be') {$b$};
+		\path (be') ++(0, -5mm) node (ae') {$a$};
+		\path (ae') ++(0, -5mm) node (ye') {$y$};
+		\path (ye') ++(0, -5mm) node (ze') {$z$};
+		\path [draw, ->] (ce) edge node {$t$} (be');
+	\end{tikzpicture}
+	\caption{Illustration for \cref{th:equalProba} with $X' = \set{a, b, c}$ and $X = X' \cup \set{x, y, z}$}
+	\label{fig:equalProba}
+\end{figure}
+
 \begin{proposition}\label{prop:probaLinearOrder}
 	Consider any $X' \subseteq X$ and any ${\ppref} \in \linors[X']$. $P(\ppref) = 1 / (\card{X'})!$.
 \end{proposition}
-\begin{proof}
-	Consider any ${\ppref}, {\ppref'} \in \linors[X']$. We have that $P(\ppref) = P(\ppref')$.
-	We also know that the set of all possible linear orderings over $X'$ represents a sure event, thus, $P(\linors[X']) = 1$, and that $\ppref$ and $\ppref'$ are disjoint events. 
-	Thus, $\sum_{{\ppref} \in \linors[X']} P(\ppref) = 1$.
-	The result follows.
-\end{proof}
-\begin{proof} Another proof. By Lemma \ref{le:equalProba}, $P(\ppref) = P(\ppref')$, for all $\ppref, \ppref' \in \linors[X']$. Since the cardinal of $\linors[X']$ is $|X'|$, for all $\ppref \in \linors[X']$, $P(\ppref) =  \frac{1}{|X'|!}$.
+\begin{proof} By \cref{th:equalProba}, $P(\ppref) = P(\ppref')$, for all ${\ppref}, {\ppref'} \in \linors[X']$. Since the cardinal of $\linors[X']$ is $|X'|!$, for all ${\ppref} \in \linors[X']$, $P(\ppref) =  \frac{1}{|X'|!}$.
 \end{proof}
 
 \begin{lemma}\label{le:probaPartialOrder}
-Let $X' \subseteq X$ and $\ppref \in \POs[X']$, a partial order on $X'$. We have 
-$$P(\ppref) = \frac{|\{\ppref' \in \linors[X']: \ppref' \supseteq \ppref\}|}{|X'|!}.
+Let $X' \subseteq X$. Given ${\ppref} \in \POs[X']$, a partial order on $X'$: 
+$$P(\ppref) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!}.
 $$
 \end{lemma}
 \begin{proof}
-$P(\ppref) = P(\set{{\ppref^{\prime\prime}} \in \linors: {\ppref^{\prime\prime}} \supseteq \ppref})$. We have that 
+$P(\ppref) = P(\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}})$. We have that 
 $$
-\set{{\ppref^{\prime\prime}} \in \linors: {\ppref^{\prime\prime}} \supseteq {\ppref}} = \bigcup_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} \set{{\ppref^{\prime\prime}} \in \linors: \restr{{\ppref^{\prime\prime}}}{X'} = {\ppref'}}.
+\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}} = \bigcup_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} \set{{\pref[e]} \in \linors: \restr{{\pref[e]}}{X'} = {\ppref'}}.
 $$   
 The latter union is disjoint. Therefore, 
 $$
-\set{{\ppref^{\prime\prime}} \in \linors: {\ppref^{\prime\prime}} \supseteq {\ppref}}= \sum_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} P({\ppref'}).
+P(\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}}) = \sum_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} P({\ppref'}).
 $$
 Using \cref{prop:probaLinearOrder}, we get the result.
 \end{proof}
 
-The following proposition is a corollary of the previous lemma (no need for a proof). 
-
+The following proposition is a corollary of the previous lemma. 
 \begin{proposition}
 	Consider any $X' \subseteq X$ and any partial order $\ppref$ over $X'$. Its probability $P(\ppref)$ is independent of $n$.
 \end{proposition}
-\begin{proof}
-	$P(\ppref) = \sum_{{\ppref'} \in \linors[X'] \suchthat {\ppref} \subseteq {\ppref'}} P(\ppref') = x / (\card{X'})!$, where $x$ is the number of linear orderings over $X'$ that extend $\ppref'$. This quantity does not depend on $n$.
-\end{proof}
 
 \begin{proposition}[draft!]
 	\label{th:indep}
