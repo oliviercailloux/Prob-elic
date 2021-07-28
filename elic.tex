@@ -4,7 +4,6 @@
 \input{preamble/redac}
 \input{preamble/math_basics}
 \input{preamble/math_mine}
-\newcommand{\commentMP}[1]{\textcolor{green}{[MP:#1]}}
 %I find these settings useful in draft mode. Should be removed for final versions.
 	%Which line breaks are chosen: accept worse lines, therefore reducing risk of overfull lines. Default = 200.
 		\tolerance=2000
@@ -272,18 +271,19 @@ The set $\sigma(X')$ is the set of ranks of the elements in $X'$ w.r.t. the orde
 
 \begin{lemma}\label{le:probaPartialOrder}
 Let $X' \subseteq X$. Given ${\ppref} \in \POs[X']$, a partial order on $X'$: 
-$$P(\ppref) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!}.
-$$
+\begin{equation}
+	P(\ppref) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!}.
+\end{equation}
 \end{lemma}
 \begin{proof}
 $P(\ppref) = P(\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}})$. We have that 
-$$
-\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}} = \bigcup_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} \set{{\pref[e]} \in \linors: \restr{{\pref[e]}}{X'} = {\ppref'}}.
-$$   
+\begin{equation}
+	\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}} = \bigcup_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} \set{{\pref[e]} \in \linors: \restr{{\pref[e]}}{X'} = {\ppref'}}.
+\end{equation}
 The latter union is disjoint. Therefore, 
-$$
-P(\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}}) = \sum_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} P({\ppref'}).
-$$
+\begin{equation}
+	P(\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}}) = \sum_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} P({\ppref'}).
+\end{equation}
 Using \cref{prop:probaLinearOrder}, we get the result.
 \end{proof}
 
@@ -295,10 +295,10 @@ The following proposition is a corollary of the previous lemma.
 \begin{proposition}[draft!]
 	\label{th:indep}
 	Given $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only incomparable elements better than $b$ and incomparable elements below $b$, and $a, b \in X$ such that $q_{ab} \cap {\ppref} = \emptyset$: 
-	\[P(a > b \knowing {\ppref}) = \frac{1 + {\ppref^{-1}}(b)}{1 + {\ppref^{-1}}(b) + 1 + {\ppref}(b)}.\]
+	\begin{equation}P(a > b \knowing {\ppref}) = \frac{1 + {\ppref^{-1}}(b)}{1 + {\ppref^{-1}}(b) + 1 + {\ppref}(b)}.\end{equation}
 	In particular, it is independent of the relative ordering of the elements below $b$.
 	\footnote{This is also equal to:
-		\[P(a > b \knowing {\ppref}) = \frac{(1 + {\ppref^{-1}}(b))! {\ppref}(b)!}{(1 + {\ppref^{-1}}(b))! {\ppref}(b)! + {\ppref^{-1}}(b)! (1 + {\ppref}(b))!}.\] 
+		\begin{equation}P(a > b \knowing {\ppref}) = \frac{(1 + {\ppref^{-1}}(b))! {\ppref}(b)!}{(1 + {\ppref^{-1}}(b))! {\ppref}(b)! + {\ppref^{-1}}(b)! (1 + {\ppref}(b))!}.\end{equation} 
 	}
 \end{proposition}
 \begin{proof}
@@ -315,17 +315,17 @@ The following proposition is a corollary of the previous lemma.
 
 \begin{proof} Another proof. I replace $a$ by $d$ in the Proposition. We try to assess $P(d > b \knowing {\ppref})$. We have that $X'= A \cup \set{b} \cup C$, where $A = {\ppref^{-1}}(b)$, $C = {\ppref}(b)$ and $\restr{{\ppref}}{A} = \emptyset = \restr{{\ppref}}{C}$.
 By \cref{le:probaPartialOrder}, we have:
-$$
-P({\ppref}) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!} = \frac{|A|! \cdot |C|!}{(|A|+|C|+1)!}
-$$
+\begin{equation}
+	P({\ppref}) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!} = \frac{|A|! \cdot |C|!}{(|A|+|C|+1)!}
+\end{equation}
 and, by applying \cref{le:probaPartialOrder} to $X^{\prime\prime} = X' \cup \set{d}$, 
-$$
-P\big(T({\ppref} \cup \set{(d,b)})\big) = \frac{|A|! \cdot |C|! \cdot (|A|+1)}{(|A|+|C|+2)!}. 
-$$
+\begin{equation}
+	P\big(T({\ppref} \cup \set{(d,b)})\big) = \frac{|A|! \cdot |C|! \cdot (|A|+1)}{(|A|+|C|+2)!}. 
+\end{equation}
 We thus have:
-$$
-P(d \ppref b \knowing {\ppref}) = \frac{P\big(T({\ppref} \cup \set{(d,b)})\big)}{P({\ppref})} = \frac{|A|+1}{|A|+|C|+2}. 
-$$
+\begin{equation}
+	P(d \ppref b \knowing {\ppref}) = \frac{P\big(T({\ppref} \cup \set{(d,b)})\big)}{P({\ppref})} = \frac{|A|+1}{|A|+|C|+2}. 
+\end{equation}
 \end{proof}
 
 \subsection{Should we always exploit the median?}
@@ -340,23 +340,48 @@ I’d say this is probably true but difficult to prove because of the complicate
 Assume > has a single connected component, and every undirected path has at most three objects. Assume $b$ is the middle element of every chain of size 3, and some element $f$ is not part of the component. Then asking $q_{bf}$ is an optimal strategy.
 \end{conjecture}
 \begin{proof}
-	Let’s check first that this is myopically optimal. Consider a chain $abc$.
-	\[E[\card{T({>} \cup (\pref \cap q_{af}))} - \card{{>}} - 1 \knowing >] = P(f > a \knowing >) (\card{{\ppref}(b)} + 1),\]
-	\[E[\card{T({>} \cup (\pref \cap q_{bf}))} - \card{{>}} - 1 \knowing >] = P(f > b \knowing >) \card{{\ppref}(b)} + P(b > f \knowing >) \card{{\ppref}^{-1}(b)}.\]
-	Thus, we need to prove:
-	\[P(f > b \knowing >) \card{{\ppref}(b)} + P(b > f \knowing >) \card{{\ppref}^{-1}(b)} > P(f > a \knowing >) \card{{\ppref}(b)} + P(f > a \knowing >),\]
-	or equivalently:
-	\[[P(f > b \knowing >) - P(f > a \knowing >)] \card{{\ppref}(b)} > P(f > a \knowing >) + P(f > b \knowing >) \card{{\ppref}^{-1}(b)} − \card{{\ppref}^{-1}(b)},\]
-	or equivalently:
-	\[P(a > f > b \knowing >) \card{{\ppref}(b)} > P(f > a \knowing >) + P(f > b \knowing >) \card{{\ppref}^{-1}(b)} − \card{{\ppref}^{-1}(b)}.\]
+	Let $A = {\pprefinv}(b)$ and $C = {\ppref}(b)$ be the elements above and below $b$, respectively. Define $X' = A \cup \set{b} \cup C$.
 	
-	Consider $x_1 = a$ to $x_k$ above $b$ above $\card{{\ppref}(b)}$ elements. 
-	$P(f > a \knowing \ppref, \card{{\pprefeqinv}(a)} = r) = r / (k + 2 + \card{{\ppref}(b)})$. 
-	Thus, $P(f > a \knowing \ppref) = (1 + k) / 2 / (k + 2 + \card{{\ppref}(b)})$.
-	Whereas $P(f > b \knowing \ppref) = (1 + k) / (k + 2 + \card{{\ppref}(b)})$.
-	Thus, the inequality holds.
+	Let’s check first that this is myopically optimal. Consider a chain $abc$.
+	\begin{equation}E[\card{T({>} \cup (\pref \cap q_{af}))} - \card{{>}} - 1 \knowing >] = P(f > a \knowing >) (\card{C} + 1),\end{equation}
+	\begin{equation}E[\card{T({>} \cup (\pref \cap q_{bf}))} - \card{{>}} - 1 \knowing >] = P(f > b \knowing >) \card{C} + P(b > f \knowing >) \card{A}.\end{equation}
+	Thus, we need to prove:
+	\begin{equation}P(f > b \knowing >) \card{C} + P(b > f \knowing >) \card{A} > P(f > a \knowing >) \card{C} + P(f > a \knowing >),\end{equation}
+	or equivalently:
+	\begin{equation}[P(f > b \knowing >) - P(f > a \knowing >)] \card{C} > P(f > a \knowing >) - P(b > f \knowing >) \card{A}.\end{equation}
+	
+	To compute $P(f > a \knowing >)$, we decompose according to $\card{\restr{{\prefeqinv}}{X'}(a)}$, the rank of $a$ in the linear completion of $\ppref$ to $X'$: 
+	\begin{equation}
+	P(f > a \knowing \ppref, \card{\restr{{\prefeqinv}}{X'}(a)} = r) = \frac{r}{\card{A} + 2 + \card{C}}.
+	\end{equation}
+	
+	As the possible ranks of $a$ range equiprobably from $1$ to $\card{A}$, we obtain:
+	\begin{equation}
+	P(f > a \knowing \ppref) = \frac{(1 + \card{A}) / 2}{\card{A} + 2 + \card{C}}.
+	\end{equation}
+	
+	On the other hand:
+	\begin{equation}
+		P(f > b \knowing \ppref) = \frac{1 + \card{A}}{\card{A} + 2 + \card{C}}.
+	\end{equation}
+	
+	Thus, $P(f > b \knowing \ppref) = 2 P(f > a \knowing \ppref)$, 
+	and the inequality holds.
+	\footnote{More intuitively: $P(f > a) = P(a > f > b)$, by symmetry.}
+	
+	Now consider $a > d$, $abc$.
+	
 	
 \end{proof}
+
+\begin{remark}
+	It may be thought that in every configurations where $b$ is in the middle of every paths of length 3, with no paths of length more than 3 and at least one path of length 3, it holds that asking about $b$ is best. This is false. 
+	
+	Let $a \ppref b$, $A = {\pprefinv}(b)$, $C = {\ppref}(b)$, S = {\ppref}(a) \setminus \set{b} \setminus C$.
+	
+	$P(f > b \knowing {\ppref}) = \sum_{k = 0}^{\card{S}} [(\card{S} - k) + \card{A} - 1]! \binom{\card{S}}{\card{S} - k} (k + \card{C})! (\card{S} - k + \card{A} + 1)$.
+	Here, $k$ represents the number of elements of $S$ that are above $b$. There are $[(\card{S} - k) + \card{A} - 1]$ possible permutations for those elements, together with …
+\end{remark}
 
 \newlength{\ordown}
 \setlength{\ordown}{2mm}
