@@ -391,65 +391,6 @@ Assume > has a single connected component, and every undirected path has at most
 	With this approximation, for $\card{A} = 7$, the inequality still holds ($22/10 > 72/34$); it fails from $\card{A} = 8$ onwards.
 \end{remark}
 
-\begin{remark}
-	Now consider we have asked any $k$ questions from a configuration with $b$ central, obtaining $\ppref'$. Consider any element $a$ of the resulting preorder. Instead, we could have asked $k$ questions about $b$ with new elements (assume there are enough new elements), obtaining $\ppref$. We show that the expected gain of asking about $b$ in $\ppref$ is higher than the expected gain of asking about $a$ in $\ppref'$. This proves the point (I guess…).
-	
-	The degree (sum of incoming and outgoing edges) of $a$ is at most $k + 2$. Say $a \ppref b$, wlog.
-	
-	Let 
-	$S = {\pprefinv}(a)$, 
-	$A = {\pprefinv}(b) \setminus S$, 
-	$C = {\ppref}(b)$ and 
-	$T = {\ppref}(a) \setminus C$. 
-	Define $X' = A \cup \set{b} \cup C \cup $. 
-	
-	This is false.
-
-  S
-  a
-A  \
- \  T
-  b
-  C
-
-S+T = k
-
-gain qaf = P(f > a) [T + 1 + C]
-	+ P(a > f) [S]
-
->'
-A'
-b
-C'
-With A' + C' = A + C + k
-
-gain qbf \knowing >' = P(f > b) [C']
-	+ P(b > f) [A' + 1]
-
-Thm (false): gain qbf > gain qaf.
-
-P(f > b) = (A' + 2) / (A' + C' + 3)
-P(b > f) = (C' + 1) / (A' + C' + 3)
-
-gb = (2 C'A' + 3 C' + A' + 1) / (A' + C' + 3)
-
-Consider A = T = 0, S = C = C' = 1, k = 1, A' = 1.
-gb = 7 / 5
-ga = 7 / 5
-
-Consider A = T = 0, C = C' = 1, k = S = A' = 2.
-gb = 10 / 6
-ga = 12 / 6.
-
-Assume that [T + 1 + C] ≥ [S].
-
-We overestimate P(f > a) by putting A over a. Then P(f > a) = (S + A + 1) / (S + A + T + C + 3);
-P(a > f) = (T + C + 2) / (S + A + T + C + 3).
-
-ga = (ST + AT + T + S + A + 1 + SC + AC + C + ST + SC + 2 S) / (S + A + T + C + 3)
- = (2 ST + AT + T + 3 S + A + 1 + 2 SC + AC + C) / (S + A + T + C + 3).
-\end{remark}
-
 \newlength{\ordown}
 \setlength{\ordown}{2mm}
 \begin{figure}
