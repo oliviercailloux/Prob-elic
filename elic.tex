@@ -341,7 +341,6 @@ Assume > has a single connected component, and every undirected path has at most
 \end{conjecture}
 \begin{proof}
 	Given ${\pref}$ and ${\ppref} \subseteq {\pref}$, define $g(q, {\ppref}, {\pref}) = \card{T({\ppref} \cup (\pref \cap q))} - \card{{\ppref}} - 1$ as the gain (in number of pairs) brought by the question $q$ thanks to transitivity when knowing ${\ppref}$.
-	%Define also $g(q)$ as a random variable that associates to any state ${\ppref}$ (considered as a set of linear orders) and ${\pref}$ the gain $g(q, {\ppref}, {\pref})$.
 	
 	Let $A = {\pprefinv}(b)$ and $C = {\ppref}(b)$ be the elements above and below $b$, respectively. Define $X' = A \cup \set{b} \cup C$.
 	
@@ -376,14 +375,26 @@ Assume > has a single connected component, and every undirected path has at most
 	and the inequality holds.
 	\footnote{More intuitively: $P(f > a) = P(a > f > b)$, by symmetry.}
 	
-	Define $S$ the preorders reachable after any $k$ questions, starting from a preorder $\ppref$ as described in the conjecture.
+	We can associate a questioning strategy $s'$ to a probability distribution over possible states, where a state associates to each $x \in X$ a pair $(A, C)$, the number of objects known better than $x$ and known worst than $x$.
+	Define $s$ as the questioning strategy that asks $q_{bf}$ with a new element $f$ at each step.
 	
-	Define $\ppref'$ (a random variable) as $\ppref$ followed by $k$ questions about $b$ and new elements.
-
-	We will define a bijection sending $>_1 \in S$ to $>_1' \in S$, so that $P(>_1' \knowing {\ppref}, k) ≤ P(>_1 \knowing {\ppref}, k)$ and $E[g(q_{bf}, {\ppref'}, {\pref}) \knowing {\ppref'}] - E[g(q_{af}, {>_1}, {\pref}) \knowing >_1] ≥ E[gain q_{af} \knowing >_1'] - E[gain q_{bf} \knowing {\ppref'}]$.
-		
-%	We will partition $S$ into $S_1, S_1', S_2, S_2', …$ (disjoint and covering $S$), so that $P(S_1' \knowing {\ppref}, k) ≤ P(S_1 \knowing {\ppref}, k)$ and $E[g(q_{bf}, {\ppref'}, {\pref}) \knowing {\ppref'}] - E[g(q_{af}, {S_1}, {\pref}) \knowing S_1] ≥ E[gain q_{af} \knowing S_1'] - E[gain q_{bf} \knowing {\ppref'}]$.
-	The latter expression is equivalent to $\frac{E[]}{}$.
+	We will show that the expected gain of the next question is not worst for $\ppref$ with a state $b → (A, C)$ than for $\ppref'$ with a state $a → (A', C')$, where $A + C ≥ A' + C'$ and $\abs{A - C} ≤ \abs{A' - C'}$ and $>$ has all elements in $A$ uncomparable and those in $C$ incomparable.
+	
+	We will then show that given $s'$, we can partition the outcomes $O'$ so that each $O'_i$ is associated to a set of outcomes $O_i$ that are each better (in exp of next question) than any of $O'_i$ and such that the prob of having $O_i$ or better for $s$ is not lower than the prob of having $O'_i$ or better for $s'$.
+	
+	This shows that $s$ is better, in terms of exp of the next question, in expectation, than $s'$. (That’s the expectation of the gain of the $k+1$th question.)
+	
+	Given ${\ppref}$ and a strategy $s'$, let ${\ppref}_k^{s'}$ designate the random variable that represents our (increased) knowledge after $k$ questions following $s'$.
+	Let $g(q, {\ppref}_k^{s'})$ designate the random variable that represents the gain of asking $q$ knowing ${\ppref}_k^{s'}$.
+	
+	Consider any $s'$, $a \in X$, $k ≥ 0$.
+	Our theorem is:
+	$E[g(q_{az}, {\ppref}_k^{s'}) \knowing {\ppref}] ≤ E[g(q_{bz}, {\ppref}_k^{s}) \knowing {\ppref}]$.
+	
+	Let $l = \card{{\pprefinv}(b)} + \card{{\ppref}(b)}$.
+	
+	To any $0 ≤ d ≤ k + l$, associate to the set $\set{{\ppref}_k^{s'} \suchthat \card{{\pprefinv}(a)} + \card{{\ppref}(a)} = k + l, \abs{\card{{\pprefinv}(a)} - \card{{\ppref}(a)}} ≤ d}$ the set $\set{{\ppref}_k^{s} \suchthat \card{({\ppref}_k^{s'})^{-1}(b)} + \card{{\ppref}(b)} = k + l, \abs{\card{{\pprefinv}(b)} - \card{{\ppref}(b)}} ≤ d}$.
+	
 \end{proof}
 
 \begin{remark}
