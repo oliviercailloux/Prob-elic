@@ -380,17 +380,8 @@ Assume > has a single connected component, and every undirected path has at most
 	Assume > has a single connected component, and every undirected path has at most three objects. Assume $b$ is the middle element of every chain of size 3, and some element $f$ is not part of the component. Then asking $q_{bf}$ is an optimal strategy.
 \end{conjecture}
 \begin{proof}
-	We can associate a questioning strategy $s'$ to a probability distribution over possible states, where a state associates to each $x \in X$ a pair $(A, C)$, the number of objects known better than $x$ and known worst than $x$.
-	Define $s$ as the questioning strategy that asks $q_{bf}$, then $q_{bg}$, …, with a new element at each step.
-	
-	We will show that the expected gain of the next question is not worst for $\ppref$ with a state $b → (A, C)$ than for $\ppref'$ with a state $a → (A', C')$, where $A + C ≥ A' + C'$ and $\abs{A - C} ≤ \abs{A' - C'}$ and $>$ has all elements in $A$ uncomparable and those in $C$ incomparable.
-	
-	We will then show that given $s'$, we can partition the outcomes $O'$ so that each $O'_i$ is associated to a set of outcomes $O_i$ that are each better (in exp of next question) than any of $O'_i$ and such that the prob of having $O_i$ or better for $s$ is not lower than the prob of having $O'_i$ or better for $s'$.
-	
-	This shows that $s$ is better, in terms of exp of the next question, in expectation, than $s'$. (That’s the expectation of the gain of the $k+1$th question.)
-	
-	Given ${\ppref}$ as in the claim and a questioning strategy $s'$, let ${\ppref}_k^{s'}$ designate the “random variable” that represents our (increased) knowledge after $k$ questions following $s'$.
-	Let $g(q, {\ppref}_k^{s'})$ designate the random variable that represents the gain of asking $q$ knowing ${\ppref}_k^{s'}$.
+	Given ${\ppref}$ as in the claim and a questioning strategy $s'$, let ${\ppref}_k^{s'}$ designate the “random variable” that represents our (increased) knowledge after $k$ questions following $s'$;
+	let $g(q, {\ppref}_k^{s'})$ designate the random variable that represents the gain of asking $q$ knowing ${\ppref}_k^{s'}$.
 	
 	Consider any $s'$, $a \in X$, $k ≥ 0$.
 	Our theorem is:
@@ -407,7 +398,7 @@ Assume > has a single connected component, and every undirected path has at most
 	I believe both can be proven with not much difficulty.
 	
 	Then, consider a strategy $s'$ such that $P(A'_k + C'_k < k + l) > 0$. I believe we can prove that there exists a similar strategy $t$ that has a better average $A'_k + C'_k$ and that has a better expected gain (thus $E[g(q_{az}, {\ppref}_k^{s'}) \knowing {\ppref}] ≤ E[g(q_{az}, {\ppref}_k^{t}) \knowing {\ppref}]$). 
-	That is because $s'$ asks some question $q_{xy}$ not related to $a$ ($x ≠ a$ and $y ≠ a$). Build $t$ by replacing one of these questions with a question about $a$ ($q_{ax}$ or $q_{ay}$). This can only improve the expected gain. 
+	That is because $s'$ supports asking some question $q_{xy}$ not related to $a$ ($x ≠ a$ and $y ≠ a$). Build $t$ by replacing one of these questions with a question about $a$ ($q_{ax}$ or $q_{ay}$). This can only improve the expected gain. 
 	
 	This proves the claim for all strategies.
 \end{proof}
@@ -418,9 +409,8 @@ Assume > has a single connected component, and every undirected path has at most
 	Let $E_a = E[g(q_{az}, {\ppref_a}) \knowing {\ppref_a}]$,
 	$E_b = E[g(q_{az}, {\ppref_b}) \knowing {\ppref_b}]$.
 	
-	I’d guess having $(a, g)$ is better. 
-	Thus, thm: $E_a > E_b$.
-	This seems true here. 
+	We want to prove that having $(a, g)$ is better. 
+	Thus: $E_a > E_b$.
 	
 	$E_a = P(b \pref g \knowing {\ppref_a}) E[g(q_{az}, {\ppref_a}) \knowing {\ppref_a}, (b, g)] + P(g \pref b \knowing {\ppref_a}) E[g(q_{az}, {\ppref_a}) \knowing {\ppref_a}, (g, b)]$.
 	
