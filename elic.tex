@@ -328,8 +328,31 @@ We thus have:
 \end{equation}
 \end{proof}
 
+\begin{proposition}\label{prop:Pd>a}
+Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only a set $A$ of incomparable elements better than $b$ and a set $C$ o incomparable elements worse than $b$, and $d \in X$ such that $q_{bd} \cap {\ppref} = \emptyset$. For all $a \in A$: 
+	\begin{equation}P(d > a \knowing {\ppref}) = \frac{(|A| + 1)/2 }{|A| + |C| +2}.\end{equation}    
+\end{proposition}
+
+\begin{proof}
+We first compute $P((d,a) \cup \ppref)$. We have:
+$$
+P((d,a) \cup \ppref) = \frac{|C|! \ [1+2+ \ldots + |A|] \ (|A|-1)!}{(|A| + |C| +2)!}=\frac{|C|!\ (|A|(|A|+1)/2)\  (|A|-1)!}{(|A| + |C| +2)!}.
+$$
+We obtain this by counting the number of possible positions for $d$ when $a$ has rank 1, 2, \ldots $|A|$ in $A$. 
+
+Therefore, using the formula for $P(\ppref)$ obtained above, we get:
+$$
+P((d,a) \cup \ppref|\ppref) = \frac{P((d,a) \cup \ppref)}{P(\ppref)} = \frac{(|A|+1)}{2 (|A|+ |C| + 2)}.
+$$
+\end{proof}
+
+A similar expression can be obtained for $
+P((c,d) \cup \ppref| \ppref)$, for any $c \in C$.
+
 \subsection{Should we always exploit the median?}
 We might attempt to answer analytically the following question: should we always ask $b$ VS everything else when we know a chain $abc$? Thus, when $\prefeq$ includes $abc$, and $q_{be}$, $q_{bf}$, … has been answered, should we ask $q_{bg}$? (That’s what every optimal strategy that we found do.) It’s a bit strange that it seems not optimal to systematically strive for a chain of three (see $k = 5$).
+
+
 
 \begin{conjecture}
 Assume $>$ has a single connected component, and the maximal size of a chain is 3. Assume $b$ is the middle element of every chain of size 3. Then the optimal strategy asks $b$ with a new element.
@@ -365,7 +388,9 @@ Assume > has a single connected component, and every undirected path has at most
 	\begin{equation}
 		P(f > a \knowing \ppref) = \frac{(1 + \card{A}) / 2}{\card{A} + 2 + \card{C}}.
 	\end{equation}
-	
+\textcolor{red}{I am not convinced by the above, because $A$ is not an independent set. I mean $\ppref_{|A}$ is not empty.}	
+
+
 	On the other hand:
 	\begin{equation}
 		P(f > b \knowing \ppref) = \frac{1 + \card{A}}{\card{A} + 2 + \card{C}}.
@@ -374,6 +399,57 @@ Assume > has a single connected component, and every undirected path has at most
 	Thus, $P(f > b \knowing \ppref) = 2 P(f > a \knowing \ppref)$, 
 	and the inequality holds.
 	\footnote{More intuitively: $P(f > a) = P(a > f > b)$, by symmetry.}
+\end{proof}
+
+\textcolor{red}{See below, for a less ambitious result, with a proof.}
+
+Notation: $\Delta g(xy|\ppref)$ denotes the gain in the number of edges when asking $q_{xy}$ (for $q_{xy} \cap \ppref = \emptyset$)  and receiving the answer $(x,y)$.
+
+Notation: $\Delta Eg(xy|\ppref)$ denotes the expected gain in the number of edges when asking $q_{xy}$.
+
+\begin{proposition}
+Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only a set $A$ of incomparable elements better than $b$ and a set $C$ o incomparable elements worse than $b$, and $d \not \in X'$. The expected gain in the number of edges is maximal when asking $q_{bd}$ provided $|C|\geq 1$ and $|A| \geq 1$.
+\end{proposition}
+
+\begin{proof}
+We have that 
+$$
+\Delta Eg(xy|\ppref) = \Delta g(xy|\ppref) P((x,y) |\ppref) + \Delta g(yx|\ppref) P((y,x) |\ppref).
+$$
+
+\noindent We first compute  $\Delta Eg(bd|\ppref)$ using Proposition~\ref{th:indep}. We have:
+
+\medskip
+\begin{align*}
+\Delta Eg(bd|\ppref) &= \Delta g(bd|\ppref) P((b,d) |\ppref) + \Delta g(db|\ppref) P((d,b) |\ppref)\\
+&= [1 \cdot (|C|+1) + (1+|C|) (|A|+1)]/(|A|+ |C| +2)\\
+&= \frac{2 |C| + 2 + |A| + |A|\cdot|C|}{|A|+|C|+2}.
+\end{align*}
+
+\bigskip
+\noindent We compute $\Delta Eg(ad|\ppref)$ using Proposition~ \ref{prop:Pd>a}. We have:
+
+\medskip
+\begin{align*}
+\Delta Eg(ad|\ppref) &= \Delta g(ad|\ppref) P((a,d) |\ppref) + \Delta g(da|\ppref) P((d,a) |\ppref)\\
+&= [1 \cdot (|A|/2 + |C|+3/2) + (2+|C|)\cdot (|A|+1)/2]/(|A|+ |C| +2)\\
+&= \frac{3 |C| + 5 + 3|A| + |A|\cdot|C|}{2 \cdot (|A|+|C|+2)}.
+\end{align*}
+
+\bigskip
+\noindent 
+\begin{align*}
+\Delta Eg(ad|\ppref) - \Delta Eg(bd|\ppref) &= \frac{3 |C| + 5 + 3|A| + |A|\cdot|C| - 4 |C| - 4 -2 |A| - 2|A|\cdot|C|}{2 \cdot (|A|+|C|+2)} \\
+&= |A|+1 - |C|(|A|+1).
+\end{align*}
+
+The latter is non-positive as soon as $|C| \geq 1$.
+
+\bigskip
+\noindent Similarly $\Delta Eg(cd|\ppref) - \Delta Eg(bd|\ppref)$ is non-positive as soon as $|A| \geq 1$.
+
+\bigskip
+\noindent In case we ask a question $q_{de}$ for $d,e \notin X'$, the expected gain is 1 and it is not as good as with the other options. 
 \end{proof}
 
 \begin{conjecture}
