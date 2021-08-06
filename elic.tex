@@ -75,17 +75,17 @@ Let ${\ppref^{±1}} = {\ppref} \cup {\ppref^{-1}}$ denote the set of pairs known
 Sequences of questions can be related to sequences of partial orders and to sequences of digraphs.
 This section shows that if a sequence of partial orders corresponds to a sequence of questions, it corresponds to a unique sequence of questions.
 
-Define the upper contour set of $x \in X$ as ${≥^{-1}}(x) = \set{y \in X \suchthat y ≥ x}$, thus, as the set of objects that are at least as good as $x$.
+Define the upper contour set of $x \in X$ as ${\pprefeqinv}(x) = \set{y \in X \suchthat y \pprefeq x}$, thus, as the set of objects that are at least as good as $x$.
 We first observe that a subset of an upper contour set that includes an object of which it is the upper contour set is the upper contour set of a unique object.
 (A similar results holds for lower contour sets.)
 \begin{proposition}[Folklore?]
 	\label{th:ucs}
-	Let $\set{x, y} \subseteq S \subseteq X$ such that $S \subseteq {≥^{-1}}(x)$ and $S \subseteq {≥^{-1}}(y)$. Then, $x = y$.
+	Let $\set{x, y} \subseteq S \subseteq X$ such that $S \subseteq {\pprefeqinv}(x)$ and $S \subseteq {\pprefeqinv}(y)$. Then, $x = y$.
 \end{proposition}
 \begin{proof}
-	By hypothesis, $x \in S$, and $\forall s \in S: s ≥ y$. Thus, $x ≥ y$.
-	By a symmetrical observation, $y ≥ x$.
-	Because $>$ is asymmetric and ${≥} = {>} \cup {=}$, this implies $x = y$.
+	By hypothesis, $x \in S$, and $\forall s \in S: s \pprefeq y$. Thus, $x \pprefeq y$.
+	By a symmetrical observation, $y \pprefeq x$.
+	Because $\ppref$ is asymmetric and ${\pprefeq} = {\ppref} \cup \restr{=}{X}$, this implies $x = y$.
 \end{proof}
 
 Given ${\ppref}, {\ppref'} \in \POs$ and $i, j \in \allalts$, say that the question $q_{ij} \in Q$ may lead from $\ppref$ to $\ppref'$ iff ${\ppref'} = {\ppref} + (i, j) \lor{\ppref'} = {\ppref} + (j, i)$.
@@ -360,12 +360,12 @@ P((c,d) \cup \ppref| \ppref)$, for any $c \in C$.
 We might attempt to answer analytically the following question: should we always ask $b$ VS everything else when we know a chain $abc$? Thus, when $\prefeq$ includes $abc$, and $q_{be}$, $q_{bf}$, … has been answered, should we ask $q_{bg}$? (That’s what every optimal strategy that we found do.) It’s a bit strange that it seems not optimal to systematically strive for a chain of three (see $k = 5$).
 
 \begin{conjecture}
-Assume $>$ has a single connected component, and the maximal size of a chain is 3. Assume $b$ is the middle element of every chain of size 3. Then the optimal strategy asks $b$ with a new element.
+Assume $\ppref$ has a single connected component, and the maximal size of a chain is 3. Assume $b$ is the middle element of every chain of size 3. Then the optimal strategy asks $b$ with a new element.
 \end{conjecture}
 I’d say this is probably true but difficult to prove because of the complicated shapes such as ${abc, be, dc}$. Let’s start with something simpler.
 
 \begin{proposition}[Draft!]
-Assume > has a single connected component, and every undirected path has at most three objects. Assume $b$ is the middle element of every chain of size 3, and some element $f$ is not part of the component. Then asking $q_{bf}$ is an optimal question (that is, an optimal myopic strategy).
+Assume $\ppref$ has a single connected component, and every undirected path has at most three objects. Assume $b$ is the middle element of every chain of size 3, and some element $f$ is not part of the component. Then asking $q_{bf}$ is an optimal question (that is, an optimal myopic strategy).
 \end{proposition}
 \begin{proof}
 	Given ${\pref}$ and ${\ppref} \subseteq {\pref}$, define $g(q, {\ppref}, {\pref}) = \card{T({\ppref} \cup (\pref \cap q))} - \card{{\ppref}} - 1$ as the gain (in number of pairs) brought by the question $q$ thanks to transitivity when knowing ${\ppref}$.
@@ -374,34 +374,38 @@ Assume > has a single connected component, and every undirected path has at most
 	
 	Consider a chain $abc$.
 	\begin{equation}
-		E[g(q_{af}, {\ppref}, {\pref}) \knowing >] = P(f > a \knowing >) (\card{C} + 1),
+		E[g(q_{af}, {\ppref}, {\pref}) \knowing {\ppref}] = P(f \ppref a \knowing {\ppref}) (\card{C} + 1),
 	\end{equation}
 	\begin{equation}
-		E[g(q_{bf}, {\ppref}, {\pref}) \knowing >] = P(f > b \knowing >) \card{C} + P(b > f \knowing >) \card{A}.
+		E[g(q_{bf}, {\ppref}, {\pref}) \knowing {\ppref}] = P(f \ppref b \knowing {\ppref}) \card{C} + P(b \ppref f \knowing {\ppref}) \card{A}.
 	\end{equation}
 	Thus, we need to prove:
-	\begin{equation}P(f > b \knowing >) \card{C} + P(b > f \knowing >) \card{A} > P(f > a \knowing >) \card{C} + P(f > a \knowing >),\end{equation}
-	or equivalently:
-	\begin{equation}[P(f > b \knowing >) - P(f > a \knowing >)] \card{C} > P(f > a \knowing >) - P(b > f \knowing >) \card{A}.\end{equation}
-	
-	To compute $P(f > a \knowing >)$, we decompose according to $\card{\restr{{\prefeqinv}}{X'}(a)}$, the rank of $a$ in the linear completion of $\ppref$ to $X'$: 
 	\begin{equation}
-	P(f > a \knowing \ppref, \card{\restr{{\prefeqinv}}{X'}(a)} = r) = \frac{r}{\card{A} + 2 + \card{C}}.
+		P(f \ppref b \knowing {\ppref}) \card{C} + P(b \ppref f \knowing {\ppref}) \card{A} > P(f \ppref a \knowing {\ppref}) \card{C} + P(f \ppref a \knowing >),
+	\end{equation}
+	or equivalently:
+	\begin{equation}
+		[P(f \ppref b \knowing {\ppref}) - P(f \ppref a \knowing {\ppref})] \card{C} > P(f \ppref a \knowing {\ppref}) - P(b \ppref f \knowing {\ppref}) \card{A}.
+	\end{equation}
+	
+	To compute $P(f \ppref a \knowing {\ppref})$, we decompose according to $\card{\restr{{\prefeqinv}}{X'}(a)}$, the rank of $a$ in the linear completion of $\ppref$ to $X'$: 
+	\begin{equation}
+	P(f \ppref a \knowing \ppref, \card{\restr{{\prefeqinv}}{X'}(a)} = r) = \frac{r}{\card{A} + 2 + \card{C}}.
 	\end{equation}
 	
 	As the possible ranks of $a$ range equiprobably from $1$ to $\card{A}$, we obtain:
 	\begin{equation}
-		P(f > a \knowing \ppref) = \frac{(1 + \card{A}) / 2}{\card{A} + 2 + \card{C}}.
+		P(f \ppref a \knowing \ppref) = \frac{(1 + \card{A}) / 2}{\card{A} + 2 + \card{C}}.
 	\end{equation}
 
 	On the other hand:
 	\begin{equation}
-		P(f > b \knowing \ppref) = \frac{1 + \card{A}}{\card{A} + 2 + \card{C}}.
+		P(f \ppref b \knowing \ppref) = \frac{1 + \card{A}}{\card{A} + 2 + \card{C}}.
 	\end{equation}
 	
-	Thus, $P(f > b \knowing \ppref) = 2 P(f > a \knowing \ppref)$, 
+	Thus, $P(f \ppref b \knowing \ppref) = 2 P(f \ppref a \knowing \ppref)$, 
 	and the inequality holds.
-	\footnote{More intuitively: $P(f > a) = P(a > f > b)$, by symmetry.}
+	\footnote{More intuitively: $P(f \ppref a) = P(a \ppref f \ppref b)$, by symmetry.}
 \end{proof}
 
 \textcolor{red}{See below, for a less ambitious result, with a proof.}
