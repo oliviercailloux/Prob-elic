@@ -149,7 +149,7 @@ Given $k \in \N^*$, ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in 
 	We can view $s$ as the conditional probabilities given by $P^s$, as these examples show for the cases of one and two questions (which can be generalized naturally).
 	\begin{itemize}
 		\item $P^s(q_1 | {\pref}) = P^s({\pref}, q_1) / P^s({\pref}) = P^s({\pref}) s(\emptyset)(q_1) / P({\pref}) = s(\emptyset)(q_1)$.
-		\item $P^s(q_2 | {\pref}, q_1) = P^s({\pref}, q_1, q_2) / P^s({\pref}, q_1) = P^s({\pref}, q_1, q_2) / [s(\emptyset)(q_1)P({\pref})] = s(\emptyset)(q_1) s(>_1)(q_2) / s(\emptyset)(q_1) = s(>_1)(q_2).$
+		\item $P^s(q_2 | {\pref}, q_1) = P^s({\pref}, q_1, q_2) / P^s({\pref}, q_1) = P^s({\pref}, q_1, q_2) / [s(\emptyset)(q_1)P({\pref})] = s(\emptyset)(q_1) s({\ppref}_1)(q_2) / s(\emptyset)(q_1) = s({\ppref}_1)(q_2).$
 	\end{itemize}
 \end{remark}
 
@@ -652,7 +652,7 @@ See \cref{fig:k3a,fig:k3b}.
 
 \subsection{Optimum for 4 questions}
 Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_4}]$ (assuming $n ≥ 5$). 
-Start by using two questions to order $\set{a, b, c}$. If $>_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, c} > b$), disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$.
+Start by using two questions to order $\set{a, b, c}$. If ${\ppref}_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, c} \ppref b$), disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$.
 
 See \cref{fig:k4}.
 
@@ -779,11 +779,11 @@ Computer experiments show that the following is the strategy that maximizes $E^s
 Start by using two questions to order $\set{a, b, c}$.
 
 \begin{itemize}
-	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$ and $q_{bf}$.
-	\item Say, ${>_2} = \set{a, c} > b$. Then two optimal strategies follow.
+	\item Assume that ${\ppref}_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$ and $q_{bf}$.
+	\item Say, ${{\ppref}_2} = \set{a, c} \ppref b$. Then two optimal strategies follow.
 	\begin{itemize}
-		\item Disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$. If $b > e$ then we obtain $>_4 = \set{a, c} > b > e, d > e$. We can exploit the chain of three elements and end up with $q_{bf}$. Otherwise, $eb$, we obtain ${>_4} = \set{a, c} > b, d > e > b$. We can exploit the chain of three elements and end up with $q_{ef}$. 
-		\item Ask $bd$. If ${>_3} = \set{a, c, d} > b$, disconnect; say $ef$, then $q_{bf}$. Otherwise, ${>_3} = \set{a, c} > b > d$, and ask $q_{be}$ then $q_{bf}$.
+		\item Disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$. If $b > e$ then we obtain ${\ppref}_4 = \set{a, c} \ppref b \ppref e, d \ppref e$. We can exploit the chain of three elements and end up with $q_{bf}$. Otherwise, $eb$, we obtain ${{\ppref}_4} = \set{a, c} \ppref b, d \ppref e \ppref b$. We can exploit the chain of three elements and end up with $q_{ef}$. 
+		\item Ask $bd$. If ${{\ppref}_3} = \set{a, c, d} > b$, disconnect; say $ef$, then $q_{bf}$. Otherwise, ${\ppref}_3 = \set{a, c} \ppref b \ppref d$, and ask $q_{be}$ then $q_{bf}$.
 	\end{itemize}
 \end{itemize}
 
@@ -792,8 +792,8 @@ Computer experiments show that the following is the strategy that maximizes $E^s
 Start by using two questions to order $\set{a, b, c}$.
 
 \begin{itemize}
-	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$, $q_{bf}$ and $q_{bg}$.
-	\item Say, ${>_2} = \set{a, c} > b$. Then $q_{ac}$. Say, wlog: ${>_3} = acb$. Then ask $q_{cd}$, $q_{ce}$ and $q_{cf}$.
+	\item Assume that ${\ppref}_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$, $q_{bf}$ and $q_{bg}$.
+	\item Say, ${\ppref}_2 = \set{a, c} \ppref b$. Then $q_{ac}$. Say, wlog: ${\ppref_3} = acb$. Then ask $q_{cd}$, $q_{ce}$ and $q_{cf}$.
 \end{itemize}
 
 \subsection{The random strategy}
