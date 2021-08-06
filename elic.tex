@@ -191,7 +191,7 @@ TODO: be more precise. See \hrefblue{https://en.wikipedia.org/wiki/Median_of_med
 Here is an algorithm to select a median of $n$ elements, with worst case complexity $O(n^2)$ and average complexity $O(n)$ (the lower or the upper median are both acceptable results).
 Select a pivot element randomly (equiprobably). Compare the $n - 1$ other elements to the pivot. Run again on either the lower elements or the higher elements, depending on where the median lies, or stop if a median has been found. 
 
-Let $V_[m_1, m_2](n)$ be the number of comparisons required to find the $m_1$th or $m_2$th element among $n$, $V_m(n)$ for $V_[m, m](n)$, $V(n)$ for $V_[\floor{\frac{n}{2}}](n)$, and let us compute an upper bound for $E[V(n)]$.
+Let $V_[m_1, m_2](n)$ be the number of comparisons required to find the $m_1$th or $m_2$th element among $n$, $V_m(n)$ for $V_{[m, m]}(n)$, $V(n)$ for $V_[\floor{\frac{n}{2}}](n)$, and let us compute an upper bound for $E[V(n)]$.
 Because of our equiprobable pivot draw, we have $1/n$ chances to pick a pivot that will turn out the be the $k$ th element (in order). Assume, pessimistically, that we always recurse on the biggest partition. If we picked a pivot that is the first or last element (that happens with odds $2/n$), we recurse on a partition of size $n - 1$. And so on (if $n$ is odd, one of the terms appears only once instead of twice). We obtain $E[V(n)] ≤ \frac{2}{n} \sum_{k = \floor{n/2}}^{n - 1} E[V(k)] + (n - 1)$.
 
 A classical result is that $E[V(n)] \in O(n)$ [Cormen et al.].
