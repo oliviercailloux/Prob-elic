@@ -148,20 +148,27 @@ Given $k \in \N^*$, ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in 
 \begin{remark}
 	We can view $s$ as the conditional probabilities given by $P^s$, as these examples show for the cases of one and two questions (which can be generalized naturally).
 	\begin{itemize}
-		\item $P^s(q_1 | >_c) = P^s(>_c, q_1) / P^s(>_c) = P^s(>_c) s(\emptyset)(q_1) / P(>_c) = s(\emptyset)(q_1)$.
-		\item $P^s(q_2 | >_c, q_1) = P^s(>_c, q_1, q_2) / P^s(>_c, q_1) = P^s(>_c, q_1, q_2) / [s(\emptyset)(q_1)P(>_c)] = s(\emptyset)(q_1) s(>_1)(q_2) / s(\emptyset)(q_1) = s(>_1)(q_2).$
+		\item $P^s(q_1 | {\pref}) = P^s({\pref}, q_1) / P^s({\pref}) = P^s({\pref}) s(\emptyset)(q_1) / P({\pref}) = s(\emptyset)(q_1)$.
+		\item $P^s(q_2 | {\pref}, q_1) = P^s({\pref}, q_1, q_2) / P^s({\pref}, q_1) = P^s({\pref}, q_1, q_2) / [s(\emptyset)(q_1)P({\pref})] = s(\emptyset)(q_1) s(>_1)(q_2) / s(\emptyset)(q_1) = s(>_1)(q_2).$
 	\end{itemize}
 \end{remark}
 
 As the sequence of questions determines the sequence of partial orders, we can also consider $P^s$ as a probability distribution over (parts of) sequences of partial orders. 
 Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
+Example: $P^s({\ppref_2} = \set{(a, b), (b, c)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land b \pref c\big)$.
+Example: $P^s({\ppref_3} = \set{(a, b), (b, c)}) = P^s\big(\set{q_1, q_2, q_3} \supseteq \set{q_{ab}, q_{bc}} \land a \pref b \land b \pref c\big)$.
 
 Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $\forall {\pref} \in \linors: P^\mathit{eq}(\pref) = 1/\card{\linors}$.
 
 Given $i, j \in \allalts$, $k \in \N$, let $P^s(i \ppref_k j) = P^s((i, j) \in {\ppref_k})$ denote the probability that the edge $(i, j)$ be known after $k$ questions. (Under reasonable conditions of symmetry on $P$ and $s$, this will be half of $P^s(q_{ij} \subseteq {\ppref^{±1}_k})$, the probability that the answer to the question $q_{ij}$ be known after $k$ questions.)
 
 Can we obtain a nice formula for $P^s(i \ppref_k j)$?
+
+\subsection{Optimal strategies}
+Note that given ${\ppref}' \supseteq {\ppref}$, $P^s({\ppref}' \knowing {\ppref}) = P^s({\ppref}') / P^s({\ppref})$.
+
+The optimal $k$-strategies knowing $\ppref$ are defined as the strategies maximizing $E^s[\card{{\ppref}_k} \knowing {\ppref}] = \sum_{{\ppref}_k \supseteq {\ppref}_{k - 1} \subseteq … \subseteq {\ppref}_1 \subseteq {\ppref}} P^s({\ppref}_k \knowing {\ppref}_{k - 1})$.
 
 \subsection{Random questions without repetition}
 The random strategy without repetition $s^\mathit{rm}$ draws a question equiprobably from the set of remaining questions. Thus, $\forall {\ppref} \in \POs \setminus \linors, i ≠ j \in \allalts$:
@@ -351,8 +358,6 @@ P((c,d) \cup \ppref| \ppref)$, for any $c \in C$.
 
 \subsection{Should we always exploit the median?}
 We might attempt to answer analytically the following question: should we always ask $b$ VS everything else when we know a chain $abc$? Thus, when $\prefeq$ includes $abc$, and $q_{be}$, $q_{bf}$, … has been answered, should we ask $q_{bg}$? (That’s what every optimal strategy that we found do.) It’s a bit strange that it seems not optimal to systematically strive for a chain of three (see $k = 5$).
-
-
 
 \begin{conjecture}
 Assume $>$ has a single connected component, and the maximal size of a chain is 3. Assume $b$ is the middle element of every chain of size 3. Then the optimal strategy asks $b$ with a new element.
