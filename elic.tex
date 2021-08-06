@@ -388,8 +388,6 @@ Assume > has a single connected component, and every undirected path has at most
 	\begin{equation}
 		P(f > a \knowing \ppref) = \frac{(1 + \card{A}) / 2}{\card{A} + 2 + \card{C}}.
 	\end{equation}
-\textcolor{red}{I am not convinced by the above, because $A$ is not an independent set. I mean $\ppref_{|A}$ is not empty.}	
-
 
 	On the other hand:
 	\begin{equation}
@@ -420,11 +418,11 @@ $$
 \noindent We first compute  $\Delta Eg(bd|\ppref)$ using Proposition~\ref{th:indep}. We have:
 
 \medskip
-\begin{align*}
+\begin{align}
 \Delta Eg(bd|\ppref) &= \Delta g(bd|\ppref) P((b,d) |\ppref) + \Delta g(db|\ppref) P((d,b) |\ppref)\\
 &= [1 \cdot (|C|+1) + (1+|C|) (|A|+1)]/(|A|+ |C| +2)\\
 &= \frac{2 |C| + 2 + |A| + |A|\cdot|C|}{|A|+|C|+2}.
-\end{align*}
+\end{align}
 
 \bigskip
 \noindent We compute $\Delta Eg(ad|\ppref)$ using Proposition~ \ref{prop:Pd>a}. We have:
