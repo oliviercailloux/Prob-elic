@@ -72,6 +72,7 @@ Let ${\ppref^{±1}} = {\ppref} \cup {\ppref^{-1}}$ denote the set of pairs known
 %Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, our knowledge is complete: $Q_{\ppref_{\card{Q}}} = \emptyset$.
 
 \subsection{Sequences of questions, of partial orders, and of digraphs}
+\label{seq:uniqueQs}
 Sequences of questions can be related to sequences of partial orders and to sequences of digraphs.
 This section shows that if a sequence of partial orders corresponds to a sequence of questions, it corresponds to a unique sequence of questions.
 
@@ -122,7 +123,7 @@ Note that if the relation was not complete at step $k - 1$, it also was incomple
 
 Given ${\prefeq} \in \linors$, define $Q^{\prefeq} = \cup_{k \in \N^*} \set{(q_t)_{t \in \intvl{1, k}} \in Q^k \suchthat {\ppref_{k - 1}} \notin \linors \land {\ppref_k} \in \linors}$ as the set of finite sequences of questions that lead to a linear order just after the last question and not before. 
 
-Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^{\prefeq}$, define $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
+Given ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in Q^{\prefeq}$ of length $k \in \N^*$, define $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
 \begin{equation}
 	P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}}) = 
 	P(\prefeq)  \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t).
@@ -130,7 +131,7 @@ Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in 
 
 For example, $P^{\prime s}(\prefeq, q_1, q_2, q_3)$ denotes the probability that the preference is $\prefeq$ and that the questions, chosen according to the strategy $s$, were $q_1$, then $q_2$, and finally $q_3$.
 
-Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$, let $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ denote $P^{\prime s}(\prefeq, \set{(q'_t)_{t \in \intvl{1, k'}} \in Q^{\prefeq} \suchthat k' ≥ k \land \restr{q'_t}{\intvl{1, k}} = q_t})$, the probability that the real preference be $\prefeq$ and that the strategy $s$ asks any sequence of questions in $Q^{\prefeq}$ that completes $q_t$.
+Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$, let $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ denote $P^{\prime s}(\prefeq, \set{(q'_t)_{t \in \intvl{1, k'}} \in Q^{\prefeq} \suchthat k' ≥ k \land \restr{q'_t}{\intvl{1, k}} = q_t})$, the probability that the real preference be $\prefeq$ and that the strategy $s$ asks any sequence of questions in $Q^{\prefeq}$ that completes $(q_t)_{t \in \intvl{1, k}}$.
 
 Given $k \in \N^*$, ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$ such that ${\ppref}_{k - 1} \notin \linors$, define $P^s(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
 \begin{equation}
@@ -154,6 +155,23 @@ Given $k \in \N^*$, ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in 
 \end{remark}
 
 As the sequence of questions determines the sequence of partial orders, we can also consider $P^s$ as a probability distribution over (parts of) sequences of partial orders. 
+Define accordingly the probability of the real preference being ${\pref}$ and obtaining the knowledge ${\ppref}_t$ after $t$ questions for each $t \in \intvl{1, k}$, given ${\pref} \in \linors$ and a finite sequence of preorders $({\ppref}_t)_{t \in \intvl{1, k}} \in \POs^k$ of length $k$, as: 
+\begin{equation}
+	P^s({\pref}, ({\ppref}_t)_{t \in \intvl{1, k}}) = 
+P^s({\pref}, \set{(q_t)_{t \in \intvl{1, k}} \suchthat \forall t \in \intvl{1, k}: T(\cup_{i ≤ t} (q_i \cap {\pref})) = {\ppref}_t}).
+\end{equation}
+As \cref{seq:uniqueQs} show that the set of sequences of questions corresponding to the sequence of preorders is a singleton if not empty, we obtain:
+\begin{equation}
+	P^s({\pref}, ({\ppref}_t)_{t \in \intvl{1, k}}) = 
+	\begin{cases}
+		P({\pref}) \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t) & \text{ if } (q_t)_{t \in \intvl{1, k}} \text{ corresponds to } ({\ppref}_t)_{t \in \intvl{1, k}},\\
+		0 & \text{ if none correspond}.
+	\end{cases}
+\end{equation}
+
+We also note $P^s({\ppref}_i) = P^s(\set{({\ppref'_t})_{t \in \intvl{1, k}} \in \cup_{i ≤ k \in \N^*} \POs^k \suchthat {\ppref'_i} = {\ppref}_i})$, given $i \in \N^*$, for the probability of our knowledge being ${\ppref}_i$ after $i$ questions.
+Note that this is a double abuse of notation. First, it introduces a possible ambiguity: $P^s({\ppref}_1) = \sum_{{\pref} \in \linors} P({\pref}) s(\emptyset)(\set{q \suchthat (q \cap {\pref}) = {\ppref_1}})$ represents the probability of obtaining a knowledge of $\ppref_1$ after one question, whereas $P^s({\ppref}) = P({\ppref})$ represents the probability that the real ordering $\pref$ be a superset of ${\ppref}$. Also, the index is important, as $P^s({\ppref}_1)$ may differ from $P^s({\ppref}_2)$. We shall use indices systematically to denote the first interpretation, with the index referring to the number of questions.
+
 Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (b, c)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land b \pref c\big)$.
@@ -168,7 +186,23 @@ Can we obtain a nice formula for $P^s(i \ppref_k j)$?
 \subsection{Optimal strategies}
 Note that given ${\ppref}' \supseteq {\ppref}$, $P^s({\ppref}' \knowing {\ppref}) = P^s({\ppref}') / P^s({\ppref})$.
 
-The optimal $k$-strategies knowing $\ppref$ are defined as the strategies maximizing $E^s[\card{{\ppref}_k} \knowing {\ppref}] = \sum_{{\ppref}_k \supseteq {\ppref}_{k - 1} \subseteq … \subseteq {\ppref}_1 \subseteq {\ppref}} P^s({\ppref}_k \knowing {\ppref}_{k - 1})$.
+The optimal $k$-strategies $\argmax_{s} E^s[\card{{\ppref}_k}]$ are defined as those that maximize the expected number of known pairs after $k$ questions:
+\begin{equation}
+	E^s[\card{{\ppref}_k}] = \sum_{({\ppref}_t) \in \POs^k} P^s(({\ppref}_t)) \card{{\ppref_k}}.
+\end{equation}
+
+We have:
+\begin{align}
+	E^s
+	& = \sum_{{\ppref}_k \supseteq {\ppref}_{k - 1} \subseteq … \subseteq {\ppref}_1 \subseteq {\ppref}} \prod P^s({\ppref}_k \knowing {\ppref}_{k - 1}) \card{{\ppref_k}}.
+\end{align}
+
+The optimal $k$-strategies knowing $\ppref$ are defined as the strategies maximizing:
+\begin{align}
+	E^s[\card{{\ppref}_k} \knowing {\ppref}]
+	& = \sum_{({\ppref}_t) \in \POs^k} P^s(({\ppref}_t) \knowing {\ppref}) \card{{\ppref_k}}\\
+	& = \sum_{{\ppref}_k \supseteq {\ppref}_{k - 1} \subseteq … \subseteq {\ppref}_1 \subseteq {\ppref}} \prod P^s({\ppref}_k \knowing {\ppref}_{k - 1}) \card{{\ppref_k}}.
+\end{align}
 
 \subsection{Random questions without repetition}
 The random strategy without repetition $s^\mathit{rm}$ draws a question equiprobably from the set of remaining questions. Thus, $\forall {\ppref} \in \POs \setminus \linors, i ≠ j \in \allalts$:
@@ -270,13 +304,13 @@ The set $\sigma(X')$ is the set of ranks of the elements in $X'$ w.r.t. the orde
 	\label{fig:equalProba}
 \end{figure}
 
-\begin{proposition}\label{prop:probaLinearOrder}
+\begin{proposition}\label{th:probaLinearOrder}
 	Consider any $X' \subseteq X$ and any ${\ppref} \in \linors[X']$. $P(\ppref) = 1 / (\card{X'})!$.
 \end{proposition}
 \begin{proof} By \cref{th:equalProba}, $P(\ppref) = P(\ppref')$, for all ${\ppref}, {\ppref'} \in \linors[X']$. Since the cardinal of $\linors[X']$ is $|X'|!$, for all ${\ppref} \in \linors[X']$, $P(\ppref) =  \frac{1}{|X'|!}$.
 \end{proof}
 
-\begin{lemma}\label{le:probaPartialOrder}
+\begin{lemma}\label{th:probaPartialOrder}
 Let $X' \subseteq X$. Given ${\ppref} \in \POs[X']$, a partial order on $X'$: 
 \begin{equation}
 	P(\ppref) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!}.
@@ -291,7 +325,7 @@ The latter union is disjoint. Therefore,
 \begin{equation}
 	P(\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}}) = \sum_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} P({\ppref'}).
 \end{equation}
-Using \cref{prop:probaLinearOrder}, we get the result.
+Using \cref{th:probaLinearOrder}, we get the result.
 \end{proof}
 
 The following proposition is a corollary of the previous lemma. 
@@ -321,11 +355,11 @@ The following proposition is a corollary of the previous lemma.
 \end{proof}
 
 \begin{proof} Another proof. I replace $a$ by $d$ in the Proposition. We try to assess $P(d > b \knowing {\ppref})$. We have that $X'= A \cup \set{b} \cup C$, where $A = {\ppref^{-1}}(b)$, $C = {\ppref}(b)$ and $\restr{{\ppref}}{A} = \emptyset = \restr{{\ppref}}{C}$.
-By \cref{le:probaPartialOrder}, we have:
+By \cref{th:probaPartialOrder}, we have:
 \begin{equation}
 	P({\ppref}) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!} = \frac{|A|! \cdot |C|!}{(|A|+|C|+1)!}
 \end{equation}
-and, by applying \cref{le:probaPartialOrder} to $X^{\prime\prime} = X' \cup \set{d}$, 
+and, by applying \cref{th:probaPartialOrder} to $X^{\prime\prime} = X' \cup \set{d}$, 
 \begin{equation}
 	P\big(T({\ppref} \cup \set{(d,b)})\big) = \frac{|A|! \cdot |C|! \cdot (|A|+1)}{(|A|+|C|+2)!}. 
 \end{equation}
@@ -335,7 +369,7 @@ We thus have:
 \end{equation}
 \end{proof}
 
-\begin{proposition}\label{prop:Pd>a}
+\begin{proposition}\label{th:Pd>a}
 Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only a set $A$ of incomparable elements better than $b$ and a set $C$ o incomparable elements worse than $b$, and $d \in X$ such that $q_{bd} \cap {\ppref} = \emptyset$. For all $a \in A$: 
 	\begin{equation}P(d > a \knowing {\ppref}) = \frac{(|A| + 1)/2 }{|A| + |C| +2}.\end{equation}    
 \end{proposition}
@@ -424,7 +458,7 @@ $$
 \Delta Eg(xy|\ppref) = \Delta g(xy|\ppref) P((x,y) |\ppref) + \Delta g(yx|\ppref) P((y,x) |\ppref).
 $$
 
-\noindent We first compute  $\Delta Eg(bd|\ppref)$ using Proposition~\ref{th:indep}. We have:
+\noindent We first compute  $\Delta Eg(bd|\ppref)$ using \cref{th:indep}. We have:
 
 \medskip
 \begin{align}
@@ -434,7 +468,7 @@ $$
 \end{align}
 
 \bigskip
-\noindent We compute $\Delta Eg(ad|\ppref)$ using Proposition~ \ref{prop:Pd>a}. We have:
+\noindent We compute $\Delta Eg(ad|\ppref)$ using \cref{th:Pd>a}. We have:
 
 \medskip
 \begin{align}
@@ -484,6 +518,40 @@ The latter is non-positive as soon as $|C| \geq 1$.
 	That is because $s'$ supports asking some question $q_{xy}$ not related to $a$ ($x ≠ a$ and $y ≠ a$). Build $t$ by replacing one of these questions with a question about $a$ ($q_{ax}$ or $q_{ay}$). This can only improve the expected gain. 
 	
 	This proves the claim for all strategies.
+	
+	Note that this fails because it might be that $E^{s'}[g(q_a)]$ is bad in general, but  $E^{s'}[g(q_a)]$ is good precisely when $a$ is the best question. We need to count $E^{s'}$ as $P(q_a best) E[g(q_a) \knowing q_a best] + …$.
+	
+	(Idea: Construisions un tout nouveau sablier car on est sûr que celui-là sera équilibré. De manière certaine, construire un sablier avec 2 éléments meilleurs et 2 moins bons, et puis l’exploiter avec beaucoup de questions.)
+	
+	\commentOC{TODO Cardinal A est Alpha et de C est gamma.}
+	
+	New attempt.
+	
+	Say that $s$ dominates $s'$ in (sum, balance) iff $\forall (k, d): $ prob $s$ to have (sum, bal) $≥ (k, -d)$ is at least prob $s'$ to have (sum, bal) $≥ (k, -d)$.
+	
+	Prove that this property persists to the next question.
+	
+	Prove that when $s$ dominates $s'$ in that sense, $s$ is better in terms of expected gain.
+\end{proof}
+\begin{proof}[New]
+	Consider $P({\ppref})$ and $R({\ppref})$, two probability distributions over $\POs$.
+	Given ${\ppref} \in \POs$ and $a, z \in X$, define $\zeta({\ppref}, a, z) \in \R^6$ as the vector $(s, -d, m, s', -d', m')$ representing the potential of $a$ after $q_{az}$, namely, $s = (above a + below z) + (below a + above z)$, $d = \abs{(above a + below z) - (below a + above z)}$, $m = prob of answer that maximizes gain thus a > z if (above a + below z) is higher$, $d' = (above a + above z) - (below a)$, $d^{\prime\prime} = (below a + below z) - (above a)$, $m' = prob of answer that maximizes balance…$, and still more indicators.
+	
+	As this is complicated, let’s focus on strategies that ask only questions involving at least one new object.
+	
+	Given ${\ppref} \in \POs$ and $a \in X$, define $\zeta({\ppref}, a) \in \R^3$ as the vector $(s, -d, m)$ representing the potential of $a$, namely, $s = (above a + below a)$, $d = \abs{above a - below a}$, $m = prob of answer that maximizes gain, thus, z > a if below a ≥ above a$.
+
+	Assume that $P$ dominates $R$, in the following sense. $\forall k \in \N, d \in \N, m \in [0, 1]$: 
+	\begin{equation}
+		P(\set{{\ppref} \suchthat \exists a \suchthat \zeta({\ppref}, a) ≥ (k, -d, m)}) ≥ R(\set{…}),
+	\end{equation}
+	using the dominance relation in $\R^3$.
+	
+	We now want to prove two things. 
+	First, if $P$ dominates $R$, it yields a higher gain. (Idea: if prob of having $(s, -d, 1/4) = 2/3$, then a contribution to the gain is $2/3 (1/4 (s + d) / 2 + 3/4 (s - d) / 2)$.)
+	Second, the dominance persists to the next question: if $P$ dominates $R$, then for any question $q$ (involving at least one new object), exists $q'$ such that $P$ after $q'$ still dominates $R$ after $q$.
+	
+	Then, we want to show that $abc$ with $q_{bz}$ dominates $abc$ with $q_{az}$.
 \end{proof}
 	
 \begin{remark}
