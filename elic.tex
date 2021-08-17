@@ -170,12 +170,15 @@ As \cref{seq:uniqueQs} show that the set of sequences of questions corresponding
 \end{equation}
 
 We also note $P^s({\ppref}_i) = P^s(\set{({\ppref'_t})_{t \in \intvl{1, k}} \in \cup_{i ≤ k \in \N^*} \POs^k \suchthat {\ppref'_i} = {\ppref}_i})$, given $i \in \N^*$, for the probability of our knowledge being ${\ppref}_i$ after $i$ questions.
-Note that this is a double abuse of notation. First, it introduces a possible ambiguity: $P^s({\ppref}_1) = \sum_{{\pref} \in \linors} P({\pref}) s(\emptyset)(\set{q \suchthat (q \cap {\pref}) = {\ppref_1}})$ represents the probability of obtaining a knowledge of $\ppref_1$ after one question, whereas $P^s({\ppref}) = P({\ppref})$ represents the probability that the real ordering $\pref$ be a superset of ${\ppref}$. Also, the index is important, as $P^s({\ppref}_1)$ may differ from $P^s({\ppref}_2)$. We shall use indices systematically to denote the first interpretation, with the index referring to the number of questions.
-
+\begin{remark}
+	Note that this is a double abuse of notation. First, it introduces a possible ambiguity: $P^s({\ppref}_1) = \sum_{{\pref} \in \linors} P({\pref}) s(\emptyset)(\set{q \suchthat (q \cap {\pref}) = {\ppref_1}})$ represents the probability of obtaining a knowledge of $\ppref_1$ after one question, whereas $P^s({\ppref}) = P({\ppref})$ represents the probability that the real ordering $\pref$ be a superset of ${\ppref}$. Also, the index is important, as $P^s({\ppref}_1)$ may differ from $P^s({\ppref}_2)$. We shall use indices systematically to denote the first interpretation, with the index referring to the number of questions.
+\end{remark}
+\begin{example}
 Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (b, c)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land b \pref c\big)$.
 Example: $P^s({\ppref_3} = \set{(a, b), (b, c)}) = P^s\big(\set{q_1, q_2, q_3} \supseteq \set{q_{ab}, q_{bc}} \land a \pref b \land b \pref c\big)$.
+\end{example}
 
 Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $\forall {\pref} \in \linors: P^\mathit{eq}(\pref) = 1/\card{\linors}$.
 
@@ -184,25 +187,35 @@ Given $i, j \in \allalts$, $k \in \N$, let $P^s(i \ppref_k j) = P^s((i, j) \in {
 Can we obtain a nice formula for $P^s(i \ppref_k j)$?
 
 \subsection{Optimal strategies}
-Note that given ${\ppref}' \supseteq {\ppref}$, $P^s({\ppref}' \knowing {\ppref}) = P^s({\ppref}') / P^s({\ppref})$.
-
+\label{sec:optDef}
 The optimal $k$-strategies $\argmax_{s} E^s[\card{{\ppref}_k}]$ are defined as those that maximize the expected number of known pairs after $k$ questions:
 \begin{equation}
-	E^s[\card{{\ppref}_k}] = \sum_{({\ppref}_t) \in \POs^k} P^s(({\ppref}_t)) \card{{\ppref_k}}.
+	E^s[\card{{\ppref}_k}] = \sum_{{\ppref}_k \in \POs} \prod P^s({\ppref}_k) \card{{\ppref_k}}.
 \end{equation}
 
 We have:
 \begin{align}
-	E^s
-	& = \sum_{{\ppref}_k \supseteq {\ppref}_{k - 1} \subseteq … \subseteq {\ppref}_1 \subseteq {\ppref}} \prod P^s({\ppref}_k \knowing {\ppref}_{k - 1}) \card{{\ppref_k}}.
+	E^s[\card{{\ppref}_k}] 
+	& = \sum_{({\ppref}_t)_{t \in \intvl{1, k}} \in \POs^k} P^s(({\ppref}_t)_{t \in \intvl{1, k}}) \card{{\ppref_k}}\\
+	& = \sum_{{\pref} \supseteq {\ppref}_k \supseteq {\ppref}_{k - 1} \supseteq … \supseteq {\ppref}_1} P^s({\pref}, ({\ppref_t})_{t \in \intvl{1, k}}) \card{{\ppref_k}}\\
+	& = \sum_{{\pref} \supseteq {\ppref}_k \supseteq {\ppref}_{k - 1} \supseteq … \supseteq {\ppref}_1} P({\pref}) \prod_{t \in \intvl{1, k}} s({\ppref_{t - 1}})(q_t) \card{{\ppref_k}}.
 \end{align}
+(The last two sums are over sequences that are feasible, meaning that for any $t \in \intvl{1, k}$, some question permits to go from ${\ppref}_{t - 1}$ to ${\ppref_t}$.)
 
 The optimal $k$-strategies knowing $\ppref$ are defined as the strategies maximizing:
 \begin{align}
 	E^s[\card{{\ppref}_k} \knowing {\ppref}]
-	& = \sum_{({\ppref}_t) \in \POs^k} P^s(({\ppref}_t) \knowing {\ppref}) \card{{\ppref_k}}\\
-	& = \sum_{{\ppref}_k \supseteq {\ppref}_{k - 1} \subseteq … \subseteq {\ppref}_1 \subseteq {\ppref}} \prod P^s({\ppref}_k \knowing {\ppref}_{k - 1}) \card{{\ppref_k}}.
+	& = \sum_{{\ppref}_k \in \POs} P^s({\ppref}_k \knowing {\ppref}) \card{{\ppref_k}}.
 \end{align}
+
+The gain due to transitivity when asking $q$ when knowing ${\ppref}$ and when the real preference is ${\pref}$ is defined as $g^{q, {\ppref}}({\pref}) = \card{T({\ppref} \cup (q \cap {\pref}))} - \card{{\ppref}} - 1$.
+
+Because $g^{q, {\ppref}}$ is a random variable, we can also define the expected gain knowing ${\ppref}$ as $E[g^{q, {\ppref}} \knowing {\ppref}] = \prod_{{\pref} \supseteq {\ppref}} P({\pref} \knowing {\ppref}) × g^{q, {\ppref}}({\pref})$.
+
+We also define the myopically best question when knowing ${\ppref}$ as $\hat{q}({\ppref}) = \argmax_{q \in Q} E[g^{q, {\ppref}} \knowing {\ppref}]$, and define, abusing notation, $g({\ppref}) = \max_{q \in Q} E[g^{q, {\ppref}} \knowing {\ppref}]$.
+
+%g^> = g^{myopic-best-q(>), >} NOT WELL DEFINED: There could be q1 and q2 with same exp but ≠ resulting gain functions: g^q1(t_1) = 3; g^g1(t_2) = 1; g^q2(t_1) = 1; g^q2(t_2) = 3.
+
 
 \subsection{Random questions without repetition}
 The random strategy without repetition $s^\mathit{rm}$ draws a question equiprobably from the set of remaining questions. Thus, $\forall {\ppref} \in \POs \setminus \linors, i ≠ j \in \allalts$:
@@ -538,20 +551,34 @@ The latter is non-positive as soon as $|C| \geq 1$.
 	Given ${\ppref} \in \POs$ and $a, z \in X$, define $\zeta({\ppref}, a, z) \in \R^6$ as the vector $(s, -d, m, s', -d', m')$ representing the potential of $a$ after $q_{az}$, namely, $s = (above a + below z) + (below a + above z)$, $d = \abs{(above a + below z) - (below a + above z)}$, $m = prob of answer that maximizes gain thus a > z if (above a + below z) is higher$, $d' = (above a + above z) - (below a)$, $d^{\prime\prime} = (below a + below z) - (above a)$, $m' = prob of answer that maximizes balance…$, and still more indicators.
 	
 	As this is complicated, let’s focus on strategies that ask only questions involving at least one new object.
-	
-	Given ${\ppref} \in \POs$ and $a \in X$, define $\zeta({\ppref}, a) \in \R^3$ as the vector $(s, -d, m)$ representing the potential of $a$, namely, $s = (above a + below a)$, $d = \abs{above a - below a}$, $m = prob of answer that maximizes gain, thus, z > a if below a ≥ above a$.
+\end{proof}
 
-	Assume that $P$ dominates $R$, in the following sense. $\forall k \in \N, d \in \N, m \in [0, 1]$: 
+Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicated by the context, we omit it from the notations of the strict upper and lower countour sets and represent the strict upper and lower contour sets of $a \in \allalts$ with $\upa = {\pprefinv}(a)$ and $\downa = {\ppref}(a)$.
+\begin{proof}[Newer]
+	Given ${\ppref} \in \POs$ and $a \in \allalts$, define $\zeta({\ppref}, a) \in \R^3$ as the vector $(s, -d, m)$ representing the potential of a question involving $a$ in $\ppref$, namely, $s = (\upa + \downa)$, $d = \abs{\upa - \downa}$, $\downa ≥ \upa ⇒ m = P(z \pref a \knowing {\ppref})$, $\downa < \upa ⇒ m = P(z \prefinv a \knowing {\ppref})$, where $z \in \allalts \setminus {\ppref^{±1}}(\allalts)$ is an alternative unknown in $\ppref$ and $m$ represents the probability of an answer that maximizes the gain when asking $q_{az}$ (which for $P = P^\mathit{eq}$ does not depend on which unknown alternative is chosen as $z$).
+	Define the potential of ${\ppref}$ as $\zeta({\ppref}) = \max_{a \in \allalts} \zeta({\ppref}, a)$.
+	
+	Given $(s, -d, m)$, the preorders with potential $(s, -d, m)$ are thus $\zeta^{-1}((s, -d, m))$. We denote the preorders with potential at least $(s, -d, m)$ as $\zeta^{-1}({\uparrow}(s, -d, m)) = \set{{\ppref} \in \POs \suchthat \max_{a \in \allalts} \zeta({\ppref}, a) ≥ (s, -d, m)}$, where $≥$ denote the vector dominance relation in $\R^3$, thus, $(s, -d, m) ≥ (s', -d', m') ⇔ s ≥ s' \land -d ≥ -d' \land m ≥ m'$.
+	
+	Given two probability distributions $R$ and $S$ over $\POs$, say that $R$ dominates $S$ iff $\forall s \in \N, d \in \N, m \in [0, 1]$: 
 	\begin{equation}
-		P(\set{{\ppref} \suchthat \exists a \suchthat \zeta({\ppref}, a) ≥ (k, -d, m)}) ≥ R(\set{…}),
+		R(\zeta^{-1}({\uparrow}(s, -d, m))) ≥ S(\zeta^{-1}({\uparrow}(s, -d, m))).
 	\end{equation}
-	using the dominance relation in $\R^3$.
 	
 	We now want to prove two things. 
-	First, if $P$ dominates $R$, it yields a higher gain. (Idea: if prob of having $(s, -d, 1/4) = 2/3$, then a contribution to the gain is $2/3 (1/4 (s + d) / 2 + 3/4 (s - d) / 2)$.)
-	Second, the dominance persists to the next question: if $P$ dominates $R$, then for any question $q$ (involving at least one new object), exists $q'$ such that $P$ after $q'$ still dominates $R$ after $q$.
+	First, if $R$ dominates $S$, it yields a higher gain. (Idea: if prob of having $(s, -d, 1/4) = 2/3$, then a contribution to the gain is $2/3 (1/4 (s + d) / 2 + 3/4 (s - d) / 2)$.)
+	Second, the dominance persists to the next question: if $R$ dominates $S$, then for any question $q$ (involving at least one new object), exists $q'$ such that $R$ after $q'$ still dominates $S$ after $q$.
 	
 	Then, we want to show that $abc$ with $q_{bz}$ dominates $abc$ with $q_{az}$.
+	
+	Note that $g$, understood as in \cref{sec:optDef} as $g({\ppref}) = \max_q E[g^{q, {\ppref}} \knowing {\ppref}]$, is a random variable wrt a probability distribution over the partial orders $\POs$.
+	
+	Given $a \in \allalts$ and a preorder ${\ppref} \in \POs$ with potential $\zeta({\ppref}, a) = (s, -d, m)$, a question $q_{az}$ yields as expected gain $E[g^{q_{az}, {\ppref}} \knowing {\ppref}] = m \frac{s + d}{2} + (1 - m) \frac{s - d}{2}$: $m$ is the probability of a favorable answer to the question, that is, one that yields a gain of $\max(\upa, \downa)$; and $1 - m$ is the probability of an answer that yields a gain of $\min(\upa, \downa)$.
+	
+	A preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d, m)$ has a gain $g({\ppref}) = E[g^{q_{az}, {\ppref}} \knowing {\ppref}]$.
+	
+	Assume that $R$ dominates $S$. 
+	We want to show that $E_R[g] ≥ E_S[g]$.
 \end{proof}
 	
 \begin{remark}
