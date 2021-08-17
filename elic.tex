@@ -415,15 +415,18 @@ I’d say this is probably true but difficult to prove because of the complicate
 Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only a non-empty set $A$ of incomparable elements better than $b$ and a non-empty set $C$ of incomparable elements worse than $b$, and $z \not \in X'$. The expected gain in the number of edges is maximal when asking $q_{bz}$. Using the notations of \cref{sec:optDef}, $q_{bz} \in \hat{q}({\ppref}) = \argmax_{q \in Q} E[g^{q, {\ppref}} \knowing {\ppref}]$.
 \end{proposition}
 \begin{proof}
-	Consider any $a \in A$, $c \in C$.
-	Define $\alpha = \card{A}$ and $\gamma = \card{C}$.
-	\begin{equation}
-		E[g^{q_{az}, {\ppref}} \knowing {\ppref}] = P(z \ppref a \knowing {\ppref}) (\gamma + 1),
-	\end{equation}
+	Defining $\alpha = \card{A}$ and $\gamma = \card{C}$, we have:
 	\begin{equation}
 		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = P(z \ppref b \knowing {\ppref}) \gamma + P(b \ppref z \knowing {\ppref}) \alpha.
 	\end{equation}
-	Thus, we need to prove:
+	We readily see that asking a question $q_{de}$ for $d,e \notin X'$ yields an expected gain of $0$, lower than $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$. 
+	
+	Considering now any $a \in A$, we have:
+	\begin{equation}
+		E[g^{q_{az}, {\ppref}} \knowing {\ppref}] = P(z \ppref a \knowing {\ppref}) (\gamma + 1).
+	\end{equation}
+	
+	As the reasoning is symmetrical when asking a question about $c \in C$, we are only left to prove that $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{az}, {\ppref}} \knowing {\ppref}]$, that is:
 	\begin{equation}
 		P(z \ppref b \knowing {\ppref}) \gamma + P(b \ppref z \knowing {\ppref}) \alpha > P(z \ppref a \knowing {\ppref}) \gamma + P(z \ppref a \knowing >),
 	\end{equation}
@@ -450,47 +453,6 @@ Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component 
 	Thus, $P(z \ppref b \knowing \ppref) = 2 P(z \ppref a \knowing \ppref)$, 
 	and the inequality holds.
 	\footnote{More intuitively: $P(z \ppref a) = P(a \ppref z \ppref b)$, by symmetry.}
-\end{proof}
-
-\begin{proof}[Marc]
-We have that 
-$$
-\Delta Eg(xy|\ppref) = \Delta g(xy|\ppref) P((x,y) |\ppref) + \Delta g(yx|\ppref) P((y,x) |\ppref).
-$$
-
-\noindent We first compute  $\Delta Eg(bd|\ppref)$ using \cref{th:indep}. We have:
-
-\medskip
-\begin{align}
-\Delta Eg(bd|\ppref) &= \Delta g(bd|\ppref) P((b,d) |\ppref) + \Delta g(db|\ppref) P((d,b) |\ppref)\\
-&= [1 \cdot (|C|+1) + (1+|C|) (|A|+1)]/(|A|+ |C| +2)\\
-&= \frac{2 |C| + 2 + |A| + |A|\cdot|C|}{|A|+|C|+2}.
-\end{align}
-
-\bigskip
-\noindent We compute $\Delta Eg(ad|\ppref)$ using \cref{th:Pd>a}. We have:
-
-\medskip
-\begin{align}
-\Delta Eg(ad|\ppref) &= \Delta g(ad|\ppref) P((a,d) |\ppref) + \Delta g(da|\ppref) P((d,a) |\ppref)\\
-&= [1 \cdot (|A|/2 + |C|+3/2) + (2+|C|)\cdot (|A|+1)/2]/(|A|+ |C| +2)\\
-&= \frac{3 |C| + 5 + 3|A| + |A|\cdot|C|}{2 \cdot (|A|+|C|+2)}.
-\end{align}
-
-\bigskip
-\noindent 
-\begin{align}
-\Delta Eg(ad|\ppref) - \Delta Eg(bd|\ppref) &= \frac{3 |C| + 5 + 3|A| + |A|\cdot|C| - 4 |C| - 4 -2 |A| - 2|A|\cdot|C|}{2 \cdot (|A|+|C|+2)} \\
-&= |A|+1 - |C|(|A|+1).
-\end{align}
-
-The latter is non-positive as soon as $|C| \geq 1$.
-
-\bigskip
-\noindent Similarly $\Delta Eg(cd|\ppref) - \Delta Eg(bd|\ppref)$ is non-positive as soon as $|A| \geq 1$.
-
-\bigskip
-\noindent In case we ask a question $q_{de}$ for $d,e \notin X'$, the expected gain is 1 and it is not as good as with the other options. 
 \end{proof}
 
 \begin{conjecture}
