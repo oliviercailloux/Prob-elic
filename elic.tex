@@ -518,26 +518,6 @@ Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicat
 	$E_b = \frac{1}{3} [\frac{2}{6} 2 + \frac{4}{6} 1] + \frac{2}{3} [\frac{3}{6} 1 + \frac{3}{6} 2] = \frac{1}{3} \frac{8}{6} + \frac{2}{3} \frac{9}{6} = \frac{26}{18}$.
 \end{remark}
 
-\begin{remark}
-	It may be thought that in every configurations where $b$ is in the middle of every paths of length 3, with no paths of length more than 3 and at least one path of length 3, it holds that asking about $b$ is best. This is likely false. 
-	
-	Let $a \ppref b$, $A = {\pprefinv}(b)$, $C = {\ppref}(b)$, $S = {\ppref}(a) \setminus \set{b} \setminus C$.
-	
-	Computing $P(f > b \knowing {\ppref})$ seems difficult, but hopefully we do not overestimate it too badly by forgetting that $a \ppref S$. Then, $P(f > b \knowing {\ppref} \setminus \cup_{s \in S} (a, s)) = \frac{1 + \alpha}{2 + \alpha + \gamma}$, and the complement is $\frac{1 + \gamma}{2 + \alpha + \gamma}$.
-	
-	With the approximation $P(f > b \knowing {\ppref}) \sim P(f > b \knowing {\ppref} \setminus \cup_{s \in S} (a, s))$, we obtain as approximate gain for $q_{bf}$:
-	\begin{equation}
-		\frac{1 + \alpha}{2 + \alpha + \gamma} \gamma + \frac{1 + \gamma}{2 + \alpha + \gamma} \alpha = \frac{\gamma + 2 \alpha \gamma + \alpha}{2 + \alpha + \gamma}.
-	\end{equation}
-	The gain for $q_{af}$ is, very approximately:
-	\begin{equation}
-		\frac{(1 + \alpha) / 2}{1 + \alpha + \card{S} + 1 + \gamma} (\card{S} + 1 + \gamma) = \frac{\card{S} + 1 + \gamma + \alpha \card{S} + \alpha + \alpha \gamma}{2 (2 + \alpha + \card{S} + \gamma)}.
-	\end{equation}
-	With $\alpha = \card{S}$ and $\gamma = 1$, this yields approximate gains for $q_{bf}$ of $\frac{1 + 3 \alpha}{3 + \alpha}$ and for $q_{af}$ of $\frac{3 \alpha + 2 + \alpha^2}{6 + 4 \alpha}$. 
-	
-	Under these approximations, for $\alpha = 7$, the inequality still holds ($22/10 > 72/34$); it fails from $\alpha = 8$ onwards.
-\end{remark}
-
 \newlength{\ordown}
 \setlength{\ordown}{2mm}
 \begin{figure}
