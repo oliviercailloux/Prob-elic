@@ -411,8 +411,9 @@ Assume $\ppref$ has a single connected component, and the maximal size of a chai
 \end{conjecture}
 I’d say this is probably true but difficult to prove because of the complicated shapes such as ${abc, be, dc}$. Let’s start with something simpler.
 
-\begin{proposition}[Better wording?]
-Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only a non-empty set $A$ of incomparable elements better than $b$ and a non-empty set $C$ of incomparable elements worse than $b$, and $z \not \in X'$. The expected gain in the number of edges is maximal when asking $q_{bz}$. Using the notations of \cref{sec:optDef}, $q_{bz} \in \hat{q}({\ppref}) = \argmax_{q \in Q} E[g^{q, {\ppref}} \knowing {\ppref}]$.
+\begin{proposition}
+	\label{th:myopicMedian}
+	Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only a non-empty set $A$ of incomparable elements better than $b$ and a non-empty set $C$ of incomparable elements worse than $b$, and $z \not \in X'$. The expected gain in the number of edges is maximal when asking $q_{bz}$. Using the notations of \cref{sec:optDef}, $q_{bz} \in \hat{q}({\ppref}) = \argmax_{q \in Q} E[g^{q, {\ppref}} \knowing {\ppref}]$.
 \end{proposition}
 \begin{proof}
 	Defining $\alpha = \card{A}$ and $\gamma = \card{C}$, we have:
@@ -455,55 +456,14 @@ Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component 
 	\footnote{More intuitively: $P(z \ppref a) = P(a \ppref z \ppref b)$, by symmetry.}
 \end{proof}
 
-\begin{conjecture}
-	Assume > has a single connected component, and every undirected path has at most three objects. Assume $b$ is the middle element of every chain of size 3, and some element $f$ is not part of the component. Then asking $q_{bf}$ is an optimal strategy.
-\end{conjecture}
-\begin{proof}
-	Given ${\ppref}$ as in the claim and a questioning strategy $s'$, let ${\ppref}_k^{s'}$ designate the “random variable” that represents our (increased) knowledge after $k$ questions following $s'$;
-	let $g(q, {\ppref}_k^{s'})$ designate the random variable that represents the gain of asking $q$ knowing ${\ppref}_k^{s'}$.
-	
-	Consider any $s'$, $a \in X$, $k ≥ 0$.
-	Our theorem is:
-	$E[g(q_{az}, {\ppref}_k^{s'}) \knowing {\ppref}] ≤ E[g(q_{bz}, {\ppref}_k^{s}) \knowing {\ppref}]$.
-	
-	Let $A = \card{{\pprefinv}(b)}$, $C = \card{{\ppref}(b)}$, $l = A + C$, $A_k = \card{({\ppref}_k^{s})^{-1}(b)}$, $C_k = \card{{\ppref}_k^{s}(b)}$, $A'_k = \card{({\ppref}_k^{s'})^{-1}(a)}$, $C'_k = \card{{\ppref}_k^{s'}(a)}$. The latter four are random variables.
-
-	First, consider a strategy $s'$ such that $P(A'_k + C'_k = k + l) = 1$: it “wastes no edge”.
-
-	To any $0 ≤ d ≤ k + l$, associate to the set $S'_d = \set{{\ppref}_k^{s'} \suchthat A'_k + C'_k = k + l, \abs{A'_k - C'_k} = d}$ the set $S_d = \set{{\ppref}_k^{s} \suchthat A_k + C_k = k + l, \abs{A_k - C_k} = d}$, and to the set $S'_{≤d} = \cup_{0 ≤ d' ≤ d} S'_d = \set{{\ppref}_k^{s'} \suchthat A'_k + C'_k = k + l, \abs{A'_k - C'_k} ≤ d}$ the set $S_{≤d} = \cup_{0 ≤ d' ≤ d} S_d = \set{{\ppref}_k^{s} \suchthat A_k + C_k = k + l, \abs{A_k - C_k} ≤ d}$.
-	
-	We now need to prove two claims. First, $\forall 0 ≤ d ≤ k + l, {\ppref}_k^{s'} \in S'_d, {\ppref}_k^{s} \in S_d: E[g(q_{az}, {\ppref}_k^{s'}) \knowing {\ppref}] ≤ E[g(q_{bz}, {\ppref}_k^{s}) \knowing {\ppref}]$. 
-	Second, $P(S_d) ≥ P(S'_d)$.
-	I believe both can be proven with not much difficulty.
-	
-	Then, consider a strategy $s'$ such that $P(A'_k + C'_k < k + l) > 0$. I believe we can prove that there exists a similar strategy $t$ that has a better average $A'_k + C'_k$ and that has a better expected gain (thus $E[g(q_{az}, {\ppref}_k^{s'}) \knowing {\ppref}] ≤ E[g(q_{az}, {\ppref}_k^{t}) \knowing {\ppref}]$). 
-	That is because $s'$ supports asking some question $q_{xy}$ not related to $a$ ($x ≠ a$ and $y ≠ a$). Build $t$ by replacing one of these questions with a question about $a$ ($q_{ax}$ or $q_{ay}$). This can only improve the expected gain. 
-	
-	This proves the claim for all strategies.
-	
-	Note that this fails because it might be that $E^{s'}[g(q_a)]$ is bad in general, but  $E^{s'}[g(q_a)]$ is good precisely when $a$ is the best question. We need to count $E^{s'}$ as $P(q_a best) E[g(q_a) \knowing q_a best] + …$.
-	
-	(Idea: Construisions un tout nouveau sablier car on est sûr que celui-là sera équilibré. De manière certaine, construire un sablier avec 2 éléments meilleurs et 2 moins bons, et puis l’exploiter avec beaucoup de questions.)
-	
-	\commentOC{TODO Cardinal A est Alpha et de C est gamma.}
-	
-	New attempt.
-	
-	Say that $s$ dominates $s'$ in (sum, balance) iff $\forall (k, d): $ prob $s$ to have (sum, bal) $≥ (k, -d)$ is at least prob $s'$ to have (sum, bal) $≥ (k, -d)$.
-	
-	Prove that this property persists to the next question.
-	
-	Prove that when $s$ dominates $s'$ in that sense, $s$ is better in terms of expected gain.
-\end{proof}
-\begin{proof}[New]
-	Consider $P({\ppref})$ and $R({\ppref})$, two probability distributions over $\POs$.
-	Given ${\ppref} \in \POs$ and $a, z \in X$, define $\zeta({\ppref}, a, z) \in \R^6$ as the vector $(s, -d, m, s', -d', m')$ representing the potential of $a$ after $q_{az}$, namely, $s = (above a + below z) + (below a + above z)$, $d = \abs{(above a + below z) - (below a + above z)}$, $m = prob of answer that maximizes gain thus a > z if (above a + below z) is higher$, $d' = (above a + above z) - (below a)$, $d^{\prime\prime} = (below a + below z) - (above a)$, $m' = prob of answer that maximizes balance…$, and still more indicators.
-	
-	As this is complicated, let’s focus on strategies that ask only questions involving at least one new object.
-\end{proof}
+\begin{remark}
+	Asking $q_{bz}$ is not always an optimal $k$-strategy (using the terminology of \cref{sec:optDef}) when $b$ is a “median” element: in the situation described in \cref{th:myopicMedian}, consider $\alpha$ big and $\gamma = 1$, with big $k$ and big $n$. Better then try to build a new structure, more balanced, than exploit $b$ which will very likely only yield gains of $1$.
+\end{remark}
 
 Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicated by the context, we omit it from the notations of the strict upper and lower countour sets and represent the strict upper and lower contour sets of $a \in \allalts$ with $\upa = {\pprefinv}(a)$ and $\downa = {\ppref}(a)$.
-\begin{proof}[Newer]
+\begin{remark}
+	Towards showing a sufficient condition for $q_{bz}$ to be an (non-myopically) optimal question, this remarks tries to argue that whenever a distribution “dominates” another one in some technical sense described here, asking $q_{bz}$ is optimal.
+
 	Given ${\ppref} \in \POs$ and $a \in \allalts$, define $\zeta({\ppref}, a) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $a$ in $\ppref$, namely, $s = (\upa + \downa)$ and $d = \abs{\upa - \downa}$.
 	Define the potential of ${\ppref}$ as $\zeta({\ppref}) = \max_{a \in \allalts} \zeta({\ppref}, a)$.
 	
@@ -538,7 +498,7 @@ Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicat
 	
 	I believe this is true because if some $q$ permits to increase the probability of the potential $(s, -d)$ from $S$, then it has taken those having lower potential $p'$ with prob $S(p')$ and added edges to it; but the prob $R(p')$ was higher and the possible gains are higher as well.
 	$(S + q)(\zeta^{-1}(m', M')) = \sum_{M < M'} S(\zeta^{-1}(m', M)) × (\text{Prob. best gained at least } M' - M) + …$
-\end{proof}
+\end{remark}
 	
 \begin{remark}
 	Let ${\ppref} = T(\set{(e, a), (a, b), (b, c)})$.
