@@ -48,6 +48,8 @@ We only know the probability distribution over $\linors$, from which $\prefeq$ i
 We can ask questions to obtain information about $\prefeq$. 
 We are interested in comparing questioning strategies and in evaluating the probabilistic evolution of our knowledge of $\prefeq$ as a function of the number of questions asked, for various strategies. 
 
+Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicated by the context, we omit it from the notations of the strict upper and lower countour sets and represent the strict upper and lower contour sets of $a \in \allalts$ with $\upa = {\pprefinv}(a)$ and $\downa = {\ppref}(a)$.
+
 \section{Questioning to increase our knowledge}
 Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\pprefeq} \subseteq \allalts × \allalts$ is a transitive, reflexive and antisymmetric relation.
 It represents our knowledge of $\prefeq$.
@@ -404,12 +406,7 @@ A similar expression can be obtained for $
 P((c,d) \cup \ppref| \ppref)$, for any $c \in C$.
 
 \subsection{Should we always exploit the median?}
-We might attempt to answer analytically the following question: should we always ask $b$ VS everything else when we know a chain $abc$? Thus, when $\prefeq$ includes $abc$, and $q_{be}$, $q_{bf}$, … has been answered, should we ask $q_{bg}$? (That’s what every optimal strategy that we found do.) It’s a bit strange that it seems not optimal to systematically strive for a chain of three (see $k = 5$).
-
-\begin{conjecture}
-Assume $\ppref$ has a single connected component, and the maximal size of a chain is 3. Assume $b$ is the middle element of every chain of size 3. Then the optimal strategy asks $b$ with a new element.
-\end{conjecture}
-I’d say this is probably true but difficult to prove because of the complicated shapes such as ${abc, be, dc}$. Let’s start with something simpler.
+Here we study whether or when it is optimal (myopically or long term) to ask $q_{bz}$ where $b$ is a median object and $z$ an object we know nothing about. That’s what every optimal strategy that we found (thus, for small $k$) do.
 
 \begin{proposition}
 	\label{th:myopicMedian}
@@ -436,7 +433,7 @@ I’d say this is probably true but difficult to prove because of the complicate
 		[P(z \ppref b \knowing {\ppref}) - P(z \ppref a \knowing {\ppref})] \gamma > P(z \ppref a \knowing {\ppref}) - P(b \ppref z \knowing {\ppref}) \alpha.
 	\end{equation}
 	
-	To compute $P(z \ppref a \knowing {\ppref})$, we decompose according to $\card{\restr{{\prefeqinv}}{X'}(a)}$, the rank of $a$ in the linear completion of $\ppref$ to $X'$: 
+	To compute $P(z \ppref a \knowing {\ppref})$, we condition on the value of $\card{\restr{{\prefeqinv}}{X'}(a)}$, the rank of $a$ in the linear completion of $\ppref$ to $X'$: 
 	\begin{equation}
 	P(z \ppref a \knowing \ppref, \card{\restr{{\prefeqinv}}{X'}(a)} = r) = \frac{r}{\alpha + 2 + \gamma}.
 	\end{equation}
@@ -456,20 +453,148 @@ I’d say this is probably true but difficult to prove because of the complicate
 	\footnote{More intuitively: $P(z \ppref a) = P(a \ppref z \ppref b)$, by symmetry.}
 \end{proof}
 
-\begin{remark}
+\begin{conjecture}[$q_{bz}$ not necessarily $k$-optimal]
 	Asking $q_{bz}$ is not always an optimal $k$-strategy (using the terminology of \cref{sec:optDef}) when $b$ is a “median” element: in the situation described in \cref{th:myopicMedian}, consider $\alpha$ big and $\gamma = 1$, with big $k$ and big $n$. Better then try to build a new structure, more balanced, than exploit $b$ which will very likely only yield gains of $1$.
-\end{remark}
+\end{conjecture}
 
-Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicated by the context, we omit it from the notations of the strict upper and lower countour sets and represent the strict upper and lower contour sets of $a \in \allalts$ with $\upa = {\pprefinv}(a)$ and $\downa = {\ppref}(a)$.
+\begin{conjecture}
+	\label{th:limDelta}
+	Given $\alpha, \gamma \in \N, \gamma ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C = \set{c, …}$, $D \ppref c$, with $\alpha = \card{A}$, $\gamma = \card{C} ≥ 1$ and $\delta = \card{D}$.
+	
+	The sequence $p_\delta$ is monotonically decreasing, and converges to:
+	\begin{equation}
+		\lim_{\delta → ∞} P[z < b \knowing {\ppref}] = \frac{\gamma}{\gamma + \alpha + 1},
+	\end{equation}
+\end{conjecture}
+\begin{proof}
+	The intuition is that when $\delta$ is large, the only thing that counts is that there are $\alpha + 1$ intervals above $b$ and $(\gamma - 1) + 1$ intervals below $b$ (because $c$ is stuck at the bottom, because for $c' \in C \setminus \set{c}$, the likelihood that $c \ppref c'$ vanishes when $\delta$ grows). On average, the objects in $D$ will be spread equally among these intervals, and the limit probability looked for is therefore the proportion of intervals below $b$.
+	
+	We now determine $P[z < b \knowing {\ppref}]$ for a fixed value of $\delta$.
+	We can restrict to considering the complete orderings $\pref$ where the objects composing $A$ and $D$ conform to an arbitrary fixed order $a_1 \pref a_2 \pref …$ and $d_1 \pref d_2 \pref …$. Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
+	
+	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ are below $b$, $\card{\downa[b] \cap D} = i$, observe that there are $\binom{i + \gamma}{\gamma - 1}$ ways of placing $D \setminus \set{c}$ among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
+	
+	Note also that $P[z < b \knowing {\ppref}, \card{\downa[b] \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
+	
+	Therefore, we obtain:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - 1} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - 1} \binom{\alpha + \delta - i}{\alpha}
+		}.
+	\end{equation}
+	
+	Note that:
+	\begin{align}
+		(i + \gamma + 1) \binom{i + \gamma}{\gamma - 1}
+		& = (i + \gamma + 1) \frac{(i + \gamma)!}{(\gamma - 1)! (i + 1)!}\\
+		& = \frac{(i + \gamma + 1)!}{(\gamma - 1)! (i + 1)!}\\
+		& = \frac{\gamma (i + \gamma + 1)!}{\gamma ! (i + 1)!}\\
+		& = \gamma \binom{i + \gamma + 1}{\gamma}.
+	\end{align}
+	(The derivation is not valid if $\gamma = 1$ but the conclusion holds in that case as well.)
+	
+	Also, using Vandermonde’s identity (and thanks to \hrefblue{https://math.stackexchange.com/a/1868061}{StackExchange}), for any $x, y, z \in \N$:
+	\begin{align}
+		\sum_{0 ≤ k ≤ z} \binom{x + k - 1}{k} \binom{y + z - k - 1}{z - k} 
+		& = \sum_{0 ≤ k ≤ z} (-1)^k \binom{-x}{k} (-1)^{z - k} \binom{-y}{z - k}\\
+		& = (-1)^{z} \sum_{0 ≤ k ≤ z} \binom{-x}{k} \binom{-y}{z - k}\\
+		& = (-1)^{z} \binom{-x -y}{z}\\
+		& = \binom{z + y + x -1}{z}.
+	\end{align}
+	
+	And:
+	\begin{multline}
+		\begin{aligned}
+		\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - 1} \binom{\alpha + \delta - i}{\alpha}
+		& = \sum_{0 ≤ i ≤ \delta} \binom{i + 1 + \gamma - 1}{\gamma - 1} \binom{\alpha + \delta + 1 - i - 1}{\alpha}\\
+		& = \sum_{0 ≤ i ≤ \delta} \binom{i + 1 + \gamma - 1}{i + 1} \binom{\alpha + (\delta + 1) - (i + 1)}{(\delta + 1) - (i + 1)}\\
+		& = \sum_{1 ≤ k ≤ \delta + 1} \binom{k + \gamma - 1}{k} \binom{\alpha + (\delta + 1) - k}{(\delta + 1) - k}\\
+		& = \sum_{1 ≤ k ≤ \delta + 1} \binom{\gamma + k - 1}{k} \binom{\alpha + 1 + (\delta + 1) - k - 1}{(\delta + 1) - k}\\
+		\end{aligned}\\
+		\begin{aligned}
+		& = \binom{\delta + 1 + \alpha + 1 + \gamma -1}{\delta + 1}
+		- \binom{\gamma - 1}{0} \binom{\alpha + 1 + (\delta + 1) - 1}{(\delta + 1)}\\
+		& = \binom{\alpha + \gamma + \delta + 1}{\delta + 1}
+		- \binom{\alpha + \delta + 1}{\delta + 1}.
+		\end{aligned}
+	\end{multline}
+	
+	Thus:
+	\begin{align}
+		P[z < b \knowing {\ppref}] 
+		& = \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ i ≤ \delta}
+			\gamma \binom{i + \gamma + 1}{\gamma} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+		}\\
+		& = \frac{\gamma}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ i ≤ \delta}
+			\binom{i + \gamma + 1}{\gamma} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+		}\\
+		& = \frac{\gamma}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 2}{\delta + 1}
+			- \binom{\alpha + \delta + 1}{\delta + 1}
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+		}.
+	\end{align}
+	\Cref{fig:probs} displays some numerical results using this formula.
+	
+	From there, it must be possible to compute the limit when $\delta$ grows, but I’ll stop here as this approach is probably much more complicated than necessary.
+\end{proof}
+
+Given ${\ppref} \in \POs$ and $a \in \allalts$, define $\zeta({\ppref}, a) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $a$ in $\ppref$, namely, $s = (\upa + \downa)$ and $d = \abs{\upa - \downa}$.
+	
+Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\upa, \downa) = \frac{s - d}{2}, M = \max(\upa, \downa) = \frac{s + d}{2})$.
+	
+\begin{conjecture}
+	Hopefully, for any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d') < (s, -d)$, 
+	for any $z \in X$ not appearing in $\ppref$,
+	$E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{b'z}, {\ppref'}} \knowing {\ppref'}]$. That is, increasing the sum or decreasing the difference never hurts the expected gain.
+\end{conjecture}
+\begin{proof}
+A partial justification for this bold claim is that I think that $p$ decreases rapidly when the difference increases.
+
+	Consider any $s, -d \in \N$, and let us evaluate lower and upper bounds on the gain of a question about $b$ for a partial order with potential $\zeta({\ppref}, b) = (s, d)$.
+	
+	Consider any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$.
+%	Define $\alpha = \card{\upa[b]}$ and $\gamma = \card{\downa[b]}$.
+
+	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upa[b] ≥ \downa[b]$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise, 
+	and define $M = \frac{s + d}{2} = \max(\card{\upa[b]}, \card{\downa[b]})$ and $m = \frac{s - d}{2} = \min(\card{\upa[b]}, \card{\downa[b]})$,
+	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$, with $M ≥ m$.
+	
+	Define $p$ as the probability of a favorable answer to the question, that is, one that yields a gain of $\max(\upa, \downa)$, thus, $p = P[z < b \knowing {\ppref}]$ iff $\upa ≥ \downa$ and $p = P[z > b \knowing {\ppref}]$ otherwise.
+	
+	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = p \frac{s + d}{2} + (1 - p) \frac{s - d}{2}$.
+	Observe that only $p$ depends on the configuration of $\ppref$, when $s$ and $d$ are fixed, and observe that minimizing (respectively, maximizing) $p$ is equivalent to minimizing (respectively, maximizing) the gain.
+	
+	Now, out of the many possible configurations of partial orders and objects with potential $(s, d)$, I conjecture that the one that minimises $p$, hence, the gain, is the one referenced by \cref{th:limDelta}. 
+	If this is correct, we obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
+	\begin{equation}
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ \frac{\gamma}{\gamma + \alpha + 1} \frac{s + d}{2} + \frac{\alpha + 1}{\gamma + \alpha + 1} \frac{s - d}{2}.
+	\end{equation}
+	(This quantity is the infimum of the gain among the partial orders and objects with that potential, when $n$ is considered unbounded.)
+	
+	For the upper bound, note that maximizing the gain is equivalent to minimizing $p'$, defined as $p' = P[z < b \knowing {\ppref}]$ iff $\upa ≤ \downa$ and $p' = P[z > b \knowing {\ppref}]$ otherwise.
+	
+	We compute the min and max possible gain at level $(s, -d)$. Then show that min possible gain $(s, -d)$ higher than max possible gain at $(s', -d')$.
+	
+\end{proof}
+
 \begin{remark}
 	Towards showing a sufficient condition for $q_{bz}$ to be an (non-myopically) optimal question, this remarks tries to argue that whenever a distribution “dominates” another one in some technical sense described here, asking $q_{bz}$ is optimal.
 
-	Given ${\ppref} \in \POs$ and $a \in \allalts$, define $\zeta({\ppref}, a) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $a$ in $\ppref$, namely, $s = (\upa + \downa)$ and $d = \abs{\upa - \downa}$.
-	Define the potential of ${\ppref}$ as $\zeta({\ppref}) = \max_{a \in \allalts} \zeta({\ppref}, a)$.
-	
 	Given $(s, -d)$, the preorders with potential $(s, -d)$ are thus $\zeta^{-1}((s, -d))$. We denote the preorders with potential at least $(s, -d)$ as $\zeta^{-1}({\uparrow}(s, -d)) = \set{{\ppref} \in \POs \suchthat \max_{a \in \allalts} \zeta({\ppref}, a) ≥ (s, -d)}$, where $≥$ denote the vector dominance relation in $\R^2$, thus, $(s, -d) ≥ (s', -d') ⇔ s ≥ s' \land -d ≥ -d'$.
-	
-	Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\upa, \downa) = \frac{s - d}{2}, M = \max(\upa, \downa) = \frac{s + d}{2})$.
 	
 	Given two probability distributions $R$ and $S$ over $\POs$, say that $R$ dominates $S$ iff $\forall s, d \in \N$: 
 	\begin{equation}
@@ -484,11 +609,7 @@ Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicat
 	
 	Note that $g$, understood as in \cref{sec:optDef} as $g({\ppref}) = \max_q E[g^{q, {\ppref}} \knowing {\ppref}]$, is a random variable wrt a probability distribution over the partial orders $\POs$.
 	
-	Given ${\ppref} \in \POs$ and $a \in \allalts$ with potential $\zeta({\ppref}, a) = (s, -d)$, a question $q_{az}$ yields as expected gain $E[g^{q_{az}, {\ppref}} \knowing {\ppref}] = p \frac{s + d}{2} + (1 - p) \frac{s - d}{2}$, where $p$ is the probability of a favorable answer to the question, that is, one that yields a gain of $\max(\upa, \downa)$; and $1 - p$ is the probability of an answer that yields a gain of $\min(\upa, \downa)$.
-	
-	Hopefully, for any ${\ppref} \in \POs$ and $a \in \allalts$ with potential $\zeta({\ppref}, a) = (s, -d)$ and ${\ppref'} \in \POs$ and $a' \in \allalts$ with potential $\zeta({\ppref'}, a') = (s', -d') < (s, -d)$, $E[g^{q_{az}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{a'z}, {\ppref'}} \knowing {\ppref'}]$. That is, increasing the sum or decreasing the difference never hurts the expected gain. (A partial justification for this bold claim is that I think that $p$ decreases rapidly when the difference increases.)
-	
-	A preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d)$ therefore has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d') < (s, -d)$.
+	Use conjecture above to yield: a preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d)$ therefore has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d') < (s, -d)$.
 	
 	It follows that if $R$ dominates $S$, $E_R[g] ≥ E_S[g]$.
 	
@@ -499,7 +620,7 @@ Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicat
 	I believe this is true because if some $q$ permits to increase the probability of the potential $(s, -d)$ from $S$, then it has taken those having lower potential $p'$ with prob $S(p')$ and added edges to it; but the prob $R(p')$ was higher and the possible gains are higher as well.
 	$(S + q)(\zeta^{-1}(m', M')) = \sum_{M < M'} S(\zeta^{-1}(m', M)) × (\text{Prob. best gained at least } M' - M) + …$
 \end{remark}
-	
+
 \begin{remark}
 	Let ${\ppref} = T(\set{(e, a), (a, b), (b, c)})$.
 	Let’s compare the expected gains of $q_{az}$ for ${\ppref_a} = T({\ppref} \cup \set{(a, g)})$ and for ${\ppref_b} = T({\ppref} \cup \set{(g, b)})$.
@@ -516,6 +637,341 @@ Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicat
 	$E_b = P(a \pref g \knowing {\ppref_b}) E[g(q_{az}, {\ppref_b}) \knowing {\ppref_b}, (a, g)] + P(g \pref a \knowing {\ppref_b}) E[g(q_{az}, {\ppref_b}) \knowing {\ppref_b}, (g, a)]$.
 	
 	$E_b = \frac{1}{3} [\frac{2}{6} 2 + \frac{4}{6} 1] + \frac{2}{3} [\frac{3}{6} 1 + \frac{3}{6} 2] = \frac{1}{3} \frac{8}{6} + \frac{2}{3} \frac{9}{6} = \frac{26}{18}$.
+\end{remark}
+
+\begin{table}
+	\DTLnewdb{probs}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{2}
+	\DTLnewdbentry{probs}{Denom}{3}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{5}
+	\DTLnewdbentry{probs}{Denom}{8}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{9}
+	\DTLnewdbentry{probs}{Denom}{15}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{14}
+	\DTLnewdbentry{probs}{Denom}{24}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{77}
+	\DTLnewdbentry{probs}{Denom}{143}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{100}
+	\DTLnewdbentry{probs}{Num}{5252}
+	\DTLnewdbentry{probs}{Denom}{10403}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{502502}
+	\DTLnewdbentry{probs}{Denom}{1004003}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{10000}
+	\DTLnewdbentry{probs}{Num}{50025002}
+	\DTLnewdbentry{probs}{Denom}{100040003}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{6}
+	\DTLnewdbentry{probs}{Denom}{10}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{24}
+	\DTLnewdbentry{probs}{Denom}{42}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{62}
+	\DTLnewdbentry{probs}{Denom}{112}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{130}
+	\DTLnewdbentry{probs}{Denom}{240}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{2706}
+	\DTLnewdbentry{probs}{Denom}{5280}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{100}
+	\DTLnewdbentry{probs}{Num}{9560256}
+	\DTLnewdbentry{probs}{Denom}{19110210}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{84505927506}
+	\DTLnewdbentry{probs}{Denom}{169010852010}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{12}
+	\DTLnewdbentry{probs}{Denom}{18}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{54}
+	\DTLnewdbentry{probs}{Denom}{84}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{156}
+	\DTLnewdbentry{probs}{Denom}{248}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{363}
+	\DTLnewdbentry{probs}{Denom}{585}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{13068}
+	\DTLnewdbentry{probs}{Denom}{21648}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{100}
+	\DTLnewdbentry{probs}{Num}{304022322}
+	\DTLnewdbentry{probs}{Denom}{506693568}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{2}
+	\DTLnewdbentry{probs}{Denom}{6}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{11}
+	\DTLnewdbentry{probs}{Denom}{35}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{36}
+	\DTLnewdbentry{probs}{Denom}{120}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{91}
+	\DTLnewdbentry{probs}{Denom}{315}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{4004}
+	\DTLnewdbentry{probs}{Denom}{16016}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{100}
+	\DTLnewdbentry{probs}{Num}{101158772}
+	\DTLnewdbentry{probs}{Denom}{487401356}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{8501128337702}
+	\DTLnewdbentry{probs}{Denom}{42337302513506}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{10000}
+	\DTLnewdbentry{probs}{Num}{835001125333377002}
+	\DTLnewdbentry{probs}{Denom}{4173337292750135006}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{6}
+	\DTLnewdbentry{probs}{Denom}{14}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{1}
+%	\DTLnewdbentry{probs}{Num}{36}
+%	\DTLnewdbentry{probs}{Denom}{88}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{2}
+%	\DTLnewdbentry{probs}{Num}{128}
+%	\DTLnewdbentry{probs}{Denom}{324}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{3}
+%	\DTLnewdbentry{probs}{Num}{350}
+%	\DTLnewdbentry{probs}{Denom}{910}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{10}
+%	\DTLnewdbentry{probs}{Num}{24024}
+%	\DTLnewdbentry{probs}{Denom}{68068}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{20}
+%	\DTLnewdbentry{probs}{Num}{587972}
+%	\DTLnewdbentry{probs}{Denom}{1721412}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{100}
+%	\DTLnewdbentry{probs}{Num}{3614127036}
+%	\DTLnewdbentry{probs}{Denom}{10823988604}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{2853601525080306}
+	\DTLnewdbentry{probs}{Denom}{8560636236065914}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{6}
+	\DTLnewdbentry{probs}{Denom}{16}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{42}
+	\DTLnewdbentry{probs}{Denom}{117}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{170}
+	\DTLnewdbentry{probs}{Denom}{490}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{520}
+	\DTLnewdbentry{probs}{Denom}{1540}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{60918}
+	\DTLnewdbentry{probs}{Denom}{198198}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{4}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{20}
+%	\DTLnewdbentry{probs}{Num}{2342780}
+%	\DTLnewdbentry{probs}{Denom}{7934080}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{4}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{100}
+%	\DTLnewdbentry{probs}{Num}{55756875876}
+%	\DTLnewdbentry{probs}{Denom}{194666262336}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{410918583538883706}
+	\DTLnewdbentry{probs}{Denom}{1438172747168373216}
+	
+	\begin{tabular}{ccccc}
+		$\alpha$ & $\gamma$ & $\delta$ & $P[z < b \knowing {\ppref}]$ & Approximately
+		\DTLforeach*{probs}{%
+			\dbAlpha=Alpha,%
+			\dbGamma=Gamma,%
+			\dbDelta=Delta,%
+			\dbNum=Num,%
+			\dbDenom=Denom%
+		}{%
+			\\ \dbAlpha & \dbGamma & \dbDelta & $\frac{\num{\dbNum}}{\num{\dbDenom}}$ & \psCalculate[round-mode = places, round-precision = 4]{\dbNum / \dbDenom}%
+		}
+	\end{tabular}
+	\caption{Some probabilities for various $(\alpha, \gamma)$ and growing values of $\delta$}
+	\label{fig:probs}
+\end{table}
+
+\begin{remark}
+	Define $s = 6 > s' = 4$, $d = d' = 2$, $(M, m) = (4, 2)$, $(M', m') = (3, 1)$.
+	
+	Now let’s try to find low $P[z < b \knowing {\ppref}]$ with $\alpha = 4, \gamma = 2$ and high $P[z < b \knowing {\ppref'}]$, that is, low $P[z > b \knowing {\ppref'}] = P[z < b \knowing {\ppref^{\prime -1}}]$ with $\alpha' = 3, \gamma' = 1$ thus $\alpha^{\prime\prime} = 1, \gamma^{\prime\prime} = 3$ corresponding to ${\ppref^{\prime\prime}} = {\ppref^{\prime -1}}$.
+	
+	I can make $P[z < b \knowing {\ppref}] = \frac{2}{7} = \frac{10}{35}$ and $P[z < b \knowing {\ppref^{\prime -1}}] = 3 / 5$ thus $P[z > b \knowing {\ppref^{\prime - 1}}] = 1 - 3 / 5 = \frac{2}{5} = \frac{14}{35} = P[z < b \knowing {\ppref'}]$.
+	
+	Then $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = \frac{2}{7} 4 + \frac{5}{7} 2 = \frac{18}{7} = \frac{90}{35}$, whereas $E[g^{q_{bz}, {\ppref'}} \knowing {\ppref'}] = \frac{2}{5} 3 + \frac{3}{5} 1 = \frac{9}{5} = \frac{63}{35}$.
+	
+	In general: $P[z < b \knowing {\ppref}] = \frac{m}{M + m + 1}$ and $P[z < b \knowing {\ppref^{\prime -1}}] = \frac{\gamma^{\prime\prime}}{\alpha^{\prime\prime} + \gamma^{\prime\prime} + 1} = \frac{M'}{M' + m' + 1}$ thus $P[z > b \knowing {\ppref^{\prime - 1}}] = 1 - \frac{M'}{M' + m' + 1} = \frac{m' + 1}{M' + m' + 1} = P[z < b \knowing {\ppref'}]$.
+	
+	Then $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = \frac{m}{M + m + 1} M + \frac{M + 1}{M + m + 1} m = \frac{18}{7} = \frac{90}{35}$, whereas $E[g^{q_{bz}, {\ppref'}} \knowing {\ppref'}] = \frac{m' + 1}{M' + m' + 1} M' + \frac{M'}{M' + m' + 1} m' = \frac{9}{5} = \frac{63}{35}$.
+	
+	For example, with $s = s' = 1000$, $d = 2$, $d' = 4$, thus $(M, m) = (501, 499)$ and $(M', m') = (502, 498)$, we obtain 
+	$E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = \frac{499}{1001} 501 + \frac{502}{1001} 499 = \frac{500497}{1001}$, whereas
+	$E[g^{q_{bz}, {\ppref'}} \knowing {\ppref'}] = \frac{498}{1001} 502 + \frac{503}{1001} 498 = \frac{500490}{1001}$.
+	
+\end{remark}
+
+\begin{remark}[Simple preorders have right probs]
+	Claim: $s > s' ⇒ P[z < b \knowing {\ppref}] ≥ P[z < b \knowing {\ppref'}]$.
+	
+	When nothing else, the claim is true:
+	\begin{align}
+		P[z < b \knowing {\ppref}] & ≥ P[z < b \knowing {\ppref'}]\\
+		⇔ \frac{m + 1}{s + 2} & ≥ \frac{m' + 1}{s' + 2}\\
+		⇔ \frac{s - d + 2}{s + 2} & ≥ \frac{s' -d + 2}{s' + 2}\\
+		⇔ (s - d + 2)(s' + 2) & ≥ (s' -d + 2)(s + 2)\\
+		⇔ ss' - ds' + 2s' + 2s - 2d + 4 & ≥ ss' - ds + 2s + 2s' - 2d + 4\\
+		⇔ -ds' & ≥ -ds\\
+		⇔ s' & ≤ s.
+	\end{align}
+\end{remark}
+
+\begin{remark}
+	Define $s = 5 > s' = 3$, $d = d' = 1$, $(M, m) = (3, 2)$, $(M', m') = (2, 1)$.
+	${\ppref} = \set{a_1, a_2, a_3} \ppref b \ppref \set{c_1, c_2}$…
+	${\ppref'} = \set{a_1, a_2} \ppref b \ppref \set{c_1}$…
+	
+	Now let’s try to find $\ppref$ with $(M, m) = (3, 2)$ and with low $P[z < b \knowing {\ppref}]$ and $\ppref'$ with $(M', m') = (2, 1)$ and with high $P[z < b \knowing {\ppref'}]$.
+	
+	I can make $P[z < b \knowing {\ppref}] = 1/3$ and $P[z < b \knowing {\ppref^{\prime -1}}] = 1/2$ thus $P[z > b \knowing {\ppref^{\prime - 1}}] = 1 - 1/2 = 1/2 = P[z < b \knowing {\ppref'}]$.
+
+	Contradicts claim: $P[z < b \knowing {\ppref}] ≥ P[z < b \knowing {\ppref'}]$.
 \end{remark}
 
 \subsection{Optimal strategies for 3 questions}

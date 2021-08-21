@@ -152,6 +152,9 @@
 	%\usepackage{ragged2e}
 %To typeset units by closely following the “official” rules.
 	\usepackage[strict]{siunitx}
+%For \psCalculate{3.14126*314^2}, which uses \num from siunitx.
+	\usepackage{pst-calculate}
+	\usepackage{datatool}
 %Turns the doi provided by some bibliography styles into URLs. However, uses old-style dx.doi url (see 3.8 DOI system Proxy Server technical details, “Users may resolve DOI names that are structured to use the DOI system Proxy Server (https://doi.org (current, preferred) or earlier syntax http://dx.doi.org).”, https://www.doi.org/doi_handbook/3_Resolution.html). The patch solves this.
 	\usepackage{doi}
 	\makeatletter
