@@ -552,66 +552,124 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 	From there, it must be possible to compute the limit when $\delta$ grows, but I’ll stop here as this approach is probably much more complicated than necessary.
 \end{proof}
 
-Given ${\ppref} \in \POs$ and $a \in \allalts$, define $\zeta({\ppref}, a) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $a$ in $\ppref$, namely, $s = (\upa + \downa)$ and $d = \abs{\upa - \downa}$.
+\begin{conjecture}
+	\label{th:infP}
+	Given $\alpha, \gamma \in \N, \gamma ≥ 1$ and $b \in X$, the worst possible configuration for any partial order with $\card{\upa[b]} = \alpha$ and $\card{\downa[b]} = \gamma$ is the one described in \cref{th:limDelta}. In other words, $\forall {\ppref} \suchthat \card{\upa[b]} = \alpha, \card{\downa[b]} = \gamma$:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] ≥ \frac{\gamma}{\gamma + \alpha + 1}.
+	\end{equation}
+	(This quantity is the infimum of that probability among the partial orders and objects satisfying that constraint, when $n$ is considered unbounded.)
+\end{conjecture}
+
+Given ${\ppref} \in \POs$ and $a \in \allalts$, define $\zeta({\ppref}, a) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $a$ in $\ppref$, namely, $s = (\upa + \downa)$ and $d = \abs{\upa - \downa}$. Note that $s ≥ d$.
 	
 Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\upa, \downa) = \frac{s - d}{2}, M = \max(\upa, \downa) = \frac{s + d}{2})$.
 	
+We use the vector dominance relation $≥$ in $\R^2$ to compare potentials, thus, $(s, -d) ≥ (s', -d') ⇔ s ≥ s' \land -d ≥ -d'$.
+
 \begin{conjecture}
-	Hopefully, for any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d') < (s, -d)$, 
+	\label{th:potentialRulez}
+	For any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d') < (s, -d)$, 
 	for any $z \in X$ not appearing in $\ppref$,
 	$E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{b'z}, {\ppref'}} \knowing {\ppref'}]$. That is, increasing the sum or decreasing the difference never hurts the expected gain.
 \end{conjecture}
 \begin{proof}
-A partial justification for this bold claim is that I think that $p$ decreases rapidly when the difference increases.
+	A possible intuitive justification for this claim is that $p$ decreases sufficiently rapidly when the difference increases. This could perhaps yield a simpler proof. Here is a painful one.
 
 	Consider any $s, -d \in \N$, and let us evaluate lower and upper bounds on the gain of a question about $b$ for a partial order with potential $\zeta({\ppref}, b) = (s, d)$.
 	
 	Consider any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$.
-%	Define $\alpha = \card{\upa[b]}$ and $\gamma = \card{\downa[b]}$.
 
 	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upa[b] ≥ \downa[b]$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise, 
 	and define $M = \frac{s + d}{2} = \max(\card{\upa[b]}, \card{\downa[b]})$ and $m = \frac{s - d}{2} = \min(\card{\upa[b]}, \card{\downa[b]})$,
 	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$, with $M ≥ m$.
 	
-	Define $p$ as the probability of a favorable answer to the question, that is, one that yields a gain of $\max(\upa, \downa)$, thus, $p = P[z < b \knowing {\ppref}]$ iff $\upa ≥ \downa$ and $p = P[z > b \knowing {\ppref}]$ otherwise.
+	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = E[g^{q_{bz}, {\ppref}^\text{up}} \knowing {\ppref^\text{up}}] = P[z < b \knowing {\ppref^\text{up}}] M + P[z > b \knowing {\ppref^\text{up}}] m$.
+	Observe that minimizing (respectively, maximizing) $p = P[z < b \knowing {\ppref^\text{up}}]$ is equivalent to minimizing (respectively, maximizing) the gain, when $M$ and $m$ are fixed.
 	
-	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = p \frac{s + d}{2} + (1 - p) \frac{s - d}{2}$.
-	Observe that only $p$ depends on the configuration of $\ppref$, when $s$ and $d$ are fixed, and observe that minimizing (respectively, maximizing) $p$ is equivalent to minimizing (respectively, maximizing) the gain.
+	\Cref{th:infP} yields that $p ≥ \frac{m}{m + M + 1}$.
+	If this conjecture is correct, we obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
+	\begin{align}
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m
+			& = m \frac{2 M + 1}{m + M + 1}\\
+			& = \frac{s - d}{2} \frac{s + d + 1}{s + 1}.
+	\end{align}
+	If $m = 0$, the formula given in \cref{th:infP} cannot be used, but the bound is trivially valid. 
 	
-	Now, out of the many possible configurations of partial orders and objects with potential $(s, d)$, I conjecture that the one that minimises $p$, hence, the gain, is the one referenced by \cref{th:limDelta}. 
-	If this is correct, we obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
+	For the upper bound, note that maximizing $p$, hence, the gain, is equivalent to minimizing $p' = 1 - p = P[z > b \knowing {\ppref^\text{up}}] = P[z < b \knowing {\pprefinv^\text{up}}]$, where ${\pprefinv^\text{up}} = {\ppref^\text{down}} = ({\ppref^\text{up}})^{-1}$ is the inverse of ${\ppref^\text{up}}$, that is, a partial order equivalent to $\ppref$ except that it is possibly inverted so as to have $M$ objects below $b$ and $m$ objects above $b$. By a symmetrical reasoning, we thus obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
+	\begin{align}
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≤ \frac{m + 1}{m + M + 1} M + \frac{M}{m + M + 1} m
+			& = M \frac{2 m + 1}{m + M + 1}\\
+			& = \frac{s + d}{2} \frac{s - d + 1}{s + 1}.
+	\end{align}
+	If $M = 0$, the formula given in \cref{th:infP} cannot be used, but the bound is trivially valid as $M = 0 ⇒ m = 0 ⇒ E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = 0$.
+	\footnote{As a sanity check, consider $M = \alpha = 3, m = \gamma = 1$, then given $a_1 a_2 a_3 b c$ with objects above $c$, $P[z < b]$ tends to and is greater than $1/5$, thus the gain is greater than $\frac{1}{5} 3 + \frac{4}{5} 1 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$; and considering the inverse ordering $a b c_1 c_2 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $3/5$, thus the gain is smaller than $\frac{3}{5} 1 + \frac{2}{5} 3 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$.
+	
+	Considering now $M = \gamma = 4, m = \alpha = 2$, then given $a_1 a_2 b c_1 c_2 c_3 c$ with objects above $c$, $P[z < b]$ tends to and is greater than $4/7$, thus the gain is smaller than $\frac{4}{7} 2 + \frac{3}{7} 4 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$; and considering the inverse ordering $a_1 a_2 a_3 a_4 b c_1 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $2/7$, thus the gain is greater than $\frac{2}{7} 4 + \frac{3}{7} 4 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$.}
+	
+	We can now prove the claim.
+	Consider ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d')$.
+	Assume $(s, -d) > (s', -d')$.
+	Thus, $s ≥ s' ≥ d' ≥ d$ and $(s > s' \lor d' > d)$.
+%	Define $(M, m) = (\frac{s + d}{2}, \frac{s - d}{2})$ and $(M', m') = (\frac{s' + d'}{2}, \frac{s' - d'}{2})$.
+	
+	We need to prove:
 	\begin{equation}
-		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ \frac{\gamma}{\gamma + \alpha + 1} \frac{s + d}{2} + \frac{\alpha + 1}{\gamma + \alpha + 1} \frac{s - d}{2}.
+		\frac{s - d}{2} \frac{s + d + 1}{s + 1} ≥ \frac{s' + d'}{2} \frac{s' - d' + 1}{s' + 1},
 	\end{equation}
-	(This quantity is the infimum of the gain among the partial orders and objects with that potential, when $n$ is considered unbounded.)
-	
-	For the upper bound, note that maximizing the gain is equivalent to minimizing $p'$, defined as $p' = P[z < b \knowing {\ppref}]$ iff $\upa ≤ \downa$ and $p' = P[z > b \knowing {\ppref}]$ otherwise.
-	
-	We compute the min and max possible gain at level $(s, -d)$. Then show that min possible gain $(s, -d)$ higher than max possible gain at $(s', -d')$.
-	
+	which we can rewrite as:
+	\begin{align}
+		& (s' + 1) (s - d) (s + d + 1) ≥ (s + 1) (s' + d') (s' - d' + 1)\\
+		& ⇔ (s' + 1) s (s + d + 1) ≥ d (s' + 1) (s + d + 1) + (s + 1) s' (s' + 1) + (s + 1) d' - d' (s + 1) d'\\
+		& ⇔ (s' + 1) s (s + 1) + (s + 1) d' (d' - 1) ≥ (s' + 1) d (d + 1) + (s + 1) s' (s' + 1)\\
+		& ⇔ (s' + 1) (s + 1) (s - s') + (s + 1) d' (d' - 1) ≥ (s' + 1) (d + 1) d.
+	\end{align}
+	When $d' > d$, we have $d' ≥ d + 1$ and $d' - 1 ≥ d ≥ 0$, thus the inequality holds.
+	When $s > s'$, we have $s ≥ s' + 1$ and $d' ≥ d$, thus the LHS can be bounded as follows:
+	\begin{align}
+		(s' + 1) (s + 1) (s - s') + (s + 1) d' (d' - 1)
+		& ≥ (s' + 1) (s' + 2) + (s' + 2) d (d - 1)\\
+		& = (s' + 2) (s' + 1 + d^2 - d),
+	\end{align}
+	and the claim becomes:
+	\begin{align}
+		& (s' + 2) (s' + 1 + d^2 - d) ≥ (s' + 1) (d + 1) d\\
+		⇔ & (s' + 2) (s' - d + 1) + d^2 (s' + 2) - d (s' + 1) (d + 1) ≥ 0\\
+		⇔ & (s' + 2) (s' - d + 1) - d [(s' + 1) (d + 1) - d (s' + 2)] ≥ 0\\
+		⇔ & (s' + 2) (s' - d + 1) - d (s' - d + 1) ≥ 0\\
+		⇔ & (s' - d + 1) (s' - d + 2) ≥ 0,
+	\end{align}
+	which follows from $s' ≥ d$.
 \end{proof}
 
-\begin{remark}
-	Towards showing a sufficient condition for $q_{bz}$ to be an (non-myopically) optimal question, this remarks tries to argue that whenever a distribution “dominates” another one in some technical sense described here, asking $q_{bz}$ is optimal.
+We denote the preorders with potential at least $(s, -d)$ as $\zeta^{-1}({\uparrow}(s, -d)) = \set{{\ppref} \in \POs \suchthat \max_{a \in \allalts} \zeta({\ppref}, a) ≥ (s, -d)}$.
 
-	Given $(s, -d)$, the preorders with potential $(s, -d)$ are thus $\zeta^{-1}((s, -d))$. We denote the preorders with potential at least $(s, -d)$ as $\zeta^{-1}({\uparrow}(s, -d)) = \set{{\ppref} \in \POs \suchthat \max_{a \in \allalts} \zeta({\ppref}, a) ≥ (s, -d)}$, where $≥$ denote the vector dominance relation in $\R^2$, thus, $(s, -d) ≥ (s', -d') ⇔ s ≥ s' \land -d ≥ -d'$.
-	
-	Given two probability distributions $R$ and $S$ over $\POs$, say that $R$ dominates $S$ iff $\forall s, d \in \N$: 
-	\begin{equation}
-		R(\zeta^{-1}({\uparrow}(s, -d))) ≥ S(\zeta^{-1}({\uparrow}(s, -d))).
-	\end{equation}
-	
-	We now want to prove two things. 
-	First, if $R$ dominates $S$, it yields a higher gain.
+Given two probability distributions $R$ and $S$ over $\POs$, say that $R$ dominates $S$ iff $\forall s, d \in \N$: 
+\begin{equation}
+	R(\zeta^{-1}({\uparrow}(s, -d))) ≥ S(\zeta^{-1}({\uparrow}(s, -d))).
+\end{equation}
+
+Note that comparing $q$ to $q'$ is similar to comparing distributions over $\POs$, more precisely, comparing the probabilistic state resulting from our current knowledge plus $q$, ${\ppref} + q$, to the one resulting from ${\ppref} + q'$.
+
+Towards showing a sufficient condition for $q_{bz}$ to be an (non-myopically) optimal question, we now want to show that whenever ${\ppref} + q$ dominates ${\ppref} + q'$ for any other $q'$, asking $q$ is optimal.
+This should be the situation we face when ${\ppref} = abc$, and, hopefully, other similar situations.
+
+We currently consider only questions involving one unknown element $z$.
+
+\begin{conjecture}
+	Whenever ${\ppref} + q$ dominates ${\ppref} + q'$ for any other $q'$, asking $q$ is optimal.
+\end{conjecture}
+\begin{proof}
+	We mainly want to prove two things.
+	First, if $R$ dominates $S$, it yields a higher immediate gain.
 	Second, the dominance persists to the next question: if $R$ dominates $S$, then for any question $q$ (involving at least one new object), there exists $q'$ such that $R + q'$ still dominates $S + q$.
-	
-	Then, we want to show that $abc$ with $q_{bz}$ dominates $abc$ with $q_{az}$, and extend this claim suitably.
+	From these two points should follow that asking $q$ may not yield a lower total gain (over all questions) than any strategy starting with another $q'$.
 	
 	Note that $g$, understood as in \cref{sec:optDef} as $g({\ppref}) = \max_q E[g^{q, {\ppref}} \knowing {\ppref}]$, is a random variable wrt a probability distribution over the partial orders $\POs$.
 	
-	Use conjecture above to yield: a preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d)$ therefore has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d') < (s, -d)$.
+	\Cref{th:potentialRulez} indicates that a preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d)$ has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d') < (s, -d)$.
 	
-	It follows that if $R$ dominates $S$, $E_R[g] ≥ E_S[g]$.
+	It should somehow follow that if $R$ dominates $S$, $E_R[g] ≥ E_S[g]$.
 	
 	Given a distribution $R$, define $R + q$ as the expected distribution resulting from adding the answer to $q$ (given by the distribution $P$), computed before knowing the answer. $(R + q)({\ppref'}) = \sum_{{\ppref}, {\pref} \suchthat {\ppref'} = T({\ppref} \cup (q \cap {\pref}))} R({\ppref}) P({\pref})$.
 	
@@ -619,7 +677,7 @@ A partial justification for this bold claim is that I think that $p$ decreases r
 	
 	I believe this is true because if some $q$ permits to increase the probability of the potential $(s, -d)$ from $S$, then it has taken those having lower potential $p'$ with prob $S(p')$ and added edges to it; but the prob $R(p')$ was higher and the possible gains are higher as well.
 	$(S + q)(\zeta^{-1}(m', M')) = \sum_{M < M'} S(\zeta^{-1}(m', M)) × (\text{Prob. best gained at least } M' - M) + …$
-\end{remark}
+\end{proof}
 
 \begin{remark}
 	Let ${\ppref} = T(\set{(e, a), (a, b), (b, c)})$.
