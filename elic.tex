@@ -986,25 +986,6 @@ We currently consider only questions involving one unknown element $z$.
 	\label{fig:probs}
 \end{table}
 
-\begin{remark}
-	Define $s = 6 > s' = 4$, $d = d' = 2$, $(M, m) = (4, 2)$, $(M', m') = (3, 1)$.
-	
-	Now let’s try to find low $P[z < b \knowing {\ppref}]$ with $\alpha = 4, \gamma = 2$ and high $P[z < b \knowing {\ppref'}]$, that is, low $P[z > b \knowing {\ppref'}] = P[z < b \knowing {\ppref^{\prime -1}}]$ with $\alpha' = 3, \gamma' = 1$ thus $\alpha^{\prime\prime} = 1, \gamma^{\prime\prime} = 3$ corresponding to ${\ppref^{\prime\prime}} = {\ppref^{\prime -1}}$.
-	
-	I can make $P[z < b \knowing {\ppref}] = \frac{2}{7} = \frac{10}{35}$ and $P[z < b \knowing {\ppref^{\prime -1}}] = 3 / 5$ thus $P[z > b \knowing {\ppref^{\prime - 1}}] = 1 - 3 / 5 = \frac{2}{5} = \frac{14}{35} = P[z < b \knowing {\ppref'}]$.
-	
-	Then $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = \frac{2}{7} 4 + \frac{5}{7} 2 = \frac{18}{7} = \frac{90}{35}$, whereas $E[g^{q_{bz}, {\ppref'}} \knowing {\ppref'}] = \frac{2}{5} 3 + \frac{3}{5} 1 = \frac{9}{5} = \frac{63}{35}$.
-	
-	In general: $P[z < b \knowing {\ppref}] = \frac{m}{M + m + 1}$ and $P[z < b \knowing {\ppref^{\prime -1}}] = \frac{\gamma^{\prime\prime}}{\alpha^{\prime\prime} + \gamma^{\prime\prime} + 1} = \frac{M'}{M' + m' + 1}$ thus $P[z > b \knowing {\ppref^{\prime - 1}}] = 1 - \frac{M'}{M' + m' + 1} = \frac{m' + 1}{M' + m' + 1} = P[z < b \knowing {\ppref'}]$.
-	
-	Then $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = \frac{m}{M + m + 1} M + \frac{M + 1}{M + m + 1} m = \frac{18}{7} = \frac{90}{35}$, whereas $E[g^{q_{bz}, {\ppref'}} \knowing {\ppref'}] = \frac{m' + 1}{M' + m' + 1} M' + \frac{M'}{M' + m' + 1} m' = \frac{9}{5} = \frac{63}{35}$.
-	
-	For example, with $s = s' = 1000$, $d = 2$, $d' = 4$, thus $(M, m) = (501, 499)$ and $(M', m') = (502, 498)$, we obtain 
-	$E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = \frac{499}{1001} 501 + \frac{502}{1001} 499 = \frac{500497}{1001}$, whereas
-	$E[g^{q_{bz}, {\ppref'}} \knowing {\ppref'}] = \frac{498}{1001} 502 + \frac{503}{1001} 498 = \frac{500490}{1001}$.
-	
-\end{remark}
-
 \begin{remark}[Simple preorders have right probs]
 	Claim: $s > s' ⇒ P[z < b \knowing {\ppref}] ≥ P[z < b \knowing {\ppref'}]$.
 	
