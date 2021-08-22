@@ -679,24 +679,6 @@ We currently consider only questions involving one unknown element $z$.
 	$(S + q)(\zeta^{-1}(m', M')) = \sum_{M < M'} S(\zeta^{-1}(m', M)) × (\text{Prob. best gained at least } M' - M) + …$
 \end{proof}
 
-\begin{remark}
-	Let ${\ppref} = T(\set{(e, a), (a, b), (b, c)})$.
-	Let’s compare the expected gains of $q_{az}$ for ${\ppref_a} = T({\ppref} \cup \set{(a, g)})$ and for ${\ppref_b} = T({\ppref} \cup \set{(g, b)})$.
-	Let $E_a = E[g(q_{az}, {\ppref_a}) \knowing {\ppref_a}]$,
-	$E_b = E[g(q_{az}, {\ppref_b}) \knowing {\ppref_b}]$.
-	
-	We want to prove that having $(a, g)$ is better. 
-	Thus: $E_a > E_b$.
-	
-	$E_a = P(b \pref g \knowing {\ppref_a}) E[g(q_{az}, {\ppref_a}) \knowing {\ppref_a}, (b, g)] + P(g \pref b \knowing {\ppref_a}) E[g(q_{az}, {\ppref_a}) \knowing {\ppref_a}, (g, b)]$.
-	
-	$E_a = \frac{2}{3} [\frac{2}{6} 3 + \frac{4}{6} 1] + \frac{1}{3} [\frac{2}{6} 3 + \frac{4}{6} 1] = \frac{2}{6} 3 + \frac{4}{6} 1 = \frac{10}{6} = \frac{30}{18}$.
-	
-	$E_b = P(a \pref g \knowing {\ppref_b}) E[g(q_{az}, {\ppref_b}) \knowing {\ppref_b}, (a, g)] + P(g \pref a \knowing {\ppref_b}) E[g(q_{az}, {\ppref_b}) \knowing {\ppref_b}, (g, a)]$.
-	
-	$E_b = \frac{1}{3} [\frac{2}{6} 2 + \frac{4}{6} 1] + \frac{2}{3} [\frac{3}{6} 1 + \frac{3}{6} 2] = \frac{1}{3} \frac{8}{6} + \frac{2}{3} \frac{9}{6} = \frac{26}{18}$.
-\end{remark}
-
 \begin{table}
 	\DTLnewdb{probs}
 	\DTLnewrow{probs}
