@@ -459,7 +459,7 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 
 \begin{conjecture}
 	\label{th:limDelta}
-	Given $\alpha, \gamma \in \N, \gamma ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C = \set{c, …}$, $D \ppref c$, with $\alpha = \card{A}$, $\gamma = \card{C} ≥ 1$ and $\delta = \card{D}$.
+	Given $\alpha, \gamma \in \N, \gamma ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C = \set{c, …}$, $D \ppref c$, with disjoint sets $A$, $B = \set{b}$, $C$ and $D$, and with $\alpha = \card{A}$, $\gamma = \card{C} ≥ 1$ and $\delta = \card{D}$.
 	
 	The sequence $p_\delta$ is monotonically decreasing, and converges to:
 	\begin{equation}
@@ -470,9 +470,11 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 	The intuition is that when $\delta$ is large, the only thing that counts is that there are $\alpha + 1$ intervals above $b$ and $(\gamma - 1) + 1$ intervals below $b$ (because $c$ is stuck at the bottom, because for $c' \in C \setminus \set{c}$, the likelihood that $c \ppref c'$ vanishes when $\delta$ grows). On average, the objects in $D$ will be spread equally among these intervals, and the limit probability looked for is therefore the proportion of intervals below $b$.
 	
 	We now determine $P[z < b \knowing {\ppref}]$ for a fixed value of $\delta$.
-	We can restrict to considering the complete orderings $\pref$ where the objects composing $A$ and $D$ conform to an arbitrary fixed order $a_1 \pref a_2 \pref …$ and $d_1 \pref d_2 \pref …$. Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
+	We can restrict to considering the complete orderings $\pref$ where the objects composing $A$ and $D$ conform to an arbitrary fixed order $a_1 \pref a_2 \pref …$ and $d_1 \pref d_2 \pref …$. 
+
+	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
 	
-	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ are below $b$, $\card{\downa[b] \cap D} = i$, observe that there are $\binom{i + \gamma}{\gamma - 1}$ ways of placing $D \setminus \set{c}$ among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
+	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downa[b] \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - 1}$ ways of placing $C \setminus \set{c}$ (the “moving” objects) among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
 	
 	Note also that $P[z < b \knowing {\ppref}, \card{\downa[b] \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
 	
@@ -550,6 +552,33 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 	\Cref{fig:probs} displays some numerical results using this formula.
 	
 	From there, it must be possible to compute the limit when $\delta$ grows, but I’ll stop here as this approach is probably much more complicated than necessary.
+\end{proof}
+
+\begin{conjecture}
+	\label{th:limDeltaAll}
+	Given $\alpha, \gamma \in \N, \gamma ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C$, $D \ppref C$, with disjoint sets $A$, $B = \set{b}$, $C$ and $D$, and with $\alpha = \card{A}$, $\gamma = \card{C} ≥ 1$ and $\delta = \card{D}$.
+	
+	The sequence $p_\delta$ is monotonically decreasing, and converges to:
+	\begin{equation}
+		\lim_{\delta → ∞} P[z < b \knowing {\ppref}] = \frac{1}{\alpha + 1},
+	\end{equation}
+\end{conjecture}
+\begin{proof}
+	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
+	
+	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downa[b] \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - \gamma}$ ways of placing $C \setminus C$ (the moving objects) among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
+	
+	Note also that $P[z < b \knowing {\ppref}, \card{\downa[b] \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
+	
+	Therefore, we obtain:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}.
+	\end{equation}
 \end{proof}
 
 \begin{conjecture}
