@@ -30,8 +30,8 @@ public BigInteger getDenomFirstSum(int alpha, int gamma, int gammaPrime, int del
 
 public BigInteger getNumComplicatedSum(int alpha, int gamma, int gammaPrime, int delta) {
 	checkArgument(gammaPrime >= 1);
-	final BigInteger rAndFact = getR(alpha, gamma + 1, gammaPrime, delta).multiply(BigInteger.valueOf(alpha + gamma + 1));
-	final BigInteger bin = BigIntegerMath.binomial(alpha + gamma + delta + 1, delta + 1);
+	final BigInteger rAndFact = getR(alpha, gamma + 1, gammaPrime, delta).multiply(BigInteger.valueOf(alpha + gamma + 2 - gammaPrime));
+	final BigInteger bin = BigIntegerMath.binomial(alpha + gamma + delta + 1, delta + gammaPrime);
 	final BigInteger binAndFact = BigInteger.valueOf(alpha + gamma + delta + 2).multiply(bin);
 	final BigInteger subtr = binAndFact.subtract(rAndFact);
 	return BigInteger.valueOf(gamma - gammaPrime + 1).multiply(subtr);
@@ -40,7 +40,7 @@ public BigInteger getNumComplicatedSum(int alpha, int gamma, int gammaPrime, int
 public BigInteger getDenomComplicatedSum(int alpha, int gamma, int gammaPrime, int delta) {
 	checkArgument(gammaPrime >= 1);
 	final BigInteger r = getR(alpha, gamma, gammaPrime, delta);
-	final BigInteger bin = BigIntegerMath.binomial(alpha + gamma + delta + 1, delta + 1);
+	final BigInteger bin = BigIntegerMath.binomial(alpha + gamma + delta + 1, delta + gammaPrime);
 	final BigInteger subtr = bin.subtract(r);
 	return BigInteger.valueOf(alpha + gamma + delta + 2).multiply(BigInteger.valueOf(alpha + gamma + 1)).multiply(subtr);
 }
@@ -77,20 +77,19 @@ public BigInteger getDenomGammaPrimeOne(int alpha, int gamma, int delta) {
 public void printFrac(int alpha, int gamma, int gammaPrime, int delta) {
 	final BigInteger num = getNumFirstSum(alpha, gamma, gammaPrime, delta);
 	final BigInteger denom = getDenomFirstSum(alpha, gamma, gammaPrime, delta);
+	final BigInteger scaling = BigInteger.valueOf(alpha + gamma + 1);
 	final BigInteger numC = getNumComplicatedSum(alpha, gamma, gammaPrime, delta);
-	assert numC.equals(num) : "" + num + ", " + numC;
-	assert getDenomComplicatedSum(alpha, gamma, gammaPrime, delta).equals(denom);
+	final BigInteger denomC = getDenomComplicatedSum(alpha, gamma, gammaPrime, delta);
+	final BigInteger scaledNum = scaling.multiply(num);
+	final BigInteger scaledDenom = scaling.multiply(denom);
+	assert scaledNum.equals(numC) : "" + scaledNum + ", " + numC;
+	assert scaledDenom.equals(denomC);
 	if(gammaPrime == 1) {
 		assert getNumGammaPrimeOne(alpha, gamma, delta).equals(num);
 		assert getDenomGammaPrimeOne(alpha, gamma, delta).equals(denom);
 	}
 	final double frac = num.doubleValue() / denom.doubleValue();
-	println(alpha);
-	println(gamma);
-	println(delta);
-	println(num);
-	println(denom);
-	println(frac);
+	println(alpha + ", " + gamma + ", " + delta + ": " + num + " / " + denom + " = " + frac);
 }
 
 public void printBunch(int alpha, int gamma, int gammaPrime) {
@@ -100,5 +99,6 @@ public void printBunch(int alpha, int gamma, int gammaPrime) {
 	}
 }
 
-printBunch(1, 3, 1);
+int gamma = 1; printFrac(0, gamma, gamma, 1);
+int gamma = 1; printBunch(0, gamma, gamma);
 
