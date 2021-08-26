@@ -488,15 +488,25 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 		}.
 	\end{equation}
 	
+	Let us examine the more general formula, for $\gamma' \in N, \gamma' ≤ \gamma$:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}.
+	\end{equation}
+	
 	Note that:
 	\begin{align}
-		(i + \gamma + 1) \binom{i + \gamma}{\gamma - 1}
-		& = (i + \gamma + 1) \frac{(i + \gamma)!}{(\gamma - 1)! (i + 1)!}\\
-		& = \frac{(i + \gamma + 1)!}{(\gamma - 1)! (i + 1)!}\\
-		& = \frac{\gamma (i + \gamma + 1)!}{\gamma ! (i + 1)!}\\
-		& = \gamma \binom{i + \gamma + 1}{\gamma}.
+		(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma'}
+		& = (i + \gamma + 1) \frac{(i + \gamma)!}{(\gamma - \gamma')! (i + \gamma')!}\\
+		& = \frac{(i + \gamma + 1)!}{(\gamma - \gamma')! (i + \gamma')!}\\
+		& = \frac{(\gamma - \gamma' + 1) (i + \gamma + 1)!}{(\gamma - \gamma' + 1) ! (i + \gamma')!}\\
+		& = (\gamma - \gamma' + 1) \binom{i + \gamma + 1}{\gamma - \gamma' + 1}.
 	\end{align}
-	(The derivation is not valid if $\gamma = 1$ but the conclusion holds in that case as well.)
+	(The derivation is not valid if $\gamma = \gamma'$ but the conclusion holds in that case as well.)
 	
 	Also, using Vandermonde’s identity (and thanks to \hrefblue{https://math.stackexchange.com/a/1868061}{StackExchange}), for any $x, y, z \in \N$:
 	\begin{align}
@@ -510,48 +520,137 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 	And:
 	\begin{multline}
 		\begin{aligned}
-		\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - 1} \binom{\alpha + \delta - i}{\alpha}
-		& = \sum_{0 ≤ i ≤ \delta} \binom{i + 1 + \gamma - 1}{\gamma - 1} \binom{\alpha + \delta + 1 - i - 1}{\alpha}\\
-		& = \sum_{0 ≤ i ≤ \delta} \binom{i + 1 + \gamma - 1}{i + 1} \binom{\alpha + (\delta + 1) - (i + 1)}{(\delta + 1) - (i + 1)}\\
-		& = \sum_{1 ≤ k ≤ \delta + 1} \binom{k + \gamma - 1}{k} \binom{\alpha + (\delta + 1) - k}{(\delta + 1) - k}\\
-		& = \sum_{1 ≤ k ≤ \delta + 1} \binom{\gamma + k - 1}{k} \binom{\alpha + 1 + (\delta + 1) - k - 1}{(\delta + 1) - k}\\
+		\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		& = \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{i + \gamma'} \binom{\alpha + \delta + \gamma' - i - \gamma'}{\alpha}\\
+		& = \sum_{0 ≤ i ≤ \delta} \binom{\gamma - \gamma' + 1 + i + \gamma' - 1}{i + \gamma'} \binom{\alpha + (\delta + \gamma') - (i + \gamma')}{(\delta + \gamma') - (i + \gamma')}\\
+		& = \sum_{\gamma' ≤ k ≤ \delta + \gamma'} \binom{\gamma - \gamma' + 1 + k - 1}{k} \binom{\alpha + (\delta + \gamma') - k}{(\delta + \gamma') - k}\\
+		& = \sum_{\gamma' ≤ k ≤ \delta + \gamma'} \binom{\gamma - \gamma' + 1 + k - 1}{k} \binom{\alpha + 1 + (\delta + \gamma') - k - 1}{(\delta + \gamma') - k}\\
 		\end{aligned}\\
+		= \sum_{0 ≤ k ≤ \delta + \gamma'} \binom{(\gamma - \gamma' + 1) + k - 1}{k} \binom{(\alpha + 1) + (\delta + \gamma') - k - 1}{(\delta + \gamma') - k}\\
+			- \sum_{0 ≤ k ≤ \gamma' - 1} \binom{(\gamma - \gamma' + 1) + k - 1}{k} \binom{(\alpha + 1) + (\delta + \gamma') - k - 1}{(\delta + \gamma') - k}\\
 		\begin{aligned}
-		& = \binom{\delta + 1 + \alpha + 1 + \gamma -1}{\delta + 1}
-		- \binom{\gamma - 1}{0} \binom{\alpha + 1 + (\delta + 1) - 1}{(\delta + 1)}\\
-		& = \binom{\alpha + \gamma + \delta + 1}{\delta + 1}
-		- \binom{\alpha + \delta + 1}{\delta + 1}.
+		& = \binom{(\delta + \gamma') + (\alpha + 1) + (\gamma - \gamma' + 1) - 1}{\delta + \gamma'}
+		- \sum_{0 ≤ k ≤ \gamma' - 1} …\\
+		& = \binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'}
+		- \sum_{0 ≤ k ≤ \gamma' - 1} \binom{\gamma - \gamma' + k}{k} \binom{\alpha + \delta + \gamma' - k}{\delta + \gamma' - k}.
 		\end{aligned}
 	\end{multline}
+	We let $R(\gamma)$ denote the last sum, when $\gamma', \alpha, \delta$ are understood from context.
 	
 	Thus:
 	\begin{align}
 		P[z < b \knowing {\ppref}] 
+		& = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}\\
 		& = \frac{1}{\alpha + \gamma + \delta + 2} 
 		\frac{
 			\sum_{0 ≤ i ≤ \delta}
-			\gamma \binom{i + \gamma + 1}{\gamma} \binom{\alpha + \delta - i}{\alpha}
+			(\gamma - \gamma' + 1) \binom{i + \gamma + 1}{\gamma - \gamma' + 1} \binom{\alpha + \delta - i}{\alpha}
 		}{
-			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+			\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
 		}\\
-		& = \frac{\gamma}{\alpha + \gamma + \delta + 2} 
+		& = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + \delta + 2} 
 		\frac{
 			\sum_{0 ≤ i ≤ \delta}
-			\binom{i + \gamma + 1}{\gamma} \binom{\alpha + \delta - i}{\alpha}
+			\binom{i + \gamma + 1}{\gamma + 1 - \gamma'} \binom{\alpha + \delta - i}{\alpha}
 		}{
-			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+			\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
 		}\\
-		& = \frac{\gamma}{\alpha + \gamma + \delta + 2} 
+		& = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + \delta + 2} 
 		\frac{
-			\binom{\alpha + \gamma + \delta + 2}{\delta + 1}
-			- \binom{\alpha + \delta + 1}{\delta + 1}
+			\binom{\alpha + \gamma + \delta + 2}{\delta + \gamma'} - R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma)
+		}\\
+		& = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\frac{\alpha + \gamma + \delta + 2}{\alpha + \gamma + 2 - \gamma'} \binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma)
+		}\\
+		& = \begin{aligned}
+			\frac{\gamma - \gamma' + 1}{\alpha + \gamma + \delta + 2} & \frac{1}{\alpha + \gamma + 2 - \gamma'} \\
+		& \frac{
+			(\alpha + \gamma + \delta + 2) \binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - (\alpha + \gamma + 2 - \gamma') R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma)
+		}\end{aligned}\\
+		& = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + 2 - \gamma'} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - \frac{\alpha + \gamma + 2 - \gamma'}{\alpha + \gamma + \delta + 2} R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma)
+		}.
+	\end{align}
+	\commentOC{A numerical check suggests that there might be a mistake in the second term.}
+	
+	In particular, for $\gamma' = 1$, $R(\gamma) = R(\gamma + 1) = \binom{\alpha + \delta + 1}{\delta + 1}$, hence:
+	\begin{align}
+		P[z < b \knowing {\ppref}] 
+		& = \frac{\gamma}{\alpha + \gamma + 1} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \frac{\alpha + \gamma + 1}{\alpha + \gamma + \delta + 2} \binom{\alpha + \delta + 1}{\delta + 1}
 		}{
 			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
 		}.
 	\end{align}
+	The second multiplicand can be written as:
+	\begin{align}
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \frac{\alpha + \gamma + 1}{\alpha + \gamma + \delta + 2} \binom{\alpha + \delta + 1}{\delta + 1}
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+		}
+		& = \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{\alpha ! (\alpha + \gamma)! (\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \gamma + 1) (\alpha + \delta + 1)!}{\alpha! (\alpha + \gamma)! (\alpha + \gamma + \delta + 2) (\delta + 1)!}
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{\alpha ! (\alpha + \gamma)! (\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \delta + 1)!}{\alpha! (\alpha + \gamma)! (\delta + 1)!}
+		}\\
+		& = \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{(\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \gamma + 1) (\alpha + \delta + 1)!}{(\alpha + \gamma + \delta + 2) (\delta + 1)!}
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{(\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \delta + 1)!}{(\delta + 1)!}
+		}\\
+		& = \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \gamma + 1) (\alpha + \delta + 1)!}{(\delta + 1)!}
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\delta + 1)!} - \frac{(\alpha + \gamma + \delta + 2) (\alpha + \gamma)! (\alpha + \delta + 1)!}{(\delta + 1)!}
+		}\\
+		& = \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)! (\alpha + \gamma + 1)
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma + \delta + 2) (\alpha + \gamma)!
+		},
+	\end{align}
+	or still equivalently:
+	\begin{align}
+	& \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)! (\delta + 1 + \alpha + \gamma + 1 - \delta - 1)
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma + \delta + 2) (\alpha + \gamma)!
+		}\\
+	= & \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)! (\delta + 1 + \alpha + \gamma + 1) + (\alpha + \gamma)! (\delta + 1) 
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma + \delta + 2) (\alpha + \gamma)!
+		}\\
+	= & 1 + \frac{
+			(\alpha + \gamma)! (\delta + 1) 
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma + \delta + 2) (\alpha + \gamma)!
+		}\\
+	= & 1 + \frac{\delta + 1}{\alpha + \gamma + \delta + 2}
+		\frac{
+			(\alpha + \gamma)! 
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)!
+		}.
+	\end{align}
 	\Cref{fig:probs} displays some numerical results using this formula.
-	
-	From there, it must be possible to compute the limit when $\delta$ grows, but I’ll stop here as this approach is probably much more complicated than necessary.
 \end{proof}
 
 \begin{conjecture}
@@ -566,7 +665,7 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 \begin{proof}
 	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
 	
-	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downa[b] \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - \gamma}$ ways of placing $C \setminus C$ (the moving objects) among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
+	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downa[b] \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - \gamma}$ ways of placing $C \setminus C$ (the objects among $C$ whose position is not determined) among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
 	
 	Note also that $P[z < b \knowing {\ppref}, \card{\downa[b] \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
 	
@@ -579,6 +678,37 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
 		}.
 	\end{equation}
+	
+	Letting again $R(\gamma)$ denote $\sum_{0 ≤ k ≤ \gamma - 1} \binom{\alpha + \delta + \gamma - k}{\delta + \gamma - k}$, we obtain from the previous proof:
+	\begin{align}
+		P[z < b \knowing {\ppref}] 
+		& = \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ i ≤ \delta}
+			\binom{i + \gamma + 1}{\gamma + 1 - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		& = \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 2}{\delta + 1} - R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma)
+		}\\
+		& = \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\frac{\alpha + \gamma + \delta + 2}{\alpha + \gamma + 1} \binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma)
+		}\\
+		& = \frac{1}{\alpha + \gamma + 1} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \frac{\alpha + \gamma + 1}{\alpha + \gamma + \delta + 2} R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma)
+		}.
+	\end{align}
+	
 \end{proof}
 
 \begin{conjecture}
