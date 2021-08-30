@@ -4,7 +4,6 @@
 \input{preamble/redac}
 \input{preamble/math_basics}
 \input{preamble/math_mine}
-\newcommand{\commentMP}[1]{\textcolor{green}{[MP:#1]}}
 %I find these settings useful in draft mode. Should be removed for final versions.
 	%Which line breaks are chosen: accept worse lines, therefore reducing risk of overfull lines. Default = 200.
 		\tolerance=2000
@@ -49,6 +48,8 @@ We only know the probability distribution over $\linors$, from which $\prefeq$ i
 We can ask questions to obtain information about $\prefeq$. 
 We are interested in comparing questioning strategies and in evaluating the probabilistic evolution of our knowledge of $\prefeq$ as a function of the number of questions asked, for various strategies. 
 
+Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicated by the context, we omit it from the notations of the strict upper and lower countour sets and represent the strict upper and lower contour sets of $a \in \allalts$ with $\upa = {\pprefinv}(a)$ and $\downa = {\ppref}(a)$.
+
 \section{Questioning to increase our knowledge}
 Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\pprefeq} \subseteq \allalts × \allalts$ is a transitive, reflexive and antisymmetric relation.
 It represents our knowledge of $\prefeq$.
@@ -73,20 +74,21 @@ Let ${\ppref^{±1}} = {\ppref} \cup {\ppref^{-1}}$ denote the set of pairs known
 %Note that if we obtain at least one edge per step, then after $\card{Q}$ steps, our knowledge is complete: $Q_{\ppref_{\card{Q}}} = \emptyset$.
 
 \subsection{Sequences of questions, of partial orders, and of digraphs}
+\label{seq:uniqueQs}
 Sequences of questions can be related to sequences of partial orders and to sequences of digraphs.
 This section shows that if a sequence of partial orders corresponds to a sequence of questions, it corresponds to a unique sequence of questions.
 
-Define the upper contour set of $x \in X$ as ${≥^{-1}}(x) = \set{y \in X \suchthat y ≥ x}$, thus, as the set of objects that are at least as good as $x$.
+Define the upper contour set of $x \in X$ as ${\pprefeqinv}(x) = \set{y \in X \suchthat y \pprefeq x}$, thus, as the set of objects that are at least as good as $x$.
 We first observe that a subset of an upper contour set that includes an object of which it is the upper contour set is the upper contour set of a unique object.
 (A similar results holds for lower contour sets.)
 \begin{proposition}[Folklore?]
 	\label{th:ucs}
-	Let $\set{x, y} \subseteq S \subseteq X$ such that $S \subseteq {≥^{-1}}(x)$ and $S \subseteq {≥^{-1}}(y)$. Then, $x = y$.
+	Let $\set{x, y} \subseteq S \subseteq X$ such that $S \subseteq {\pprefeqinv}(x)$ and $S \subseteq {\pprefeqinv}(y)$. Then, $x = y$.
 \end{proposition}
 \begin{proof}
-	By hypothesis, $x \in S$, and $\forall s \in S: s ≥ y$. Thus, $x ≥ y$.
-	By a symmetrical observation, $y ≥ x$.
-	Because $>$ is asymmetric and ${≥} = {>} \cup {=}$, this implies $x = y$.
+	By hypothesis, $x \in S$, and $\forall s \in S: s \pprefeq y$. Thus, $x \pprefeq y$.
+	By a symmetrical observation, $y \pprefeq x$.
+	Because $\ppref$ is asymmetric and ${\pprefeq} = {\ppref} \cup \restr{=}{X}$, this implies $x = y$.
 \end{proof}
 
 Given ${\ppref}, {\ppref'} \in \POs$ and $i, j \in \allalts$, say that the question $q_{ij} \in Q$ may lead from $\ppref$ to $\ppref'$ iff ${\ppref'} = {\ppref} + (i, j) \lor{\ppref'} = {\ppref} + (j, i)$.
@@ -123,7 +125,7 @@ Note that if the relation was not complete at step $k - 1$, it also was incomple
 
 Given ${\prefeq} \in \linors$, define $Q^{\prefeq} = \cup_{k \in \N^*} \set{(q_t)_{t \in \intvl{1, k}} \in Q^k \suchthat {\ppref_{k - 1}} \notin \linors \land {\ppref_k} \in \linors}$ as the set of finite sequences of questions that lead to a linear order just after the last question and not before. 
 
-Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^{\prefeq}$, define $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
+Given ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in Q^{\prefeq}$ of length $k \in \N^*$, define $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
 \begin{equation}
 	P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}}) = 
 	P(\prefeq)  \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t).
@@ -131,7 +133,7 @@ Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in 
 
 For example, $P^{\prime s}(\prefeq, q_1, q_2, q_3)$ denotes the probability that the preference is $\prefeq$ and that the questions, chosen according to the strategy $s$, were $q_1$, then $q_2$, and finally $q_3$.
 
-Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$, let $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ denote $P^{\prime s}(\prefeq, \set{(q'_t)_{t \in \intvl{1, k'}} \in Q^{\prefeq} \suchthat k' ≥ k \land \restr{q'_t}{\intvl{1, k}} = q_t})$, the probability that the real preference be $\prefeq$ and that the strategy $s$ asks any sequence of questions in $Q^{\prefeq}$ that completes $q_t$.
+Given ${\prefeq} \in \linors$, $k \in \N^*$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$, let $P^{\prime s}(\prefeq, (q_t)_{t \in \intvl{1, k}})$ denote $P^{\prime s}(\prefeq, \set{(q'_t)_{t \in \intvl{1, k'}} \in Q^{\prefeq} \suchthat k' ≥ k \land \restr{q'_t}{\intvl{1, k}} = q_t})$, the probability that the real preference be $\prefeq$ and that the strategy $s$ asks any sequence of questions in $Q^{\prefeq}$ that completes $(q_t)_{t \in \intvl{1, k}}$.
 
 Given $k \in \N^*$, ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in Q^k$ such that ${\ppref}_{k - 1} \notin \linors$, define $P^s(\prefeq, (q_t)_{t \in \intvl{1, k}})$ as the probability of ${\prefeq} \in \linors$ being the real preference and of the strategy $s$ asking the sequence of questions $(q_t)_{t \in \intvl{1, k}}$ as: 
 \begin{equation}
@@ -149,20 +151,73 @@ Given $k \in \N^*$, ${\prefeq} \in \linors$ and $(q_t)_{t \in \intvl{1, k}} \in 
 \begin{remark}
 	We can view $s$ as the conditional probabilities given by $P^s$, as these examples show for the cases of one and two questions (which can be generalized naturally).
 	\begin{itemize}
-		\item $P^s(q_1 | >_c) = P^s(>_c, q_1) / P^s(>_c) = P^s(>_c) s(\emptyset)(q_1) / P(>_c) = s(\emptyset)(q_1)$.
-		\item $P^s(q_2 | >_c, q_1) = P^s(>_c, q_1, q_2) / P^s(>_c, q_1) = P^s(>_c, q_1, q_2) / [s(\emptyset)(q_1)P(>_c)] = s(\emptyset)(q_1) s(>_1)(q_2) / s(\emptyset)(q_1) = s(>_1)(q_2).$
+		\item $P^s(q_1 | {\pref}) = P^s({\pref}, q_1) / P^s({\pref}) = P^s({\pref}) s(\emptyset)(q_1) / P({\pref}) = s(\emptyset)(q_1)$.
+		\item $P^s(q_2 | {\pref}, q_1) = P^s({\pref}, q_1, q_2) / P^s({\pref}, q_1) = P^s({\pref}, q_1, q_2) / [s(\emptyset)(q_1)P({\pref})] = s(\emptyset)(q_1) s({\ppref}_1)(q_2) / s(\emptyset)(q_1) = s({\ppref}_1)(q_2).$
 	\end{itemize}
 \end{remark}
 
 As the sequence of questions determines the sequence of partial orders, we can also consider $P^s$ as a probability distribution over (parts of) sequences of partial orders. 
+Define accordingly the probability of the real preference being ${\pref}$ and obtaining the knowledge ${\ppref}_t$ after $t$ questions for each $t \in \intvl{1, k}$, given ${\pref} \in \linors$ and a finite sequence of preorders $({\ppref}_t)_{t \in \intvl{1, k}} \in \POs^k$ of length $k$, as: 
+\begin{equation}
+	P^s({\pref}, ({\ppref}_t)_{t \in \intvl{1, k}}) = 
+P^s({\pref}, \set{(q_t)_{t \in \intvl{1, k}} \suchthat \forall t \in \intvl{1, k}: T(\cup_{i ≤ t} (q_i \cap {\pref})) = {\ppref}_t}).
+\end{equation}
+As \cref{seq:uniqueQs} show that the set of sequences of questions corresponding to the sequence of preorders is a singleton if not empty, we obtain:
+\begin{equation}
+	P^s({\pref}, ({\ppref}_t)_{t \in \intvl{1, k}}) = 
+	\begin{cases}
+		P({\pref}) \prod_{t \in \intvl{1, k}} s(\ppref_{t - 1})(q_t) & \text{ if } (q_t)_{t \in \intvl{1, k}} \text{ corresponds to } ({\ppref}_t)_{t \in \intvl{1, k}},\\
+		0 & \text{ if none correspond}.
+	\end{cases}
+\end{equation}
+
+We also note $P^s({\ppref}_i) = P^s(\set{({\ppref'_t})_{t \in \intvl{1, k}} \in \cup_{i ≤ k \in \N^*} \POs^k \suchthat {\ppref'_i} = {\ppref}_i})$, given $i \in \N^*$, for the probability of our knowledge being ${\ppref}_i$ after $i$ questions.
+\begin{remark}
+	Note that this is a double abuse of notation. First, it introduces a possible ambiguity: $P^s({\ppref}_1) = \sum_{{\pref} \in \linors} P({\pref}) s(\emptyset)(\set{q \suchthat (q \cap {\pref}) = {\ppref_1}})$ represents the probability of obtaining a knowledge of $\ppref_1$ after one question, whereas $P^s({\ppref}) = P({\ppref})$ represents the probability that the real ordering $\pref$ be a superset of ${\ppref}$. Also, the index is important, as $P^s({\ppref}_1)$ may differ from $P^s({\ppref}_2)$. We shall use indices systematically to denote the first interpretation, with the index referring to the number of questions.
+\end{remark}
+\begin{example}
 Example: $P^s({\ppref_1} = \set{(a, b)}) = P^s(q_1 = q_{ab} \land a \pref b)$.
 Example: $P^s({\ppref_2} = \set{(a, b), (c, b)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land c \pref b\big)$.
+Example: $P^s({\ppref_2} = \set{(a, b), (b, c)}) = P^s\big(\set{q_1, q_2} = \set{q_{ab}, q_{bc}} \land a \pref b \land b \pref c\big)$.
+Example: $P^s({\ppref_3} = \set{(a, b), (b, c)}) = P^s\big(\set{q_1, q_2, q_3} \supseteq \set{q_{ab}, q_{bc}} \land a \pref b \land b \pref c\big)$.
+\end{example}
 
 Define $P^\mathit{eq}$ as the equiprobable distribution over $\linors$, thus, $\forall {\pref} \in \linors: P^\mathit{eq}(\pref) = 1/\card{\linors}$.
 
 Given $i, j \in \allalts$, $k \in \N$, let $P^s(i \ppref_k j) = P^s((i, j) \in {\ppref_k})$ denote the probability that the edge $(i, j)$ be known after $k$ questions. (Under reasonable conditions of symmetry on $P$ and $s$, this will be half of $P^s(q_{ij} \subseteq {\ppref^{±1}_k})$, the probability that the answer to the question $q_{ij}$ be known after $k$ questions.)
 
 Can we obtain a nice formula for $P^s(i \ppref_k j)$?
+
+\subsection{Optimal strategies}
+\label{sec:optDef}
+The optimal $k$-strategies $\argmax_{s} E^s[\card{{\ppref}_k}]$ are defined as those that maximize the expected number of known pairs after $k$ questions:
+\begin{equation}
+	E^s[\card{{\ppref}_k}] = \sum_{{\ppref}_k \in \POs} \prod P^s({\ppref}_k) \card{{\ppref_k}}.
+\end{equation}
+
+We have:
+\begin{align}
+	E^s[\card{{\ppref}_k}] 
+	& = \sum_{({\ppref}_t)_{t \in \intvl{1, k}} \in \POs^k} P^s(({\ppref}_t)_{t \in \intvl{1, k}}) \card{{\ppref_k}}\\
+	& = \sum_{{\pref} \supseteq {\ppref}_k \supseteq {\ppref}_{k - 1} \supseteq … \supseteq {\ppref}_1} P^s({\pref}, ({\ppref_t})_{t \in \intvl{1, k}}) \card{{\ppref_k}}\\
+	& = \sum_{{\pref} \supseteq {\ppref}_k \supseteq {\ppref}_{k - 1} \supseteq … \supseteq {\ppref}_1} P({\pref}) \prod_{t \in \intvl{1, k}} s({\ppref_{t - 1}})(q_t) \card{{\ppref_k}}.
+\end{align}
+(The last two sums are over sequences that are feasible, meaning that for any $t \in \intvl{1, k}$, some question permits to go from ${\ppref}_{t - 1}$ to ${\ppref_t}$.)
+
+The optimal $k$-strategies knowing $\ppref$ are defined as the strategies maximizing:
+\begin{align}
+	E^s[\card{{\ppref}_k} \knowing {\ppref}]
+	& = \sum_{{\ppref}_k \in \POs} P^s({\ppref}_k \knowing {\ppref}) \card{{\ppref_k}}.
+\end{align}
+
+The gain due to transitivity when asking $q$ when knowing ${\ppref}$ and when the real preference is ${\pref}$ is defined as $g^{q, {\ppref}}({\pref}) = \card{T({\ppref} \cup (q \cap {\pref}))} - \card{{\ppref}} - 1$.
+
+Because $g^{q, {\ppref}}$ is a random variable, we can also define the expected gain knowing ${\ppref}$ as $E[g^{q, {\ppref}} \knowing {\ppref}] = \prod_{{\pref} \supseteq {\ppref}} P({\pref} \knowing {\ppref}) × g^{q, {\ppref}}({\pref})$.
+
+We also define the myopically best question when knowing ${\ppref}$ as $\hat{q}({\ppref}) = \argmax_{q \in Q} E[g^{q, {\ppref}} \knowing {\ppref}]$, and define, abusing notation, $g({\ppref}) = \max_{q \in Q} E[g^{q, {\ppref}} \knowing {\ppref}]$.
+
+%g^> = g^{myopic-best-q(>), >} NOT WELL DEFINED: There could be q1 and q2 with same exp but ≠ resulting gain functions: g^q1(t_1) = 3; g^g1(t_2) = 1; g^q2(t_1) = 1; g^q2(t_2) = 3.
+
 
 \subsection{Random questions without repetition}
 The random strategy without repetition $s^\mathit{rm}$ draws a question equiprobably from the set of remaining questions. Thus, $\forall {\ppref} \in \POs \setminus \linors, i ≠ j \in \allalts$:
@@ -192,7 +247,7 @@ TODO: be more precise. See \hrefblue{https://en.wikipedia.org/wiki/Median_of_med
 Here is an algorithm to select a median of $n$ elements, with worst case complexity $O(n^2)$ and average complexity $O(n)$ (the lower or the upper median are both acceptable results).
 Select a pivot element randomly (equiprobably). Compare the $n - 1$ other elements to the pivot. Run again on either the lower elements or the higher elements, depending on where the median lies, or stop if a median has been found. 
 
-Let $V_[m_1, m_2](n)$ be the number of comparisons required to find the $m_1$th or $m_2$th element among $n$, $V_m(n)$ for $V_[m, m](n)$, $V(n)$ for $V_[\floor{\frac{n}{2}}](n)$, and let us compute an upper bound for $E[V(n)]$.
+Let $V_[m_1, m_2](n)$ be the number of comparisons required to find the $m_1$th or $m_2$th element among $n$, $V_m(n)$ for $V_{[m, m]}(n)$, $V(n)$ for $V_[\floor{\frac{n}{2}}](n)$, and let us compute an upper bound for $E[V(n)]$.
 Because of our equiprobable pivot draw, we have $1/n$ chances to pick a pivot that will turn out the be the $k$ th element (in order). Assume, pessimistically, that we always recurse on the biggest partition. If we picked a pivot that is the first or last element (that happens with odds $2/n$), we recurse on a partition of size $n - 1$. And so on (if $n$ is odd, one of the terms appears only once instead of twice). We obtain $E[V(n)] ≤ \frac{2}{n} \sum_{k = \floor{n/2}}^{n - 1} E[V(k)] + (n - 1)$.
 
 A classical result is that $E[V(n)] \in O(n)$ [Cormen et al.].
@@ -264,27 +319,28 @@ The set $\sigma(X')$ is the set of ranks of the elements in $X'$ w.r.t. the orde
 	\label{fig:equalProba}
 \end{figure}
 
-\begin{proposition}\label{prop:probaLinearOrder}
+\begin{proposition}\label{th:probaLinearOrder}
 	Consider any $X' \subseteq X$ and any ${\ppref} \in \linors[X']$. $P(\ppref) = 1 / (\card{X'})!$.
 \end{proposition}
 \begin{proof} By \cref{th:equalProba}, $P(\ppref) = P(\ppref')$, for all ${\ppref}, {\ppref'} \in \linors[X']$. Since the cardinal of $\linors[X']$ is $|X'|!$, for all ${\ppref} \in \linors[X']$, $P(\ppref) =  \frac{1}{|X'|!}$.
 \end{proof}
 
-\begin{lemma}\label{le:probaPartialOrder}
+\begin{lemma}\label{th:probaPartialOrder}
 Let $X' \subseteq X$. Given ${\ppref} \in \POs[X']$, a partial order on $X'$: 
-$$P(\ppref) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!}.
-$$
+\begin{equation}
+	P(\ppref) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!}.
+\end{equation}
 \end{lemma}
 \begin{proof}
 $P(\ppref) = P(\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}})$. We have that 
-$$
-\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}} = \bigcup_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} \set{{\pref[e]} \in \linors: \restr{{\pref[e]}}{X'} = {\ppref'}}.
-$$   
+\begin{equation}
+	\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}} = \bigcup_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} \set{{\pref[e]} \in \linors: \restr{{\pref[e]}}{X'} = {\ppref'}}.
+\end{equation}
 The latter union is disjoint. Therefore, 
-$$
-P(\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}}) = \sum_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} P({\ppref'}).
-$$
-Using \cref{prop:probaLinearOrder}, we get the result.
+\begin{equation}
+	P(\set{{\pref[e]} \in \linors: {\pref[e]} \supseteq {\ppref}}) = \sum_{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}} P({\ppref'}).
+\end{equation}
+Using \cref{th:probaLinearOrder}, we get the result.
 \end{proof}
 
 The following proposition is a corollary of the previous lemma. 
@@ -295,10 +351,10 @@ The following proposition is a corollary of the previous lemma.
 \begin{proposition}[draft!]
 	\label{th:indep}
 	Given $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only incomparable elements better than $b$ and incomparable elements below $b$, and $a, b \in X$ such that $q_{ab} \cap {\ppref} = \emptyset$: 
-	\[P(a > b \knowing {\ppref}) = \frac{1 + {\ppref^{-1}}(b)}{1 + {\ppref^{-1}}(b) + 1 + {\ppref}(b)}.\]
+	\begin{equation}P(a > b \knowing {\ppref}) = \frac{1 + {\ppref^{-1}}(b)}{1 + {\ppref^{-1}}(b) + 1 + {\ppref}(b)}.\end{equation}
 	In particular, it is independent of the relative ordering of the elements below $b$.
 	\footnote{This is also equal to:
-		\[P(a > b \knowing {\ppref}) = \frac{(1 + {\ppref^{-1}}(b))! {\ppref}(b)!}{(1 + {\ppref^{-1}}(b))! {\ppref}(b)! + {\ppref^{-1}}(b)! (1 + {\ppref}(b))!}.\] 
+		\begin{equation}P(a > b \knowing {\ppref}) = \frac{(1 + {\ppref^{-1}}(b))! {\ppref}(b)!}{(1 + {\ppref^{-1}}(b))! {\ppref}(b)! + {\ppref^{-1}}(b)! (1 + {\ppref}(b))!}.\end{equation} 
 	}
 \end{proposition}
 \begin{proof}
@@ -314,50 +370,764 @@ The following proposition is a corollary of the previous lemma.
 \end{proof}
 
 \begin{proof} Another proof. I replace $a$ by $d$ in the Proposition. We try to assess $P(d > b \knowing {\ppref})$. We have that $X'= A \cup \set{b} \cup C$, where $A = {\ppref^{-1}}(b)$, $C = {\ppref}(b)$ and $\restr{{\ppref}}{A} = \emptyset = \restr{{\ppref}}{C}$.
-By \cref{le:probaPartialOrder}, we have:
-$$
-P({\ppref}) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!} = \frac{|A|! \cdot |C|!}{(|A|+|C|+1)!}
-$$
-and, by applying \cref{le:probaPartialOrder} to $X^{\prime\prime} = X' \cup \set{d}$, 
-$$
-P\big(T({\ppref} \cup \set{(d,b)})\big) = \frac{|A|! \cdot |C|! \cdot (|A|+1)}{(|A|+|C|+2)!}. 
-$$
+By \cref{th:probaPartialOrder}, we have:
+\begin{equation}
+	P({\ppref}) = \frac{|\set{{\ppref'} \in \linors[X']: {\ppref'} \supseteq {\ppref}}|}{|X'|!} = \frac{|A|! \cdot |C|!}{(|A|+|C|+1)!}
+\end{equation}
+and, by applying \cref{th:probaPartialOrder} to $X^{\prime\prime} = X' \cup \set{d}$, 
+\begin{equation}
+	P\big(T({\ppref} \cup \set{(d,b)})\big) = \frac{|A|! \cdot |C|! \cdot (|A|+1)}{(|A|+|C|+2)!}. 
+\end{equation}
 We thus have:
+\begin{equation}
+	P(d \ppref b \knowing {\ppref}) = \frac{P\big(T({\ppref} \cup \set{(d,b)})\big)}{P({\ppref})} = \frac{|A|+1}{|A|+|C|+2}. 
+\end{equation}
+\end{proof}
+
+\begin{proposition}\label{th:Pd>a}
+Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only a set $A$ of incomparable elements better than $b$ and a set $C$ o incomparable elements worse than $b$, and $d \in X$ such that $q_{bd} \cap {\ppref} = \emptyset$. For all $a \in A$: 
+	\begin{equation}P(d > a \knowing {\ppref}) = \frac{(|A| + 1)/2 }{|A| + |C| +2}.\end{equation}    
+\end{proposition}
+
+\begin{proof}
+We first compute $P((d,a) \cup \ppref)$. We have:
 $$
-P(d \ppref b \knowing {\ppref}) = \frac{P\big(T({\ppref} \cup \set{(d,b)})\big)}{P({\ppref})} = \frac{|A|+1}{|A|+|C|+2}. 
+P((d,a) \cup \ppref) = \frac{|C|! \ [1+2+ \ldots + |A|] \ (|A|-1)!}{(|A| + |C| +2)!}=\frac{|C|!\ (|A|(|A|+1)/2)\  (|A|-1)!}{(|A| + |C| +2)!}.
+$$
+We obtain this by counting the number of possible positions for $d$ when $a$ has rank 1, 2, \ldots $|A|$ in $A$. 
+
+Therefore, using the formula for $P(\ppref)$ obtained above, we get:
+$$
+P((d,a) \cup \ppref|\ppref) = \frac{P((d,a) \cup \ppref)}{P(\ppref)} = \frac{(|A|+1)}{2 (|A|+ |C| + 2)}.
 $$
 \end{proof}
+
+A similar expression can be obtained for $
+P((c,d) \cup \ppref| \ppref)$, for any $c \in C$.
 
 \subsection{Should we always exploit the median?}
-We might attempt to answer analytically the following question: should we always ask $b$ VS everything else when we know a chain $abc$? Thus, when $\prefeq$ includes $abc$, and $q_{be}$, $q_{bf}$, … has been answered, should we ask $q_{bg}$? (That’s what every optimal strategy that we found do.) It’s a bit strange that it seems not optimal to systematically strive for a chain of three (see $k = 5$).
+Here we study whether or when it is optimal (myopically or long term) to ask $q_{bz}$ where $b$ is a median object and $z$ an object we know nothing about. That’s what every optimal strategy that we found (thus, for small $k$) do.
 
-\begin{conjecture}
-Assume $>$ has a single connected component, and the maximal size of a chain is 3. Assume $b$ is the middle element of every chain of size 3. Then the optimal strategy asks $b$ with a new element.
+\begin{proposition}
+	\label{th:myopicMedian}
+	Let $X' \subseteq X$, ${\ppref} \in \POs[X']$ with a single connected component containing only a non-empty set $A$ of incomparable elements better than $b$ and a non-empty set $C$ of incomparable elements worse than $b$, and $z \not \in X'$. The expected gain in the number of edges is maximal when asking $q_{bz}$. Using the notations of \cref{sec:optDef}, $q_{bz} \in \hat{q}({\ppref}) = \argmax_{q \in Q} E[g^{q, {\ppref}} \knowing {\ppref}]$.
+\end{proposition}
+\begin{proof}
+	Defining $\alpha = \card{A}$ and $\gamma = \card{C}$, we have:
+	\begin{equation}
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = P(z \ppref b \knowing {\ppref}) \gamma + P(b \ppref z \knowing {\ppref}) \alpha.
+	\end{equation}
+	We readily see that asking a question $q_{de}$ for $d,e \notin X'$ yields an expected gain of $0$, lower than $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$. 
+	
+	Considering now any $a \in A$, we have:
+	\begin{equation}
+		E[g^{q_{az}, {\ppref}} \knowing {\ppref}] = P(z \ppref a \knowing {\ppref}) (\gamma + 1).
+	\end{equation}
+	
+	As the reasoning is symmetrical when asking a question about $c \in C$, we are only left to prove that $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{az}, {\ppref}} \knowing {\ppref}]$, that is:
+	\begin{equation}
+		P(z \ppref b \knowing {\ppref}) \gamma + P(b \ppref z \knowing {\ppref}) \alpha > P(z \ppref a \knowing {\ppref}) \gamma + P(z \ppref a \knowing >),
+	\end{equation}
+	or equivalently:
+	\begin{equation}
+		[P(z \ppref b \knowing {\ppref}) - P(z \ppref a \knowing {\ppref})] \gamma > P(z \ppref a \knowing {\ppref}) - P(b \ppref z \knowing {\ppref}) \alpha.
+	\end{equation}
+	
+	To compute $P(z \ppref a \knowing {\ppref})$, we condition on the value of $\card{\restr{{\prefeqinv}}{X'}(a)}$, the rank of $a$ in the linear completion of $\ppref$ to $X'$: 
+	\begin{equation}
+	P(z \ppref a \knowing \ppref, \card{\restr{{\prefeqinv}}{X'}(a)} = r) = \frac{r}{\alpha + 2 + \gamma}.
+	\end{equation}
+	
+	As the possible ranks of $a$ range equiprobably from $1$ to $\alpha$, we obtain:
+	\begin{equation}
+		P(z \ppref a \knowing \ppref) = \frac{(1 + \alpha) / 2}{\alpha + 2 + \gamma}.
+	\end{equation}
+
+	On the other hand:
+	\begin{equation}
+		P(z \ppref b \knowing \ppref) = \frac{1 + \alpha}{\alpha + 2 + \gamma}.
+	\end{equation}
+	
+	Thus, $P(z \ppref b \knowing \ppref) = 2 P(z \ppref a \knowing \ppref)$, 
+	and the inequality holds.
+	\footnote{More intuitively: $P(z \ppref a) = P(a \ppref z \ppref b)$, by symmetry.}
+\end{proof}
+
+\begin{conjecture}[$q_{bz}$ not necessarily $k$-optimal]
+	Asking $q_{bz}$ is not always an optimal $k$-strategy (using the terminology of \cref{sec:optDef}) when $b$ is a “median” element: in the situation described in \cref{th:myopicMedian}, consider $\alpha$ big and $\gamma = 1$, with big $k$ and big $n$. Better then try to build a new structure, more balanced, than exploit $b$ which will very likely only yield gains of $1$.
 \end{conjecture}
-I’d say this is probably true but difficult to prove because of the complicated shapes such as ${abc, be, dc}$. Let’s start with something simpler.
 
 \begin{conjecture}
-Assume > has a single connected component, and every undirected path has at most three objects. Assume $b$ is the middle element of every chain of size 3, and some element $f$ is not part of the component. Then asking $q_{bf}$ is an optimal strategy.
+	\label{th:limDelta}
+	Given $\alpha, \gamma \in \N, \gamma ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C = \set{c, …}$, $D \ppref c$, with disjoint sets $A$, $B = \set{b}$, $C$ and $D$, and with $\alpha = \card{A}$, $\gamma = \card{C} ≥ 1$ and $\delta = \card{D}$.
+	
+	The sequence $p_\delta$ is monotonically decreasing, and converges to:
+	\begin{equation}
+		\lim_{\delta → ∞} P[z < b \knowing {\ppref}] = \frac{\gamma}{\gamma + \alpha + 1},
+	\end{equation}
 \end{conjecture}
 \begin{proof}
-	Let’s check first that this is myopically optimal. Consider a chain $abc$.
-	\[E[\card{T({>} \cup (\pref \cap q_{af}))} - \card{{>}} - 1 \knowing >] = P(f > a \knowing >) (\card{{\ppref}(b)} + 1),\]
-	\[E[\card{T({>} \cup (\pref \cap q_{bf}))} - \card{{>}} - 1 \knowing >] = P(f > b \knowing >) \card{{\ppref}(b)} + P(b > f \knowing >) \card{{\ppref}^{-1}(b)}.\]
-	Thus, we need to prove:
-	\[P(f > b \knowing >) \card{{\ppref}(b)} + P(b > f \knowing >) \card{{\ppref}^{-1}(b)} > P(f > a \knowing >) \card{{\ppref}(b)} + P(f > a \knowing >),\]
-	or equivalently:
-	\[[P(f > b \knowing >) - P(f > a \knowing >)] \card{{\ppref}(b)} > P(f > a \knowing >) + P(f > b \knowing >) \card{{\ppref}^{-1}(b)} − \card{{\ppref}^{-1}(b)},\]
-	or equivalently:
-	\[P(a > f > b \knowing >) \card{{\ppref}(b)} > P(f > a \knowing >) + P(f > b \knowing >) \card{{\ppref}^{-1}(b)} − \card{{\ppref}^{-1}(b)}.\]
+	The intuition is that when $\delta$ is large, the only thing that counts is that there are $\alpha + 1$ intervals above $b$ and $(\gamma - 1) + 1$ intervals below $b$ (because $c$ is stuck at the bottom, because for $c' \in C \setminus \set{c}$, the likelihood that $c \ppref c'$ vanishes when $\delta$ grows). On average, the objects in $D$ will be spread equally among these intervals, and the limit probability looked for is therefore the proportion of intervals below $b$.
 	
-	Consider $x_1 = a$ to $x_k$ above $b$ above $\card{{\ppref}(b)}$ elements. 
-	$P(f > a \knowing \ppref, \card{{\pprefeqinv}(a)} = r) = r / (k + 2 + \card{{\ppref}(b)})$. 
-	Thus, $P(f > a \knowing \ppref) = (1 + k) / 2 / (k + 2 + \card{{\ppref}(b)})$.
-	Whereas $P(f > b \knowing \ppref) = (1 + k) / (k + 2 + \card{{\ppref}(b)})$.
-	Thus, the inequality holds.
+	We now determine $P[z < b \knowing {\ppref}]$ for a fixed value of $\delta$.
+	We can restrict to considering the complete orderings $\pref$ where the objects composing $A$ and $D$ conform to an arbitrary fixed order $a_1 \pref a_2 \pref …$ and $d_1 \pref d_2 \pref …$. 
+
+	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
+	
+	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downa[b] \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - 1}$ ways of placing $C \setminus \set{c}$ (the “moving” objects) among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
+	
+	Note also that $P[z < b \knowing {\ppref}, \card{\downa[b] \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
+	
+	Therefore, we obtain:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - 1} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - 1} \binom{\alpha + \delta - i}{\alpha}
+		}.
+	\end{equation}
+	
+	Let us examine the more general formula, for $\gamma' \in N, \gamma' ≤ \gamma$:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}.
+	\end{equation}
+	
+	Note that:
+	\begin{align}
+		(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma'}
+		& = (i + \gamma + 1) \frac{(i + \gamma)!}{(\gamma - \gamma')! (i + \gamma')!}\\
+		& = \frac{(i + \gamma + 1)!}{(\gamma - \gamma')! (i + \gamma')!}\\
+		& = \frac{(\gamma - \gamma' + 1) (i + \gamma + 1)!}{(\gamma - \gamma' + 1) ! (i + \gamma')!}\\
+		& = (\gamma - \gamma' + 1) \binom{i + \gamma + 1}{\gamma - \gamma' + 1}.
+	\end{align}
+	(The derivation is not valid if $\gamma = \gamma'$ but the conclusion holds in that case as well.)
+	
+	Also, using Vandermonde’s identity (and thanks to \hrefblue{https://math.stackexchange.com/a/1868061}{StackExchange}), for any $x, y, z \in \N$:
+	\begin{align}
+		\sum_{0 ≤ k ≤ z} \binom{x + k - 1}{k} \binom{y + z - k - 1}{z - k} 
+		& = \sum_{0 ≤ k ≤ z} (-1)^k \binom{-x}{k} (-1)^{z - k} \binom{-y}{z - k}\\
+		& = (-1)^{z} \sum_{0 ≤ k ≤ z} \binom{-x}{k} \binom{-y}{z - k}\\
+		& = (-1)^{z} \binom{-x -y}{z}\\
+		& = \binom{z + y + x -1}{z}.
+	\end{align}
+	
+	And:
+	\begin{multline}
+		\begin{aligned}
+		\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		& = \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{i + \gamma'} \binom{\alpha + \delta + \gamma' - i - \gamma'}{\alpha}\\
+		& = \sum_{0 ≤ i ≤ \delta} \binom{\gamma - \gamma' + 1 + i + \gamma' - 1}{i + \gamma'} \binom{\alpha + (\delta + \gamma') - (i + \gamma')}{(\delta + \gamma') - (i + \gamma')}\\
+		& = \sum_{\gamma' ≤ k ≤ \delta + \gamma'} \binom{\gamma - \gamma' + 1 + k - 1}{k} \binom{\alpha + (\delta + \gamma') - k}{(\delta + \gamma') - k}\\
+		& = \sum_{\gamma' ≤ k ≤ \delta + \gamma'} \binom{\gamma - \gamma' + 1 + k - 1}{k} \binom{\alpha + 1 + (\delta + \gamma') - k - 1}{(\delta + \gamma') - k}\\
+		\end{aligned}\\
+		= \sum_{0 ≤ k ≤ \delta + \gamma'} \binom{(\gamma - \gamma' + 1) + k - 1}{k} \binom{(\alpha + 1) + (\delta + \gamma') - k - 1}{(\delta + \gamma') - k}\\
+			- \sum_{0 ≤ k ≤ \gamma' - 1} \binom{(\gamma - \gamma' + 1) + k - 1}{k} \binom{(\alpha + 1) + (\delta + \gamma') - k - 1}{(\delta + \gamma') - k}\\
+		\begin{aligned}
+		& = \binom{(\delta + \gamma') + (\alpha + 1) + (\gamma - \gamma' + 1) - 1}{\delta + \gamma'}
+		- \sum_{0 ≤ k ≤ \gamma' - 1} …\\
+		& = \binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'}
+		- \sum_{0 ≤ k ≤ \gamma' - 1} \binom{\gamma - \gamma' + k}{k} \binom{\alpha + \delta + \gamma' - k}{\delta + \gamma' - k}.
+		\end{aligned}
+	\end{multline}
+	We let $R(\gamma)$ denote the last sum, when $\gamma', \alpha, \delta$ are understood from context.
+	
+	Thus:
+	\begin{align}
+		P[z < b \knowing {\ppref}] 
+		& = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		& = \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(\gamma - \gamma' + 1) \binom{i + \gamma + 1}{\gamma - \gamma' + 1} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		& = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ i ≤ \delta}
+			\binom{i + \gamma + 1}{\gamma + 1 - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		& = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 2}{\delta + \gamma'} - R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma)
+		}\\
+		& = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\frac{\alpha + \gamma + \delta + 2}{\alpha + \gamma + 2 - \gamma'} \binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma)
+		}\\
+		& = \begin{aligned}
+			\frac{\gamma - \gamma' + 1}{\alpha + \gamma + \delta + 2} & \frac{1}{\alpha + \gamma + 2 - \gamma'} \\
+		& \frac{
+			(\alpha + \gamma + \delta + 2) \binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - (\alpha + \gamma + 2 - \gamma') R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma)
+		}\end{aligned}\\
+		& = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + 2 - \gamma'} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - \frac{\alpha + \gamma + 2 - \gamma'}{\alpha + \gamma + \delta + 2} R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma)
+		}.
+	\end{align}
+	\commentOC{A numerical check suggests that there might be a mistake in the second term.}
+	
+	In particular, for $\gamma' = 1$, $R(\gamma) = R(\gamma + 1) = \binom{\alpha + \delta + 1}{\delta + 1}$, hence:
+	\begin{align}
+		P[z < b \knowing {\ppref}] 
+		& = \frac{\gamma}{\alpha + \gamma + 1} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \frac{\alpha + \gamma + 1}{\alpha + \gamma + \delta + 2} \binom{\alpha + \delta + 1}{\delta + 1}
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+		}.
+	\end{align}
+	The second multiplicand can be written as:
+	\begin{align}
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \frac{\alpha + \gamma + 1}{\alpha + \gamma + \delta + 2} \binom{\alpha + \delta + 1}{\delta + 1}
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+		}
+		& = \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{\alpha ! (\alpha + \gamma)! (\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \gamma + 1) (\alpha + \delta + 1)!}{\alpha! (\alpha + \gamma)! (\alpha + \gamma + \delta + 2) (\delta + 1)!}
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{\alpha ! (\alpha + \gamma)! (\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \delta + 1)!}{\alpha! (\alpha + \gamma)! (\delta + 1)!}
+		}\\
+		& = \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{(\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \gamma + 1) (\alpha + \delta + 1)!}{(\alpha + \gamma + \delta + 2) (\delta + 1)!}
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{(\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \delta + 1)!}{(\delta + 1)!}
+		}\\
+		& = \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\delta + 1)!} - \frac{(\alpha + \gamma)! (\alpha + \gamma + 1) (\alpha + \delta + 1)!}{(\delta + 1)!}
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\delta + 1)!} - \frac{(\alpha + \gamma + \delta + 2) (\alpha + \gamma)! (\alpha + \delta + 1)!}{(\delta + 1)!}
+		}\\
+		& = \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)! (\alpha + \gamma + 1)
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma + \delta + 2) (\alpha + \gamma)!
+		},
+	\end{align}
+	or still equivalently:
+	\begin{align}
+	& \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)! (\delta + 1 + \alpha + \gamma + 1 - \delta - 1)
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma + \delta + 2) (\alpha + \gamma)!
+		}\\
+	= & \frac{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)! (\delta + 1 + \alpha + \gamma + 1) + (\alpha + \gamma)! (\delta + 1) 
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma + \delta + 2) (\alpha + \gamma)!
+		}\\
+	= & 1 + \frac{
+			(\alpha + \gamma)! (\delta + 1) 
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 2)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma + \delta + 2) (\alpha + \gamma)!
+		}\\
+	= & 1 + \frac{\delta + 1}{\alpha + \gamma + \delta + 2}
+		\frac{
+			(\alpha + \gamma)! 
+		}{
+			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)!
+		}.
+	\end{align}
+	\Cref{fig:probs} displays some numerical results using this formula.
+\end{proof}
+
+\begin{conjecture}
+	\label{th:limDeltaAll}
+	Given $\alpha, \gamma \in \N, \gamma ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C$, $D \ppref C$, with disjoint sets $A$, $B = \set{b}$, $C$ and $D$, and with $\alpha = \card{A}$, $\gamma = \card{C} ≥ 1$ and $\delta = \card{D}$.
+	
+	The sequence $p_\delta$ is monotonically decreasing, and converges to:
+	\begin{equation}
+		\lim_{\delta → ∞} P[z < b \knowing {\ppref}] = \frac{1}{\alpha + 1},
+	\end{equation}
+\end{conjecture}
+\begin{proof}
+	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
+	
+	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downa[b] \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - \gamma}$ ways of placing $C \setminus C$ (the objects among $C$ whose position is not determined) among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
+	
+	Note also that $P[z < b \knowing {\ppref}, \card{\downa[b] \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
+	
+	Therefore, we obtain:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}.
+	\end{equation}
+	
+	Letting again $R(\gamma)$ denote $\sum_{0 ≤ k ≤ \gamma - 1} \binom{\alpha + \delta + \gamma - k}{\delta + \gamma - k}$, we obtain from the previous proof:
+	\begin{align}
+		P[z < b \knowing {\ppref}] 
+		& = \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ i ≤ \delta}
+			\binom{i + \gamma + 1}{\gamma + 1 - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		& = \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 2}{\delta + 1} - R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma)
+		}\\
+		& = \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\frac{\alpha + \gamma + \delta + 2}{\alpha + \gamma + 1} \binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma)
+		}\\
+		& = \frac{1}{\alpha + \gamma + 1} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \frac{\alpha + \gamma + 1}{\alpha + \gamma + \delta + 2} R(\gamma + 1)
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma)
+		}.
+	\end{align}
 	
 \end{proof}
 
+\begin{conjecture}
+	\label{th:infP}
+	Given $\alpha, \gamma \in \N, \gamma ≥ 1$ and $b \in X$, the worst possible configuration for any partial order with $\card{\upa[b]} = \alpha$ and $\card{\downa[b]} = \gamma$ is the one described in \cref{th:limDelta}. In other words, $\forall {\ppref} \suchthat \card{\upa[b]} = \alpha, \card{\downa[b]} = \gamma$:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] ≥ \frac{\gamma}{\gamma + \alpha + 1}.
+	\end{equation}
+	(This quantity is the infimum of that probability among the partial orders and objects satisfying that constraint, when $n$ is considered unbounded.)
+\end{conjecture}
+
+Given ${\ppref} \in \POs$ and $a \in \allalts$, define $\zeta({\ppref}, a) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $a$ in $\ppref$, namely, $s = (\upa + \downa)$ and $d = \abs{\upa - \downa}$. Note that $s ≥ d$.
+	
+Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\upa, \downa) = \frac{s - d}{2}, M = \max(\upa, \downa) = \frac{s + d}{2})$.
+	
+We use the vector dominance relation $≥$ in $\R^2$ to compare potentials, thus, $(s, -d) ≥ (s', -d') ⇔ s ≥ s' \land -d ≥ -d'$.
+
+\begin{conjecture}
+	\label{th:potentialRulez}
+	For any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d') < (s, -d)$, 
+	for any $z \in X$ not appearing in $\ppref$,
+	$E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{b'z}, {\ppref'}} \knowing {\ppref'}]$. That is, increasing the sum or decreasing the difference never hurts the expected gain.
+\end{conjecture}
+\begin{proof}
+	A possible intuitive justification for this claim is that $p$ decreases sufficiently rapidly when the difference increases. This could perhaps yield a simpler proof. Here is a painful one.
+
+	Consider any $s, -d \in \N$, and let us evaluate lower and upper bounds on the gain of a question about $b$ for a partial order with potential $\zeta({\ppref}, b) = (s, d)$.
+	
+	Consider any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$.
+
+	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upa[b] ≥ \downa[b]$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise, 
+	and define $M = \frac{s + d}{2} = \max(\card{\upa[b]}, \card{\downa[b]})$ and $m = \frac{s - d}{2} = \min(\card{\upa[b]}, \card{\downa[b]})$,
+	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$, with $M ≥ m$.
+	
+	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = E[g^{q_{bz}, {\ppref}^\text{up}} \knowing {\ppref^\text{up}}] = P[z < b \knowing {\ppref^\text{up}}] M + P[z > b \knowing {\ppref^\text{up}}] m$.
+	Observe that minimizing (respectively, maximizing) $p = P[z < b \knowing {\ppref^\text{up}}]$ is equivalent to minimizing (respectively, maximizing) the gain, when $M$ and $m$ are fixed.
+	
+	\Cref{th:infP} yields that $p ≥ \frac{m}{m + M + 1}$.
+	If this conjecture is correct, we obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
+	\begin{align}
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m
+			& = m \frac{2 M + 1}{m + M + 1}\\
+			& = \frac{s - d}{2} \frac{s + d + 1}{s + 1}.
+	\end{align}
+	If $m = 0$, the formula given in \cref{th:infP} cannot be used, but the bound is trivially valid. 
+	
+	For the upper bound, note that maximizing $p$, hence, the gain, is equivalent to minimizing $p' = 1 - p = P[z > b \knowing {\ppref^\text{up}}] = P[z < b \knowing {\pprefinv^\text{up}}]$, where ${\pprefinv^\text{up}} = {\ppref^\text{down}} = ({\ppref^\text{up}})^{-1}$ is the inverse of ${\ppref^\text{up}}$, that is, a partial order equivalent to $\ppref$ except that it is possibly inverted so as to have $M$ objects below $b$ and $m$ objects above $b$. By a symmetrical reasoning, we thus obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
+	\begin{align}
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≤ \frac{m + 1}{m + M + 1} M + \frac{M}{m + M + 1} m
+			& = M \frac{2 m + 1}{m + M + 1}\\
+			& = \frac{s + d}{2} \frac{s - d + 1}{s + 1}.
+	\end{align}
+	If $M = 0$, the formula given in \cref{th:infP} cannot be used, but the bound is trivially valid as $M = 0 ⇒ m = 0 ⇒ E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = 0$.
+	\footnote{As a sanity check, consider $M = \alpha = 3, m = \gamma = 1$, then given $a_1 a_2 a_3 b c$ with objects above $c$, $P[z < b]$ tends to and is greater than $1/5$, thus the gain is greater than $\frac{1}{5} 3 + \frac{4}{5} 1 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$; and considering the inverse ordering $a b c_1 c_2 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $3/5$, thus the gain is smaller than $\frac{3}{5} 1 + \frac{2}{5} 3 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$.
+	
+	Considering now $M = \gamma = 4, m = \alpha = 2$, then given $a_1 a_2 b c_1 c_2 c_3 c$ with objects above $c$, $P[z < b]$ tends to and is greater than $4/7$, thus the gain is smaller than $\frac{4}{7} 2 + \frac{3}{7} 4 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$; and considering the inverse ordering $a_1 a_2 a_3 a_4 b c_1 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $2/7$, thus the gain is greater than $\frac{2}{7} 4 + \frac{3}{7} 4 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$.}
+	
+	We can now prove the claim.
+	Consider ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d')$.
+	Assume $(s, -d) > (s', -d')$.
+	Thus, $s ≥ s' ≥ d' ≥ d$ and $(s > s' \lor d' > d)$.
+%	Define $(M, m) = (\frac{s + d}{2}, \frac{s - d}{2})$ and $(M', m') = (\frac{s' + d'}{2}, \frac{s' - d'}{2})$.
+	
+	We need to prove:
+	\begin{equation}
+		\frac{s - d}{2} \frac{s + d + 1}{s + 1} ≥ \frac{s' + d'}{2} \frac{s' - d' + 1}{s' + 1},
+	\end{equation}
+	which we can rewrite as:
+	\begin{align}
+		& (s' + 1) (s - d) (s + d + 1) ≥ (s + 1) (s' + d') (s' - d' + 1)\\
+		& ⇔ (s' + 1) s (s + d + 1) ≥ d (s' + 1) (s + d + 1) + (s + 1) s' (s' + 1) + (s + 1) d' - d' (s + 1) d'\\
+		& ⇔ (s' + 1) s (s + 1) + (s + 1) d' (d' - 1) ≥ (s' + 1) d (d + 1) + (s + 1) s' (s' + 1)\\
+		& ⇔ (s' + 1) (s + 1) (s - s') + (s + 1) d' (d' - 1) ≥ (s' + 1) (d + 1) d.
+	\end{align}
+	When $d' > d$, we have $d' ≥ d + 1$ and $d' - 1 ≥ d ≥ 0$, thus the inequality holds.
+	When $s > s'$, we have $s ≥ s' + 1$ and $d' ≥ d$, thus the LHS can be bounded as follows:
+	\begin{align}
+		(s' + 1) (s + 1) (s - s') + (s + 1) d' (d' - 1)
+		& ≥ (s' + 1) (s' + 2) + (s' + 2) d (d - 1)\\
+		& = (s' + 2) (s' + 1 + d^2 - d),
+	\end{align}
+	and the claim becomes:
+	\begin{align}
+		& (s' + 2) (s' + 1 + d^2 - d) ≥ (s' + 1) (d + 1) d\\
+		⇔ & (s' + 2) (s' - d + 1) + d^2 (s' + 2) - d (s' + 1) (d + 1) ≥ 0\\
+		⇔ & (s' + 2) (s' - d + 1) - d [(s' + 1) (d + 1) - d (s' + 2)] ≥ 0\\
+		⇔ & (s' + 2) (s' - d + 1) - d (s' - d + 1) ≥ 0\\
+		⇔ & (s' - d + 1) (s' - d + 2) ≥ 0,
+	\end{align}
+	which follows from $s' ≥ d$.
+\end{proof}
+
+We denote the preorders with potential at least $(s, -d)$ as $\zeta^{-1}({\uparrow}(s, -d)) = \set{{\ppref} \in \POs \suchthat \max_{a \in \allalts} \zeta({\ppref}, a) ≥ (s, -d)}$.
+
+Given two probability distributions $R$ and $S$ over $\POs$, say that $R$ dominates $S$ iff $\forall s, d \in \N$: 
+\begin{equation}
+	R(\zeta^{-1}({\uparrow}(s, -d))) ≥ S(\zeta^{-1}({\uparrow}(s, -d))).
+\end{equation}
+
+Note that comparing $q$ to $q'$ is similar to comparing distributions over $\POs$, more precisely, comparing the probabilistic state resulting from our current knowledge plus $q$, ${\ppref} + q$, to the one resulting from ${\ppref} + q'$.
+
+Towards showing a sufficient condition for $q_{bz}$ to be an (non-myopically) optimal question, we now want to show that whenever ${\ppref} + q$ dominates ${\ppref} + q'$ for any other $q'$, asking $q$ is optimal.
+This should be the situation we face when ${\ppref} = abc$, and, hopefully, other similar situations.
+
+We currently consider only questions involving one unknown element $z$.
+
+\begin{conjecture}
+	Whenever ${\ppref} + q$ dominates ${\ppref} + q'$ for any other $q'$, asking $q$ is optimal.
+\end{conjecture}
+\begin{proof}
+	We mainly want to prove two things.
+	First, if $R$ dominates $S$, it yields a higher immediate gain.
+	Second, the dominance persists to the next question: if $R$ dominates $S$, then for any question $q$ (involving at least one new object), there exists $q'$ such that $R + q'$ still dominates $S + q$.
+	From these two points should follow that asking $q$ may not yield a lower total gain (over all questions) than any strategy starting with another $q'$.
+	
+	Note that $g$, understood as in \cref{sec:optDef} as $g({\ppref}) = \max_q E[g^{q, {\ppref}} \knowing {\ppref}]$, is a random variable wrt a probability distribution over the partial orders $\POs$.
+	
+	\Cref{th:potentialRulez} indicates that a preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d)$ has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d') < (s, -d)$.
+	
+	It should somehow follow that if $R$ dominates $S$, $E_R[g] ≥ E_S[g]$.
+	
+	Given a distribution $R$, define $R + q$ as the expected distribution resulting from adding the answer to $q$ (given by the distribution $P$), computed before knowing the answer. $(R + q)({\ppref'}) = \sum_{{\ppref}, {\pref} \suchthat {\ppref'} = T({\ppref} \cup (q \cap {\pref}))} R({\ppref}) P({\pref})$.
+	
+	Our second claim is that if $R$ dominates $S$, then $\forall q \in Q, \exists q' \in Q \suchthat R + q' \text{ dominates } S + q$.
+	
+	I believe this is true because if some $q$ permits to increase the probability of the potential $(s, -d)$ from $S$, then it has taken those having lower potential $p'$ with prob $S(p')$ and added edges to it; but the prob $R(p')$ was higher and the possible gains are higher as well.
+	$(S + q)(\zeta^{-1}(m', M')) = \sum_{M < M'} S(\zeta^{-1}(m', M)) × (\text{Prob. best gained at least } M' - M) + …$
+\end{proof}
+
+\begin{table}
+	\DTLnewdb{probs}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{2}
+	\DTLnewdbentry{probs}{Denom}{3}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{5}
+	\DTLnewdbentry{probs}{Denom}{8}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{9}
+	\DTLnewdbentry{probs}{Denom}{15}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{14}
+	\DTLnewdbentry{probs}{Denom}{24}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{77}
+	\DTLnewdbentry{probs}{Denom}{143}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{100}
+	\DTLnewdbentry{probs}{Num}{5252}
+	\DTLnewdbentry{probs}{Denom}{10403}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{502502}
+	\DTLnewdbentry{probs}{Denom}{1004003}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{0}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{10000}
+	\DTLnewdbentry{probs}{Num}{50025002}
+	\DTLnewdbentry{probs}{Denom}{100040003}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{6}
+	\DTLnewdbentry{probs}{Denom}{10}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{24}
+	\DTLnewdbentry{probs}{Denom}{42}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{62}
+	\DTLnewdbentry{probs}{Denom}{112}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{130}
+	\DTLnewdbentry{probs}{Denom}{240}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{2706}
+	\DTLnewdbentry{probs}{Denom}{5280}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{100}
+	\DTLnewdbentry{probs}{Num}{9560256}
+	\DTLnewdbentry{probs}{Denom}{19110210}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{84505927506}
+	\DTLnewdbentry{probs}{Denom}{169010852010}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{12}
+	\DTLnewdbentry{probs}{Denom}{18}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{54}
+	\DTLnewdbentry{probs}{Denom}{84}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{156}
+	\DTLnewdbentry{probs}{Denom}{248}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{363}
+	\DTLnewdbentry{probs}{Denom}{585}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{13068}
+	\DTLnewdbentry{probs}{Denom}{21648}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{1}
+	\DTLnewdbentry{probs}{Gamma}{3}
+	\DTLnewdbentry{probs}{Delta}{100}
+	\DTLnewdbentry{probs}{Num}{304022322}
+	\DTLnewdbentry{probs}{Denom}{506693568}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{2}
+	\DTLnewdbentry{probs}{Denom}{6}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{11}
+	\DTLnewdbentry{probs}{Denom}{35}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{36}
+	\DTLnewdbentry{probs}{Denom}{120}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{91}
+	\DTLnewdbentry{probs}{Denom}{315}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{4004}
+	\DTLnewdbentry{probs}{Denom}{16016}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{100}
+	\DTLnewdbentry{probs}{Num}{101158772}
+	\DTLnewdbentry{probs}{Denom}{487401356}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{8501128337702}
+	\DTLnewdbentry{probs}{Denom}{42337302513506}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{1}
+	\DTLnewdbentry{probs}{Delta}{10000}
+	\DTLnewdbentry{probs}{Num}{835001125333377002}
+	\DTLnewdbentry{probs}{Denom}{4173337292750135006}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{6}
+	\DTLnewdbentry{probs}{Denom}{14}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{1}
+%	\DTLnewdbentry{probs}{Num}{36}
+%	\DTLnewdbentry{probs}{Denom}{88}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{2}
+%	\DTLnewdbentry{probs}{Num}{128}
+%	\DTLnewdbentry{probs}{Denom}{324}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{3}
+%	\DTLnewdbentry{probs}{Num}{350}
+%	\DTLnewdbentry{probs}{Denom}{910}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{10}
+%	\DTLnewdbentry{probs}{Num}{24024}
+%	\DTLnewdbentry{probs}{Denom}{68068}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{20}
+%	\DTLnewdbentry{probs}{Num}{587972}
+%	\DTLnewdbentry{probs}{Denom}{1721412}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{3}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{100}
+%	\DTLnewdbentry{probs}{Num}{3614127036}
+%	\DTLnewdbentry{probs}{Denom}{10823988604}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{3}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{2853601525080306}
+	\DTLnewdbentry{probs}{Denom}{8560636236065914}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{0}
+	\DTLnewdbentry{probs}{Num}{6}
+	\DTLnewdbentry{probs}{Denom}{16}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1}
+	\DTLnewdbentry{probs}{Num}{42}
+	\DTLnewdbentry{probs}{Denom}{117}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{2}
+	\DTLnewdbentry{probs}{Num}{170}
+	\DTLnewdbentry{probs}{Denom}{490}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{3}
+	\DTLnewdbentry{probs}{Num}{520}
+	\DTLnewdbentry{probs}{Denom}{1540}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{10}
+	\DTLnewdbentry{probs}{Num}{60918}
+	\DTLnewdbentry{probs}{Denom}{198198}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{4}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{20}
+%	\DTLnewdbentry{probs}{Num}{2342780}
+%	\DTLnewdbentry{probs}{Denom}{7934080}
+%	\DTLnewrow{probs}
+%	\DTLnewdbentry{probs}{Alpha}{4}
+%	\DTLnewdbentry{probs}{Gamma}{2}
+%	\DTLnewdbentry{probs}{Delta}{100}
+%	\DTLnewdbentry{probs}{Num}{55756875876}
+%	\DTLnewdbentry{probs}{Denom}{194666262336}
+	\DTLnewrow{probs}
+	\DTLnewdbentry{probs}{Alpha}{4}
+	\DTLnewdbentry{probs}{Gamma}{2}
+	\DTLnewdbentry{probs}{Delta}{1000}
+	\DTLnewdbentry{probs}{Num}{410918583538883706}
+	\DTLnewdbentry{probs}{Denom}{1438172747168373216}
+	
+	\begin{tabular}{ccccc}
+		$\alpha$ & $\gamma$ & $\delta$ & $P[z < b \knowing {\ppref}]$ & Approximately
+		\DTLforeach*{probs}{%
+			\dbAlpha=Alpha,%
+			\dbGamma=Gamma,%
+			\dbDelta=Delta,%
+			\dbNum=Num,%
+			\dbDenom=Denom%
+		}{%
+			\\ \dbAlpha & \dbGamma & \dbDelta & $\frac{\num{\dbNum}}{\num{\dbDenom}}$ & \psCalculate[round-mode = places, round-precision = 4]{\dbNum / \dbDenom}%
+		}
+	\end{tabular}
+	\caption{Some probabilities for various $(\alpha, \gamma)$ and growing values of $\delta$}
+	\label{fig:probs}
+\end{table}
+
+\subsection{Optimal strategies for 3 questions}
 \newlength{\ordown}
 \setlength{\ordown}{2mm}
 \begin{figure}
@@ -468,7 +1238,6 @@ Assume > has a single connected component, and every undirected path has at most
 	\label{fig:k3b}
 \end{figure}
 
-\subsection{Optimal strategies for 3 questions}
 Consider $n ≥ 4$ and let us determine the strategies that maximize the expected number of edges known after $3$ questions, thus, $E^s[\card{{\ppref}_3}]$.
 
 We write $cd$ instead of $\set{(c, d)}$, $abc$ instead of $\set{(a, b), (b, c), (a, c)}$, and so on.
@@ -490,7 +1259,7 @@ See \cref{fig:k3a,fig:k3b}.
 
 \subsection{Optimum for 4 questions}
 Computer experiments show that the following is the strategy that maximizes $E^s[\card{{\ppref}_4}]$ (assuming $n ≥ 5$). 
-Start by using two questions to order $\set{a, b, c}$. If $>_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, c} > b$), disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$.
+Start by using two questions to order $\set{a, b, c}$. If ${\ppref}_2$ is a linear order (say, $abc$), spend the remaining two questions by comparing yet unknown elements with $b$. Otherwise (say, $\set{a, c} \ppref b$), disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$.
 
 See \cref{fig:k4}.
 
@@ -617,11 +1386,11 @@ Computer experiments show that the following is the strategy that maximizes $E^s
 Start by using two questions to order $\set{a, b, c}$.
 
 \begin{itemize}
-	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$ and $q_{bf}$.
-	\item Say, ${>_2} = \set{a, c} > b$. Then two optimal strategies follow.
+	\item Assume that ${\ppref}_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$ and $q_{bf}$.
+	\item Say, ${{\ppref}_2} = \set{a, c} \ppref b$. Then two optimal strategies follow.
 	\begin{itemize}
-		\item Disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$. If $b > e$ then we obtain $>_4 = \set{a, c} > b > e, d > e$. We can exploit the chain of three elements and end up with $q_{bf}$. Otherwise, $eb$, we obtain ${>_4} = \set{a, c} > b, d > e > b$. We can exploit the chain of three elements and end up with $q_{ef}$. 
-		\item Ask $bd$. If ${>_3} = \set{a, c, d} > b$, disconnect; say $ef$, then $q_{bf}$. Otherwise, ${>_3} = \set{a, c} > b > d$, and ask $q_{be}$ then $q_{bf}$.
+		\item Disconnect temporarily by asking $q_{de}$ (say, $de$), then connect the two components by asking $q_{be}$. If $b > e$ then we obtain ${\ppref}_4 = \set{a, c} \ppref b \ppref e, d \ppref e$. We can exploit the chain of three elements and end up with $q_{bf}$. Otherwise, $eb$, we obtain ${{\ppref}_4} = \set{a, c} \ppref b, d \ppref e \ppref b$. We can exploit the chain of three elements and end up with $q_{ef}$. 
+		\item Ask $bd$. If ${{\ppref}_3} = \set{a, c, d} > b$, disconnect; say $ef$, then $q_{bf}$. Otherwise, ${\ppref}_3 = \set{a, c} \ppref b \ppref d$, and ask $q_{be}$ then $q_{bf}$.
 	\end{itemize}
 \end{itemize}
 
@@ -630,8 +1399,8 @@ Computer experiments show that the following is the strategy that maximizes $E^s
 Start by using two questions to order $\set{a, b, c}$.
 
 \begin{itemize}
-	\item Assume that $>_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$, $q_{bf}$ and $q_{bg}$.
-	\item Say, ${>_2} = \set{a, c} > b$. Then $q_{ac}$. Say, wlog: ${>_3} = acb$. Then ask $q_{cd}$, $q_{ce}$ and $q_{cf}$.
+	\item Assume that ${\ppref}_2$ is a linear order (say, $abc$). Then ask $q_{bd}$, $q_{be}$, $q_{bf}$ and $q_{bg}$.
+	\item Say, ${\ppref}_2 = \set{a, c} \ppref b$. Then $q_{ac}$. Say, wlog: ${\ppref_3} = acb$. Then ask $q_{cd}$, $q_{ce}$ and $q_{cf}$.
 \end{itemize}
 
 \subsection{The random strategy}
