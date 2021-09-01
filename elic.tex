@@ -470,6 +470,7 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
 		}.
 	\end{equation}
+	
 	Furthermore, the sequence $p_\delta$ is monotonically decreasing, and converges to:
 	\begin{equation}
 		\lim_{\delta → ∞} p_\delta = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + 2 - \gamma'}.
@@ -479,7 +480,7 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 \begin{proof}
 	The intuition is that when $\delta$ is large, the only thing that counts is that there are $\alpha + 1$ intervals above $b$ and $(\gamma - \gamma') + 1$ intervals below $b$ (because $C'$ is stuck at the bottom, because for any $c' \in C'$ and $c \in C \setminus C'$, the likelihood that $c' \ppref c$ vanishes when $\delta$ grows). On average, the objects in $D$ will be uniformly distributed within these intervals, and the limit probability looked for is therefore the proportion of intervals below $b$.
 	
-	We now determine $p_\delta$, that is, $P[z < b \knowing {\ppref}]$ for a fixed value of $\delta$.
+	We now determine $p_\delta$, that is, $P[z < b \knowing {\ppref}]$, for a fixed value of $\delta$.
 	We can restrict to considering the complete orderings $\pref$ where the objects composing $A, C, C'$ and $D$ conform to an arbitrary fixed order $a_1 \pref a_2 \pref …$, $d_1 \pref d_2 \pref …$, etc. 
 
 	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
@@ -587,7 +588,85 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 		}.
 	\end{align}
 	
-	In particular, for $\gamma' = 1$, $R(\gamma) = R(\gamma + 1) = \binom{\alpha + \delta + 1}{\delta + 1}$, hence:
+	The limit for large $\delta$ can probably be obtained by algebraic manipulations similar to the ones used to obtain \cref{th:deltaOne}.
+\end{proof}
+
+\begin{conjecture}
+	\label{th:deltaGamma}
+	In the case $\gamma' = \gamma$ of \cref{th:limDelta}:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
+	\end{equation}
+\end{conjecture}
+\begin{proof}
+	From \cref{th:limDelta}, we obtain:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		},
+	\end{equation}
+	equivalently (using the identity established in a previous proof):
+	\begin{align}
+		& \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{1 ≤ i ≤ \delta} \binom{i}{i - 1} \binom{\alpha + \delta - i}{\delta - i}
+			+ (\gamma + 1) \sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ j ≤ \delta - 1} \binom{j + 1}{j} \binom{\alpha + \delta - j - 1}{\delta - j - 1}
+			+ (\gamma + 1) \sum_{0 ≤ i ≤ \delta} \binom{1 + i - 1}{i} \binom{\alpha + 1 + \delta - i - 1}{\delta - i}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\binom{\alpha + \delta + 1}{\delta - 1}
+			+ (\gamma + 1) \binom{\alpha + \delta + 1}{\delta}
+		}{
+			\binom{\alpha + \delta + 1}{\delta}
+		}\\
+		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
+		 \frac{
+		 	\binom{\alpha + \delta + 1}{\delta}
+			\left(
+				\frac{\delta}{\alpha + 2} + (\gamma + 1)
+			\right)
+		 }{
+		 	\binom{\alpha + \delta + 1}{\delta}
+		 }\\
+		= {}& \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
+	\end{align}
+\end{proof}
+
+\begin{conjecture}
+	\label{th:deltaOne}
+	In the case $\gamma' = 1$ of \cref{th:limDelta}:
+	\begin{equation}
+		p_\delta = 
+		P[z < b \knowing {\ppref}] = 
+		\frac{\gamma}{\alpha + \gamma + 1} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \frac{\alpha + \gamma + 1}{\alpha + \gamma + \delta + 2} \binom{\alpha + \delta + 1}{\delta + 1}
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+		}.
+	\end{equation}
+\end{conjecture}
+\begin{proof}
+	When $\gamma' = 1$, $R(\gamma) = R(\gamma + 1) = \binom{\alpha + \delta + 1}{\delta + 1}$, hence:
 	\begin{align}
 		P[z < b \knowing {\ppref}] 
 		& = \frac{\gamma}{\alpha + \gamma + 1} 
@@ -597,6 +676,8 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
 		}.
 	\end{align}
+	\Cref{fig:probs} displays some numerical results using this formula.
+	
 	The second multiplicand can be written as:
 	\begin{align}
 		\frac{
@@ -648,70 +729,6 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 		}{
 			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)!
 		}.
-	\end{align}
-	\Cref{fig:probs} displays some numerical results using this formula.
-\end{proof}
-
-\begin{conjecture}
-	\label{th:infP}
-	Given $\alpha, \gamma \in \N, \gamma ≥ 1$ and $b \in X$, the configuration that minimizes $P[z < b \knowing {\ppref}]$, for any partial order with $\card{\upb} = \alpha$, $\card{\downb} = \gamma$ and $\delta$ other objects in the component containing $b$, is the one described in \cref{th:limDelta} with $\gamma' = \gamma$. Furthermore, in the case $\gamma' = \gamma$, $P[z < b \knowing {\ppref}]$ can be written $\frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}$.
-	In summary, $\forall {\ppref} \suchthat \card{\upb} = \alpha, \card{\downb} = \gamma$ with $\delta$ other objects in the component containing $b$:
-	\begin{equation}
-		P[z < b \knowing {\ppref}] ≥ \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
-	\end{equation}
-\end{conjecture}
-\begin{proof}[Partial]
-	Let’s admit for now that the minimizing configuration is the one of \cref{th:limDelta} with $\gamma = \gamma'$.
-	
-	From \cref{th:limDelta}, we obtain:
-	\begin{equation}
-		P[z < b \knowing {\ppref}] = \frac{
-			\sum_{0 ≤ i ≤ \delta}
-			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
-		}{
-			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
-		},
-	\end{equation}
-	equivalently (using the identity established in a previous proof):
-	\begin{align}
-		& \frac{1}{\alpha + \gamma + \delta + 2} 
-		\frac{
-			\sum_{0 ≤ i ≤ \delta}
-			(i + \gamma + 1) \binom{\alpha + \delta - i}{\alpha}
-		}{
-			\sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
-		}\\
-		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
-		\frac{
-			\sum_{1 ≤ i ≤ \delta} \binom{i}{i - 1} \binom{\alpha + \delta - i}{\delta - i}
-			+ (\gamma + 1) \sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
-		}{
-			\sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
-		}\\
-		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
-		\frac{
-			\sum_{0 ≤ j ≤ \delta - 1} \binom{j + 1}{j} \binom{\alpha + \delta - j - 1}{\delta - j - 1}
-			+ (\gamma + 1) \sum_{0 ≤ i ≤ \delta} \binom{1 + i - 1}{i} \binom{\alpha + 1 + \delta - i - 1}{\delta - i}
-		}{
-			\sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
-		}\\
-		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
-		\frac{
-			\binom{\alpha + \delta + 1}{\delta - 1}
-			+ (\gamma + 1) \binom{\alpha + \delta + 1}{\delta}
-		}{
-			\binom{\alpha + \delta + 1}{\delta}
-		}\\
-		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
-		 \frac{
-		 	\binom{\alpha + \delta + 1}{\delta}
-			\left(
-				\frac{\delta}{\alpha + 2} + (\gamma + 1)
-			\right)
-		 }{
-		 	\binom{\alpha + \delta + 1}{\delta}
-		 }\\
-		= {}& \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
 	\end{align}
 \end{proof}
 
@@ -880,14 +897,14 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = E[g^{q_{bz}, {\ppref}^\text{up}} \knowing {\ppref^\text{up}}] = P[z < b \knowing {\ppref^\text{up}}] M + P[z > b \knowing {\ppref^\text{up}}] m$.
 	Observe that minimizing (respectively, maximizing) $p = P[z < b \knowing {\ppref^\text{up}}]$ is equivalent to minimizing (respectively, maximizing) the gain, when $M$ and $m$ are fixed.
 	
-	\Cref{th:infP} yields that $p ≥ \frac{m}{m + M + 1}$.
+	TODO Cref{th:infP} yields that $p ≥ \frac{m}{m + M + 1}$.
 	If this conjecture is correct, we obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
 	\begin{align}
 		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m
 			& = m \frac{2 M + 1}{m + M + 1}\\
 			& = \frac{s - d}{2} \frac{s + d + 1}{s + 1}.
 	\end{align}
-	If $m = 0$, the formula given in \cref{th:infP} cannot be used, but the bound is trivially valid. 
+	If $m = 0$, the formula given in cref{th:infP} cannot be used, but the bound is trivially valid. 
 	
 	For the upper bound, note that maximizing $p$, hence, the gain, is equivalent to minimizing $p' = 1 - p = P[z > b \knowing {\ppref^\text{up}}] = P[z < b \knowing {\pprefinv^\text{up}}]$, where ${\pprefinv^\text{up}} = {\ppref^\text{down}} = ({\ppref^\text{up}})^{-1}$ is the inverse of ${\ppref^\text{up}}$, that is, a partial order equivalent to $\ppref$ except that it is possibly inverted so as to have $M$ objects below $b$ and $m$ objects above $b$. By a symmetrical reasoning, we thus obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
 	\begin{align}
@@ -895,7 +912,7 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 			& = M \frac{2 m + 1}{m + M + 1}\\
 			& = \frac{s + d}{2} \frac{s - d + 1}{s + 1}.
 	\end{align}
-	If $M = 0$, the formula given in \cref{th:infP} cannot be used, but the bound is trivially valid as $M = 0 ⇒ m = 0 ⇒ E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = 0$.
+	If $M = 0$, the formula given in cref{th:infP} cannot be used, but the bound is trivially valid as $M = 0 ⇒ m = 0 ⇒ E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = 0$.
 	\footnote{As a sanity check, consider $M = \alpha = 3, m = \gamma = 1$, then given $a_1 a_2 a_3 b c$ with objects above $c$, $P[z < b]$ tends to and is greater than $1/5$, thus the gain is greater than $\frac{1}{5} 3 + \frac{4}{5} 1 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$; and considering the inverse ordering $a b c_1 c_2 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $3/5$, thus the gain is smaller than $\frac{3}{5} 1 + \frac{2}{5} 3 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$.
 	
 	Considering now $M = \gamma = 4, m = \alpha = 2$, then given $a_1 a_2 b c_1 c_2 c_3 c$ with objects above $c$, $P[z < b]$ tends to and is greater than $4/7$, thus the gain is smaller than $\frac{4}{7} 2 + \frac{3}{7} 4 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$; and considering the inverse ordering $a_1 a_2 a_3 a_4 b c_1 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $2/7$, thus the gain is greater than $\frac{2}{7} 4 + \frac{3}{7} 4 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$.}
