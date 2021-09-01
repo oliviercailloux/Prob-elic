@@ -459,7 +459,7 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 
 \begin{conjecture}
 	\label{th:limDelta}
-	Given $\alpha, \gamma \in \N, \gamma ≥  \gamma' ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C$, $D \ppref C'$, with disjoint sets $A$, $B = \set{b}$, $C$ and $D$, with $C' \subseteq C$, and with $\alpha = \card{A}$, $\gamma = \card{C} ≥ \gamma'$, $\gamma' = \card{C'} ≥ 1$ and $\delta = \card{D}$.
+	Given $\alpha, \gamma \in \N, \gamma ≥  \gamma' ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C$, $D \ppref C'$, with disjoint sets $A$, $B = \set{b}$, $C$ and $D$, with $C' \subseteq C$, and with $\alpha = \card{A}$, $\gamma = \card{C} ≥ \gamma' = \card{C'} ≥ 1$ and $\delta = \card{D}$.
 	
 	In that case, we have:
 	\begin{equation}
@@ -651,6 +651,18 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 	\end{align}
 \end{proof}
 
+Given ${\ppref} \in \POs$ and $b \in X$, let ${\pprefeq^{±1}}[b]$ denote the objects in the connected component containing $b$ in ${\pprefeq}$, thus, the transitive closure of $\pprefeq$ and $\pprefeqinv$ starting from $b$.
+Define $A = {\pprefinv}(b) = \upb$, $C = {\ppref}(b) = \downb$.
+Then,  ${\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] \setminus A \setminus \set{b} \setminus C$ denote the elements path-connected to $b$ but incomparable to $b$ in $\ppref$.
+
+\begin{conjecture}
+	\label{th:lowerDelta}
+	Given $\alpha, \gamma, \delta \in \N$, given $b, z \in X$, given ${\ppref} \in \POs$ such that $\card{\upb} = \alpha$, $\card{\downb} = \gamma$, $\card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)\right)} = \delta$ and $z$ is isolated in ${\ppref}$, the configuration that minimizes $P[z < b \knowing {\ppref}]$ is the one described in \cref{th:limDelta} with $\gamma' = \gamma$. In other words (as per \cref{th:deltaGamma}):
+	\begin{equation}
+		P[z < b \knowing {\ppref}] ≥ \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
+	\end{equation}
+\end{conjecture}
+
 \begin{conjecture}
 	\label{th:deltaOne}
 	In the case $\gamma' = 1$ of \cref{th:limDelta}:
@@ -744,7 +756,7 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 	Define $A = {\pprefinv}(b) = \upb$, $C = {\ppref}(b) = \downb$, $A' = {\pprefinv'}(b') = \upb'$ and $C' = {\ppref'}(b') = \downb'$; and
 	$\alpha = \card{A}$, $\gamma = \card{C}$, $\alpha' = \card{A'}$ and $\gamma' = \card{C'}$.
 	
-	Let ${\pprefeq^{±1}}[b]$ denote the connected component containing $b$ in ${\pprefeq}$, thus, the transitive closure of $\pprefeq$ and $\pprefeqinv$ starting from $b$. Let $D = {\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] \setminus A \setminus \set{b} \setminus C$ denote the elements path-connected to $b$ but incomparable to $b$ in $\ppref$, and define $\delta = \card{D}$. Define similarly $D'$ and $\delta'$ wrt $b'$ and $\ppref'$.
+	Let $D ={\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)$, and define $\delta = \card{D}$. Define similarly $D'$ and $\delta'$ wrt $b'$ and $\ppref'$.
 	
 	We write $E = E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$ and $E' = E[g^{q_{b'z'}, {\ppref'}} \knowing {\ppref'}]$, for short, to denote the gain of asking $q_{bz}$ given $\ppref$ or of asking $q_{b'z'}$ given $\ppref'$, respectively.
 
