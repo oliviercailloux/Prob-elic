@@ -31,27 +31,20 @@ class Elic_node:
     #f_node = father node
     #sym_question = True if question has symmetrical answers, else False
     if r_node is None:
-      A=list(range(n))
-      self._perms=np.array(list(permutations(A)))
       self._descriptor=''
-      self._mask=np.ones((self._perms.shape[0]),dtype=np.bool_)
       self._depth=0
       self._items=[]
       self._f_node=None
       self._known_answers=[]
+      self._direct_answers=[]
       self._isquestion=False
-      self._num_compat=self._perms.shape[0]
-      self._long_description=self._descriptor+','+str(self._num_compat)+','+str(len(self._known_answers))
       self._child_indices=[]
       self._index=0
-      self._median_node=None
+      self._long_description=''
     elif f_node._isquestion == True: #answer node
       self._isquestion=False
       x1=question[0]
       x2=question[1]
-      new_cases=np.array(list(map(lambda x:x[x1]>x[x2],r_node._perms[f_node._f_node._mask])),dtype=np.bool_)
-      self._mask=f_node._f_node._mask.copy()
-      self._mask[self._mask]=new_cases
       self._descriptor=f_node._f_node._descriptor+'('+str(x1)+'>'+str(x2)+')'
       self._items=f_node._f_node._items.copy()
       if not(x1 in self._items):
@@ -63,14 +56,14 @@ class Elic_node:
       self._x1=x1
       self._x2=x2
       self._known_answers=f_node._f_node._known_answers.copy()
+      self._direct_answers=f_node._f_node._direct_answers.copy()
       self.add_known_answer(x1,x2)
+      self._new_answer=(x1,x2)
+      self._direct_answers.append((x1,x2))
       #self._num_compat=sum(self._mask)
-      self._num_compat=np.count_nonzero(self._mask)
-      self._long_description=self._descriptor+','+str(self._num_compat)+','+str(len(self._known_answers))
       self._child_indices=[]
       self._index=index
       self._f_node._child_indices.append(index)
-      self._median_node=self._f_node._f_node._median_node
     else: #question node
       x1=question[0]
       x2=question[1]
@@ -79,11 +72,10 @@ class Elic_node:
       self._x1=x1
       self._x2=x2
       self._expected_value=None
-      self._descriptor='question'
       self._long_description='('+str(x1)+'>'+str(x2)+')?'
+      self._descriptor='('+str(x1)+'>'+str(x2)+')?'
       self._isquestion=True
       self._issymquestion=sym_question
-      self._num_compat=self._f_node._num_compat
       self._known_answers=None
       self._child_indices=[]
       self._index=index
@@ -95,10 +87,6 @@ class Elic_node:
       print('root_node')
     else:
       print(self._descriptor)
-      if self._isquestion:
-        print(self._long_description)
-      else:
-        print(self._num_compat, 'compatible orders, ',len(self._known_answers), 'preferences known.' )
   
   def add_known_answer(self,x1,x2):
       self._known_answers.append((x1,x2))
@@ -107,16 +95,6 @@ class Elic_node:
           self.add_known_answer(x1,answer[1])
         if answer[1]==x1 and ((answer[0],x2)) not in self._known_answers:
           self.add_known_answer(answer[0],x2)
-          
-  def num_higher_nodes(self,x1):
-      # return number of of nodes ranked higher than x1 in current node
-      return sum(answer[1]==x1 for answer in self._known_answers)
-    
-  def num_lower_nodes(self,x1):
-      # return number of of nodes ranked lower than x1 in current node
-      return sum(answer[0]==x1 for answer in self._known_answers)
-
-  
       
 
 class Elic_Tree:
@@ -129,6 +107,9 @@ class Elic_Tree:
     self._nodes=[Elic_node(n)]
     self._parents=[]
     self._open_nodes=[0]
+    A=list(range(n))
+    self._perms=np.array(list(permutations(A)))
+    self._num_perms=self._perms.shape[0]
   
   def next_questions(self,node_index):
     #outputs all pairs of possible answers to questions as a list of pairs
@@ -152,47 +133,10 @@ class Elic_Tree:
       questions.add((max_item+1))
     return questions
 
-  def next_question(self,node_index,strategy):
-      #strategy 'NAIVE' or 'ADVANCED'
-      node= self._nodes[node_index]
-      items=node._items.copy()
-      if node._depth==0:
-          return [(0)]#symmetrical question (0,1)
-      if node._depth==1:
-          return [(1,2)]
-      if node._depth==2:
-          if len(node._known_answers)==3:#1 is median
-              node._median_node=1
-              return [(1,3)]
-          else:
-              return[(0,2)]
-      if node._depth==3:
-          if node._median_node==1:
-              return [(1,4)]
-          else:#median is either 0 or 2
-              if node.num_higher_nodes(0)==node.num_lower_nodes(0):
-                  node._median_node=0
-              else:
-                  node._median_node=2
-              return [(node._median_node,3)]
-      else:
-          if strategy=='NAIVE':
-              return [(node._median_node,len(node._items))]
-          else:
-              return [(node._median_node,len(node._items))]
-              
-              
-              
-      
-      
-
-  def open_first_node(self,strategy=None):
+  def open_first_node(self):
     node_index=self._open_nodes.pop(0)
     if self._nodes[node_index]._isquestion==False:
-      if strategy is None:
-          questions=self.next_questions(node_index)
-      else:
-          questions=self.next_question(node_index,strategy)
+      questions=self.next_questions(node_index)
       for i,question in enumerate(questions):
         new_node_index=len(self._nodes)
         if type(question)==tuple:
@@ -223,12 +167,31 @@ class Elic_Tree:
   def compute_expected_values(self):
     for i, node in reversed(list(enumerate(self._nodes))):
       if node._isquestion:
-        son_indices=node._child_indices
-        if node._num_compat==0:
-            print('0 cases:'+node._long_description+' with father'+node._f_node._long_description)
-        node._EV=sum(self._nodes[son_index]._EV*self._nodes[son_index]._num_compat for son_index in son_indices)/node._num_compat
         if node._issymquestion:
-          node._EV=node._EV*2
+            child_probabilities=[1]
+            #compute descriptor for child
+            child_index=node._child_indices[0]
+            self._nodes[child_index]._long_description=self._nodes[child_index]._descriptor+',p(0.5),'+str(len(self._nodes[child_index]._known_answers))
+        else:
+            # compute mask for and num_compat child nodes
+            mask=np.ones((self._num_perms),dtype=np.bool_)
+            for answer in node._f_node._direct_answers:
+                x1=answer[0]
+                x2=answer[1]
+                new_cases=np.array(list(map(lambda x:x[x1]>x[x2],self._perms[mask])),dtype=np.bool_)
+                mask[mask]=new_cases
+            f_num_compat=np.count_nonzero(mask)
+            answer=self._nodes[node._child_indices[0]]._new_answer
+            x1=answer[0]
+            x2=answer[1]
+            new_cases=np.array(list(map(lambda x:x[x1]>x[x2],self._perms[mask])),dtype=np.bool_)
+            mask[mask]=new_cases
+            child_num_compat=np.count_nonzero(mask)
+            proba=child_num_compat/f_num_compat
+            child_probabilities=[proba,1-proba]
+            for j,child_index in enumerate(node._child_indices):
+                self._nodes[child_index]._long_description=self._nodes[child_index]._descriptor+',p('+str(child_probabilities[j])+'),'+str(len(self._nodes[child_index]._known_answers))
+        node._EV=sum(self._nodes[son_index]._EV*child_probabilities[j] for j,son_index in enumerate(node._child_indices))
       else:
         if node._depth==self._k:
           node._EV=len(node._known_answers)
@@ -238,6 +201,7 @@ class Elic_Tree:
           node._EV=max([self._nodes[son_index]._EV for son_index in son_indices])
           node._best_sons=[son_index for son_index in son_indices if self._nodes[son_index]._EV==node._EV]
   
+    
   def compute_best_lists(self):
     self._best_indices=[0]
     self._best_parents=[]
@@ -317,28 +281,16 @@ class Elic_Tree:
           print('\r opening ',current_state, ' ... ' , in_step_number , '/', next_level_len, end='' )
       self.open_first_node()
       in_step_number+=1
-      
-  def build_partial_tree(self,strategy):
-      while len(self._open_nodes)>0:
-        self.open_first_node(strategy)
-       
-       
 
     
 tic=time.time()
-k=10
+k=6
 tree=Elic_Tree(k+1,k)
-partial=True
-if not partial:
-    tree.build_whole_tree()
-    #tree.render()
-    tree.compute_expected_values()
-    tree.compute_best_lists()
-    tree.render_best()
-    print('old algo with ',k, 'questions took',time.time()-tic)
+tree.build_whole_tree()
+#tree.render()
+tree.compute_expected_values()
+tree.compute_best_lists()
+#tree.render_best()
 
-else:
-    tree.build_partial_tree('NAIVE')
-    tree.compute_expected_values()
-    tree.compute_best_lists()
-    tree.render_best()
+print('new algo with ',k, 'questions took',time.time()-tic)
+
