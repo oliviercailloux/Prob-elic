@@ -48,7 +48,7 @@ We only know the probability distribution over $\linors$, from which $\prefeq$ i
 We can ask questions to obtain information about $\prefeq$. 
 We are interested in comparing questioning strategies and in evaluating the probabilistic evolution of our knowledge of $\prefeq$ as a function of the number of questions asked, for various strategies. 
 
-Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicated by the context, we omit it from the notations of the strict upper and lower countour sets and represent the strict upper and lower contour sets of $a \in \allalts$ with $\upa = {\pprefinv}(a)$ and $\downa = {\ppref}(a)$.
+Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicated by the context, we omit it from the notations of the strict upper and lower countour sets and represent the strict upper and lower contour sets of $b \in \allalts$ with $\upb = {\pprefinv}(b)$ and $\downb = {\ppref}(b)$.
 
 \section{Questioning to increase our knowledge}
 Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\pprefeq} \subseteq \allalts × \allalts$ is a transitive, reflexive and antisymmetric relation.
@@ -484,9 +484,9 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 
 	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
 	
-	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downa[b] \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - \gamma'}$ ways of placing $C \setminus C'$ (the objects among $C$ whose position relative to $D$ is not determined) among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
+	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downb \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - \gamma'}$ ways of placing $C \setminus C'$ (the objects among $C$ whose position relative to $D$ is not determined) among the $\card{\downb} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upb \cap D)$ above $b$.
 	
-	Note also that $P[z < b \knowing {\ppref}, \card{\downa[b] \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
+	Note also that $P[z < b \knowing {\ppref}, \card{\downb \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
 	
 	Therefore, we obtain:
 	\begin{equation}
@@ -654,8 +654,8 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 
 \begin{conjecture}
 	\label{th:infP}
-	Given $\alpha, \gamma \in \N, \gamma ≥ 1$ and $b \in X$, the configuration that minimizes $P[z < b \knowing {\ppref}]$, for any partial order with $\card{\upa[b]} = \alpha$, $\card{\downa[b]} = \gamma$ and $\delta$ other objects in the component containing $b$, is the one described in \cref{th:limDelta} with $\gamma' = \gamma$. Furthermore, in the case $\gamma' = \gamma$, $P[z < b \knowing {\ppref}]$ can be written $\frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}$.
-	In summary, $\forall {\ppref} \suchthat \card{\upa[b]} = \alpha, \card{\downa[b]} = \gamma$ with $\delta$ other objects in the component containing $b$:
+	Given $\alpha, \gamma \in \N, \gamma ≥ 1$ and $b \in X$, the configuration that minimizes $P[z < b \knowing {\ppref}]$, for any partial order with $\card{\upb} = \alpha$, $\card{\downb} = \gamma$ and $\delta$ other objects in the component containing $b$, is the one described in \cref{th:limDelta} with $\gamma' = \gamma$. Furthermore, in the case $\gamma' = \gamma$, $P[z < b \knowing {\ppref}]$ can be written $\frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}$.
+	In summary, $\forall {\ppref} \suchthat \card{\upb} = \alpha, \card{\downb} = \gamma$ with $\delta$ other objects in the component containing $b$:
 	\begin{equation}
 		P[z < b \knowing {\ppref}] ≥ \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
 	\end{equation}
@@ -715,23 +715,169 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 	\end{align}
 \end{proof}
 
-\begin{remark}
-	Consider $\alpha = 0$, $\gamma = 4$, $\delta = t$ and $\ppref$ with this potential but highest possible gain. That is, $E = P[z > b \knowing {\ppref}] 4$ with the smallest possible $P[z < b \knowing {\ppref}]$, thus:
+Given ${\ppref} \in \POs$ and $b \in \allalts$, define $\zeta({\ppref}, b) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $b$ in $\ppref$, namely, with $\alpha = \card{\upb}$ and $\gamma = \card{\downb}$, $s = (\alpha + \gamma)$ and $d = \abs{\alpha - \gamma}$. Note that $s ≥ d$.
+
+We use the vector dominance relation $≥$ in $\R^2$ to compare potentials, thus, $(s, -d) ≥ (s', -d') ⇔ s ≥ s' \land -d ≥ -d'$.
+	
+Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \gamma) = \frac{s - d}{2}, M = \max(\alpha, \gamma) = \frac{s + d}{2})$. (The dominance relation $≥$ however always uses the representation based on the sum and difference.)
+
+\begin{conjecture}
+	Consider and ${\ppref}, {\ppref'} \in \POs$, $b, b' \in X$ and $z, z' \in X$ such that $z$ is isolated in $\ppref$ and $z'$ is isolated in $\ppref'$. 
+	Define $A = \upb$, $C = \downb$, $A' = \upb'$ and $C' = \downb'$; and
+	$\alpha = \card{A}$, $\gamma = \card{C}$, $\alpha' = \card{A'}$ and $\gamma' = \card{C'}$.
+	
+	Let ${\pprefeq^{±1}}[b]$ denote the connected component containing $b$ in ${\pprefeq}$, thus, the transitive closure of $\pprefeq$ and $\pprefeqinv$ starting from $b$. Let $D = {\pprefeq^{±1}}[b] \setminus A \setminus \set{b} \setminus C$ denote the elements path-connected to $b$ but incomparable to $b$ in $\ppref'$, and define $\delta = \card{D}$. Define similarly $D'$ and $\delta'$ wrt $b'$ and $\ppref'$.
+	
+	We write $E = E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$ and $E' = E[g^{q_{b'z'}, {\ppref'}} \knowing {\ppref'}]$, for short, to denote the gain of asking $q_{bz}$ given $\ppref$ or of asking $q_{b'z'}$ given $\ppref'$, respectively.
+
+	Assume that $\alpha ≤ \gamma$ and assume that $\zeta(\ppref, b) > \zeta(\ppref', b')$.
+
+	Then:
 	\begin{equation}
-		P[z < b \knowing {\ppref}] = \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
+		\left\{\begin{gathered}
+			(\alpha \gamma + \alpha - 2) \delta ≤ 2 (\gamma + 2) (\alpha + 1)\\
+			(\alpha \gamma + \alpha - 2) \delta' ≤ 2 (\gamma + 2) (\alpha + 1)
+		\end{gathered}\right.
+		⇒ E ≥ E'.
+	\end{equation}
+	Note that the condition is satisfied whatever $\delta, \delta'$ when $\alpha = \gamma = 1$.
+\end{conjecture}
+\begin{proof}
+	I am interested in analyzing the case $\delta = \delta'$, for simplicity.
+	
+	Let us compute the lowest possible $E$. That is, $E = P[z < b \knowing {\ppref}] \alpha + P[z > b \knowing {\ppref}] \gamma$ with the lowest possible $P[z > b \knowing {\ppref}] = P[z < b \knowing {\pprefinv}]$. Thus:
+	\begin{equation}
+		P[z < b \knowing {\pprefinv}] = \frac{\delta + (\gamma + 2) (\alpha + 1)}{(\gamma + \alpha + \delta + 2) (\gamma + 2)}.
 	\end{equation}
 	
-	Compare this to $\alpha' = 1$, $\gamma' = 3$, $\delta' ≤ t$ and $\ppref'$ with this potential but lowest possible gain. That is, $E' = P[z < b \knowing {\ppref'}] 1 + P[z > b \knowing {\ppref'}] 3$ with the highest possible $P[z < b \knowing {\ppref'}]$.
+	We want to compare this to the highest possible $E'$. That is, $E' = P[z' < b' \knowing {\ppref'}] \alpha' + P[z' > b' \knowing {\ppref'}] \gamma'$ with the smallest possible $P[z' < b' \knowing {\ppref'}]$, thus:
+	\begin{equation}
+		P[z' < b' \knowing {\ppref'}] = \frac{\delta + (\alpha' + 2) (\gamma' + 1)}{(\alpha' + \gamma' + \delta + 2) (\alpha' + 2)}.
+	\end{equation}
 	
-	I want to find the greatest $t$ such that $E' ≥ E$.
+	The quantity $E - E'$ is weakly decreasing when $\delta$ increases. Thus, suffices to find $\delta$ such that $E - E' = 0$. 
 	
-\end{remark}
-
-Given ${\ppref} \in \POs$ and $a \in \allalts$, define $\zeta({\ppref}, a) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $a$ in $\ppref$, namely, $s = (\upa + \downa)$ and $d = \abs{\upa - \downa}$. Note that $s ≥ d$.
+	We have:
+	\begin{multline}
+		E - E' = \frac{(\gamma + 2) (\delta + \gamma + 1) - \delta}{(\gamma + \alpha + \delta + 2) (\gamma + 2)} \alpha 
+		+ \frac{\delta + (\gamma + 2) (\alpha + 1)}{(\gamma + \alpha + \delta + 2) (\gamma + 2)} \gamma \\
+		- \frac{\delta + (\alpha' + 2) (\gamma' + 1)}{(\alpha' + \gamma' + \delta + 2) (\alpha' + 2)} \alpha' 
+		- \frac{(\alpha' + 2) (\alpha' + \delta + 1) - \delta}{(\alpha' + \gamma' + \delta + 2) (\alpha' + 2)} \gamma'.
+	\end{multline}
+	The worst case, intuitively, should happen when the sums $s = \alpha + \gamma$ and $s' = \alpha' + \gamma'$ in the potentials are equal and the differences $\gamma - \alpha$ and $\gamma' - \alpha'$ are close.
+	Assume $s = \alpha + \gamma = s' = \alpha' + \gamma'$.
+	Multiplying the RHS by $(\gamma + \alpha + \delta + 2) (\gamma + 2) (\alpha' + 2)$, we obtain
+	\begin{align}
+		& \begin{split}
+			(\alpha' + 2) [\alpha (\gamma + 2) (\delta + \gamma + 1) - \alpha \delta + \gamma \delta + \gamma (\gamma + 2) (\alpha + 1)]\\
+			- (\gamma + 2) [\alpha' \delta + \alpha' (\alpha' + 2) (\gamma' + 1) + \gamma' (\alpha' + 2) (\alpha' + \delta + 1) - \gamma' \delta]
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) [(\gamma + 2) (\alpha (\delta + \gamma + 1) + \gamma (\alpha + 1)) + \delta (\gamma - \alpha)]\\
+			- (\gamma + 2) [(\alpha' + 2) (\alpha' (\gamma' + 1) + \gamma' (\alpha' + \delta + 1)) + \delta (\alpha' - \gamma')]
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) [(\gamma + 2) (\alpha (\gamma + 1) + \delta \alpha + \gamma (\alpha + 1))] + \delta (\alpha' + 2) (\gamma - \alpha)\\
+			- (\gamma + 2) [(\alpha' + 2) (\alpha' (\gamma' + 1) + \gamma' (\alpha' + 1) + \delta \gamma')] - \delta (\gamma + 2) (\alpha' - \gamma')
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) (\gamma + 2) [\alpha (\gamma + 1) + \delta \alpha + \gamma (\alpha + 1) - \alpha' (\gamma' + 1) - \gamma' (\alpha' + 1) - \delta \gamma']\\
+			+ \delta (\alpha' + 2) (\gamma - \alpha) - \delta (\gamma + 2) (\alpha' - \gamma')
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) (\gamma + 2) [\alpha (\gamma + 1) + \gamma (\alpha + 1) - \alpha' (\gamma' + 1) - \gamma' (\alpha' + 1)]\\
+			+ \delta [(\alpha' + 2) (\gamma + 2) (\alpha - \gamma') + (\alpha' + 2) (\gamma - \alpha) - (\gamma + 2) (\alpha' - \gamma')]
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) (\gamma + 2) [2 \alpha \gamma + \alpha + \gamma - 2 \alpha' \gamma' - \alpha' - \gamma']\\
+			+ \delta [(\alpha' + 2) (\gamma + 2) (\alpha - \gamma') + (\alpha' + 2) (\gamma - \alpha) - (\gamma + 2) (\alpha' - \gamma')]
+		\end{split}.
+	\end{align}
+	Dividing by $(\alpha' + 2) (\gamma + 2)$, we obtain:
+	\begin{align}
+		& 2 \alpha \gamma + \alpha + \gamma - 2 \alpha' \gamma' - \alpha' - \gamma'
+			+ \delta [(\alpha - \gamma') + \frac{\gamma - \alpha}{\gamma + 2} + \frac{\gamma' - \alpha'}{\alpha' + 2}].
+	\end{align}
+%	Distributing instead, we obtain:
+%	\begin{align}
+%		& \begin{split}
+%			(\alpha' + 2) (\gamma + 2) [2 \alpha \gamma + \alpha + \gamma - 2 \alpha' \gamma' - \alpha' - \gamma']\\
+%			+ \delta [(\alpha' + 2) (\alpha - \gamma') \gamma + (\alpha' + 2) (\alpha - \gamma') 2 - \alpha' \alpha + 2 (\gamma - \alpha) + \gamma \gamma' + 2 (\gamma' - \alpha')]
+%		\end{split}.
+%	\end{align}
+%	It follows from $\alpha + \gamma = \alpha' + \gamma'$ that $\gamma' = \alpha + \gamma - \alpha'$. Replacing:
+%	\begin{align}
+%		& \begin{split}
+%			(\alpha' + 2) (\gamma + 2) [2 \alpha \gamma + \alpha + \gamma - 2 \alpha' \alpha - 2 \alpha' \gamma + 2 \alpha^{\prime 2} - \alpha - \gamma]\\
+%			+ \delta [(\alpha' + 2) (\alpha' - \gamma) \gamma + (\alpha' + 2) (\alpha' - \gamma) 2 - \alpha' \alpha + 2 (\gamma - \alpha) + \gamma \alpha + \gamma^2 - \gamma \alpha' + 2 (\alpha + \gamma - 2 \alpha')]
+%		\end{split}\\
+%		& \begin{split}
+%			(\alpha' + 2) (\gamma + 2) [2 \alpha \gamma - 2 \alpha' \alpha - 2 \alpha' \gamma + 2 \alpha^{\prime 2}]\\
+%			+ \delta [(\alpha' + 2) (\alpha' - \gamma) \gamma + (\alpha' + 2) (\alpha' - \gamma) 2 - \alpha' \alpha + 2 (\gamma - \alpha) + \gamma \alpha + \gamma^2 - \gamma \alpha' + 2 (\alpha + \gamma - 2 \alpha')]
+%		\end{split}.
+%	\end{align}
+	It follows from $\alpha + \gamma = \alpha' + \gamma'$ that $\gamma' = \alpha + \gamma - \alpha'$. Replacing:
+	\begin{align}
+		& 2 \alpha \gamma + \alpha + \gamma - 2 \alpha \alpha' - 2 \alpha' \gamma + 2 \alpha^{\prime 2} - \alpha - \gamma
+			+ \delta [(\alpha' - \gamma) + \frac{\gamma - \alpha}{\gamma + 2} + \frac{\alpha + \gamma - 2 \alpha'}{\alpha' + 2}]\\
+		& 2 \alpha \gamma - 2 \alpha \alpha' - 2 \alpha' \gamma + 2 \alpha^{\prime 2}
+			+ \delta [(\alpha' - \gamma) + \frac{\gamma - \alpha}{\gamma + 2} + \frac{\alpha + \gamma - 2 \alpha'}{\alpha' + 2}]. % confirmed using Maxima
+	\end{align}
 	
-Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\upa, \downa) = \frac{s - d}{2}, M = \max(\upa, \downa) = \frac{s + d}{2})$.
+	Consider furthermore that $\alpha = \alpha' + 1$, or equivalently, just consider that $\alpha = \alpha' + 1$ and $\gamma = \gamma' - 1$. 
+	We have $E - E' = 0$ iff:
+	\begin{align}
+		& \begin{split}
+		2 \alpha \gamma - 2 \alpha (\alpha - 1) - 2 (\alpha - 1) \gamma + 2 (\alpha - 1)^2\\
+			+ \delta [(\alpha - 1 - \gamma) + \frac{\gamma - \alpha}{\gamma + 2} + \frac{\alpha + \gamma - 2 \alpha + 2}{\alpha + 1}]
+		\end{split} = 0\\
+		⇔ & \begin{split}
+		2 (\alpha - 1) \gamma + 2 \gamma - 2 \alpha (\alpha - 1) - 2 (\alpha - 1) \gamma + 2 (\alpha - 1)^2\\
+			+ \delta \frac{(\gamma + 2) (\alpha + 1) (\alpha - 1 - \gamma) + (\alpha + 1) (\gamma - \alpha) + (\gamma + 2) (\gamma - \alpha + 2)}{(\gamma + 2) (\alpha + 1)}
+		\end{split} = 0\\
+%		& ⇔ \begin{split}
+%		(\alpha - 1) (2 \gamma - 2 \alpha - 2 \gamma + 2 (\alpha - 1)) + 2 \gamma\\
+%			+ \delta \frac{- (\gamma + 2) (\alpha + 1) (\gamma - \alpha + 1) + (\alpha + 1) (\gamma - \alpha + 1) - (\alpha + 1) + (\gamma + 2) (\gamma - \alpha + 1) + (\gamma + 2)}{(\gamma + 2) (\alpha + 1)}
+%		\end{split} = 0\\
+		⇔ & \begin{split}
+		(\alpha - 1) (- 2) + 2 \gamma\\
+			+ \delta \frac{(\gamma - \alpha + 1) [- (\gamma + 2) (\alpha + 1) + (\alpha + 1) + (\gamma + 2)] - (\alpha + 1) + (\gamma + 2)}{(\gamma + 2) (\alpha + 1)}
+		\end{split} = 0\\
+		⇔ & \begin{split}
+		2 (\gamma - \alpha + 1)
+			+ \delta \frac{(\gamma - \alpha + 1) (- \alpha \gamma - \alpha + 1) - \alpha + \gamma + 1}{(\gamma + 2) (\alpha + 1)}
+		\end{split} = 0\\
+		⇔ & \begin{split}
+		2 (\gamma - \alpha + 1)
+			+ \delta \frac{(\gamma - \alpha + 1) (- \alpha \gamma - \alpha + 2)}{(\gamma + 2) (\alpha + 1)}
+		\end{split} = 0.
+	\end{align}
+	As $\gamma ≥ \alpha$, we can divide by $\gamma - \alpha + 1$, and obtain $E - E' = 0$ iff:
+	\begin{equation}
+		\delta (\alpha \gamma + \alpha - 2) = 2 (\gamma + 2) (\alpha + 1),
+	\end{equation}
+	that is, when $\alpha' = 0 ≤ \alpha = \gamma = 1 ≤ \gamma' = 2$, never; and otherwise, when $\delta = 2 \frac{(\gamma + 2) (\alpha + 1)}{\alpha \gamma + \alpha - 2}$.
 	
-We use the vector dominance relation $≥$ in $\R^2$ to compare potentials, thus, $(s, -d) ≥ (s', -d') ⇔ s ≥ s' \land -d ≥ -d'$.
+	Consider $\alpha = 1$, $\gamma = 3$, 
+	thus, $P[z < b \knowing {\pprefinv}] = \frac{\delta + 10}{5 (\delta + 6)}$ and $E = \frac{4 \delta + 20}{5 (\delta + 6)} 1 + \frac{\delta + 10}{5 (\delta + 6)} 3 = \frac{7 \delta + 50}{5 \delta + 30}$; compared to $\alpha' = 0$, $\gamma' = 4$,
+	thus, $P[z < b \knowing {\ppref'}] = \frac{\delta + 10}{2 (\delta + 6)}$ and $E' = \frac{\delta + 10}{2 (\delta + 6)} 0 + \frac{\delta + 2}{2 (\delta + 6)} 4 = \frac{2 \delta + 4}{\delta + 6}$.
+	\begin{itemize}
+		\item $\delta = 0$: $E - E' = \frac{5 - 2}{3} = 1$.
+		\item $\delta = 1$: $E - E' = \frac{57 - 30}{35} = \frac{27}{35}$.
+		\item $\delta = 2$: $E - E' = \frac{64 - 40}{40} = \frac{3}{5}$.
+		\item $\delta = 10$: $E - E' = \frac{3 - 3}{2} = 0$.
+	\end{itemize}
+	
+	Consider $\alpha = 3, \gamma = 5$ and $\alpha' = 2, \gamma' = 6$. Thus $E = \frac{6 \delta + 42}{7 \delta + 70} 3 + \frac{\delta + 28}{7 \delta + 70} 5 = \frac{23 \delta + 266}{7 \delta + 70}$ and $E' = \frac{\delta + 28}{4 \delta + 40} 2 + \frac{3 \delta + 12}{4 \delta + 40} 6 = \frac{20 \delta + 128}{4 \delta + 40} = \frac{5 \delta + 32}{\delta + 10} = \frac{35 \delta + 224}{7 \delta + 70}$.
+	
+	\begin{itemize}
+		\item $\delta = 0$: $E - E' = \frac{266 - 224}{70} = \frac{42}{70} = \frac{3}{5}$.
+		\item $\delta = 1$: $E - E' = \frac{289 - 259}{77} = \frac{30}{77}$.
+		\item $\delta = 3$: $E - E' = \frac{335 - 329}{98} = \frac{6}{98} = \frac{3}{49}$.
+		\item $\delta = 4$: $E - E' = \frac{358 - 364}{98} = \frac{-6}{98} = \frac{-3}{49}$.
+		\item $\delta = 5$: $E - E' = \frac{381 - 399}{105} = \frac{-18}{105} = \frac{-6}{35}$.
+	\end{itemize}
+\end{proof}
 
 \begin{conjecture}
 	\label{th:potentialRulez}
@@ -746,8 +892,8 @@ We use the vector dominance relation $≥$ in $\R^2$ to compare potentials, thus
 	
 	Consider any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$.
 
-	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upa[b] ≥ \downa[b]$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise, 
-	and define $M = \frac{s + d}{2} = \max(\card{\upa[b]}, \card{\downa[b]})$ and $m = \frac{s - d}{2} = \min(\card{\upa[b]}, \card{\downa[b]})$,
+	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upb ≥ \downb$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise, 
+	and define $M = \frac{s + d}{2} = \max(\card{\upb}, \card{\downb})$ and $m = \frac{s - d}{2} = \min(\card{\upb}, \card{\downb})$,
 	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$, with $M ≥ m$.
 	
 	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = E[g^{q_{bz}, {\ppref}^\text{up}} \knowing {\ppref^\text{up}}] = P[z < b \knowing {\ppref^\text{up}}] M + P[z > b \knowing {\ppref^\text{up}}] m$.
