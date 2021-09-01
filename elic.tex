@@ -657,11 +657,16 @@ Then,  ${\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] 
 
 \begin{conjecture}
 	\label{th:lowerDelta}
-	Given $\alpha, \gamma, \delta \in \N$, given $b, z \in X$, given ${\ppref} \in \POs$ such that $\card{\upb} = \alpha$, $\card{\downb} = \gamma$, $\card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)\right)} = \delta$ and $z$ is isolated in ${\ppref}$, the configuration that minimizes $P[z < b \knowing {\ppref}]$ is the one described in \cref{th:limDelta} with $\gamma' = \gamma$. In other words (as per \cref{th:deltaGamma}):
+	Given $\alpha, \gamma, \delta \in \N$, given $b, z \in X$, given ${\ppref} \in \POs$ such that $\card{\upb} = \alpha$, $\card{\downb} = \gamma$, $\card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)\right)} = \delta$ and $z$ is isolated in ${\ppref}$:
 	\begin{equation}
 		P[z < b \knowing {\ppref}] ≥ \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
 	\end{equation}
 \end{conjecture}
+\begin{proof}
+	The configuration that minimizes $P[z < b \knowing {\ppref}]$ when $\gamma ≥ 1$ is the one described in \cref{th:limDelta} with $\gamma' = \gamma$. Using \cref{th:deltaGamma} gives the result. 
+	
+	When $\gamma = 0$, $P[z < b \knowing {\ppref}] = \frac{1}{\alpha + 2} ≥ \frac{\delta + (\alpha + 2)}{(\alpha + \delta + 2) (\alpha + 2)} = \frac{1}{\alpha + 2}$.
+\end{proof}
 
 \begin{conjecture}
 	\label{th:deltaOne}
@@ -751,6 +756,46 @@ We use the vector dominance relation $≥$ in $\R^2$ to compare potentials, thus
 Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \gamma) = \frac{s - d}{2}, M = \max(\alpha, \gamma) = \frac{s + d}{2})$. (The dominance relation $≥$ however always uses the representation based on the sum and difference.)
 
 \begin{conjecture}
+	Consider $s, d \in \N$, ${\ppref} \in \POs$ and $b, z \in X$ such that $z$ is isolated in $\ppref$ and $\zeta({\ppref}, b) = (s, -d)$. 
+	
+	Define $A = {\pprefinv}(b) = \upb$, $C = {\ppref}(b) = \downb$, $D ={\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)$, 
+	$\alpha = \card{A}$, $\gamma = \card{C}$ and $\delta = \card{D}$.
+	
+	The gain of asking $q_{bz}$ given $\ppref$, $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$, is bounded by:
+	\begin{multline}
+		\frac{\delta (M - m) + (M + 2) (2 M m + M + \delta m + m)}{(M + m + \delta + 2) (M + 2)} ≤ E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]\\
+		 ≤ \frac{(m + 2) [2 M m + \delta M + M + m] - \delta (M - m)}{(M + m + \delta + 2) (m + 2)}.
+	\end{multline}
+\end{conjecture}
+\begin{proof}
+	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upb ≥ \downb$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise, 
+	and define $M = \frac{s + d}{2} = \max(\card{\upb}, \card{\downb})$ and $m = \frac{s - d}{2} = \min(\card{\upb}, \card{\downb})$,
+	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$, with $M ≥ m$.
+	
+	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = E[g^{q_{bz}, {\ppref}^\text{up}} \knowing {\ppref^\text{up}}] = p M + \overline{p} m$, where $p = P[z < b \knowing {\ppref^\text{up}}]$ and $\overline{p} = 1 - p = P[z > b \knowing {\ppref^\text{up}}]$.
+	Observe that minimizing (respectively, maximizing) $p$ is equivalent to minimizing (respectively, maximizing) the gain, when $M$ and $m$ are fixed.
+	
+	\Cref{th:lowerDelta} yields that $p ≥ \frac{\delta + (M + 2) (m + 1)}{(M + m + \delta + 2) (M + 2)}$, hence:
+	\begin{align}
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] & ≥ \frac{\delta + (M + 2) (m + 1)}{(M + m + \delta + 2) (M + 2)} M + \frac{(M + \delta + 1) (M + 2) - \delta}{(M + m + \delta + 2) (M + 2)} m\\
+		& = \frac{\delta (M - m) + (M + 2) [(m + 1) M + (M + \delta + 1) m]}{(M + m + \delta + 2) (M + 2)}\\
+		& = \frac{\delta (M - m) + (M + 2) (2 M m + M + \delta m + m)}{(M + m + \delta + 2) (M + 2)}.
+	\end{align}
+	
+	For the upper bound, note that maximizing $p$, hence, the gain, is equivalent to minimizing $\overline{p} = P[z > b \knowing {\ppref^\text{up}}] = P[z < b \knowing {\pprefinv^\text{up}}]$, where ${\pprefinv^\text{up}} = {\ppref^\text{down}} = ({\ppref^\text{up}})^{-1}$ is the inverse of ${\ppref^\text{up}}$, that is, a partial order equivalent to $\ppref$ except that it is possibly inverted so as to have $M$ objects below $b$ and $m$ objects above $b$. 
+	
+	\Cref{th:lowerDelta} yields that $\overline{p} = P[z < b \knowing {\pprefinv^\text{up}}] ≥ \frac{\delta + (m + 2) (M + 1)}{(m + M + \delta + 2) (m + 2)}$, hence:
+	\begin{align}
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] & ≤ \frac{(m + \delta + 1) (m + 2) - \delta}{(m + M + \delta + 2) (m + 2)} M + \frac{\delta + (m + 2) (M + 1)}{(m + M + \delta + 2) (m + 2)} m\\
+			& = \frac{(m + 2) [(m + \delta + 1) M + (M + 1) m] - \delta (M - m)}{(M + m + \delta + 2) (m + 2)}\\
+			& = \frac{(m + 2) [2 M m + \delta M + M + m] - \delta (M - m)}{(M + m + \delta + 2) (m + 2)}.
+	\end{align}
+%	\footnote{As a (now outdated) sanity check, consider $M = \alpha = 3, m = \gamma = 1$, then given $a_1 a_2 a_3 b c$ with objects above $c$, $P[z < b]$ tends to and is greater than $1/5$, thus the gain is greater than $\frac{1}{5} 3 + \frac{4}{5} 1 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$; and considering the inverse ordering $a b c_1 c_2 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $3/5$, thus the gain is smaller than $\frac{3}{5} 1 + \frac{2}{5} 3 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$.
+%	
+%	Considering now $M = \gamma = 4, m = \alpha = 2$, then given $a_1 a_2 b c_1 c_2 c_3 c$ with objects above $c$, $P[z < b]$ tends to and is greater than $4/7$, thus the gain is smaller than $\frac{4}{7} 2 + \frac{3}{7} 4 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$; and considering the inverse ordering $a_1 a_2 a_3 a_4 b c_1 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $2/7$, thus the gain is greater than $\frac{2}{7} 4 + \frac{3}{7} 4 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$.}
+\end{proof}
+
+\begin{conjecture}
 	\label{th:boundDelta}
 	Consider and ${\ppref}, {\ppref'} \in \POs$, $b, b' \in X$ and $z, z' \in X$ such that $z$ is isolated in $\ppref$ and $z'$ is isolated in $\ppref'$. 
 	Define $A = {\pprefinv}(b) = \upb$, $C = {\ppref}(b) = \downb$, $A' = {\pprefinv'}(b') = \upb'$ and $C' = {\ppref'}(b') = \downb'$; and
@@ -770,20 +815,10 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 		\end{gathered}\right.
 		⇒ E ≥ E'.
 	\end{equation}
-	Note that the condition is satisfied whatever $\delta, \delta'$ when $\alpha = \gamma = 1$.
+	Note that when $\alpha = \gamma = 1$, the condition is satisfied whatever $\delta, \delta'$.
 \end{conjecture}
 \begin{proof}
-	I am interested in analyzing the case $\delta = \delta'$, for simplicity.
-	
-	Let us compute the lowest possible $E$. That is, $E = P[z < b \knowing {\ppref}] \alpha + P[z > b \knowing {\ppref}] \gamma$ with the lowest possible $P[z > b \knowing {\ppref}] = P[z < b \knowing {\pprefinv}]$. Thus:
-	\begin{equation}
-		P[z < b \knowing {\pprefinv}] = \frac{\delta + (\gamma + 2) (\alpha + 1)}{(\gamma + \alpha + \delta + 2) (\gamma + 2)}.
-	\end{equation}
-	
-	We want to compare this to the highest possible $E'$. That is, $E' = P[z' < b' \knowing {\ppref'}] \alpha' + P[z' > b' \knowing {\ppref'}] \gamma'$ with the smallest possible $P[z' < b' \knowing {\ppref'}]$, thus:
-	\begin{equation}
-		P[z' < b' \knowing {\ppref'}] = \frac{\delta + (\alpha' + 2) (\gamma' + 1)}{(\alpha' + \gamma' + \delta + 2) (\alpha' + 2)}.
-	\end{equation}
+	I am interested in analyzing the case $\delta = \delta'$, for simplicity. Define $E$ corresponding to the lowest possible value for any $\ppref$ satisfying the conditions, and $E'$ for the highest one.
 	
 	The quantity $E - E'$ is weakly decreasing when $\delta$ increases. Thus, suffices to find $\delta$ such that $E - E' = 0$. 
 	
@@ -888,47 +923,16 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 	\end{equation}
 	that is, when $\alpha' = 0 ≤ \alpha = \gamma = 1 ≤ \gamma' = 2$, never; and otherwise, when $\delta = 2 \frac{(\gamma + 2) (\alpha + 1)}{\alpha \gamma + \alpha - 2}$.
 \end{proof}
-
+	
 \begin{conjecture}
 	\label{th:potentialRulez}
 	For any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d') < (s, -d)$, 
-	for any $z \in X$ not appearing in $\ppref$,
+	for any $z \in X$ isolated in $\ppref$,
 	$E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{b'z}, {\ppref'}} \knowing {\ppref'}]$. That is, increasing the sum or decreasing the difference never hurts the expected gain.
 \end{conjecture}
 \begin{proof}
 	A possible intuitive justification for this claim is that $p$ decreases sufficiently rapidly when the difference increases. This could perhaps yield a simpler proof. Here is a painful one.
 
-	Consider any $s, -d \in \N$, and let us evaluate lower and upper bounds on the gain of a question about $b$ for a partial order with potential $\zeta({\ppref}, b) = (s, d)$.
-	
-	Consider any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$.
-
-	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upb ≥ \downb$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise, 
-	and define $M = \frac{s + d}{2} = \max(\card{\upb}, \card{\downb})$ and $m = \frac{s - d}{2} = \min(\card{\upb}, \card{\downb})$,
-	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$, with $M ≥ m$.
-	
-	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = E[g^{q_{bz}, {\ppref}^\text{up}} \knowing {\ppref^\text{up}}] = P[z < b \knowing {\ppref^\text{up}}] M + P[z > b \knowing {\ppref^\text{up}}] m$.
-	Observe that minimizing (respectively, maximizing) $p = P[z < b \knowing {\ppref^\text{up}}]$ is equivalent to minimizing (respectively, maximizing) the gain, when $M$ and $m$ are fixed.
-	
-	TODO Cref{th:infP} yields that $p ≥ \frac{m}{m + M + 1}$.
-	If this conjecture is correct, we obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
-	\begin{align}
-		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m
-			& = m \frac{2 M + 1}{m + M + 1}\\
-			& = \frac{s - d}{2} \frac{s + d + 1}{s + 1}.
-	\end{align}
-	If $m = 0$, the formula given in cref{th:infP} cannot be used, but the bound is trivially valid. 
-	
-	For the upper bound, note that maximizing $p$, hence, the gain, is equivalent to minimizing $p' = 1 - p = P[z > b \knowing {\ppref^\text{up}}] = P[z < b \knowing {\pprefinv^\text{up}}]$, where ${\pprefinv^\text{up}} = {\ppref^\text{down}} = ({\ppref^\text{up}})^{-1}$ is the inverse of ${\ppref^\text{up}}$, that is, a partial order equivalent to $\ppref$ except that it is possibly inverted so as to have $M$ objects below $b$ and $m$ objects above $b$. By a symmetrical reasoning, we thus obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
-	\begin{align}
-		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≤ \frac{m + 1}{m + M + 1} M + \frac{M}{m + M + 1} m
-			& = M \frac{2 m + 1}{m + M + 1}\\
-			& = \frac{s + d}{2} \frac{s - d + 1}{s + 1}.
-	\end{align}
-	If $M = 0$, the formula given in cref{th:infP} cannot be used, but the bound is trivially valid as $M = 0 ⇒ m = 0 ⇒ E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = 0$.
-	\footnote{As a sanity check, consider $M = \alpha = 3, m = \gamma = 1$, then given $a_1 a_2 a_3 b c$ with objects above $c$, $P[z < b]$ tends to and is greater than $1/5$, thus the gain is greater than $\frac{1}{5} 3 + \frac{4}{5} 1 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$; and considering the inverse ordering $a b c_1 c_2 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $3/5$, thus the gain is smaller than $\frac{3}{5} 1 + \frac{2}{5} 3 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$.
-	
-	Considering now $M = \gamma = 4, m = \alpha = 2$, then given $a_1 a_2 b c_1 c_2 c_3 c$ with objects above $c$, $P[z < b]$ tends to and is greater than $4/7$, thus the gain is smaller than $\frac{4}{7} 2 + \frac{3}{7} 4 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$; and considering the inverse ordering $a_1 a_2 a_3 a_4 b c_1 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $2/7$, thus the gain is greater than $\frac{2}{7} 4 + \frac{3}{7} 4 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$.}
-	
 	We can now prove the claim.
 	Consider ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d')$.
 	Assume $(s, -d) > (s', -d')$.
