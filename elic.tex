@@ -758,8 +758,7 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 \begin{conjecture}
 	Consider $s, d \in \N$, ${\ppref} \in \POs$ and $b, z \in X$ such that $z$ is isolated in $\ppref$ and $\zeta({\ppref}, b) = (s, -d)$. 
 	
-	Define $A = {\pprefinv}(b) = \upb$, $C = {\ppref}(b) = \downb$, $D ={\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)$, 
-	$\alpha = \card{A}$, $\gamma = \card{C}$ and $\delta = \card{D}$.
+	Define $M = \frac{s + d}{2} = \max(\card{\upb}, \card{\downb})$, $m = \frac{s - d}{2} = \min(\card{\upb}, \card{\downb})$, $D ={\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)$ and $\delta = \card{D}$.
 	
 	The gain of asking $q_{bz}$ given $\ppref$, $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$, is bounded by:
 	\begin{multline}
@@ -768,12 +767,14 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 	\end{multline}
 \end{conjecture}
 \begin{proof}
-	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upb ≥ \downb$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise, 
-	and define $M = \frac{s + d}{2} = \max(\card{\upb}, \card{\downb})$ and $m = \frac{s - d}{2} = \min(\card{\upb}, \card{\downb})$,
-	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$, with $M ≥ m$.
+	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upb ≥ \downb$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise,
+	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$.
 	
 	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = E[g^{q_{bz}, {\ppref}^\text{up}} \knowing {\ppref^\text{up}}] = p M + \overline{p} m$, where $p = P[z < b \knowing {\ppref^\text{up}}]$ and $\overline{p} = 1 - p = P[z > b \knowing {\ppref^\text{up}}]$.
-	Observe that minimizing (respectively, maximizing) $p$ is equivalent to minimizing (respectively, maximizing) the gain, when $M$ and $m$ are fixed.
+	Observe that minimizing (respectively, maximizing) $p$ is equivalent to minimizing (respectively, maximizing) the gain, as $M$ and $m$ are fixed and $M ≥ m$.
+	
+%	Define $M^\text{up} = M$ and $M^\text{down} = m$, $m^\text{up} = m$ and $m^\text{down} = M$.
+%	Then, $P[z < b \knowing {\ppref^\text{up}}] ≥ \frac{\delta + (M^\text{up} + 2) (m^\text{up} + 1)}{(M^\text{up} + m^\text{up} + \delta + 2) (M^\text{up} + 2)}$. And $P[z < b \knowing {\ppref^\text{down}}] ≥ \frac{\delta + (M^\text{down} + 2) (m^\text{down} + 1)}{(M^\text{down} + m^\text{down} + \delta + 2) (M^\text{down} + 2)}$.
 	
 	\Cref{th:lowerDelta} yields that $p ≥ \frac{\delta + (M + 2) (m + 1)}{(M + m + \delta + 2) (M + 2)}$, hence:
 	\begin{align}
