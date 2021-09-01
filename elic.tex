@@ -806,7 +806,7 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 	
 	We write $E = E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$ and $E' = E[g^{q_{b'z'}, {\ppref'}} \knowing {\ppref'}]$, for short, to denote the gain of asking $q_{bz}$ given $\ppref$ or of asking $q_{b'z'}$ given $\ppref'$, respectively.
 
-	Assume that $\alpha ≤ \gamma$ and assume that $\zeta(\ppref, b) > \zeta(\ppref', b')$.
+	Assume that $\alpha ≤ \gamma$ and $\alpha' ≤ \gamma'$ and assume that $\zeta(\ppref, b) > \zeta(\ppref', b')$.
 
 	Then:
 	\begin{equation}
@@ -928,16 +928,13 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 \begin{conjecture}
 	\label{th:potentialRulez}
 	For any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d') < (s, -d)$, 
-	for any $z \in X$ isolated in $\ppref$,
+	for any $z \in X$ isolated in $\ppref$ and in $\ppref'$,
 	$E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{b'z}, {\ppref'}} \knowing {\ppref'}]$. That is, increasing the sum or decreasing the difference never hurts the expected gain.
 \end{conjecture}
 \begin{proof}
 	A possible intuitive justification for this claim is that $p$ decreases sufficiently rapidly when the difference increases. This could perhaps yield a simpler proof. Here is a painful one.
 
-	We can now prove the claim.
-	Consider ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d')$.
-	Assume $(s, -d) > (s', -d')$.
-	Thus, $s ≥ s' ≥ d' ≥ d$ and $(s > s' \lor d' > d)$.
+	We know that $s ≥ s' ≥ d' ≥ d$ and $(s > s' \lor d' > d)$.
 %	Define $(M, m) = (\frac{s + d}{2}, \frac{s - d}{2})$ and $(M', m') = (\frac{s' + d'}{2}, \frac{s' - d'}{2})$.
 	
 	We need to prove:
