@@ -722,11 +722,12 @@ We use the vector dominance relation $≥$ in $\R^2$ to compare potentials, thus
 Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \gamma) = \frac{s - d}{2}, M = \max(\alpha, \gamma) = \frac{s + d}{2})$. (The dominance relation $≥$ however always uses the representation based on the sum and difference.)
 
 \begin{conjecture}
+	\label{th:boundDelta}
 	Consider and ${\ppref}, {\ppref'} \in \POs$, $b, b' \in X$ and $z, z' \in X$ such that $z$ is isolated in $\ppref$ and $z'$ is isolated in $\ppref'$. 
-	Define $A = \upb$, $C = \downb$, $A' = \upb'$ and $C' = \downb'$; and
+	Define $A = {\pprefinv}(b) = \upb$, $C = {\ppref}(b) = \downb$, $A' = {\pprefinv'}(b') = \upb'$ and $C' = {\ppref'}(b') = \downb'$; and
 	$\alpha = \card{A}$, $\gamma = \card{C}$, $\alpha' = \card{A'}$ and $\gamma' = \card{C'}$.
 	
-	Let ${\pprefeq^{±1}}[b]$ denote the connected component containing $b$ in ${\pprefeq}$, thus, the transitive closure of $\pprefeq$ and $\pprefeqinv$ starting from $b$. Let $D = {\pprefeq^{±1}}[b] \setminus A \setminus \set{b} \setminus C$ denote the elements path-connected to $b$ but incomparable to $b$ in $\ppref'$, and define $\delta = \card{D}$. Define similarly $D'$ and $\delta'$ wrt $b'$ and $\ppref'$.
+	Let ${\pprefeq^{±1}}[b]$ denote the connected component containing $b$ in ${\pprefeq}$, thus, the transitive closure of $\pprefeq$ and $\pprefeqinv$ starting from $b$. Let $D = {\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] \setminus A \setminus \set{b} \setminus C$ denote the elements path-connected to $b$ but incomparable to $b$ in $\ppref$, and define $\delta = \card{D}$. Define similarly $D'$ and $\delta'$ wrt $b'$ and $\ppref'$.
 	
 	We write $E = E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$ and $E' = E[g^{q_{b'z'}, {\ppref'}} \knowing {\ppref'}]$, for short, to denote the gain of asking $q_{bz}$ given $\ppref$ or of asking $q_{b'z'}$ given $\ppref'$, respectively.
 
@@ -857,26 +858,6 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 		\delta (\alpha \gamma + \alpha - 2) = 2 (\gamma + 2) (\alpha + 1),
 	\end{equation}
 	that is, when $\alpha' = 0 ≤ \alpha = \gamma = 1 ≤ \gamma' = 2$, never; and otherwise, when $\delta = 2 \frac{(\gamma + 2) (\alpha + 1)}{\alpha \gamma + \alpha - 2}$.
-	
-	Consider $\alpha = 1$, $\gamma = 3$, 
-	thus, $P[z < b \knowing {\pprefinv}] = \frac{\delta + 10}{5 (\delta + 6)}$ and $E = \frac{4 \delta + 20}{5 (\delta + 6)} 1 + \frac{\delta + 10}{5 (\delta + 6)} 3 = \frac{7 \delta + 50}{5 \delta + 30}$; compared to $\alpha' = 0$, $\gamma' = 4$,
-	thus, $P[z < b \knowing {\ppref'}] = \frac{\delta + 10}{2 (\delta + 6)}$ and $E' = \frac{\delta + 10}{2 (\delta + 6)} 0 + \frac{\delta + 2}{2 (\delta + 6)} 4 = \frac{2 \delta + 4}{\delta + 6}$.
-	\begin{itemize}
-		\item $\delta = 0$: $E - E' = \frac{5 - 2}{3} = 1$.
-		\item $\delta = 1$: $E - E' = \frac{57 - 30}{35} = \frac{27}{35}$.
-		\item $\delta = 2$: $E - E' = \frac{64 - 40}{40} = \frac{3}{5}$.
-		\item $\delta = 10$: $E - E' = \frac{3 - 3}{2} = 0$.
-	\end{itemize}
-	
-	Consider $\alpha = 3, \gamma = 5$ and $\alpha' = 2, \gamma' = 6$. Thus $E = \frac{6 \delta + 42}{7 \delta + 70} 3 + \frac{\delta + 28}{7 \delta + 70} 5 = \frac{23 \delta + 266}{7 \delta + 70}$ and $E' = \frac{\delta + 28}{4 \delta + 40} 2 + \frac{3 \delta + 12}{4 \delta + 40} 6 = \frac{20 \delta + 128}{4 \delta + 40} = \frac{5 \delta + 32}{\delta + 10} = \frac{35 \delta + 224}{7 \delta + 70}$.
-	
-	\begin{itemize}
-		\item $\delta = 0$: $E - E' = \frac{266 - 224}{70} = \frac{42}{70} = \frac{3}{5}$.
-		\item $\delta = 1$: $E - E' = \frac{289 - 259}{77} = \frac{30}{77}$.
-		\item $\delta = 3$: $E - E' = \frac{335 - 329}{98} = \frac{6}{98} = \frac{3}{49}$.
-		\item $\delta = 4$: $E - E' = \frac{358 - 364}{98} = \frac{-6}{98} = \frac{-3}{49}$.
-		\item $\delta = 5$: $E - E' = \frac{381 - 399}{105} = \frac{-18}{105} = \frac{-6}{35}$.
-	\end{itemize}
 \end{proof}
 
 \begin{conjecture}
@@ -1575,6 +1556,29 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 %\bibliography{bibl}
 
 \appendix
+\section{Numerical examples for bound on delta}
+(About \cref{th:boundDelta}.)
+
+Consider $\alpha = 1$, $\gamma = 3$, 
+thus, $P[z < b \knowing {\pprefinv}] = \frac{\delta + 10}{5 (\delta + 6)}$ and $E = \frac{4 \delta + 20}{5 (\delta + 6)} 1 + \frac{\delta + 10}{5 (\delta + 6)} 3 = \frac{7 \delta + 50}{5 \delta + 30}$; compared to $\alpha' = 0$, $\gamma' = 4$,
+thus, $P[z < b \knowing {\ppref'}] = \frac{\delta + 10}{2 (\delta + 6)}$ and $E' = \frac{\delta + 10}{2 (\delta + 6)} 0 + \frac{\delta + 2}{2 (\delta + 6)} 4 = \frac{2 \delta + 4}{\delta + 6}$.
+\begin{itemize}
+	\item $\delta = 0$: $E - E' = \frac{5 - 2}{3} = 1$.
+	\item $\delta = 1$: $E - E' = \frac{57 - 30}{35} = \frac{27}{35}$.
+	\item $\delta = 2$: $E - E' = \frac{64 - 40}{40} = \frac{3}{5}$.
+	\item $\delta = 10$: $E - E' = \frac{3 - 3}{2} = 0$.
+\end{itemize}
+
+Consider $\alpha = 3, \gamma = 5$ and $\alpha' = 2, \gamma' = 6$. Thus $E = \frac{6 \delta + 42}{7 \delta + 70} 3 + \frac{\delta + 28}{7 \delta + 70} 5 = \frac{23 \delta + 266}{7 \delta + 70}$ and $E' = \frac{\delta + 28}{4 \delta + 40} 2 + \frac{3 \delta + 12}{4 \delta + 40} 6 = \frac{20 \delta + 128}{4 \delta + 40} = \frac{5 \delta + 32}{\delta + 10} = \frac{35 \delta + 224}{7 \delta + 70}$.
+
+\begin{itemize}
+	\item $\delta = 0$: $E - E' = \frac{266 - 224}{70} = \frac{42}{70} = \frac{3}{5}$.
+	\item $\delta = 1$: $E - E' = \frac{289 - 259}{77} = \frac{30}{77}$.
+	\item $\delta = 3$: $E - E' = \frac{335 - 329}{98} = \frac{6}{98} = \frac{3}{49}$.
+	\item $\delta = 4$: $E - E' = \frac{358 - 364}{98} = \frac{-6}{98} = \frac{-3}{49}$.
+	\item $\delta = 5$: $E - E' = \frac{381 - 399}{105} = \frac{-18}{105} = \frac{-6}{35}$.
+\end{itemize}
+
 \section{Best possible number of edges}
 Assume we are the luckiest possible: we can choose the orientation of edges (the answers to questions) so as to maximise the number of resulting edges.
 
