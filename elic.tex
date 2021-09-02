@@ -938,12 +938,18 @@ Note that $s ≥ d$.
 	\end{equation}
 	that is, when $\alpha' = 0 ≤ \alpha = \gamma = 1 ≤ \gamma' = 2$, never; and otherwise, when $\delta = 2 \frac{(\gamma + 2) (\alpha + 1)}{\alpha \gamma + \alpha - 2}$.
 \end{proof}
-	
-We denote the preorders with potential at least $(s, -d)$ as $\zeta^{-1}({\uparrow}(s, -d)) = \set{{\ppref} \in \POs \suchthat \max_{a \in \allalts} \zeta({\ppref}, a) ≥ (s, -d)}$.
+
+A preorder ${\ppref}$ is said to dominate the levels of potential $\zeta^\mathit{dom}({\ppref}) = {>}\left(\cup_{a \in X} \zeta^\mathit{max}({\ppref}, a)\right) = \set{(s, -d, \delta) \in \R^3 \suchthat \exists a \in X \suchthat \zeta^\mathit{max}({\ppref}, a) > (s, -d, \delta)}$.
+
+A preorder ${\ppref}$ is said to reach the levels of potential $\zeta({\ppref}) = {≥}\left(\cup_{a \in X} \zeta({\ppref}, a)\right) = \set{(s, -d, \delta) \in \R^3 \suchthat \exists a \in X \suchthat \zeta({\ppref}, a) ≥ (s, -d, \delta)}$.
+
+Given $s, d, \delta \in \R$, we denote the preorders that dominate the potential $(s, -d, \delta)$ as $(\zeta^\mathit{dom})^{-1}(s, -d, \delta) = \set{{\ppref} \in \POs \suchthat (s, -d, \delta) \in \zeta^\mathit{dom}({\ppref})}$.
+
+Given $s, d, \delta \in \R$, we denote the preorders that reach the potential $(s, -d, \delta)$ as $\zeta^{-1}(s, -d, \delta) = \set{{\ppref} \in \POs \suchthat (s, -d, \delta) \in \zeta({\ppref})}$.
 
 Given two probability distributions $R$ and $S$ over $\POs$, say that $R$ dominates $S$ iff $\forall s, d \in \N$: 
 \begin{equation}
-	R(\zeta^{-1}({\uparrow}(s, -d))) ≥ S(\zeta^{-1}({\uparrow}(s, -d))).
+	R((\zeta^\mathit{dom})^{-1}(s, -d, \delta)) ≥ S(\zeta^{-1}(s, -d, \delta)).
 \end{equation}
 
 Note that comparing $q$ to $q'$ is similar to comparing distributions over $\POs$, more precisely, comparing the probabilistic state resulting from our current knowledge plus $q$, ${\ppref} + q$, to the one resulting from ${\ppref} + q'$.
@@ -951,29 +957,41 @@ Note that comparing $q$ to $q'$ is similar to comparing distributions over $\POs
 Towards showing a sufficient condition for $q_{bz}$ to be an (non-myopically) optimal question, we now want to show that whenever ${\ppref} + q$ dominates ${\ppref} + q'$ for any other $q'$, asking $q$ is optimal.
 This should be the situation we face when ${\ppref} = abc$, and, hopefully, other similar situations.
 
-We currently consider only questions involving one unknown element $z$.
+We now mainly want to prove two things.
+First, if $R$ dominates $S$, it yields a higher immediate gain.
+Second, the dominance persists to the next question: if $R$ dominates $S$, then for any question $q$ (involving at least one new object), there exists $q'$ such that $R + q'$ still dominates $S + q$.
+From these two points should follow that asking $q$ may not yield a lower total gain (over all questions) than any strategy starting with another $q'$.
+
+We currently consider only questions involving one isolated element $z$.
+
+Note that $g$, understood as in \cref{sec:optDef} as $g({\ppref}) = \max_q E[g^{q, {\ppref}} \knowing {\ppref}]$, is a random variable wrt a probability distribution over the partial orders $\POs$.
+
+\begin{conjecture}
+	If $R$ dominates $S$, it yields a higher gain, that is, $E_R[g] ≥ E_S[g]$.
+\end{conjecture}
+\begin{proof}
+	\Cref{th:boundDelta} indicates that a preorder ${\ppref}$ with potential $\zeta^\mathit{max}({\ppref}) = (s, -d, \delta^\mathit{max})$ has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d', \delta') < (s, -d, \delta^\mathit{max})$.
+	
+	It should somehow follow that if $R$ dominates $S$, $E_R[g] ≥ E_S[g]$.
+\end{proof}
+
+Given a distribution $R$, define $R + q$ as the expected distribution resulting from adding the answer to $q$ (given by the distribution $P$), computed before knowing the answer. $(R + q)({\ppref'}) = \sum_{{\ppref}, {\pref} \suchthat {\ppref'} = T({\ppref} \cup (q \cap {\pref}))} R({\ppref}) P({\pref})$.
+
+\begin{conjecture}
+	The dominance persists to the next question: 
+	if $R$ dominates $S$, then $\forall q, \exists q' \suchthat R + q' \text{ dominates } S + q$.
+\end{conjecture}
+\begin{proof}
+	I believe this is true because if some $q$ permits to increase the probability of the potential $(s, -d)$ from $S$, then it has taken those having lower potential $p'$ with prob $S(p')$ and added edges to it; but the prob $R(p')$ was higher and the possible gains are higher as well.
+	$(S + q)(\zeta^{-1}(m', M')) = \sum_{M < M'} S(\zeta^{-1}(m', M)) × (\text{Prob. best gained at least } M' - M) + …$
+\end{proof}
 
 \begin{conjecture}
 	Whenever ${\ppref} + q$ dominates ${\ppref} + q'$ for any other $q'$, asking $q$ is optimal.
 \end{conjecture}
 \begin{proof}
-	We mainly want to prove two things.
-	First, if $R$ dominates $S$, it yields a higher immediate gain.
-	Second, the dominance persists to the next question: if $R$ dominates $S$, then for any question $q$ (involving at least one new object), there exists $q'$ such that $R + q'$ still dominates $S + q$.
-	From these two points should follow that asking $q$ may not yield a lower total gain (over all questions) than any strategy starting with another $q'$.
 	
-	Note that $g$, understood as in \cref{sec:optDef} as $g({\ppref}) = \max_q E[g^{q, {\ppref}} \knowing {\ppref}]$, is a random variable wrt a probability distribution over the partial orders $\POs$.
-	
-	Cref{th:potentialRulez} indicates that a preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d)$ has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d') < (s, -d)$.
-	
-	It should somehow follow that if $R$ dominates $S$, $E_R[g] ≥ E_S[g]$.
-	
-	Given a distribution $R$, define $R + q$ as the expected distribution resulting from adding the answer to $q$ (given by the distribution $P$), computed before knowing the answer. $(R + q)({\ppref'}) = \sum_{{\ppref}, {\pref} \suchthat {\ppref'} = T({\ppref} \cup (q \cap {\pref}))} R({\ppref}) P({\pref})$.
-	
-	Our second claim is that if $R$ dominates $S$, then $\forall q \in Q, \exists q' \in Q \suchthat R + q' \text{ dominates } S + q$.
-	
-	I believe this is true because if some $q$ permits to increase the probability of the potential $(s, -d)$ from $S$, then it has taken those having lower potential $p'$ with prob $S(p')$ and added edges to it; but the prob $R(p')$ was higher and the possible gains are higher as well.
-	$(S + q)(\zeta^{-1}(m', M')) = \sum_{M < M'} S(\zeta^{-1}(m', M)) × (\text{Prob. best gained at least } M' - M) + …$
+	…
 \end{proof}
 
 \begin{table}
