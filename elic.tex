@@ -749,16 +749,9 @@ Then,  ${\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] 
 	\end{align}
 \end{proof}
 
-Given ${\ppref} \in \POs$ and $b \in \allalts$, define $\zeta({\ppref}, b) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $b$ in $\ppref$, namely, with $\alpha = \card{\upb}$ and $\gamma = \card{\downb}$, $s = (\alpha + \gamma)$ and $d = \abs{\alpha - \gamma}$. Note that $s ≥ d$.
-
-We use the vector dominance relation $≥$ in $\R^2$ to compare potentials, thus, $(s, -d) ≥ (s', -d') ⇔ s ≥ s' \land -d ≥ -d'$.
-	
-Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \gamma) = \frac{s - d}{2}, M = \max(\alpha, \gamma) = \frac{s + d}{2})$. (The dominance relation $≥$ however always uses the representation based on the sum and difference.)
-
 \begin{conjecture}
-	Consider $s, d \in \N$, ${\ppref} \in \POs$ and $b, z \in X$ such that $z$ is isolated in $\ppref$ and $\zeta({\ppref}, b) = (s, -d)$. 
-	
-	Define $M = \frac{s + d}{2} = \max(\card{\upb}, \card{\downb})$, $m = \frac{s - d}{2} = \min(\card{\upb}, \card{\downb})$, $D ={\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)$ and $\delta = \card{D}$.
+	Consider ${\ppref} \in \POs$ and $b, z \in X$ such that $z$ is isolated in $\ppref$.
+	Define $M = \max(\card{\upb}, \card{\downb})$, $m = \min(\card{\upb}, \card{\downb})$, $D ={\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)$ and $\delta = \card{D}$.
 	
 	The gain of asking $q_{bz}$ given $\ppref$, $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$, is bounded by:
 	\begin{multline}
@@ -796,6 +789,24 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 %	Considering now $M = \gamma = 4, m = \alpha = 2$, then given $a_1 a_2 b c_1 c_2 c_3 c$ with objects above $c$, $P[z < b]$ tends to and is greater than $4/7$, thus the gain is smaller than $\frac{4}{7} 2 + \frac{3}{7} 4 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$; and considering the inverse ordering $a_1 a_2 a_3 a_4 b c_1 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $2/7$, thus the gain is greater than $\frac{2}{7} 4 + \frac{3}{7} 4 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$.}
 \end{proof}
 
+In the following paragraph we use $\frac{x}{y} \in (\Q \cup ∞)$ with $x, y \in \N$ to denote the rational $\frac{x}{y}$ when $y ≠ 0$ and $∞$ when $y = 0$. We extend the usual comparison order $≥$ on $\R$ so that $∞ ≥ r$ for any $r \in \R$. We never compare $∞$ to $∞$.
+
+Given ${\ppref} \in \POs$ and $b \in \allalts$, define $\zeta({\ppref}, b) \in \R^3$ as the vector $(s, -d, \delta)$ representing the covering potential of a question involving $b$ in $\ppref$, namely, with $\alpha = \card{\upb}$ and $\gamma = \card{\downb}$, $s = (\alpha + \gamma)$, $d = \abs{\alpha - \gamma}$ and $\delta = \card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)}\right)$. 
+Define $\zeta^\mathit{max}({\ppref}, b) \in \R^2 × (\R \cup ∞)$ as the vector $(s, -d, \delta^\mathit{max})$ representing the covering potential of a question involving $b$ in $\ppref$, namely, with $\alpha = \card{\upb}$, $\gamma = \card{\downb}$ and $\delta = \card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)}\right)$, $s = (\alpha + \gamma)$, $d = \abs{\alpha - \gamma}$ and 
+\begin{equation}
+	\delta^\mathit{max} = \left\{
+	\begin{aligned}
+		\frac{2 (\gamma + 2) (\alpha + 1)}{(\alpha \gamma + \alpha - 2)} & \text{ if } \delta ≤ \frac{2 (\gamma + 2) (\alpha + 1)}{(\alpha \gamma + \alpha - 2)},\\ 
+		-1 & \text{ if } \delta > \frac{2 (\gamma + 2) (\alpha + 1)}{(\alpha \gamma + \alpha - 2)}
+	\end{aligned}\right.
+\end{equation}
+
+We use the usual vector dominance relation $≥$ to compare potentials, thus, for any $s, d, s', d', \delta' \in \R$ and $\delta^\mathit{max} \in \R \cup ∞$: $(s, -d, \delta^\mathit{max}) ≥ (s', -d', \delta') ⇔ s ≥ s' \land -d ≥ -d' \land \delta^\mathit{max} ≥ \delta'$.
+	
+Equivalently, we can represent the potential $(s, -d, \delta)$ by $(m = \min(\alpha, \gamma) = \frac{s - d}{2}, M = \max(\alpha, \gamma) = \frac{s + d}{2}, \delta)$. (The dominance relation $≥$ however always uses the representation based on the sum and difference.)
+
+Note that $s ≥ d$.
+
 \begin{conjecture}
 	\label{th:boundDelta}
 	Consider and ${\ppref}, {\ppref'} \in \POs$, $b, b' \in X$ and $z, z' \in X$ such that $z$ is isolated in $\ppref$ and $z'$ is isolated in $\ppref'$. 
@@ -805,8 +816,12 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 	Let $D ={\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)$, and define $\delta = \card{D}$. Define similarly $D'$ and $\delta'$ wrt $b'$ and $\ppref'$.
 	
 	We write $E = E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$ and $E' = E[g^{q_{b'z'}, {\ppref'}} \knowing {\ppref'}]$, for short, to denote the gain of asking $q_{bz}$ given $\ppref$ or of asking $q_{b'z'}$ given $\ppref'$, respectively.
-
-	Assume that $\alpha ≤ \gamma$ and $\alpha' ≤ \gamma'$ and assume that $\zeta(\ppref, b) > \zeta(\ppref', b')$.
+	
+	If $\zeta^\mathit{max}({\ppref}, b) > \zeta({\ppref'}, b')$, then $E ≥ E'$.
+\end{conjecture}
+\begin{proof}
+	We need to prove the following.
+	Assume that $\alpha ≤ \gamma$ and $\alpha' ≤ \gamma'$ and assume that $(s, -d) > (s', -d')$.
 
 	Then:
 	\begin{equation}
@@ -817,8 +832,7 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 		⇒ E ≥ E'.
 	\end{equation}
 	Note that when $\alpha = \gamma = 1$, the condition is satisfied whatever $\delta, \delta'$.
-\end{conjecture}
-\begin{proof}
+
 	I am interested in analyzing the case $\delta = \delta'$, for simplicity. Define $E$ corresponding to the lowest possible value for any $\ppref$ satisfying the conditions, and $E'$ for the highest one.
 	
 	The quantity $E - E'$ is weakly decreasing when $\delta$ increases. Thus, suffices to find $\delta$ such that $E - E' = 0$. 
@@ -925,47 +939,6 @@ Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\alpha, \ga
 	that is, when $\alpha' = 0 ≤ \alpha = \gamma = 1 ≤ \gamma' = 2$, never; and otherwise, when $\delta = 2 \frac{(\gamma + 2) (\alpha + 1)}{\alpha \gamma + \alpha - 2}$.
 \end{proof}
 	
-\begin{conjecture}
-	\label{th:potentialRulez}
-	For any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d') < (s, -d)$, 
-	for any $z \in X$ isolated in $\ppref$ and in $\ppref'$,
-	$E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{b'z}, {\ppref'}} \knowing {\ppref'}]$. That is, increasing the sum or decreasing the difference never hurts the expected gain.
-\end{conjecture}
-\begin{proof}
-	A possible intuitive justification for this claim is that $p$ decreases sufficiently rapidly when the difference increases. This could perhaps yield a simpler proof. Here is a painful one.
-
-	We know that $s ≥ s' ≥ d' ≥ d$ and $(s > s' \lor d' > d)$.
-%	Define $(M, m) = (\frac{s + d}{2}, \frac{s - d}{2})$ and $(M', m') = (\frac{s' + d'}{2}, \frac{s' - d'}{2})$.
-	
-	We need to prove:
-	\begin{equation}
-		\frac{s - d}{2} \frac{s + d + 1}{s + 1} ≥ \frac{s' + d'}{2} \frac{s' - d' + 1}{s' + 1},
-	\end{equation}
-	which we can rewrite as:
-	\begin{align}
-		& (s' + 1) (s - d) (s + d + 1) ≥ (s + 1) (s' + d') (s' - d' + 1)\\
-		& ⇔ (s' + 1) s (s + d + 1) ≥ d (s' + 1) (s + d + 1) + (s + 1) s' (s' + 1) + (s + 1) d' - d' (s + 1) d'\\
-		& ⇔ (s' + 1) s (s + 1) + (s + 1) d' (d' - 1) ≥ (s' + 1) d (d + 1) + (s + 1) s' (s' + 1)\\
-		& ⇔ (s' + 1) (s + 1) (s - s') + (s + 1) d' (d' - 1) ≥ (s' + 1) (d + 1) d.
-	\end{align}
-	When $d' > d$, we have $d' ≥ d + 1$ and $d' - 1 ≥ d ≥ 0$, thus the inequality holds.
-	When $s > s'$, we have $s ≥ s' + 1$ and $d' ≥ d$, thus the LHS can be bounded as follows:
-	\begin{align}
-		(s' + 1) (s + 1) (s - s') + (s + 1) d' (d' - 1)
-		& ≥ (s' + 1) (s' + 2) + (s' + 2) d (d - 1)\\
-		& = (s' + 2) (s' + 1 + d^2 - d),
-	\end{align}
-	and the claim becomes:
-	\begin{align}
-		& (s' + 2) (s' + 1 + d^2 - d) ≥ (s' + 1) (d + 1) d\\
-		⇔ & (s' + 2) (s' - d + 1) + d^2 (s' + 2) - d (s' + 1) (d + 1) ≥ 0\\
-		⇔ & (s' + 2) (s' - d + 1) - d [(s' + 1) (d + 1) - d (s' + 2)] ≥ 0\\
-		⇔ & (s' + 2) (s' - d + 1) - d (s' - d + 1) ≥ 0\\
-		⇔ & (s' - d + 1) (s' - d + 2) ≥ 0,
-	\end{align}
-	which follows from $s' ≥ d$.
-\end{proof}
-
 We denote the preorders with potential at least $(s, -d)$ as $\zeta^{-1}({\uparrow}(s, -d)) = \set{{\ppref} \in \POs \suchthat \max_{a \in \allalts} \zeta({\ppref}, a) ≥ (s, -d)}$.
 
 Given two probability distributions $R$ and $S$ over $\POs$, say that $R$ dominates $S$ iff $\forall s, d \in \N$: 
@@ -991,7 +964,7 @@ We currently consider only questions involving one unknown element $z$.
 	
 	Note that $g$, understood as in \cref{sec:optDef} as $g({\ppref}) = \max_q E[g^{q, {\ppref}} \knowing {\ppref}]$, is a random variable wrt a probability distribution over the partial orders $\POs$.
 	
-	\Cref{th:potentialRulez} indicates that a preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d)$ has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d') < (s, -d)$.
+	Cref{th:potentialRulez} indicates that a preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d)$ has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d') < (s, -d)$.
 	
 	It should somehow follow that if $R$ dominates $S$, $E_R[g] ≥ E_S[g]$.
 	
