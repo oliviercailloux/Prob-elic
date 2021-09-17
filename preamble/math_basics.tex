@@ -1,5 +1,6 @@
-\NewDocumentCommand{\R}{}{ℝ}
 \NewDocumentCommand{\N}{}{ℕ}
+\NewDocumentCommand{\Q}{}{ℚ}
+\NewDocumentCommand{\R}{}{ℝ}
 %\mathscr is rounder than \mathcal.
 \NewDocumentCommand{\powerset}{m}{\mathscr{P}(#1)}
 %Powerset without zero.
@@ -13,6 +14,7 @@
 %Allows for \abs and \abs*, which resizes the delimiters.
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 \NewDocumentCommand\card{m}{\##1}
+%\DeclarePairedDelimiter\card{\lvert}{\rvert}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 %Perhaps should use U+2016 ‖ DOUBLE VERTICAL LINE here?

@@ -48,7 +48,7 @@ We only know the probability distribution over $\linors$, from which $\prefeq$ i
 We can ask questions to obtain information about $\prefeq$. 
 We are interested in comparing questioning strategies and in evaluating the probabilistic evolution of our knowledge of $\prefeq$ as a function of the number of questions asked, for various strategies. 
 
-Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicated by the context, we omit it from the notations of the strict upper and lower countour sets and represent the strict upper and lower contour sets of $a \in \allalts$ with $\upa = {\pprefinv}(a)$ and $\downa = {\ppref}(a)$.
+Notation: when the relevant partial order ${\ppref} \in \POs$ is clearly indicated by the context, we omit it from the notations of the strict upper and lower countour sets and represent the strict upper and lower contour sets of $b \in \allalts$ with $\upb = {\pprefinv}(b)$ and $\downb = {\ppref}(b)$.
 
 \section{Questioning to increase our knowledge}
 Let $\POs$ denote the set of partial orders over $\allalts$. A partial order ${\pprefeq} \subseteq \allalts × \allalts$ is a transitive, reflexive and antisymmetric relation.
@@ -459,36 +459,37 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 
 \begin{conjecture}
 	\label{th:limDelta}
-	Given $\alpha, \gamma \in \N, \gamma ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C = \set{c, …}$, $D \ppref c$, with disjoint sets $A$, $B = \set{b}$, $C$ and $D$, and with $\alpha = \card{A}$, $\gamma = \card{C} ≥ 1$ and $\delta = \card{D}$.
+	Given $\alpha, \gamma \in \N, \gamma ≥  \gamma' ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C$, $D \ppref C'$, with disjoint sets $A$, $B = \set{b}$, $C$ and $D$, with $C' \subseteq C$, and with $\alpha = \card{A}$, $\gamma = \card{C} ≥ \gamma' = \card{C'} ≥ 1$ and $\delta = \card{D}$.
 	
-	The sequence $p_\delta$ is monotonically decreasing, and converges to:
+	In that case, we have:
 	\begin{equation}
-		\lim_{\delta → ∞} P[z < b \knowing {\ppref}] = \frac{\gamma}{\gamma + \alpha + 1},
-	\end{equation}
-\end{conjecture}
-\begin{proof}
-	The intuition is that when $\delta$ is large, the only thing that counts is that there are $\alpha + 1$ intervals above $b$ and $(\gamma - 1) + 1$ intervals below $b$ (because $c$ is stuck at the bottom, because for $c' \in C \setminus \set{c}$, the likelihood that $c \ppref c'$ vanishes when $\delta$ grows). On average, the objects in $D$ will be spread equally among these intervals, and the limit probability looked for is therefore the proportion of intervals below $b$.
-	
-	We now determine $P[z < b \knowing {\ppref}]$ for a fixed value of $\delta$.
-	We can restrict to considering the complete orderings $\pref$ where the objects composing $A$ and $D$ conform to an arbitrary fixed order $a_1 \pref a_2 \pref …$ and $d_1 \pref d_2 \pref …$. 
-
-	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
-	
-	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downa[b] \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - 1}$ ways of placing $C \setminus \set{c}$ (the “moving” objects) among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
-	
-	Note also that $P[z < b \knowing {\ppref}, \card{\downa[b] \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
-	
-	Therefore, we obtain:
-	\begin{equation}
-		P[z < b \knowing {\ppref}] = \frac{
+		p_\delta = P[z < b \knowing {\ppref}] = \frac{
 			\sum_{0 ≤ i ≤ \delta}
-			(i + \gamma + 1) \binom{i + \gamma}{\gamma - 1} \binom{\alpha + \delta - i}{\alpha}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
 		}{
-			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - 1} \binom{\alpha + \delta - i}{\alpha}
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma'} \binom{\alpha + \delta - i}{\alpha}
 		}.
 	\end{equation}
 	
-	Let us examine the more general formula, for $\gamma' \in N, \gamma' ≤ \gamma$:
+	Furthermore, the sequence $p_\delta$ is monotonically decreasing, and converges to:
+	\begin{equation}
+		\lim_{\delta → ∞} p_\delta = \frac{\gamma - \gamma' + 1}{\alpha + \gamma + 2 - \gamma'}.
+	\end{equation}
+	(This quantity is the infimum of that probability among the partial orders and objects satisfying that constraint, when $n$ is considered unbounded.)
+\end{conjecture}
+\begin{proof}
+	The intuition is that when $\delta$ is large, the only thing that counts is that there are $\alpha + 1$ intervals above $b$ and $(\gamma - \gamma') + 1$ intervals below $b$ (because $C'$ is stuck at the bottom, because for any $c' \in C'$ and $c \in C \setminus C'$, the likelihood that $c' \ppref c$ vanishes when $\delta$ grows). On average, the objects in $D$ will be uniformly distributed within these intervals, and the limit probability looked for is therefore the proportion of intervals below $b$.
+	
+	We now determine $p_\delta$, that is, $P[z < b \knowing {\ppref}]$, for a fixed value of $\delta$.
+	We can restrict to considering the complete orderings $\pref$ where the objects composing $A, C, C'$ and $D$ conform to an arbitrary fixed order $a_1 \pref a_2 \pref …$, $d_1 \pref d_2 \pref …$, etc. 
+
+	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
+	
+	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downb \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - \gamma'}$ ways of placing $C \setminus C'$ (the objects among $C$ whose position relative to $D$ is not determined) among the $\card{\downb} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upb \cap D)$ above $b$.
+	
+	Note also that $P[z < b \knowing {\ppref}, \card{\downb \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
+	
+	Therefore, we obtain:
 	\begin{equation}
 		P[z < b \knowing {\ppref}] = \frac{
 			\sum_{0 ≤ i ≤ \delta}
@@ -586,9 +587,103 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 			\binom{\alpha + \gamma + \delta + 1}{\delta + \gamma'} - R(\gamma)
 		}.
 	\end{align}
-	\commentOC{A numerical check suggests that there might be a mistake in the second term.}
 	
-	In particular, for $\gamma' = 1$, $R(\gamma) = R(\gamma + 1) = \binom{\alpha + \delta + 1}{\delta + 1}$, hence:
+	The limit for large $\delta$ can probably be obtained by algebraic manipulations similar to the ones used to obtain \cref{th:deltaOne}.
+\end{proof}
+
+\begin{conjecture}
+	\label{th:deltaGamma}
+	In the case $\gamma' = \gamma$ of \cref{th:limDelta}:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
+	\end{equation}
+\end{conjecture}
+\begin{proof}
+	From \cref{th:limDelta}, we obtain:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] = \frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
+		},
+	\end{equation}
+	equivalently (using the identity established in a previous proof):
+	\begin{align}
+		& \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ i ≤ \delta}
+			(i + \gamma + 1) \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{1 ≤ i ≤ \delta} \binom{i}{i - 1} \binom{\alpha + \delta - i}{\delta - i}
+			+ (\gamma + 1) \sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\sum_{0 ≤ j ≤ \delta - 1} \binom{j + 1}{j} \binom{\alpha + \delta - j - 1}{\delta - j - 1}
+			+ (\gamma + 1) \sum_{0 ≤ i ≤ \delta} \binom{1 + i - 1}{i} \binom{\alpha + 1 + \delta - i - 1}{\delta - i}
+		}{
+			\sum_{0 ≤ i ≤ \delta} \binom{\alpha + \delta - i}{\alpha}
+		}\\
+		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
+		\frac{
+			\binom{\alpha + \delta + 1}{\delta - 1}
+			+ (\gamma + 1) \binom{\alpha + \delta + 1}{\delta}
+		}{
+			\binom{\alpha + \delta + 1}{\delta}
+		}\\
+		= {}& \frac{1}{\alpha + \gamma + \delta + 2} 
+		 \frac{
+		 	\binom{\alpha + \delta + 1}{\delta}
+			\left(
+				\frac{\delta}{\alpha + 2} + (\gamma + 1)
+			\right)
+		 }{
+		 	\binom{\alpha + \delta + 1}{\delta}
+		 }\\
+		= {}& \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
+	\end{align}
+\end{proof}
+
+Given ${\ppref} \in \POs$ and $b \in X$, let ${\pprefeq^{±1}}[b]$ denote the objects in the connected component containing $b$ in ${\pprefeq}$, thus, the transitive closure of $\pprefeq$ and $\pprefeqinv$ starting from $b$.
+Define $A = {\pprefinv}(b) = \upb$, $C = {\ppref}(b) = \downb$.
+Then,  ${\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] \setminus A \setminus \set{b} \setminus C$ denote the elements path-connected to $b$ but incomparable to $b$ in $\ppref$.
+
+\begin{conjecture}
+	\label{th:lowerDelta}
+	Given $\alpha, \gamma, \delta \in \N$, given $b, z \in X$, given ${\ppref} \in \POs$ such that $\card{\upb} = \alpha$, $\card{\downb} = \gamma$, $\card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)\right)} = \delta$ and $z$ is isolated in ${\ppref}$:
+	\begin{equation}
+		P[z < b \knowing {\ppref}] ≥ \frac{\delta + (\alpha + 2) (\gamma + 1)}{(\alpha + \gamma + \delta + 2) (\alpha + 2)}.
+	\end{equation}
+\end{conjecture}
+\begin{proof}
+	The configuration that minimizes $P[z < b \knowing {\ppref}]$ when $\gamma ≥ 1$ is hopefully the one described in \cref{th:limDelta} with $\gamma' = \gamma$. \Cref{th:deltaGamma} then gives the result. 
+	
+	When $\gamma = 0$, $P[z < b \knowing {\ppref}] = \frac{1}{\alpha + 2} ≥ \frac{\delta + (\alpha + 2)}{(\alpha + \delta + 2) (\alpha + 2)} = \frac{1}{\alpha + 2}$.
+\end{proof}
+
+\begin{conjecture}
+	\label{th:deltaOne}
+	In the case $\gamma' = 1$ of \cref{th:limDelta}:
+	\begin{equation}
+		p_\delta = 
+		P[z < b \knowing {\ppref}] = 
+		\frac{\gamma}{\alpha + \gamma + 1} 
+		\frac{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \frac{\alpha + \gamma + 1}{\alpha + \gamma + \delta + 2} \binom{\alpha + \delta + 1}{\delta + 1}
+		}{
+			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
+		}.
+	\end{equation}
+\end{conjecture}
+\begin{proof}
+	When $\gamma' = 1$, $R(\gamma) = R(\gamma + 1) = \binom{\alpha + \delta + 1}{\delta + 1}$, hence:
 	\begin{align}
 		P[z < b \knowing {\ppref}] 
 		& = \frac{\gamma}{\alpha + \gamma + 1} 
@@ -598,6 +693,8 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
 		}.
 	\end{align}
+	\Cref{fig:probs} displays some numerical results using this formula.
+	
 	The second multiplicand can be written as:
 	\begin{align}
 		\frac{
@@ -650,162 +747,209 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 			\frac{\alpha! (\alpha + \gamma + \delta + 1)!}{(\alpha + \delta + 1)!} - (\alpha + \gamma)!
 		}.
 	\end{align}
-	\Cref{fig:probs} displays some numerical results using this formula.
 \end{proof}
 
 \begin{conjecture}
-	\label{th:limDeltaAll}
-	Given $\alpha, \gamma \in \N, \gamma ≥ 1$, define the sequence $p_\delta$, for $\delta \in \N$, as $p_\delta = P[z < b \knowing {\ppref}]$, with the partial order $\ppref$ being defined as follows: $A \ppref b \ppref C$, $D \ppref C$, with disjoint sets $A$, $B = \set{b}$, $C$ and $D$, and with $\alpha = \card{A}$, $\gamma = \card{C} ≥ 1$ and $\delta = \card{D}$.
+	Consider ${\ppref} \in \POs$ and $b, z \in X$ such that $z$ is isolated in $\ppref$.
+	Define $M = \max(\card{\upb}, \card{\downb})$, $m = \min(\card{\upb}, \card{\downb})$, $D ={\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)$ and $\delta = \card{D}$.
 	
-	The sequence $p_\delta$ is monotonically decreasing, and converges to:
-	\begin{equation}
-		\lim_{\delta → ∞} P[z < b \knowing {\ppref}] = \frac{1}{\alpha + 1},
-	\end{equation}
+	The gain of asking $q_{bz}$ given $\ppref$, $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$, is bounded by:
+	\begin{multline}
+		\frac{\delta (M - m) + (M + 2) (2 M m + M + \delta m + m)}{(M + m + \delta + 2) (M + 2)} ≤ E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]\\
+		 ≤ \frac{(m + 2) [2 M m + \delta M + M + m] - \delta (M - m)}{(M + m + \delta + 2) (m + 2)}.
+	\end{multline}
 \end{conjecture}
 \begin{proof}
-	Let us condition on $i$, the number of alternatives among $D$ below $b$ in $\pref$. 
+	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upb ≥ \downb$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise,
+	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$.
 	
-	To count the number of orderings $\pref$ extending $\ppref$ such that $i$ objects among $D$ (say, $D_1 = \downa[b] \cap D$) are below $b$, $\card{D_1} = i$, observe that there are $\binom{i + \gamma}{\gamma - \gamma}$ ways of placing $C \setminus C$ (the objects among $C$ whose position is not determined) among the $\card{\downa[b]} = i + \gamma$ objects below $b$; and there are $\binom{\alpha + (\delta - i)}{\alpha}$ ways of ordering the objects in $A \cup (\upa[b] \cap D)$ above $b$.
+	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = E[g^{q_{bz}, {\ppref}^\text{up}} \knowing {\ppref^\text{up}}] = p M + \overline{p} m$, where $p = P[z < b \knowing {\ppref^\text{up}}]$ and $\overline{p} = 1 - p = P[z > b \knowing {\ppref^\text{up}}]$.
+	Observe that minimizing (respectively, maximizing) $p$ is equivalent to minimizing (respectively, maximizing) the gain, as $M$ and $m$ are fixed and $M ≥ m$.
 	
-	Note also that $P[z < b \knowing {\ppref}, \card{\downa[b] \cap D} = i] = \frac{(i + \gamma) + 1}{(\alpha + 1 + \gamma + \delta) + 1}$.
+%	Define $M^\text{up} = M$ and $M^\text{down} = m$, $m^\text{up} = m$ and $m^\text{down} = M$.
+%	Then, $P[z < b \knowing {\ppref^\text{up}}] ≥ \frac{\delta + (M^\text{up} + 2) (m^\text{up} + 1)}{(M^\text{up} + m^\text{up} + \delta + 2) (M^\text{up} + 2)}$. And $P[z < b \knowing {\ppref^\text{down}}] ≥ \frac{\delta + (M^\text{down} + 2) (m^\text{down} + 1)}{(M^\text{down} + m^\text{down} + \delta + 2) (M^\text{down} + 2)}$.
 	
-	Therefore, we obtain:
-	\begin{equation}
-		P[z < b \knowing {\ppref}] = \frac{
-			\sum_{0 ≤ i ≤ \delta}
-			(i + \gamma + 1) \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
-		}{
-			(\alpha + \gamma + \delta + 2) \sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
-		}.
-	\end{equation}
-	
-	Letting again $R(\gamma)$ denote $\sum_{0 ≤ k ≤ \gamma - 1} \binom{\alpha + \delta + \gamma - k}{\delta + \gamma - k}$, we obtain from the previous proof:
+	\Cref{th:lowerDelta} yields that $p ≥ \frac{\delta + (M + 2) (m + 1)}{(M + m + \delta + 2) (M + 2)}$, hence:
 	\begin{align}
-		P[z < b \knowing {\ppref}] 
-		& = \frac{1}{\alpha + \gamma + \delta + 2} 
-		\frac{
-			\sum_{0 ≤ i ≤ \delta}
-			\binom{i + \gamma + 1}{\gamma + 1 - \gamma} \binom{\alpha + \delta - i}{\alpha}
-		}{
-			\sum_{0 ≤ i ≤ \delta} \binom{i + \gamma}{\gamma - \gamma} \binom{\alpha + \delta - i}{\alpha}
-		}\\
-		& = \frac{1}{\alpha + \gamma + \delta + 2} 
-		\frac{
-			\binom{\alpha + \gamma + \delta + 2}{\delta + 1} - R(\gamma + 1)
-		}{
-			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma)
-		}\\
-		& = \frac{1}{\alpha + \gamma + \delta + 2} 
-		\frac{
-			\frac{\alpha + \gamma + \delta + 2}{\alpha + \gamma + 1} \binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma + 1)
-		}{
-			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma)
-		}\\
-		& = \frac{1}{\alpha + \gamma + 1} 
-		\frac{
-			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \frac{\alpha + \gamma + 1}{\alpha + \gamma + \delta + 2} R(\gamma + 1)
-		}{
-			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - R(\gamma)
-		}.
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] & ≥ \frac{\delta + (M + 2) (m + 1)}{(M + m + \delta + 2) (M + 2)} M + \frac{(M + \delta + 1) (M + 2) - \delta}{(M + m + \delta + 2) (M + 2)} m\\
+		& = \frac{\delta (M - m) + (M + 2) [(m + 1) M + (M + \delta + 1) m]}{(M + m + \delta + 2) (M + 2)}\\
+		& = \frac{\delta (M - m) + (M + 2) (2 M m + M + \delta m + m)}{(M + m + \delta + 2) (M + 2)}.
 	\end{align}
 	
+	For the upper bound, note that maximizing $p$, hence, the gain, is equivalent to minimizing $\overline{p} = P[z > b \knowing {\ppref^\text{up}}] = P[z < b \knowing {\pprefinv^\text{up}}]$, where ${\pprefinv^\text{up}} = {\ppref^\text{down}} = ({\ppref^\text{up}})^{-1}$ is the inverse of ${\ppref^\text{up}}$, that is, a partial order equivalent to $\ppref$ except that it is possibly inverted so as to have $M$ objects below $b$ and $m$ objects above $b$. 
+	
+	\Cref{th:lowerDelta} yields that $\overline{p} = P[z < b \knowing {\pprefinv^\text{up}}] ≥ \frac{\delta + (m + 2) (M + 1)}{(m + M + \delta + 2) (m + 2)}$, hence:
+	\begin{align}
+		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] & ≤ \frac{(m + \delta + 1) (m + 2) - \delta}{(m + M + \delta + 2) (m + 2)} M + \frac{\delta + (m + 2) (M + 1)}{(m + M + \delta + 2) (m + 2)} m\\
+			& = \frac{(m + 2) [(m + \delta + 1) M + (M + 1) m] - \delta (M - m)}{(M + m + \delta + 2) (m + 2)}\\
+			& = \frac{(m + 2) [2 M m + \delta M + M + m] - \delta (M - m)}{(M + m + \delta + 2) (m + 2)}.
+	\end{align}
+%	\footnote{As a (now outdated) sanity check, consider $M = \alpha = 3, m = \gamma = 1$, then given $a_1 a_2 a_3 b c$ with objects above $c$, $P[z < b]$ tends to and is greater than $1/5$, thus the gain is greater than $\frac{1}{5} 3 + \frac{4}{5} 1 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$; and considering the inverse ordering $a b c_1 c_2 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $3/5$, thus the gain is smaller than $\frac{3}{5} 1 + \frac{2}{5} 3 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$.
+%	
+%	Considering now $M = \gamma = 4, m = \alpha = 2$, then given $a_1 a_2 b c_1 c_2 c_3 c$ with objects above $c$, $P[z < b]$ tends to and is greater than $4/7$, thus the gain is smaller than $\frac{4}{7} 2 + \frac{3}{7} 4 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$; and considering the inverse ordering $a_1 a_2 a_3 a_4 b c_1 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $2/7$, thus the gain is greater than $\frac{2}{7} 4 + \frac{3}{7} 4 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$.}
 \end{proof}
 
-\begin{conjecture}
-	\label{th:infP}
-	Given $\alpha, \gamma \in \N, \gamma ≥ 1$ and $b \in X$, the worst possible configuration for any partial order with $\card{\upa[b]} = \alpha$ and $\card{\downa[b]} = \gamma$ is the one described in \cref{th:limDelta}. In other words, $\forall {\ppref} \suchthat \card{\upa[b]} = \alpha, \card{\downa[b]} = \gamma$:
-	\begin{equation}
-		P[z < b \knowing {\ppref}] ≥ \frac{\gamma}{\gamma + \alpha + 1}.
-	\end{equation}
-	(This quantity is the infimum of that probability among the partial orders and objects satisfying that constraint, when $n$ is considered unbounded.)
-\end{conjecture}
+In the following paragraph we use $\frac{x}{y} \in (\Q \cup ∞)$ with $x, y \in \N$ to denote the rational $\frac{x}{y}$ when $y ≠ 0$ and $∞$ when $y = 0$. We extend the usual comparison order $≥$ on $\R$ so that $∞ ≥ r$ for any $r \in \R$. We never compare $∞$ to $∞$.
 
-Given ${\ppref} \in \POs$ and $a \in \allalts$, define $\zeta({\ppref}, a) \in \R^2$ as the vector $(s, -d)$ representing the potential of a question involving $a$ in $\ppref$, namely, $s = (\upa + \downa)$ and $d = \abs{\upa - \downa}$. Note that $s ≥ d$.
+Given ${\ppref} \in \POs$ and $b \in \allalts$, define $\zeta({\ppref}, b) \in \R^3$ as the vector $(s, -d, \delta)$ representing the covering potential of a question involving $b$ in $\ppref$, namely, with $\alpha = \card{\upb}$ and $\gamma = \card{\downb}$, $s = (\alpha + \gamma)$, $d = \abs{\alpha - \gamma}$ and $\delta = \card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)}\right)$. 
+Define $\zeta^\mathit{max}({\ppref}, b) \in \R^2 × (\R \cup ∞)$ as the vector $(s, -d, \delta^\mathit{max})$ representing the covering potential of a question involving $b$ in $\ppref$, namely, with $\alpha = \card{\upb}$, $\gamma = \card{\downb}$ and $\delta = \card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)}\right)$, $s = (\alpha + \gamma)$, $d = \abs{\alpha - \gamma}$ and 
+\begin{equation}
+	\delta^\mathit{max} = \left\{
+	\begin{aligned}
+		\frac{2 (\gamma + 2) (\alpha + 1)}{(\alpha \gamma + \alpha - 2)} & \text{ if } \delta ≤ \frac{2 (\gamma + 2) (\alpha + 1)}{(\alpha \gamma + \alpha - 2)},\\ 
+		-1 & \text{ if } \delta > \frac{2 (\gamma + 2) (\alpha + 1)}{(\alpha \gamma + \alpha - 2)}
+	\end{aligned}\right.
+\end{equation}
+
+We use the usual vector dominance relation $≥$ to compare potentials, thus, for any $s, d, s', d', \delta' \in \R$ and $\delta^\mathit{max} \in \R \cup ∞$: $(s, -d, \delta^\mathit{max}) ≥ (s', -d', \delta') ⇔ s ≥ s' \land -d ≥ -d' \land \delta^\mathit{max} ≥ \delta'$.
 	
-Equivalently, we can represent the potential $(s, -d)$ by $(m = \min(\upa, \downa) = \frac{s - d}{2}, M = \max(\upa, \downa) = \frac{s + d}{2})$.
-	
-We use the vector dominance relation $≥$ in $\R^2$ to compare potentials, thus, $(s, -d) ≥ (s', -d') ⇔ s ≥ s' \land -d ≥ -d'$.
+Equivalently, we can represent the potential $(s, -d, \delta)$ by $(m = \min(\alpha, \gamma) = \frac{s - d}{2}, M = \max(\alpha, \gamma) = \frac{s + d}{2}, \delta)$. (The dominance relation $≥$ however always uses the representation based on the sum and difference.)
+
+Note that $s ≥ d$.
 
 \begin{conjecture}
-	\label{th:potentialRulez}
-	For any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d') < (s, -d)$, 
-	for any $z \in X$ not appearing in $\ppref$,
-	$E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ E[g^{q_{b'z}, {\ppref'}} \knowing {\ppref'}]$. That is, increasing the sum or decreasing the difference never hurts the expected gain.
+	\label{th:boundDelta}
+	Consider and ${\ppref}, {\ppref'} \in \POs$, $b, b' \in X$ and $z, z' \in X$ such that $z$ is isolated in $\ppref$ and $z'$ is isolated in $\ppref'$. 
+	Define $A = {\pprefinv}(b) = \upb$, $C = {\ppref}(b) = \downb$, $A' = {\pprefinv'}(b') = \upb'$ and $C' = {\ppref'}(b') = \downb'$; and
+	$\alpha = \card{A}$, $\gamma = \card{C}$, $\alpha' = \card{A'}$ and $\gamma' = \card{C'}$.
+	
+	Let $D ={\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)$, and define $\delta = \card{D}$. Define similarly $D'$ and $\delta'$ wrt $b'$ and $\ppref'$.
+	
+	We write $E = E[g^{q_{bz}, {\ppref}} \knowing {\ppref}]$ and $E' = E[g^{q_{b'z'}, {\ppref'}} \knowing {\ppref'}]$, for short, to denote the gain of asking $q_{bz}$ given $\ppref$ or of asking $q_{b'z'}$ given $\ppref'$, respectively.
+	
+	If $\zeta^\mathit{max}({\ppref}, b) > \zeta({\ppref'}, b')$, then $E ≥ E'$.
 \end{conjecture}
 \begin{proof}
-	A possible intuitive justification for this claim is that $p$ decreases sufficiently rapidly when the difference increases. This could perhaps yield a simpler proof. Here is a painful one.
+	We need to prove the following.
+	Assume that $\alpha ≤ \gamma$ and $\alpha' ≤ \gamma'$ and assume that $(s, -d) > (s', -d')$.
 
-	Consider any $s, -d \in \N$, and let us evaluate lower and upper bounds on the gain of a question about $b$ for a partial order with potential $\zeta({\ppref}, b) = (s, d)$.
-	
-	Consider any ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$.
-
-	Define ${\ppref^\text{up}}$ as ${\ppref^\text{up}} = {\ppref} ⇔ \upa[b] ≥ \downa[b]$ and ${\ppref^\text{up}} = {\pprefinv}$ otherwise, 
-	and define $M = \frac{s + d}{2} = \max(\card{\upa[b]}, \card{\downa[b]})$ and $m = \frac{s - d}{2} = \min(\card{\upa[b]}, \card{\downa[b]})$,
-	so that ${\ppref^\text{up}}$ has $M$ objects above $b$ and $m$ objects below $b$, with $M ≥ m$.
-	
-	A question $q_{bz}$ yields as expected gain $E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = E[g^{q_{bz}, {\ppref}^\text{up}} \knowing {\ppref^\text{up}}] = P[z < b \knowing {\ppref^\text{up}}] M + P[z > b \knowing {\ppref^\text{up}}] m$.
-	Observe that minimizing (respectively, maximizing) $p = P[z < b \knowing {\ppref^\text{up}}]$ is equivalent to minimizing (respectively, maximizing) the gain, when $M$ and $m$ are fixed.
-	
-	\Cref{th:infP} yields that $p ≥ \frac{m}{m + M + 1}$.
-	If this conjecture is correct, we obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
-	\begin{align}
-		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≥ \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m
-			& = m \frac{2 M + 1}{m + M + 1}\\
-			& = \frac{s - d}{2} \frac{s + d + 1}{s + 1}.
-	\end{align}
-	If $m = 0$, the formula given in \cref{th:infP} cannot be used, but the bound is trivially valid. 
-	
-	For the upper bound, note that maximizing $p$, hence, the gain, is equivalent to minimizing $p' = 1 - p = P[z > b \knowing {\ppref^\text{up}}] = P[z < b \knowing {\pprefinv^\text{up}}]$, where ${\pprefinv^\text{up}} = {\ppref^\text{down}} = ({\ppref^\text{up}})^{-1}$ is the inverse of ${\ppref^\text{up}}$, that is, a partial order equivalent to $\ppref$ except that it is possibly inverted so as to have $M$ objects below $b$ and $m$ objects above $b$. By a symmetrical reasoning, we thus obtain, $\forall {\ppref} \in \POs, b \in \allalts \suchthat \zeta({\ppref}, b) = (s, -d)$:
-	\begin{align}
-		E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] ≤ \frac{m + 1}{m + M + 1} M + \frac{M}{m + M + 1} m
-			& = M \frac{2 m + 1}{m + M + 1}\\
-			& = \frac{s + d}{2} \frac{s - d + 1}{s + 1}.
-	\end{align}
-	If $M = 0$, the formula given in \cref{th:infP} cannot be used, but the bound is trivially valid as $M = 0 ⇒ m = 0 ⇒ E[g^{q_{bz}, {\ppref}} \knowing {\ppref}] = 0$.
-	\footnote{As a sanity check, consider $M = \alpha = 3, m = \gamma = 1$, then given $a_1 a_2 a_3 b c$ with objects above $c$, $P[z < b]$ tends to and is greater than $1/5$, thus the gain is greater than $\frac{1}{5} 3 + \frac{4}{5} 1 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$; and considering the inverse ordering $a b c_1 c_2 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $3/5$, thus the gain is smaller than $\frac{3}{5} 1 + \frac{2}{5} 3 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$.
-	
-	Considering now $M = \gamma = 4, m = \alpha = 2$, then given $a_1 a_2 b c_1 c_2 c_3 c$ with objects above $c$, $P[z < b]$ tends to and is greater than $4/7$, thus the gain is smaller than $\frac{4}{7} 2 + \frac{3}{7} 4 = \frac{M}{m + M + 1} m + \frac{m + 1}{m + M + 1} M$; and considering the inverse ordering $a_1 a_2 a_3 a_4 b c_1 c$ with objects above $c$, we see that $P[z < b]$ tends to and is greater than $2/7$, thus the gain is greater than $\frac{2}{7} 4 + \frac{3}{7} 4 = \frac{m}{m + M + 1} M + \frac{M + 1}{m + M + 1} m$.}
-	
-	We can now prove the claim.
-	Consider ${\ppref} \in \POs$ and $b \in \allalts$ with potential $\zeta({\ppref}, b) = (s, -d)$ and ${\ppref'} \in \POs$ and $b' \in \allalts$ with potential $\zeta({\ppref'}, b') = (s', -d')$.
-	Assume $(s, -d) > (s', -d')$.
-	Thus, $s ≥ s' ≥ d' ≥ d$ and $(s > s' \lor d' > d)$.
-%	Define $(M, m) = (\frac{s + d}{2}, \frac{s - d}{2})$ and $(M', m') = (\frac{s' + d'}{2}, \frac{s' - d'}{2})$.
-	
-	We need to prove:
+	Then:
 	\begin{equation}
-		\frac{s - d}{2} \frac{s + d + 1}{s + 1} ≥ \frac{s' + d'}{2} \frac{s' - d' + 1}{s' + 1},
+		\left\{\begin{gathered}
+			(\alpha \gamma + \alpha - 2) \delta ≤ 2 (\gamma + 2) (\alpha + 1)\\
+			(\alpha \gamma + \alpha - 2) \delta' ≤ 2 (\gamma + 2) (\alpha + 1)
+		\end{gathered}\right.
+		⇒ E ≥ E'.
 	\end{equation}
-	which we can rewrite as:
+	Note that when $\alpha = \gamma = 1$, the condition is satisfied whatever $\delta, \delta'$.
+
+	I am interested in analyzing the case $\delta = \delta'$, for simplicity. Define $E$ corresponding to the lowest possible value for any $\ppref$ satisfying the conditions, and $E'$ for the highest one.
+	
+	The quantity $E - E'$ is weakly decreasing when $\delta$ increases. Thus, suffices to find $\delta$ such that $E - E' = 0$. 
+	
+	We have:
+	\begin{multline}
+		E - E' = \frac{(\gamma + 2) (\delta + \gamma + 1) - \delta}{(\gamma + \alpha + \delta + 2) (\gamma + 2)} \alpha 
+		+ \frac{\delta + (\gamma + 2) (\alpha + 1)}{(\gamma + \alpha + \delta + 2) (\gamma + 2)} \gamma \\
+		- \frac{\delta + (\alpha' + 2) (\gamma' + 1)}{(\alpha' + \gamma' + \delta + 2) (\alpha' + 2)} \alpha' 
+		- \frac{(\alpha' + 2) (\alpha' + \delta + 1) - \delta}{(\alpha' + \gamma' + \delta + 2) (\alpha' + 2)} \gamma'.
+	\end{multline}
+	The worst case, intuitively, should happen when the sums $s = \alpha + \gamma$ and $s' = \alpha' + \gamma'$ in the potentials are equal and the differences $\gamma - \alpha$ and $\gamma' - \alpha'$ are close.
+	Assume $s = \alpha + \gamma = s' = \alpha' + \gamma'$.
+	Multiplying the RHS by $(\gamma + \alpha + \delta + 2) (\gamma + 2) (\alpha' + 2)$, we obtain
 	\begin{align}
-		& (s' + 1) (s - d) (s + d + 1) ≥ (s + 1) (s' + d') (s' - d' + 1)\\
-		& ⇔ (s' + 1) s (s + d + 1) ≥ d (s' + 1) (s + d + 1) + (s + 1) s' (s' + 1) + (s + 1) d' - d' (s + 1) d'\\
-		& ⇔ (s' + 1) s (s + 1) + (s + 1) d' (d' - 1) ≥ (s' + 1) d (d + 1) + (s + 1) s' (s' + 1)\\
-		& ⇔ (s' + 1) (s + 1) (s - s') + (s + 1) d' (d' - 1) ≥ (s' + 1) (d + 1) d.
+		& \begin{split}
+			(\alpha' + 2) [\alpha (\gamma + 2) (\delta + \gamma + 1) - \alpha \delta + \gamma \delta + \gamma (\gamma + 2) (\alpha + 1)]\\
+			- (\gamma + 2) [\alpha' \delta + \alpha' (\alpha' + 2) (\gamma' + 1) + \gamma' (\alpha' + 2) (\alpha' + \delta + 1) - \gamma' \delta]
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) [(\gamma + 2) (\alpha (\delta + \gamma + 1) + \gamma (\alpha + 1)) + \delta (\gamma - \alpha)]\\
+			- (\gamma + 2) [(\alpha' + 2) (\alpha' (\gamma' + 1) + \gamma' (\alpha' + \delta + 1)) + \delta (\alpha' - \gamma')]
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) [(\gamma + 2) (\alpha (\gamma + 1) + \delta \alpha + \gamma (\alpha + 1))] + \delta (\alpha' + 2) (\gamma - \alpha)\\
+			- (\gamma + 2) [(\alpha' + 2) (\alpha' (\gamma' + 1) + \gamma' (\alpha' + 1) + \delta \gamma')] - \delta (\gamma + 2) (\alpha' - \gamma')
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) (\gamma + 2) [\alpha (\gamma + 1) + \delta \alpha + \gamma (\alpha + 1) - \alpha' (\gamma' + 1) - \gamma' (\alpha' + 1) - \delta \gamma']\\
+			+ \delta (\alpha' + 2) (\gamma - \alpha) - \delta (\gamma + 2) (\alpha' - \gamma')
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) (\gamma + 2) [\alpha (\gamma + 1) + \gamma (\alpha + 1) - \alpha' (\gamma' + 1) - \gamma' (\alpha' + 1)]\\
+			+ \delta [(\alpha' + 2) (\gamma + 2) (\alpha - \gamma') + (\alpha' + 2) (\gamma - \alpha) - (\gamma + 2) (\alpha' - \gamma')]
+		\end{split}\\
+		= {} & \begin{split}
+			(\alpha' + 2) (\gamma + 2) [2 \alpha \gamma + \alpha + \gamma - 2 \alpha' \gamma' - \alpha' - \gamma']\\
+			+ \delta [(\alpha' + 2) (\gamma + 2) (\alpha - \gamma') + (\alpha' + 2) (\gamma - \alpha) - (\gamma + 2) (\alpha' - \gamma')]
+		\end{split}.
 	\end{align}
-	When $d' > d$, we have $d' ≥ d + 1$ and $d' - 1 ≥ d ≥ 0$, thus the inequality holds.
-	When $s > s'$, we have $s ≥ s' + 1$ and $d' ≥ d$, thus the LHS can be bounded as follows:
+	Dividing by $(\alpha' + 2) (\gamma + 2)$, we obtain:
 	\begin{align}
-		(s' + 1) (s + 1) (s - s') + (s + 1) d' (d' - 1)
-		& ≥ (s' + 1) (s' + 2) + (s' + 2) d (d - 1)\\
-		& = (s' + 2) (s' + 1 + d^2 - d),
+		& 2 \alpha \gamma + \alpha + \gamma - 2 \alpha' \gamma' - \alpha' - \gamma'
+			+ \delta [(\alpha - \gamma') + \frac{\gamma - \alpha}{\gamma + 2} + \frac{\gamma' - \alpha'}{\alpha' + 2}].
 	\end{align}
-	and the claim becomes:
+%	Distributing instead, we obtain:
+%	\begin{align}
+%		& \begin{split}
+%			(\alpha' + 2) (\gamma + 2) [2 \alpha \gamma + \alpha + \gamma - 2 \alpha' \gamma' - \alpha' - \gamma']\\
+%			+ \delta [(\alpha' + 2) (\alpha - \gamma') \gamma + (\alpha' + 2) (\alpha - \gamma') 2 - \alpha' \alpha + 2 (\gamma - \alpha) + \gamma \gamma' + 2 (\gamma' - \alpha')]
+%		\end{split}.
+%	\end{align}
+%	It follows from $\alpha + \gamma = \alpha' + \gamma'$ that $\gamma' = \alpha + \gamma - \alpha'$. Replacing:
+%	\begin{align}
+%		& \begin{split}
+%			(\alpha' + 2) (\gamma + 2) [2 \alpha \gamma + \alpha + \gamma - 2 \alpha' \alpha - 2 \alpha' \gamma + 2 \alpha^{\prime 2} - \alpha - \gamma]\\
+%			+ \delta [(\alpha' + 2) (\alpha' - \gamma) \gamma + (\alpha' + 2) (\alpha' - \gamma) 2 - \alpha' \alpha + 2 (\gamma - \alpha) + \gamma \alpha + \gamma^2 - \gamma \alpha' + 2 (\alpha + \gamma - 2 \alpha')]
+%		\end{split}\\
+%		& \begin{split}
+%			(\alpha' + 2) (\gamma + 2) [2 \alpha \gamma - 2 \alpha' \alpha - 2 \alpha' \gamma + 2 \alpha^{\prime 2}]\\
+%			+ \delta [(\alpha' + 2) (\alpha' - \gamma) \gamma + (\alpha' + 2) (\alpha' - \gamma) 2 - \alpha' \alpha + 2 (\gamma - \alpha) + \gamma \alpha + \gamma^2 - \gamma \alpha' + 2 (\alpha + \gamma - 2 \alpha')]
+%		\end{split}.
+%	\end{align}
+	It follows from $\alpha + \gamma = \alpha' + \gamma'$ that $\gamma' = \alpha + \gamma - \alpha'$. Replacing:
 	\begin{align}
-		& (s' + 2) (s' + 1 + d^2 - d) ≥ (s' + 1) (d + 1) d\\
-		⇔ & (s' + 2) (s' - d + 1) + d^2 (s' + 2) - d (s' + 1) (d + 1) ≥ 0\\
-		⇔ & (s' + 2) (s' - d + 1) - d [(s' + 1) (d + 1) - d (s' + 2)] ≥ 0\\
-		⇔ & (s' + 2) (s' - d + 1) - d (s' - d + 1) ≥ 0\\
-		⇔ & (s' - d + 1) (s' - d + 2) ≥ 0,
+		& 2 \alpha \gamma + \alpha + \gamma - 2 \alpha \alpha' - 2 \alpha' \gamma + 2 \alpha^{\prime 2} - \alpha - \gamma
+			+ \delta [(\alpha' - \gamma) + \frac{\gamma - \alpha}{\gamma + 2} + \frac{\alpha + \gamma - 2 \alpha'}{\alpha' + 2}]\\
+		& 2 \alpha \gamma - 2 \alpha \alpha' - 2 \alpha' \gamma + 2 \alpha^{\prime 2}
+			+ \delta [(\alpha' - \gamma) + \frac{\gamma - \alpha}{\gamma + 2} + \frac{\alpha + \gamma - 2 \alpha'}{\alpha' + 2}]. % confirmed using Maxima
 	\end{align}
-	which follows from $s' ≥ d$.
+	
+	Consider furthermore that $\alpha = \alpha' + 1$, or equivalently, just consider that $\alpha = \alpha' + 1$ and $\gamma = \gamma' - 1$. 
+	We have $E - E' = 0$ iff:
+	\begin{align}
+		& \begin{split}
+		2 \alpha \gamma - 2 \alpha (\alpha - 1) - 2 (\alpha - 1) \gamma + 2 (\alpha - 1)^2\\
+			+ \delta [(\alpha - 1 - \gamma) + \frac{\gamma - \alpha}{\gamma + 2} + \frac{\alpha + \gamma - 2 \alpha + 2}{\alpha + 1}]
+		\end{split} = 0\\
+		⇔ & \begin{split}
+		2 (\alpha - 1) \gamma + 2 \gamma - 2 \alpha (\alpha - 1) - 2 (\alpha - 1) \gamma + 2 (\alpha - 1)^2\\
+			+ \delta \frac{(\gamma + 2) (\alpha + 1) (\alpha - 1 - \gamma) + (\alpha + 1) (\gamma - \alpha) + (\gamma + 2) (\gamma - \alpha + 2)}{(\gamma + 2) (\alpha + 1)}
+		\end{split} = 0\\
+%		& ⇔ \begin{split}
+%		(\alpha - 1) (2 \gamma - 2 \alpha - 2 \gamma + 2 (\alpha - 1)) + 2 \gamma\\
+%			+ \delta \frac{- (\gamma + 2) (\alpha + 1) (\gamma - \alpha + 1) + (\alpha + 1) (\gamma - \alpha + 1) - (\alpha + 1) + (\gamma + 2) (\gamma - \alpha + 1) + (\gamma + 2)}{(\gamma + 2) (\alpha + 1)}
+%		\end{split} = 0\\
+		⇔ & \begin{split}
+		(\alpha - 1) (- 2) + 2 \gamma\\
+			+ \delta \frac{(\gamma - \alpha + 1) [- (\gamma + 2) (\alpha + 1) + (\alpha + 1) + (\gamma + 2)] - (\alpha + 1) + (\gamma + 2)}{(\gamma + 2) (\alpha + 1)}
+		\end{split} = 0\\
+		⇔ & \begin{split}
+		2 (\gamma - \alpha + 1)
+			+ \delta \frac{(\gamma - \alpha + 1) (- \alpha \gamma - \alpha + 1) - \alpha + \gamma + 1}{(\gamma + 2) (\alpha + 1)}
+		\end{split} = 0\\
+		⇔ & \begin{split}
+		2 (\gamma - \alpha + 1)
+			+ \delta \frac{(\gamma - \alpha + 1) (- \alpha \gamma - \alpha + 2)}{(\gamma + 2) (\alpha + 1)}
+		\end{split} = 0.
+	\end{align}
+	As $\gamma ≥ \alpha$, we can divide by $\gamma - \alpha + 1$, and obtain $E - E' = 0$ iff:
+	\begin{equation}
+		\delta (\alpha \gamma + \alpha - 2) = 2 (\gamma + 2) (\alpha + 1),
+	\end{equation}
+	that is, when $\alpha' = 0 ≤ \alpha = \gamma = 1 ≤ \gamma' = 2$, never; and otherwise, when $\delta = 2 \frac{(\gamma + 2) (\alpha + 1)}{\alpha \gamma + \alpha - 2}$.
 \end{proof}
 
-We denote the preorders with potential at least $(s, -d)$ as $\zeta^{-1}({\uparrow}(s, -d)) = \set{{\ppref} \in \POs \suchthat \max_{a \in \allalts} \zeta({\ppref}, a) ≥ (s, -d)}$.
+A preorder ${\ppref}$ is said to dominate the levels of potential $\zeta^\mathit{dom}({\ppref}) = {>}\left(\cup_{a \in X} \zeta^\mathit{max}({\ppref}, a)\right) = \set{(s, -d, \delta) \in \R^3 \suchthat \exists a \in X \suchthat \zeta^\mathit{max}({\ppref}, a) > (s, -d, \delta)}$.
+
+A preorder ${\ppref}$ is said to reach the levels of potential $\zeta({\ppref}) = {≥}\left(\cup_{a \in X} \zeta({\ppref}, a)\right) = \set{(s, -d, \delta) \in \R^3 \suchthat \exists a \in X \suchthat \zeta({\ppref}, a) ≥ (s, -d, \delta)}$.
+
+Given $s, d, \delta \in \R$, we denote the preorders that dominate the potential $(s, -d, \delta)$ as $(\zeta^\mathit{dom})^{-1}(s, -d, \delta) = \set{{\ppref} \in \POs \suchthat (s, -d, \delta) \in \zeta^\mathit{dom}({\ppref})}$.
+
+Given $s, d, \delta \in \R$, we denote the preorders that reach the potential $(s, -d, \delta)$ as $\zeta^{-1}(s, -d, \delta) = \set{{\ppref} \in \POs \suchthat (s, -d, \delta) \in \zeta({\ppref})}$.
 
 Given two probability distributions $R$ and $S$ over $\POs$, say that $R$ dominates $S$ iff $\forall s, d \in \N$: 
 \begin{equation}
-	R(\zeta^{-1}({\uparrow}(s, -d))) ≥ S(\zeta^{-1}({\uparrow}(s, -d))).
+	R((\zeta^\mathit{dom})^{-1}(s, -d, \delta)) ≥ S(\zeta^{-1}(s, -d, \delta)).
 \end{equation}
 
 Note that comparing $q$ to $q'$ is similar to comparing distributions over $\POs$, more precisely, comparing the probabilistic state resulting from our current knowledge plus $q$, ${\ppref} + q$, to the one resulting from ${\ppref} + q'$.
@@ -813,29 +957,41 @@ Note that comparing $q$ to $q'$ is similar to comparing distributions over $\POs
 Towards showing a sufficient condition for $q_{bz}$ to be an (non-myopically) optimal question, we now want to show that whenever ${\ppref} + q$ dominates ${\ppref} + q'$ for any other $q'$, asking $q$ is optimal.
 This should be the situation we face when ${\ppref} = abc$, and, hopefully, other similar situations.
 
-We currently consider only questions involving one unknown element $z$.
+We now mainly want to prove two things.
+First, if $R$ dominates $S$, it yields a higher immediate gain.
+Second, the dominance persists to the next question: if $R$ dominates $S$, then for any question $q$ (involving at least one new object), there exists $q'$ such that $R + q'$ still dominates $S + q$.
+From these two points should follow that asking $q$ may not yield a lower total gain (over all questions) than any strategy starting with another $q'$.
+
+We currently consider only questions involving one isolated element $z$.
+
+Note that $g$, understood as in \cref{sec:optDef} as $g({\ppref}) = \max_q E[g^{q, {\ppref}} \knowing {\ppref}]$, is a random variable wrt a probability distribution over the partial orders $\POs$.
+
+\begin{conjecture}
+	If $R$ dominates $S$, it yields a higher gain, that is, $E_R[g] ≥ E_S[g]$.
+\end{conjecture}
+\begin{proof}
+	\Cref{th:boundDelta} indicates that a preorder ${\ppref}$ with potential $\zeta^\mathit{max}({\ppref}) = (s, -d, \delta^\mathit{max})$ has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d', \delta') < (s, -d, \delta^\mathit{max})$.
+	
+	It should somehow follow that if $R$ dominates $S$, $E_R[g] ≥ E_S[g]$.
+\end{proof}
+
+Given a distribution $R$, define $R + q$ as the expected distribution resulting from adding the answer to $q$ (given by the distribution $P$), computed before knowing the answer. $(R + q)({\ppref'}) = \sum_{{\ppref}, {\pref} \suchthat {\ppref'} = T({\ppref} \cup (q \cap {\pref}))} R({\ppref}) P({\pref})$.
+
+\begin{conjecture}
+	The dominance persists to the next question: 
+	if $R$ dominates $S$, then $\forall q, \exists q' \suchthat R + q' \text{ dominates } S + q$.
+\end{conjecture}
+\begin{proof}
+	I believe this is true because if some $q$ permits to increase the probability of the potential $(s, -d)$ from $S$, then it has taken those having lower potential $p'$ with prob $S(p')$ and added edges to it; but the prob $R(p')$ was higher and the possible gains are higher as well.
+	$(S + q)(\zeta^{-1}(m', M')) = \sum_{M < M'} S(\zeta^{-1}(m', M)) × (\text{Prob. best gained at least } M' - M) + …$
+\end{proof}
 
 \begin{conjecture}
 	Whenever ${\ppref} + q$ dominates ${\ppref} + q'$ for any other $q'$, asking $q$ is optimal.
 \end{conjecture}
 \begin{proof}
-	We mainly want to prove two things.
-	First, if $R$ dominates $S$, it yields a higher immediate gain.
-	Second, the dominance persists to the next question: if $R$ dominates $S$, then for any question $q$ (involving at least one new object), there exists $q'$ such that $R + q'$ still dominates $S + q$.
-	From these two points should follow that asking $q$ may not yield a lower total gain (over all questions) than any strategy starting with another $q'$.
 	
-	Note that $g$, understood as in \cref{sec:optDef} as $g({\ppref}) = \max_q E[g^{q, {\ppref}} \knowing {\ppref}]$, is a random variable wrt a probability distribution over the partial orders $\POs$.
-	
-	\Cref{th:potentialRulez} indicates that a preorder ${\ppref}$ with potential $\zeta({\ppref}) = (s, -d)$ has a not lower gain $g({\ppref})$ than another preorder ${\ppref'}$ with lower potential $\zeta({\ppref'}) = (s', d') < (s, -d)$.
-	
-	It should somehow follow that if $R$ dominates $S$, $E_R[g] ≥ E_S[g]$.
-	
-	Given a distribution $R$, define $R + q$ as the expected distribution resulting from adding the answer to $q$ (given by the distribution $P$), computed before knowing the answer. $(R + q)({\ppref'}) = \sum_{{\ppref}, {\pref} \suchthat {\ppref'} = T({\ppref} \cup (q \cap {\pref}))} R({\ppref}) P({\pref})$.
-	
-	Our second claim is that if $R$ dominates $S$, then $\forall q \in Q, \exists q' \in Q \suchthat R + q' \text{ dominates } S + q$.
-	
-	I believe this is true because if some $q$ permits to increase the probability of the potential $(s, -d)$ from $S$, then it has taken those having lower potential $p'$ with prob $S(p')$ and added edges to it; but the prob $R(p')$ was higher and the possible gains are higher as well.
-	$(S + q)(\zeta^{-1}(m', M')) = \sum_{M < M'} S(\zeta^{-1}(m', M)) × (\text{Prob. best gained at least } M' - M) + …$
+	…
 \end{proof}
 
 \begin{table}
@@ -1422,6 +1578,29 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 %\bibliography{bibl}
 
 \appendix
+\section{Numerical examples for bound on delta}
+(About \cref{th:boundDelta}.)
+
+Consider $\alpha = 1$, $\gamma = 3$, 
+thus, $P[z < b \knowing {\pprefinv}] = \frac{\delta + 10}{5 (\delta + 6)}$ and $E = \frac{4 \delta + 20}{5 (\delta + 6)} 1 + \frac{\delta + 10}{5 (\delta + 6)} 3 = \frac{7 \delta + 50}{5 \delta + 30}$; compared to $\alpha' = 0$, $\gamma' = 4$,
+thus, $P[z < b \knowing {\ppref'}] = \frac{\delta + 10}{2 (\delta + 6)}$ and $E' = \frac{\delta + 10}{2 (\delta + 6)} 0 + \frac{\delta + 2}{2 (\delta + 6)} 4 = \frac{2 \delta + 4}{\delta + 6}$.
+\begin{itemize}
+	\item $\delta = 0$: $E - E' = \frac{5 - 2}{3} = 1$.
+	\item $\delta = 1$: $E - E' = \frac{57 - 30}{35} = \frac{27}{35}$.
+	\item $\delta = 2$: $E - E' = \frac{64 - 40}{40} = \frac{3}{5}$.
+	\item $\delta = 10$: $E - E' = \frac{3 - 3}{2} = 0$.
+\end{itemize}
+
+Consider $\alpha = 3, \gamma = 5$ and $\alpha' = 2, \gamma' = 6$. Thus $E = \frac{6 \delta + 42}{7 \delta + 70} 3 + \frac{\delta + 28}{7 \delta + 70} 5 = \frac{23 \delta + 266}{7 \delta + 70}$ and $E' = \frac{\delta + 28}{4 \delta + 40} 2 + \frac{3 \delta + 12}{4 \delta + 40} 6 = \frac{20 \delta + 128}{4 \delta + 40} = \frac{5 \delta + 32}{\delta + 10} = \frac{35 \delta + 224}{7 \delta + 70}$.
+
+\begin{itemize}
+	\item $\delta = 0$: $E - E' = \frac{266 - 224}{70} = \frac{42}{70} = \frac{3}{5}$.
+	\item $\delta = 1$: $E - E' = \frac{289 - 259}{77} = \frac{30}{77}$.
+	\item $\delta = 3$: $E - E' = \frac{335 - 329}{98} = \frac{6}{98} = \frac{3}{49}$.
+	\item $\delta = 4$: $E - E' = \frac{358 - 364}{98} = \frac{-6}{98} = \frac{-3}{49}$.
+	\item $\delta = 5$: $E - E' = \frac{381 - 399}{105} = \frac{-18}{105} = \frac{-6}{35}$.
+\end{itemize}
+
 \section{Best possible number of edges}
 Assume we are the luckiest possible: we can choose the orientation of edges (the answers to questions) so as to maximise the number of resulting edges.
 
