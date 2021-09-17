@@ -41,6 +41,7 @@ class Elic_node:
       self._child_indices=[]
       self._index=0
       self._long_description=''
+      self._median_node=None
     elif f_node._isquestion == True: #answer node
       self._isquestion=False
       x1=question[0]
@@ -64,6 +65,7 @@ class Elic_node:
       self._child_indices=[]
       self._index=index
       self._f_node._child_indices.append(index)
+      self._median_node=self._f_node._f_node._median_node
     else: #question node
       x1=question[0]
       x2=question[1]
@@ -95,6 +97,16 @@ class Elic_node:
           self.add_known_answer(x1,answer[1])
         if answer[1]==x1 and ((answer[0],x2)) not in self._known_answers:
           self.add_known_answer(answer[0],x2)
+          
+  def num_higher_nodes(self,x1):
+      # return number of of nodes ranked higher than x1 in current node
+      return sum(answer[1]==x1 for answer in self._known_answers)
+    
+  def num_lower_nodes(self,x1):
+      # return number of of nodes ranked lower than x1 in current node
+      return sum(answer[0]==x1 for answer in self._known_answers)
+
+  
       
 
 class Elic_Tree:
@@ -133,10 +145,44 @@ class Elic_Tree:
       questions.add((max_item+1))
     return questions
 
-  def open_first_node(self):
+  def next_question(self,node_index,strategy):
+    #strategy 'NAIVE' or 'ADVANCED'
+    node= self._nodes[node_index]
+    #items=node._items.copy()
+    if node._depth==0:
+        return [(0)]#symmetrical question (0,1)
+    if node._depth==1:
+        return [(1,2)]
+    if node._depth==2:
+        if len(node._known_answers)==3:#1 is median
+            node._median_node=1
+            return [(1,3)]
+        else:
+            return[(0,2)]
+    if node._depth==3:
+        if node._median_node==1:
+            return [(1,4)]
+        else:#median is either 0 or 2
+            if node.num_higher_nodes(0)==node.num_lower_nodes(0):
+                node._median_node=0
+            else:
+                node._median_node=2
+            return [(node._median_node,3)]
+    else:
+        if strategy=='NAIVE':
+            return [(node._median_node,len(node._items))]
+        else:
+            return [(node._median_node,len(node._items))]
+              
+
+
+  def open_first_node(self,strategy=None):
     node_index=self._open_nodes.pop(0)
     if self._nodes[node_index]._isquestion==False:
-      questions=self.next_questions(node_index)
+      if strategy is None:
+          questions=self.next_questions(node_index)
+      else:
+          questions=self.next_question(node_index,strategy)
       for i,question in enumerate(questions):
         new_node_index=len(self._nodes)
         if type(question)==tuple:
@@ -281,16 +327,20 @@ class Elic_Tree:
           print('\r opening ',current_state, ' ... ' , in_step_number , '/', next_level_len, end='' )
       self.open_first_node()
       in_step_number+=1
+      
+  def build_partial_tree(self,strategy):
+      while len(self._open_nodes)>0:
+        self.open_first_node(strategy)
 
     
 tic=time.time()
-k=6
+k=9
 tree=Elic_Tree(k+1,k)
-tree.build_whole_tree()
+tree.build_partial_tree('NAIVE')
 #tree.render()
 tree.compute_expected_values()
 tree.compute_best_lists()
-#tree.render_best()
+tree.render_best()
 
-print('new algo with ',k, 'questions took',time.time()-tic)
+print('new algo optimized with ',k, 'questions took',time.time()-tic)
 

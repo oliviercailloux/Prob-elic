@@ -21,13 +21,14 @@ import time
 
 n=6
 
-# At any level, any question that is not 'connected' to any other is symmetrical.
+# At any level, any question that has a single element
 # Hence we give only one in the decision tree.
 
 # A node is an answer to a question
 
 class Elic_node:
   def __init__(self,n,r_node=None,question=None,f_node=None,sym_question=False,index=None):
+    #r_node = root node
     #f_node = father node
     #sym_question = True if question has symmetrical answers, else False
     if r_node is None:
@@ -155,7 +156,7 @@ class Elic_Tree:
   def next_question(self,node_index,strategy):
       #strategy 'NAIVE' or 'ADVANCED'
       node= self._nodes[node_index]
-      items=node._items.copy()
+      #items=node._items.copy()
       if node._depth==0:
           return [(0)]#symmetrical question (0,1)
       if node._depth==1:
@@ -181,10 +182,6 @@ class Elic_Tree:
           else:
               return [(node._median_node,len(node._items))]
               
-              
-              
-      
-      
 
   def open_first_node(self,strategy=None):
     node_index=self._open_nodes.pop(0)
@@ -326,7 +323,7 @@ class Elic_Tree:
 
     
 tic=time.time()
-k=10
+k=9
 tree=Elic_Tree(k+1,k)
 partial=True
 if not partial:
@@ -342,3 +339,4 @@ else:
     tree.compute_expected_values()
     tree.compute_best_lists()
     tree.render_best()
+    print('naive algo with ',k, 'questions took',time.time()-tic)
