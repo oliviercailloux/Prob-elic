@@ -453,9 +453,158 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 	\footnote{More intuitively: $P(z \ppref a) = P(a \ppref z \ppref b)$, by symmetry.}
 \end{proof}
 
-\begin{conjecture}[$q_{bz}$ not necessarily $k$-optimal]
-	Asking $q_{bz}$ is not always an optimal $k$-strategy (using the terminology of \cref{sec:optDef}) when $b$ is a “median” element: in the situation described in \cref{th:myopicMedian}, consider $\alpha$ big and $\gamma = 1$, with big $k$ and big $n$. Better then try to build a new structure, more balanced, than exploit $b$ which will very likely only yield gains of $1$.
-\end{conjecture}
+\begin{theorem}[Computing “hourglass” probabilities]
+	\label{th:probhour}
+	Consider a partial order $\ppref$ defined as follows: $A \ppref b \ppref C$, with disjoint sets $A$, $B = \set{b}$, $C$ and with $\alpha = \card{A}$ and $\gamma = \card{C}$.
+	Define $s$ as the strategy that asks $q_{b, z_i}$ at step $i$, for $1 ≤ i ≤ k$, with each $z_i$ being isolated in ${\ppref}$.
+	The expected total gain is:
+	\begin{multline}
+		E^s[\card{{\ppref}_k} - \card{{\ppref}} - k]\\
+		= \sum_{0 ≤ k' ≤ k - 1} \left[\begin{multlined}\frac{\alpha + \gamma + k' + 2 \alpha \gamma + 2 \alpha k'}{\alpha + \gamma + k' + 2} \\
+		+ \frac{2 (\alpha + 1) k' (- \alpha^2 + \gamma^2 + 2 \gamma - 3 \alpha + \gamma k' + k' - 1)}{(\alpha + \gamma + k' + 2) (\alpha + \gamma + 3) (\alpha + \gamma + 2)}\end{multlined}\right].
+	\end{multline}
+\end{theorem}
+\begin{proof}
+	Given $0 ≤ u ≤ k' ≤ k$, the probability of having $u = k_1$ “ups” (hence, $k' - u = k_2$ “downs”) among the $k' = k_1 + k_2$ questions $\set{q_{b, z_i}, 1 ≤ i ≤ k'}$ is denoted by $P(\card{{\pprefinv}_{k'}(b)} = \alpha + u \knowing {\ppref})$. When also fixing the order of the ups and downs, it equals $\frac{(\alpha + u)!}{\alpha!} \frac{(\gamma + (k' - u))!}{\gamma!} \frac{(\alpha + \gamma + 1)!}{(\alpha + \gamma + 1 + k') !} = \frac{[(\alpha + u) P u] [(\gamma + (k' - u)) P (k' - u)]}{(\alpha + \gamma + 1 + k')Pk'} = \frac{1}{(\alpha + \gamma + 1 + k')Pk'} \binom{\alpha + k_1}{k_1} k_1 ! \binom{\gamma + k_2}{k_2} k_2 !$.
+	\footnote{Therefore, $P(\card{{\pprefinv}_{k'}(b)} = \alpha + u \knowing {\ppref}) = \binom{k'}{u}\frac{(\alpha + u)!}{\alpha!} \frac{(\gamma + (k' - u))!}{\gamma!} \frac{(\alpha + \gamma + 1)!}{(\alpha + \gamma + 1 + k') !}$, and the corresponding sure event (summing over all possible decomposition of $k'$) is
+	$\frac{1}{(\alpha + \gamma + 1 + k')Pk'} \sum_{k_1 + k_2 = k'} \binom{k'}{k_1} \binom{\alpha + k_1}{k_1} k_1 ! \binom{\gamma + k_2}{k_2} k_2 !$. 
+	To ensure that this quantity equals one, omitting the fraction for now, and using Vandermonde’s identity, we obtain $k' ! \sum_{k_1 + k_2 = k'} \binom{\alpha + k_1}{k_1} \binom{\gamma + k_2}{k_2} = k' ! \sum_{k_1 + k_2 = k'} (-1)^{k_1 + k_2} \binom{- \alpha - 1}{k_1} \binom{- \gamma - 1}{k_2} = k' ! (-1)^{k'} \binom{- \alpha - \gamma - 2}{k'} = k' ! (-1)^{2k'} \binom{k' + \alpha + \gamma + 1}{k'} = \frac{(k' + \alpha + \gamma + 1)!}{(\alpha + \gamma + 1)!} = (k' + \alpha + \gamma + 1) P (k')$.}
+	\footnote{
+	For example, for $\alpha = 1000, \gamma = 1$: 
+	\begin{align}
+		& E^s[\card{{\ppref}_2} - \card{{\ppref}} - 2] \\
+		& = \begin{multlined}
+			P(z_1 \pref b \knowing {\ppref}) [1 + (P(z_2 \pref b \knowing {\ppref} \cup (z_1, b)) 1 + P(b \pref z_2 \knowing {\ppref} \cup (z_1, b)) 1001)] \\
+			+ P(b \pref z_1 \knowing {\ppref}) [1000 + (P(z_2 \pref b \knowing {\ppref} \cup (b, z_1)) 2 + P(b \pref z_2 \knowing {\ppref} \cup (b, z_1)) 1000)] 
+		\end{multlined} \\
+		& = \begin{multlined}
+			P(z_1 \pref b \knowing {\ppref}) 1 + P(b \pref z_1 \knowing {\ppref}) 1000 \\
+			+ P(z_1 \pref b \knowing {\ppref}) (P(z_2 \pref b \knowing {\ppref} \cup (z_1, b)) 1 + P(b \pref z_2 \knowing {\ppref} \cup (z_1, b)) 1001) \\
+			+ P(b \pref z_1 \knowing {\ppref}) (P(z_2 \pref b \knowing {\ppref} \cup (b, z_1)) 2 + P(b \pref z_2 \knowing {\ppref} \cup (b, z_1)) 1000) 
+		\end{multlined}\\
+		& = \begin{multlined}
+			\frac{1001}{1003} \left[1 + \left(\frac{1002}{1004} 1 + \frac{2}{1004} 1001\right)\right] \\
+			+ \frac{2}{1003} \left[1000 + \left(\frac{1001}{1004} 2 + \frac{3}{1004} 1000\right)\right]\\ 
+		\end{multlined}\\
+		& = [\frac{1001}{1003} 1 + \frac{2}{1003} 1000] + [\frac{1001}{1003} (\frac{1002}{1004} 1 + \frac{2}{1004} 1001) + \frac{2}{1003} (\frac{1001}{1004} 2 + \frac{3}{1004} 1000)] \\
+		& = \frac{3001}{1003} + \frac{1001 × 1502 + 5002}{1003 × 502} = \frac{3001}{1003} + \frac{751000 + 751 + 2501}{251000 + 753} = \frac{3001}{1003} + \frac{754252}{251753}\\
+		& = \frac{3001 × 251 + 754252}{251753} = \frac{753000 + 251 + 754252}{251753} = \frac{1507503}{251753} \sim 3 + 3. 
+	\end{align}
+	More generally, for small $k$, $E^s[\card{{\ppref}_k} - \card{{\ppref}} - k] \sim 3k$.
+	}
+	
+	We obtain:
+	\begin{align}
+		& E^s[\card{{\ppref}_{k' + 1}} - \card{{\ppref}_{k'}} - 1] \\
+		& = \sum_{0 ≤ u ≤ k'} P(\card{{\pprefinv}_{k'}(b)} = \alpha + u \knowing {\ppref}) \left[\begin{multlined}
+			P(\text{up} \knowing {\ppref}, \card{{\pprefinv}_{k'}(b)} = \alpha + u) (\gamma + (k' - u)) \\
+			+ P(\text{down} \knowing {\ppref}, \card{{\pprefinv}_{k'}(b)} = \alpha + u) (\alpha + u)
+		\end{multlined}\right]\\
+		& = \sum_{0 ≤ u ≤ k'} \binom{k'}{u} \frac{[(\alpha + u) P u] [(\gamma + (k' - u)) P (k' - u)]}{(\alpha + \gamma + 1 + k')Pk'} \left[\begin{multlined}
+			\frac{\alpha + u + 1}{\alpha + \gamma + k' + 2} (\gamma + (k' - u)) \\
+			+ \frac{\gamma + k' - u + 1}{\alpha + \gamma + k' + 2} (\alpha + u)
+		\end{multlined}\right]\\
+		& = \sum_{0 ≤ u ≤ k'} \binom{k'}{u} \frac{[(\alpha + u) P u] [(\gamma + (k' - u)) P (k' - u)]}{(\alpha + \gamma + k' + 2)P(k' + 1)} \left[\begin{multlined}
+			(\alpha + u + 1) (\gamma + (k' - u)) \\
+			+ (\gamma + k' - u + 1) (\alpha + u)
+		\end{multlined}\right]\\
+		& = \frac{k'!}{(\alpha + \gamma + k' + 2)P(k' + 1)} \sum_{k_1 + k_2 = k'} \binom{\alpha + k_1}{k_1} \binom{\gamma + k_2}{k_2} \left[\begin{multlined}
+			(\alpha + k_1 + 1) (\gamma + k_2) \\
+			+ (\gamma + k_2 + 1) (\alpha + k_1)
+		\end{multlined}\right]\\
+		& = \frac{k'!}{(\alpha + \gamma + k' + 2)P(k' + 1)} \sum_{k_1 + k_2 = k'} \binom{\alpha + k_1}{k_1} \binom{\gamma + k_2}{k_2} \left[\begin{multlined}
+			2 \alpha \gamma + \alpha + \gamma + 2 \alpha k' + k'\\
+			+ 2 u (\gamma - \alpha + k' - u)
+		\end{multlined}\right]\\
+		& = \begin{multlined}
+			\frac{\alpha + \gamma + k' + 2 \alpha \gamma + 2 \alpha k'}{\alpha + \gamma + k' + 2} \\
+			+ \frac{2 (k'!)}{(\alpha + \gamma + k' + 2)P(k' + 1)} \sum_{k_1 + k_2 = k'} k_1 \binom{\alpha + k_1}{k_1} \binom{\gamma + k_2}{k_2} (\gamma - \alpha + k_2)\end{multlined}\\
+		& = \begin{multlined}
+			\frac{\alpha + \gamma + k' + 2 \alpha \gamma + 2 \alpha k'}{\alpha + \gamma + k' + 2} \\
+			+ \frac{2 (k'!)}{(\alpha + \gamma + k' + 2)P(k' + 1)} \sum_{k_1 + k_2 = k'}^{k_1 ≠ 0} (\alpha + 1) \binom{\alpha + k_1}{k_1 - 1} \binom{\gamma + k_2}{k_2} (\gamma - \alpha + k_2)\end{multlined}\\
+		& = \begin{multlined}
+			\frac{\alpha + \gamma + k' + 2 \alpha \gamma + 2 \alpha k'}{\alpha + \gamma + k' + 2} \\
+			+ \frac{2 (k'!) (\alpha + 1)}{(\alpha + \gamma + k' + 2)P(k' + 1)} \left[\begin{aligned}
+				&(\gamma - \alpha) \sum_{k_1 + k_2 = k'}^{k_1 ≠ 0} \binom{\alpha + k_1}{k_1 - 1} \binom{\gamma + k_2}{k_2}\\
+				&+ (\gamma  + 1) \sum_{k_1 + k_2 = k'}^{k_1, k_2 ≠ 0} \binom{\alpha + k_1}{k_1 - 1} \binom{\gamma + k_2}{k_2 - 1}\end{aligned}\right]\end{multlined}.
+	\end{align}
+%e(a, g, k) := sum(t(a, g, u, k), u, 0, k);
+%t(a, g, u, k) := binomial(k, u) * frac(a, g, u, k) * br(a, g, u, k);
+%frac(a, g, u, k) := (Perms(a + u, u) * Perms(g + k - u, k - u)) / Perms(a + g + k + 1, k);
+%br(a, g, u, k) := (a + u + 1) / (a + g + k + 2) * (g + k - u) + (g + k - u + 1) / (a + g + k + 2) * (a + u);
+%Perms(n, r) := n! / (n - r)!;
+%e3(a, g, k) := k! / Perms(a + g + k + 2, k + 1) * sum(binomial(a + u, u) * binomial(g + k - u, k - u) * ((a + u + 1) * (g + k - u) + (g + k - u + 1) * (a + u)), u, 0, k);
+%e5(a, g, k) := k! / Perms(a + g + k + 2, k + 1) * sum(binomial(a + u, u) * binomial(g + k - u, k - u) * (2 * a * g + a + g + 2 * a * k + k + 2 * u * (g - a + k - u)), u, 0, k);
+%e6(a, g, k) := (a + g + k + 2 * a * g + 2 * a * k) / (a + g + k + 2) + 2 * k! / Perms(a + g + k + 2, k + 1) * sum(u * binomial(a + u, u) * binomial(g + k - u, k - u) * (g - a + k - u), u, 0, k);
+%e7(a, g, k) := (a + g + k + 2 * a * g + 2 * a * k) / (a + g + k + 2) + 2 * k! * (a + 1) / Perms(a + g + k + 2, k + 1) * br7(a, g, k);
+%br7(a, g, k) := (g - a) * sum(binomial(a + u, u - 1) * binomial(g + k - u, k - u), u, 1, k) + (g + 1) * sum(binomial(a + u, u - 1) * binomial(g + k - u, k - u - 1), u, 1, k - 1);
+	The content of the bracket can be written as follows.
+	\begin{align}
+		& \left[\begin{multlined}
+			(\gamma - \alpha) \sum_{1 ≤ u ≤ k'} \binom{\alpha + u - 1 + 1}{u - 1} \binom{\gamma + k' - u + 1 - 1}{k' - u + 1 - 1}\\
+			+ (\gamma  + 1) \sum_{1 ≤ u ≤ k' - 1} \binom{\alpha + u - 1 + 1}{u - 1} \binom{\gamma + k' - u + 1 - 1}{k' - u + 1 - 2}\end{multlined}\right]\\
+		& = \left[\begin{multlined}(\gamma - \alpha) \sum_{0 ≤ u' ≤ k' - 1} \binom{\alpha + u' + 1}{u'} \binom{\gamma + k' - u' - 1}{k' - u' - 1}\\
+			+ (\gamma  + 1) \sum_{0 ≤ u' ≤ k' - 2} \binom{\alpha + u' + 1}{u'} \binom{\gamma + k' - u' - 1}{k' - u' - 2}\end{multlined}\right]\\
+		& = \left[(\gamma - \alpha) \binom{\alpha + \gamma + k' + 1}{k' - 1} + (\gamma  + 1) \binom{\alpha + \gamma + k' + 1}{k' - 2}\right] \text{If $k' ≥ 2$}\\
+		& = \frac{k' (\alpha + \gamma + k' + 1)!}{k'! (\alpha + \gamma + 3)!} [(\gamma - \alpha) (\alpha + \gamma + 3) + (\gamma + 1) (k' - 1)]\\
+		& = \frac{k' (\alpha + \gamma + k' + 1) P (k' - 2)}{k'!} [(\gamma - \alpha) (\alpha + \gamma + 3) + (\gamma + 1) (k' - 1)].
+	\end{align}
+%brbis1(a, g, k) := (g - a) * sum(binomial(a + u - 1 + 1, u - 1) * binomial(g + k - u + 1 - 1, k - u + 1 - 1), u, 1, k) + (g + 1) * sum(binomial(a + u - 1 + 1, u - 1) * binomial(g + k - u + 1 - 1, k - u + 1 - 2), u, 1, k - 1);
+%brbis3(a, g, k) := (g - a) * binomial(a + g + k + 1, k - 1) + (g + 1) * binomial(a + g + k + 1, k - 2);
+%brbis5(a, g, k) := k * Perms(a + g + k + 1, k - 2) / k! * ((g - a) * (a + g + 3) + (g + 1) * (k - 1));
+	Uniting again, we obtain:
+	\begin{align}
+		& E^s[\card{{\ppref}_{k' + 1}} - \card{{\ppref}_{k'}} - 1] \\
+		& = \begin{multlined}
+			\frac{\alpha + \gamma + k' + 2 \alpha \gamma + 2 \alpha k'}{\alpha + \gamma + k' + 2} \\
+			+ \frac{2 (\alpha + 1) k' (\alpha + \gamma + k' + 1) P (k' - 2)}{(\alpha + \gamma + k' + 2)P(k' + 1)} [(\gamma - \alpha) (\alpha + \gamma + 3) + (\gamma + 1) (k' - 1)]\end{multlined}\\
+		& = \begin{multlined}
+			\frac{\alpha + \gamma + k' + 2 \alpha \gamma + 2 \alpha k'}{\alpha + \gamma + k' + 2} \\
+			+ \frac{2 (\alpha + 1) k'}{(\alpha + \gamma + k' + 2) (\alpha + \gamma + 3) (\alpha + \gamma + 2)} [(\gamma - \alpha) (\alpha + \gamma + 3) + (\gamma + 1) (k' - 1)]\end{multlined}\\
+		& = \begin{multlined}
+			\frac{\alpha + \gamma + k' + 2 \alpha \gamma + 2 \alpha k'}{\alpha + \gamma + k' + 2} \\
+			+ \frac{2 (\alpha + 1) k'}{(\alpha + \gamma + k' + 2) (\alpha + \gamma + 3) (\alpha + \gamma + 2)} (- \alpha^2 + \gamma^2 + 2 \gamma - 3 \alpha + \gamma k' + k' - 1)\end{multlined}.
+	\end{align}
+%ebis(a, g, k) := (a + g + k + 2 * a * g + 2 * a * k) / (a + g + k + 2) + 2 * (a + 1) * k / ((a + g + k + 2) * (a + g + 3) * (a + g + 2)) * ((g - a) * (a + g + 3) + (g + 1) * (k - 1));
+	Phew. \footnote{
+		According to Maxima, that’s: 
+		\begin{multline}
+			\frac{2 \alpha \gamma k^{\prime 2} + 2 \gamma k^{\prime 2} + 2 \alpha k^{\prime 2} + 2 k^{\prime 2}}{(\alpha + \gamma + k' + 2) (\alpha + \gamma + 3) (\alpha + \gamma + 2)} \\
+			+ \frac{4 \alpha \gamma^2 k' + 3 \gamma^2 k' + 4 \alpha^2 \gamma k' + 16 \alpha \gamma k' + 9 \gamma k' + 3 \alpha^2 k' + 9 \alpha k' + 4 k'}{(\alpha + \gamma + k' + 2) (\alpha + \gamma + 3) (\alpha + \gamma + 2)} \\
+			+ \frac{2 \alpha \gamma^3 + \gamma^3 + 4 \alpha^2 \gamma^2 + 13 \alpha \gamma^2 + 5 \gamma^2 + 2 \alpha^3 \gamma + 13 \alpha^2 \gamma + 22 \alpha \gamma + 6 \gamma + \alpha^3 + 5 \alpha^2 + 6 \alpha}{(\alpha + \gamma + k' + 2) (\alpha + \gamma + 3) (\alpha + \gamma + 2)}.
+		\end{multline}
+	}
+%xpanded(a, g, k) := expand((a + g + 3) * (a + g + 2) * (a + g + k + 2 * a * g + 2 * a * k) + 2 * (a + 1) * k * (g - a) * (a + g + 3) + 2 * (a + 1) * k * (g + 1) * (k - 1)) / ((a + g + k + 2) * (a + g + 3) * (a + g + 2));
+	
+	Finally, we can compute the expected total gain thanks to:
+	\begin{align}
+		& E^s[\card{{\ppref}_k} - \card{{\ppref}} - k]\\
+		& = \sum_{0 ≤ k' ≤ k - 1} E^s[\card{{\ppref}_{k' + 1}} - \card{{\ppref}_{k'}} - 1].
+	\end{align}
+%etot(a, g, k) := sum(ebis(a, g, kp), kp, 0, k - 1);
+\end{proof}
+
+\begin{theorem}[$q_{bz}$ not necessarily $k$-optimal]
+	Asking $q_{bz}$ is not always an optimal $k$-strategy (using the terminology of \cref{sec:optDef}) when $b$ is a “median” element: in the situation described in \cref{th:myopicMedian}, consider $\alpha$ big and $\gamma = 1$, with big $k$ and big $n$. Better then try to build a new structure, more balanced, than exploit $b$ which will very likely only yield low gains.
+	
+	More explicitly, consider $\ppref$ as described in \cref{th:myopicMedian} and such that $\alpha = 1000$. 
+	Define $s^\mathit{expl}$ as the strategy that asks $q_{b, z_i}$ at step $i$, for $1 ≤ i ≤ k$. 
+	Define $k$ objects $\set{w, x, y, z_1, …, z_{k - 3}}$ that are isolated in $\ppref$.
+	Define $s^\mathit{new}$ as the strategy that first builds a new chain, using $\set{w, x, y}$, so as to obtain (using two or three questions) a chain $w \ppref' x \ppref' y$ (renaming objects if necessary so that $x$ is the median one), then asks $q_{x, z_i}$ at steps $i + 2$ or $i + 3$, for $1 ≤ i ≤ k - 2$ or $1 ≤ i ≤ k - 3$.
+	Then $E^\mathit{new}[\card{{\ppref_k}} - \card{{\ppref}} - k] > E^\mathit{expl}[\card{{\ppref_k}} - \card{{\ppref}} - k]$.
+\end{theorem}
+\begin{proof}
+	Thanks to \cref{th:probhour}, we obtain (using a computer) $E^\mathit{expl}[\card{{\ppref}_{20}} - \card{{\ppref}} - 20] \sim 60$.
+	
+	Similarly, we obtain, assuming we need three questions with $s^\mathit{new}$ to obtain ${\ppref}_3 = wxy$, $E^\mathit{new}[\card{{\ppref}_{20}} - \card{{\ppref_3}} - 17] \sim 71$.
+%	Previous approach:
+%	¨Strategy $s'$, for $k$ questions, $k$ objects: $q_{y w_i}, 1 ≤ i ≤ k$.
+%	P[|better than y| ≥ 9 and |less good than y| ≤ 9] = \frac{k - 18}{k}
+%	Then ask $k'$ more questions, exploiting $y$.
+%	Total gain is at least 9k' \frac{k - 18}{k}$.
+%	
+%	For $k = 100$ and $k' = 40$, $s'$ has a higher gain than $3(k + k')$.
+\end{proof}
 
 \begin{conjecture}
 	\label{th:limDelta}
@@ -507,7 +656,6 @@ Here we study whether or when it is optimal (myopically or long term) to ask $q_
 		& = \frac{(\gamma - \gamma' + 1) (i + \gamma + 1)!}{(\gamma - \gamma' + 1) ! (i + \gamma')!}\\
 		& = (\gamma - \gamma' + 1) \binom{i + \gamma + 1}{\gamma - \gamma' + 1}.
 	\end{align}
-	(The derivation is not valid if $\gamma = \gamma'$ but the conclusion holds in that case as well.)
 	
 	Also, using Vandermonde’s identity (and thanks to \hrefblue{https://math.stackexchange.com/a/1868061}{StackExchange}), for any $x, y, z \in \N$:
 	\begin{align}
@@ -655,6 +803,19 @@ Given ${\ppref} \in \POs$ and $b \in X$, let ${\pprefeq^{±1}}[b]$ denote the ob
 Define $A = {\pprefinv}(b) = \upb$, $C = {\ppref}(b) = \downb$.
 Then,  ${\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] \setminus A \setminus \set{b} \setminus C$ denote the elements path-connected to $b$ but incomparable to $b$ in $\ppref$.
 
+\begin{conjecture}[Worst case is with $D$ above $C$]
+	Consider a preorder defined as $b \ppref \set{c_1, c_2} \ppref c_3$ and $d_2 \ppref d_1$. Consider ${\ppref}' = {\ppref} \cup (d_1, c_1)$. We have: $P[z < b \knowing {\ppref}'] < P[z < b \knowing {\ppref}]$.
+\end{conjecture}
+\begin{proof}
+	Consider the complete orderings of $b, d_1, d_2$ compatible with $\ppref$. Consider some ordering $o$ where $b$ has the first rank and some ordering $p$ where $b$ has the second rank. We claim that by switching to $\ppref'$, we remove more orderings that complete $o$ than those that complete $p$.
+	That is because the orderings that remain, in $\ppref$, are all those manners of dispatching $C$ (subject to constraints within $C$) in between the $D$ (subject to constraints within $D$); whereas in $\ppref'$, we remove those such that $c_1 \ppref d_1$. (I have a hard time reaching the desired conclusion here.)
+	
+	More generally, we remove more orderings where $b$ has rank $r$ than orderings where $b$ has (lower) rank $r + 1$.
+	
+	Observe that we can (perhaps) see the probability $P[z < b \knowing {\ppref}] = \sum_{1 ≤ r ≤ n} x_r (n - r + 1)$ as a weighted average, over the ranks $r$, the weight $x_r$ being the number of orderings that have $b$ at rank $r$ that complete ${\ppref}$, and $(n - r + 1)$ being the number of “intervals” below $b$, where $z$ can be put.
+	Therefore, if we remove more orderings where $b$ has a higher rank $r$, the probability decreases. (Or so goes the intuition.)
+\end{proof}
+	
 \begin{conjecture}
 	\label{th:lowerDelta}
 	Given $\alpha, \gamma, \delta \in \N$, given $b, z \in X$, given ${\ppref} \in \POs$ such that $\card{\upb} = \alpha$, $\card{\downb} = \gamma$, $\card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)\right)} = \delta$ and $z$ is isolated in ${\ppref}$:
@@ -680,6 +841,10 @@ Then,  ${\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] 
 		}{
 			\binom{\alpha + \gamma + \delta + 1}{\delta + 1} - \binom{\alpha + \delta + 1}{\delta + 1}
 		}.
+	\end{equation}
+	Furthermore, the sequence $p_\delta$ is monotonically decreasing, and converges to:
+	\begin{equation}
+		\lim_{\delta → ∞} p_\delta = \frac{\gamma}{\alpha + \gamma + 1}.
 	\end{equation}
 \end{conjecture}
 \begin{proof}
