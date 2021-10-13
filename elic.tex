@@ -815,7 +815,66 @@ Then,  ${\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] 
 	Observe that we can (perhaps) see the probability $P[z < b \knowing {\ppref}] = \sum_{1 ≤ r ≤ n} x_r (n - r + 1)$ as a weighted average, over the ranks $r$, the weight $x_r$ being the number of orderings that have $b$ at rank $r$ that complete ${\ppref}$, and $(n - r + 1)$ being the number of “intervals” below $b$, where $z$ can be put.
 	Therefore, if we remove more orderings where $b$ has a higher rank $r$, the probability decreases. (Or so goes the intuition.)
 \end{proof}
-	
+
+Another, hopefully true, \textbf{more general conjecture}. Let $A, B, C, D$ be disjoint subsets, with $a \succ b$, $b \succ c$, for all $a \in A, b \in B, c \in C$. It is not assumed that there are no pairs in relation $\succ$ neither within $A, B, C, D$ nor between these sets. 
+ 
+The claim is the following: for $z \not \in A, B, C, D$ and $a \in A, b \in B, c \in C, d \in D$, we have 
+$$
+P[z < b \knowing \ppref \cup (d,c)] \leq P[z < b \knowing \ppref]
+$$
+and also
+$$
+P[z < b \knowing \ppref \cup (a,d)] \leq P[z < b \knowing \ppref].
+$$
+\begin{proof} 
+Let $X'= A \cup B \cup C \cup D$ and $X"= X'\cup \{z\}$. Let $n$ denote $\#{X'}$. Let $\mathcal{L}(Y,\succ)$ denote the set of linear orders on the set Y, extending the partial order $\succ$ on $Y$; additional restrictions of this set may be introduced, e.g., $\mathcal{L}(Y,\succ, r(b)=r)$ denotes the subset of orders in $\mathcal{L}(Y,\succ)$ in which $b \in Y$ has rank $r$; $\mathcal{L}(Y,\succ, z < b)$ denotes the set of orders in $\mathcal{L}(Y,\succ)$ such that $z,b \in Y$ and neither $(z,b)$ nor $b,z)$ belongs to $\succ$. Moreover $r(b,Y')$ is the rank of $b$ in the restriction of an order to $Y' \ni b$.  
+
+The ratio
+\begin{align}
+    \frac{P[z < b \knowing \ppref]}{P[z > b \knowing \ppref]} 
+    & =
+    \frac{\#\mathcal{L}(X",\succ, z < b)}{\#\mathcal{L}(X",\succ, z > b)}\\
+    & = \frac{\sum_{r=1}^n \#\mathcal{L}(X",\succ, r(b,X') = r, z < b)}{\sum_{r=1}^n \#\mathcal{L}(X",\succ, r(b,X')=r, z > b)}.
+\end{align}
+We have: $\#\mathcal{L}(X",\succ, r(b,X') = r, z < b)= \#\mathcal{L}(X',\succ, r(b,X') = r) \cdot (n-r+1)$. Also, $\#\mathcal{L}(X",\succ, r(b,X') = r, z > b)= \#\mathcal{L}(X',\succ, r(b,X') = r) \cdot r$.
+
+Normalizing the numerator and denominator by dividing both of them by $\#\mathcal{L}(X',\succ)$, we get:
+
+$$
+\frac{P[z < b \knowing{\ppref}]}{P[z > b \knowing {\ppref}]} =
+\frac{\sum_{r=1}^n x_r \cdot (n-r+1)}{\sum_{r=1}^n x_r \cdot r},
+$$
+where 
+$$
+x_r =  \frac{\#\mathcal{L}(X',\succ, r(b,X') = r)}{\#\mathcal{L}(X',\succ)}.
+$$
+This means that $x_r$ is the probability of the orders on $X'$ extending $\succ$ in which $b$ has rank $r$. 
+Note also that $\sum_{r=1}^n x_r \cdot (n-r+1)$ is the average rank of $z$, given that $z <b$ and $\sum_{r=1}^n x_r \cdot r$ is the average rank of $z$, given that $z > b$. The latter can also be interpreted as the average rank of $b$, given $\succ$.
+
+Now, when $\succ$ is modified, becoming $\succ'$ when receiving the information that $d > c$, for some $d \in D, c \in C$, $x_r$ becomes $x_r'$ the probability that the rank of $b$ is $r$ given $\succ'$. Consider the cumulative distribution of the rank of $b$, $r(b)$. We have:
+\begin{align}
+P[r(b) \geq k \knowing{\succ}] &= P[r(b) \geq k \knowing{\succ \cup (d,c)}]\cdot P[d>c \knowing{\succ}] \\
+ + & P[r(b) \geq k \knowing{\succ \cup (c,d)}]\cdot P[c>d \knowing{\succ}] 
+\end{align}
+
+If $c>d$, then $b>d$ (by transitivity). This tends to decrease the rank of $b$ ($b$ tends to go up in the ranking since it is preferred to more alternatives), hence $P[r(b) \geq k \knowing{\succ \cup (c,d)}] \leq P[r(b) \geq k \knowing{\succ \cup (d,c)}]$ (This is intuitively clear, but requires a formal proof). Therefore, $P[r(b) \geq k \knowing{\succ \cup (d,c)}] \geq P[r(b) \geq k \knowing{\succ}]$. This is true for all $k$, implying stochastic dominance of the former distribution over the latter. As a consequence, $\sum_{1 ≤ r ≤ n} x_r \cdot r \leq \sum_{1 ≤ r ≤ n} x'_r \cdot r$ and $\sum_{1 ≤ r ≤ n} x_r (n - r + 1) \geq \sum_{1 ≤ r ≤ n} x'_r (n - r + 1)$. Therefore,   
+$$
+\frac{P[z < b \knowing{\ppref}]}{P[z > b \knowing {\ppref}]} \geq \frac{P[z < b \knowing{\ppref \cup{(d,c)}}]}{P[z > b \knowing {\ppref \cup{(d,c)}}]}.
+$$
+In a symmetric way, if we learn that $a>d$, for some $a \in A, d \in D$, 
+we have:
+\begin{align}
+P[r(b) \geq k \knowing{\succ}] &= P[r(b) \geq k \knowing{\succ \cup (d,a)}]\cdot P[d>a \knowing{\succ}] \\
+ + & P[r(b) \geq k \knowing{\succ \cup (a,d)}]\cdot P[a>d \knowing{\succ}] .
+\end{align}
+If $d>a$, then $d>b$ (by transitivity). This tends to increase $r(b)$. Hence $P[r(b) \geq k \knowing{\succ \cup (d,a)}] \leq P[r(b) \geq k \knowing{\succ \cup (a,d)}]$. This implies $P[r(b) \geq k \knowing{\succ \cup (a,d)}] \geq P[r(b) \geq k \knowing{\succ}]$. Using a similar reasoning as above, we get:
+$$
+\frac{P[z < b \knowing{\ppref}]}{P[z > b \knowing {\ppref}]} \geq \frac{P[z < b \knowing{\ppref \cup{(a,d)}}]}{P[z > b \knowing {\ppref \cup{(a,d)}}]}.
+$$
+\end{proof}	
+
+
+
 \begin{conjecture}
 	\label{th:lowerDelta}
 	Given $\alpha, \gamma, \delta \in \N$, given $b, z \in X$, given ${\ppref} \in \POs$ such that $\card{\upb} = \alpha$, $\card{\downb} = \gamma$, $\card{\left({\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b)\right)} = \delta$ and $z$ is isolated in ${\ppref}$:
