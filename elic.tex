@@ -814,6 +814,16 @@ Then,  ${\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] 
 	
 	Observe that we can (perhaps) see the probability $P[z < b \knowing {\ppref}] = \sum_{1 ≤ r ≤ n} x_r (n - r + 1)$ as a weighted average, over the ranks $r$, the weight $x_r$ being the number of orderings that have $b$ at rank $r$ that complete ${\ppref}$, and $(n - r + 1)$ being the number of “intervals” below $b$, where $z$ can be put.
 	Therefore, if we remove more orderings where $b$ has a higher rank $r$, the probability decreases. (Or so goes the intuition.)
+	
+	Avg number of positions for $z$ below $b$. Sort of an average rank of $b$. $x_r$ prop des ordres où rang $b$ = $r$.
+	
+	We must show that the average rank of $b$ increases (thus $b$ gets lower). The average rank of $b$ is the average number of intervals above $b$ (possible positions of $z$, thus).
+	
+	%Coeffs $H$. Weights $W$ ordered by decreasing coefficients. Weights after $W'$ with delta i = W_i - W'_i decreasing (we remove more from high coefficients). Theorem: $W/\sum W H ≥ W'/\sum W' H$. FALSE! We need to show that we remove more proportionally, not only absolutely.
+	
+	Let $o_r$ be the number of orderings where $b$ has rank $r$.
+	
+	We want to show that $o_r \knowing \ppref' / o_r \knowing \ppref ≥ o_{r + 1} \knowing \ppref' / o_{r + 1} \knowing \ppref ≥ o_{r + 1}$.
 \end{proof}
 	
 \begin{conjecture}
