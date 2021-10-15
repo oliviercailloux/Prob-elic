@@ -815,29 +815,33 @@ Then,  ${\pprefeq^{±1}}[b] \setminus {\pprefeq^{±1}}(b) = {\pprefeq^{±1}}[b] 
 	Observe that we can (perhaps) see the probability $P[z < b \knowing {\ppref}] = \sum_{1 ≤ r ≤ n} x_r (n - r + 1)$ as a weighted average, over the ranks $r$, the weight $x_r$ being the number of orderings that have $b$ at rank $r$ that complete ${\ppref}$, and $(n - r + 1)$ being the number of “intervals” below $b$, where $z$ can be put.
 	Therefore, if we remove more orderings where $b$ has a higher rank $r$, the probability decreases. (Or so goes the intuition.)
 	
-	Avg number of positions for $z$ below $b$. Sort of an average rank of $b$. $x_r$ prop des ordres où rang $b$ = $r$.
+%	Avg number of positions for $z$ below $b$. Sort of an average rank of $b$. $x_r$ prop des ordres où rang $b$ = $r$.
 	
-	We must show that the average rank of $b$ increases (thus $b$ gets lower). The average rank of $b$ is the average number of intervals above $b$ (possible positions of $z$, thus).
+%	We must show that the average rank of $b$ increases (thus $b$ gets lower). The average rank of $b$ is the average number of intervals above $b$ (possible positions of $z$, thus).
 	
-	%Coeffs $H$. Weights $W$ ordered by decreasing coefficients. Weights after $W'$ with delta i = W_i - W'_i decreasing (we remove more from high coefficients). Theorem: $W/\sum W H ≥ W'/\sum W' H$. FALSE! We need to show that we remove more proportionally, not only absolutely.
+	Coeffs $H$. Weights $W$ ordered by decreasing coefficients. Weights after $W'$ with $\delta_i = W_i - W'_i$ decreasing (we remove more from high coefficients). Theorem: $W/\sum W H ≥ W'/\sum W' H$. FALSE! We need to show that we remove more proportionally, not only absolutely.
 	
-	Let $o_r$ be the number of orderings where $b$ has rank $r$.
+%	Let $o_r$ be the number of orderings where $b$ has rank $r$.
 	
-	We want to show that $o_r \knowing \ppref' / o_r \knowing \ppref ≥ o_{r + 1} \knowing \ppref' / o_{r + 1} \knowing \ppref ≥ o_{r + 1}$.
+%	We want to show that $o_r \knowing \ppref' / o_r \knowing \ppref ≥ o_{r + 1} \knowing \ppref' / o_{r + 1} \knowing \ppref ≥ o_{r + 1}$.
 \end{proof}
 
-Another, hopefully true, \textbf{more general conjecture}. Let $A, B, C, D$ be disjoint subsets, with $a \succ b$, $b \succ c$, for all $a \in A, b \in B, c \in C$. It is not assumed that there are no pairs in relation $\succ$ neither within $A, B, C, D$ nor between these sets. 
- 
-The claim is the following: for $z \not \in A, B, C, D$ and $a \in A, b \in B, c \in C, d \in D$, we have 
-$$
-P[z < b \knowing \ppref \cup (d,c)] \leq P[z < b \knowing \ppref]
-$$
-and also
-$$
-P[z < b \knowing \ppref \cup (a,d)] \leq P[z < b \knowing \ppref].
-$$
+\begin{conjecture}[More general, worst case]
+	Let $A, B, C, D$ be disjoint subsets, with $a \succ b$, $b \succ c$, for all $a \in A, b \in B, c \in C$. It is not assumed that there are no pairs in relation $\succ$ neither within $A, B, C, D$ nor between these sets. 
+ 	
+	The claim is the following: for $z \not \in A, B, C, D$ and $a \in A, b \in B, c \in C, d \in D$, we have 
+	\begin{equation}
+	P[z < b \knowing \ppref \cup (d,c)] \leq P[z < b \knowing \ppref]
+	\end{equation}
+	and also
+	\begin{equation}
+	P[z < b \knowing \ppref \cup (a,d)] \leq P[z < b \knowing \ppref].
+	\end{equation}
+\end{conjecture}
 \begin{proof} 
-Let $X'= A \cup B \cup C \cup D$ and $X"= X'\cup \{z\}$. Let $n$ denote $\#{X'}$. Let $\mathcal{L}(Y,\succ)$ denote the set of linear orders on the set Y, extending the partial order $\succ$ on $Y$; additional restrictions of this set may be introduced, e.g., $\mathcal{L}(Y,\succ, r(b)=r)$ denotes the subset of orders in $\mathcal{L}(Y,\succ)$ in which $b \in Y$ has rank $r$; $\mathcal{L}(Y,\succ, z < b)$ denotes the set of orders in $\mathcal{L}(Y,\succ)$ such that $z,b \in Y$ and neither $(z,b)$ nor $b,z)$ belongs to $\succ$. Moreover $r(b,Y')$ is the rank of $b$ in the restriction of an order to $Y' \ni b$.  
+Let $X'= A \cup B \cup C \cup D$ and $X"= X'\cup \{z\}$. 
+Let $n$ denote $\#{X'}$. 
+Let $\mathcal{L}(Y,\succ)$ denote the set of linear orders on the set Y, extending the partial order $\succ$ on $Y$; additional restrictions of this set may be introduced, e.g., $\mathcal{L}(Y,\succ, r(b)=r)$ denotes the subset of orders in $\mathcal{L}(Y,\succ)$ in which $b \in Y$ has rank $r$; $\mathcal{L}(Y,\succ, z < b)$ denotes the set of orders in $\mathcal{L}(Y,\succ)$ such that $z,b \in Y$ and neither $(z,b)$ nor $b,z)$ belongs to $\succ$. Moreover $r(b,Y')$ is the rank of $b$ in the restriction of an order to $Y' \ni b$.  
 
 The ratio
 \begin{align}
@@ -850,14 +854,14 @@ We have: $\#\mathcal{L}(X",\succ, r(b,X') = r, z < b)= \#\mathcal{L}(X',\succ, r
 
 Normalizing the numerator and denominator by dividing both of them by $\#\mathcal{L}(X',\succ)$, we get:
 
-$$
+\begin{equation}
 \frac{P[z < b \knowing{\ppref}]}{P[z > b \knowing {\ppref}]} =
 \frac{\sum_{r=1}^n x_r \cdot (n-r+1)}{\sum_{r=1}^n x_r \cdot r},
-$$
+\end{equation}
 where 
-$$
+\begin{equation}
 x_r =  \frac{\#\mathcal{L}(X',\succ, r(b,X') = r)}{\#\mathcal{L}(X',\succ)}.
-$$
+\end{equation}
 This means that $x_r$ is the probability of the orders on $X'$ extending $\succ$ in which $b$ has rank $r$. 
 Note also that $\sum_{r=1}^n x_r \cdot (n-r+1)$ is the average rank of $z$, given that $z <b$ and $\sum_{r=1}^n x_r \cdot r$ is the average rank of $z$, given that $z > b$. The latter can also be interpreted as the average rank of $b$, given $\succ$.
 
@@ -868,9 +872,9 @@ P[r(b) \geq k \knowing{\succ}] &= P[r(b) \geq k \knowing{\succ \cup (d,c)}]\cdot
 \end{align}
 
 If $c>d$, then $b>d$ (by transitivity). This tends to decrease the rank of $b$ ($b$ tends to go up in the ranking since it is preferred to more alternatives), hence $P[r(b) \geq k \knowing{\succ \cup (c,d)}] \leq P[r(b) \geq k \knowing{\succ \cup (d,c)}]$ (This is intuitively clear, but requires a formal proof). Therefore, $P[r(b) \geq k \knowing{\succ \cup (d,c)}] \geq P[r(b) \geq k \knowing{\succ}]$. This is true for all $k$, implying stochastic dominance of the former distribution over the latter. As a consequence, $\sum_{1 ≤ r ≤ n} x_r \cdot r \leq \sum_{1 ≤ r ≤ n} x'_r \cdot r$ and $\sum_{1 ≤ r ≤ n} x_r (n - r + 1) \geq \sum_{1 ≤ r ≤ n} x'_r (n - r + 1)$. Therefore,   
-$$
+\begin{equation}
 \frac{P[z < b \knowing{\ppref}]}{P[z > b \knowing {\ppref}]} \geq \frac{P[z < b \knowing{\ppref \cup{(d,c)}}]}{P[z > b \knowing {\ppref \cup{(d,c)}}]}.
-$$
+\end{equation}
 In a symmetric way, if we learn that $a>d$, for some $a \in A, d \in D$, 
 we have:
 \begin{align}
@@ -878,12 +882,86 @@ P[r(b) \geq k \knowing{\succ}] &= P[r(b) \geq k \knowing{\succ \cup (d,a)}]\cdot
  + & P[r(b) \geq k \knowing{\succ \cup (a,d)}]\cdot P[a>d \knowing{\succ}] .
 \end{align}
 If $d>a$, then $d>b$ (by transitivity). This tends to increase $r(b)$. Hence $P[r(b) \geq k \knowing{\succ \cup (d,a)}] \leq P[r(b) \geq k \knowing{\succ \cup (a,d)}]$. This implies $P[r(b) \geq k \knowing{\succ \cup (a,d)}] \geq P[r(b) \geq k \knowing{\succ}]$. Using a similar reasoning as above, we get:
-$$
+\begin{equation}
 \frac{P[z < b \knowing{\ppref}]}{P[z > b \knowing {\ppref}]} \geq \frac{P[z < b \knowing{\ppref \cup{(a,d)}}]}{P[z > b \knowing {\ppref \cup{(a,d)}}]}.
-$$
+\end{equation}
 \end{proof}	
+\begin{conjecture}[Alternative writing of the more general, worst case]
+	Let $A, B = \set{b}, C, D \subseteq \allalts$ be disjoint subsets of objects. 
+	Define $X' = A \cup B \cup C \cup D$. 
+	Let ${\ppref_1} \in \POs$ with $A × B \subseteq {\ppref_1}$, $B × C \subseteq {\ppref_1}$, ${\pprefeq_1^{± 1}}(X') = X'$ (thus $X'$ being isolated from $X \setminus X'$ in $\ppref_1$).
+	
+	For any $c \in C, d \in D, z \in X \setminus X'$, letting ${\ppref_2} = {\ppref} \cup \set{(d, c)}$, we have:
+	\begin{equation}
+		P[z < b \knowing {\ppref_2}] ≤ P[z < b \knowing {\ppref_1}].
+	\end{equation}
+%	and also
+%	\begin{equation}
+%	P[z < b \knowing \ppref \cup (a,d)] \leq P[z < b \knowing \ppref].
+%	\end{equation}
+\end{conjecture}
+\begin{proof}
+	We prove the equivalent claim:
+	\begin{equation}
+		P[z > b \knowing {\ppref_2}] ≥ P[z > b \knowing {\ppref_1}].
+	\end{equation}
+	
+	Define $m = \card{X'}$.
+	Let $r(b) \in \intvl{1, m}$ denote the rank of $b$ among $X'$ given some complete ordering over $X$.
+	
+	Note that for ${\ppref} \in \set{{\ppref_1}, {\ppref_2}}$:
+	\begin{align}
+		P[z > b \knowing {\ppref}] & = \sum_{1 ≤ k ≤ m} P[r(b) = k \knowing {\ppref}] P[z > b \knowing {\ppref} \land r(b) = k]\\
+		& = \sum_{1 ≤ k ≤ m} P[r(b) = k \knowing {\ppref}] \frac{k}{m + 1}.
+	\end{align}
+	Therefore, $(m + 1) P[z > b \knowing {\ppref}] = E[r(b) \knowing {\ppref}]$, the average rank of $b$ in $X'$ given $\ppref$.
+	Suffices therefore to establish that $E[r(b) \knowing {\ppref_2}] ≥ E[r(b) \knowing {\ppref_1}]$.
+	
+	We have to establish that, for any $k \in \intvl{1, m}$:
+	\begin{equation}
+		P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(c, d)}] ≤ P[r(b) ≥ k \knowing {\ppref_1}].
+	\end{equation}
+	
+	This entails that $P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(d, c)}] ≥ P[r(b) ≥ k \knowing {\ppref_1}]$, as the RHS is a weighted average of $P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(c, d)}]$ and $P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(d, c)}]$. 
 
+	This therefore establishes the stochastic dominance of $(r(b) \knowing {\ppref_2})$ over $(r(b) \knowing {\ppref_1})$, in turn leading to $E[r(b) \knowing {\ppref_2}] ≥ E[r(b) \knowing {\ppref_1}]$.
+	
+	Alternatively, we could establish that $P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(c, d)}] ≤ P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(d, c)}]$, or directly that $E[r(b) \knowing {\ppref_2}] ≥ E[r(b) \knowing {\ppref_1}]$, or that $E[r(b) \knowing {\ppref_3}] ≤ E[r(b) \knowing {\ppref_1}]$ with ${\ppref_3} = {\ppref_1} \cup \set{(c, d)}$.
 
+	Note that 
+	\begin{align}
+		E[r(b) \knowing {\ppref_1}] & = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} P[{\pref} \knowing {\ppref_1}] \left\{\begin{aligned}
+			& P[d > b \knowing {\pref}] r(b, {\pref} \cup \set{(d, b)}) \\
+			+ & P[b > d \knowing {\pref}] r(b, {\pref} \cup \set{(b, d)})
+		\end{aligned}\right\}\\
+		& = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} \left\{\begin{aligned}
+			& P[{\pref} \land d > b \knowing {\ppref_1}] (r(b, {\pref}) + 1) \\
+			+ & P[{\pref} \land b > d \knowing {\ppref_1}] r(b, {\pref})
+		\end{aligned}\right\}\\
+		& = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} \left\{\begin{aligned}
+			& P[\text{any order on } X' \knowing {\ppref_1}] r(b, {\pref}) (r(b, {\pref}) + 1) \\
+			+ & P[\text{any order on } X' \knowing {\ppref_1}] (m - r(b, {\pref})) r(b, {\pref})
+		\end{aligned}\right\}\\
+		& = P[\text{any order on } X' \knowing {\ppref_1}] \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} \left\{\begin{aligned}
+			& r(b, {\pref}) (r(b, {\pref}) + 1) \\
+			+ & (m - r(b, {\pref})) r(b, {\pref})
+		\end{aligned}\right\}\\
+		& = P[\text{any order on } X' \knowing {\ppref_1}] (m + 1) \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} \left\{r(b, {\pref})\right\}
+	\end{align}
+	whereas
+	\begin{align}
+		E[r(b) \knowing {\ppref_1} \cup \set{(b, d)}] & = \sum_{({\ppref_1} \cup \set{(b, d)}) \subseteq {\pref} \in \linors[X' \setminus \set{d}]} P[{\pref} \knowing {\ppref_1} \cup \set{(b, d)}] r(b, {\pref}).
+	\end{align}
+	\footnote{Example with $A = \emptyset$, $C = \set{c_1, c_2}$, $D = \set{d_1, d_2}$, ${\ppref_1} = \set{(b, c_1), (b, c_2), (c_1, c_2), (d_2, c_2)}$.
+		Define ${\pref_1} = d_2, b, c_1, c_2$, ${\pref_2} = b, d_2, c_1, c_2$ and ${\pref_3} = b, c_1, d_2, c_2$ and,
+		for $i \in \intvl{1, 3}$, define ${\pref_{id}} = \set{{\pref_i} \subseteq {\pref} \in \linors[X'] \suchthat (d_1, b) \in {\pref}}$ and ${\pref_{ib}} = \set{{\pref_i} \subseteq {\pref} \in \linors[X'] \suchthat (b, d_1) \in {\pref}}$.
+
+		$E[r(b) \knowing {\ppref_1}] = P[{\pref_{1d}} \knowing {\ppref_1}] r(b, {\pref_{1d}}) + P[{\pref_{2d}} \knowing {\ppref_1}] r(b, {\pref_{2d}}) + P[{\pref_{3d}} \knowing {\ppref_1}] r(b, {\pref_{3d}}) + P[{\pref_{1b}} \knowing {\ppref_1}] r(b, {\pref_{1b}}) + P[{\pref_{2b}} \knowing {\ppref_1}] r(b, {\pref_{2b}}) + P[{\pref_{3b}} \knowing {\ppref_1}] r(b, {\pref_{3b}}) 
+		= \frac{2}{15} 3 + \frac{1}{15} 2 + \frac{1}{15} 2 + \frac{3}{15} 2 + \frac{4}{15} 1 + \frac{4}{15} 1 = \frac{24}{15}$.
+		
+		This is equal to $\frac{6}{15} (2 + 1 + 1)$. How lucky.
+	}
+\end{proof}
 
 \begin{conjecture}
 	\label{th:lowerDelta}
