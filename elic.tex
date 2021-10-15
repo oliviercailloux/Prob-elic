@@ -937,16 +937,7 @@ If $d>a$, then $d>b$ (by transitivity). This tends to increase $r(b)$. Hence $P[
 		& = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} \left\{\begin{aligned}
 			& P[{\pref} \land d > b \knowing {\ppref_1}] (r(b, {\pref}) + 1) \\
 			+ & P[{\pref} \land b > d \knowing {\ppref_1}] r(b, {\pref})
-		\end{aligned}\right\}\\
-		& = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} \left\{\begin{aligned}
-			& P[\text{any order on } X' \knowing {\ppref_1}] r(b, {\pref}) (r(b, {\pref}) + 1) \\
-			+ & P[\text{any order on } X' \knowing {\ppref_1}] (m - r(b, {\pref})) r(b, {\pref})
-		\end{aligned}\right\}\\
-		& = P[\text{any order on } X' \knowing {\ppref_1}] \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} \left\{\begin{aligned}
-			& r(b, {\pref}) (r(b, {\pref}) + 1) \\
-			+ & (m - r(b, {\pref})) r(b, {\pref})
-		\end{aligned}\right\}\\
-		& = P[\text{any order on } X' \knowing {\ppref_1}] (m + 1) \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} \left\{r(b, {\pref})\right\}
+		\end{aligned}\right\}
 	\end{align}
 	whereas
 	\begin{align}
