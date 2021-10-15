@@ -907,7 +907,7 @@ If $d>a$, then $d>b$ (by transitivity). This tends to increase $r(b)$. Hence $P[
 	\end{equation}
 	
 	Define $m = \card{X'}$.
-	Let $r(b) \in \intvl{1, m}$ denote the rank of $b$ among $X'$ given some complete ordering over $X$.
+	Given ${\ppref} \in \POs$, let $r(b, {\ppref}) = \card{({\pprefeqinv}(b) \cap X')} \in \intvl{1, m}$ denote the rank of $b$ among $X'$ in $\ppref$. We let also $r(b)$ denote a random variable associating to each ${\pref} \in \linors$ the rank of $b$ among $X'$, $r(b, {\pref})$.
 	
 	Note that for ${\ppref} \in \set{{\ppref_1}, {\ppref_2}}$:
 	\begin{align}
@@ -927,8 +927,24 @@ If $d>a$, then $d>b$ (by transitivity). This tends to increase $r(b)$. Hence $P[
 	This therefore establishes the stochastic dominance of $(r(b) \knowing {\ppref_2})$ over $(r(b) \knowing {\ppref_1})$, in turn leading to $E[r(b) \knowing {\ppref_2}] ≥ E[r(b) \knowing {\ppref_1}]$.
 	
 	Alternatively, we could establish that $P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(c, d)}] ≤ P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(d, c)}]$, or directly that $E[r(b) \knowing {\ppref_2}] ≥ E[r(b) \knowing {\ppref_1}]$, or that $E[r(b) \knowing {\ppref_3}] ≤ E[r(b) \knowing {\ppref_1}]$ with ${\ppref_3} = {\ppref_1} \cup \set{(c, d)}$.
-
-	Note that 
+	
+	We have:
+	\begin{align}
+		P[r(b) ≥ k \knowing {\ppref_1}] & = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} P[{\pref} \knowing {\ppref_1}] \left\{\begin{aligned}
+			& P[d > b \land r(b, {\pref}) ≥ (k - 1) \knowing {\pref}] \\
+			+ & P[b > d \land r(b, {\pref}) ≥ k \knowing {\pref}]
+		\end{aligned}\right\}\\
+		& = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} \left\{\begin{aligned}
+			& P[{\pref} \land d > b \land r(b, {\pref}) ≥ (k - 1) \knowing {\ppref_1}] \\
+			+ & P[{\pref} \land b > d \land r(b, {\pref}) ≥ k \knowing {\ppref_1}]
+		\end{aligned}\right\}
+	\end{align}
+	whereas
+	\begin{align}
+		P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(b, d)}] & = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} P[{\pref} \land b > d \land r(b, {\pref}) ≥ k \knowing {\ppref_1} \cup \set{(b, d)}].
+	\end{align}
+	
+	Or, for another starting point:
 	\begin{align}
 		E[r(b) \knowing {\ppref_1}] & = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} P[{\pref} \knowing {\ppref_1}] \left\{\begin{aligned}
 			& P[d > b \knowing {\pref}] r(b, {\pref} \cup \set{(d, b)}) \\
@@ -941,7 +957,7 @@ If $d>a$, then $d>b$ (by transitivity). This tends to increase $r(b)$. Hence $P[
 	\end{align}
 	whereas
 	\begin{align}
-		E[r(b) \knowing {\ppref_1} \cup \set{(b, d)}] & = \sum_{({\ppref_1} \cup \set{(b, d)}) \subseteq {\pref} \in \linors[X' \setminus \set{d}]} P[{\pref} \knowing {\ppref_1} \cup \set{(b, d)}] r(b, {\pref}).
+		E[r(b) \knowing {\ppref_1} \cup \set{(b, d)}] & = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} P[{\pref} \knowing {\ppref_1} \cup \set{(b, d)}] r(b, {\pref}).
 	\end{align}
 	\footnote{Example with $A = \emptyset$, $C = \set{c_1, c_2}$, $D = \set{d_1, d_2}$, ${\ppref_1} = \set{(b, c_1), (b, c_2), (c_1, c_2), (d_2, c_2)}$.
 		Define ${\pref_1} = d_2, b, c_1, c_2$, ${\pref_2} = b, d_2, c_1, c_2$ and ${\pref_3} = b, c_1, d_2, c_2$ and,
