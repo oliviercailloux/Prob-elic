@@ -889,9 +889,9 @@ If $d>a$, then $d>b$ (by transitivity). This tends to increase $r(b)$. Hence $P[
 \begin{conjecture}[Alternative writing of the more general, worst case]
 	Let $A, B = \set{b}, C, D \subseteq \allalts$ be disjoint subsets of objects. 
 	Define $X' = A \cup B \cup C \cup D$. 
-	Let ${\ppref_1} \in \POs$ with $A × B \subseteq {\ppref_1}$, $B × C \subseteq {\ppref_1}$, ${\pprefeq_1^{± 1}}(X') = X'$ (thus $X'$ being isolated from $X \setminus X'$ in $\ppref_1$).
+	Let ${\ppref_1} \in \POs$ satisfying $\forall a \in A: a \ppref_1 b$, $\forall c \in C: b \ppref_1 c$ and $X'$ being isolated from $X \setminus X'$ in $\ppref_1$ (formally,${\pprefeq_1^{± 1}}(X') = X'$).
 	
-	For any $c \in C, d \in D, z \in X \setminus X'$, letting ${\ppref_2} = {\ppref} \cup \set{(d, c)}$, we have:
+	For any $c \in C, d \in D, z \in X \setminus X'$, letting ${\ppref_2} = {\ppref_1} \cup \set{(d, c)}$, we have:
 	\begin{equation}
 		P[z < b \knowing {\ppref_2}] ≤ P[z < b \knowing {\ppref_1}].
 	\end{equation}
@@ -911,24 +911,32 @@ If $d>a$, then $d>b$ (by transitivity). This tends to increase $r(b)$. Hence $P[
 	
 	Note that for ${\ppref} \in \set{{\ppref_1}, {\ppref_2}}$:
 	\begin{align}
-		P[z > b \knowing {\ppref}] & = \sum_{1 ≤ k ≤ m} P[r(b) = k \knowing {\ppref}] P[z > b \knowing {\ppref} \land r(b) = k]\\
+		P[z > b \knowing {\ppref}] & = \sum_{1 ≤ k ≤ m} P[r(b) = k \knowing {\ppref}] \cdot P[z > b \knowing {\ppref} \land r(b) = k]\\
 		& = \sum_{1 ≤ k ≤ m} P[r(b) = k \knowing {\ppref}] \frac{k}{m + 1}.
 	\end{align}
 	Therefore, $(m + 1) P[z > b \knowing {\ppref}] = E[r(b) \knowing {\ppref}]$, the average rank of $b$ in $X'$ given $\ppref$.
 	Suffices therefore to establish that $E[r(b) \knowing {\ppref_2}] ≥ E[r(b) \knowing {\ppref_1}]$.
 	
-	We have to establish that, for any $k \in \intvl{1, m}$:
+	The Choquet integral shows that $E[r(b) \knowing {\ppref}] = \sum_k P[r(b) ≥ k \knowing {\ppref}]$, thus, suffices to establish that, for any $k \in \intvl{1, m}$:
 	\begin{equation}
-		P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(c, d)}] ≤ P[r(b) ≥ k \knowing {\ppref_1}].
+		P[r(b) ≥ k \knowing {\ppref_2}] ≥ P[r(b) ≥ k \knowing {\ppref_1}].
 	\end{equation}
-	
-	This entails that $P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(d, c)}] ≥ P[r(b) ≥ k \knowing {\ppref_1}]$, as the RHS is a weighted average of $P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(c, d)}]$ and $P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(d, c)}]$. 
 
-	This therefore establishes the stochastic dominance of $(r(b) \knowing {\ppref_2})$ over $(r(b) \knowing {\ppref_1})$, in turn leading to $E[r(b) \knowing {\ppref_2}] ≥ E[r(b) \knowing {\ppref_1}]$.
+	Also, defining ${\ppref'_2} = {\ppref_1} \cup \set{(c, d)}$, suffices to establish that, for any $k \in \intvl{1, m}$:
+	\begin{equation}
+		P[r(b) = k \knowing {\ppref'_2}] ≤ P[r(b) = k \knowing {\ppref_1}]
+	\end{equation}
+	(or the same thing replacing equality to $k$ by at least $k$).
+	Indeed, this entails that $P[r(b) ≥ k \knowing {\ppref_2}] ≥ P[r(b) ≥ k \knowing {\ppref_1}]$, as the RHS is a weighted average of $P[r(b) ≥ k \knowing {\ppref'_2}]$ and $P[r(b) ≥ k \knowing {\ppref_2}]$. 
 	
-	Alternatively, we could establish that $P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(c, d)}] ≤ P[r(b) ≥ k \knowing {\ppref_1} \cup \set{(d, c)}]$, or directly that $E[r(b) \knowing {\ppref_2}] ≥ E[r(b) \knowing {\ppref_1}]$, or that $E[r(b) \knowing {\ppref_3}] ≤ E[r(b) \knowing {\ppref_1}]$ with ${\ppref_3} = {\ppref_1} \cup \set{(c, d)}$.
+	Define $n_\mathit{ext}$ as the number of linear orders that extend $\ppref_1$.
+	Define $n_k = P[r(b) = k \knowing {\ppref_1}] n_\mathit{ext} = P[r(b) = k \land {\ppref_1}] n!$ as the number of orders that extend ${\ppref_1}$ that satisfy $r(b) = k$.
+	Define similarly $n'_\mathit{ext}$ and $n'_k$ for ${\ppref_2}$ instead of ${\ppref_1}$.
+	Define $w_k = \frac{n'_k}{n_k} \frac{n_\mathit{ext}}{n'_\mathit{ext}}$.
+	We have that $E[r(b) \knowing {\ppref_1}] = \sum_k P[r(b) = k \knowing {\ppref_1}] k = \frac{\sum_k n_k k}{n_\mathit{ext}}$ and $E[r(b) \knowing {\ppref_2}] = \frac{\sum_k n'_k k}{n'_\mathit{ext}} = \frac{\sum_k n_k w_k k}{n_\mathit{ext}}$.
+	Thus, we have to establish that $\sum_k n_k k ≤ \sum_k n_k w_k k$, or that $\sum_k \frac{n_k}{n_\mathit{ext}} k ≤ \sum_k \frac{n_k}{n_\mathit{ext}} w_k k$. As the RHS is a weighted average, suffices to establish that the factors $w_k$ increase with $k$?
 	
-	We have:
+	Another attempt. We have:
 	\begin{align}
 		P[r(b) ≥ k \knowing {\ppref_1}] & = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} P[{\pref} \knowing {\ppref_1}] \left\{\begin{aligned}
 			& P[d > b \land r(b, {\pref}) ≥ (k - 1) \knowing {\pref}] \\
@@ -959,14 +967,25 @@ If $d>a$, then $d>b$ (by transitivity). This tends to increase $r(b)$. Hence $P[
 	\begin{align}
 		E[r(b) \knowing {\ppref_1} \cup \set{(b, d)}] & = \sum_{{\ppref_1} \subseteq {\pref} \in \linors[X' \setminus \set{d}]} P[{\pref} \knowing {\ppref_1} \cup \set{(b, d)}] r(b, {\pref}).
 	\end{align}
+	
+	Yet another starting point:
+	\begin{align}
+		E[r(b) \knowing {\ppref_1} \cup \set{(b, d)}] & = \sum_{k} P[r(b) = k \knowing {\ppref_1} \cup \set{(b, d)}] r(b, {\pref}).
+	\end{align}
+	
 	\footnote{Example with $A = \emptyset$, $C = \set{c_1, c_2}$, $D = \set{d_1, d_2}$, ${\ppref_1} = \set{(b, c_1), (b, c_2), (c_1, c_2), (d_2, c_2)}$.
 		Define ${\pref_1} = d_2, b, c_1, c_2$, ${\pref_2} = b, d_2, c_1, c_2$ and ${\pref_3} = b, c_1, d_2, c_2$ and,
 		for $i \in \intvl{1, 3}$, define ${\pref_{id}} = \set{{\pref_i} \subseteq {\pref} \in \linors[X'] \suchthat (d_1, b) \in {\pref}}$ and ${\pref_{ib}} = \set{{\pref_i} \subseteq {\pref} \in \linors[X'] \suchthat (b, d_1) \in {\pref}}$.
 
 		$E[r(b) \knowing {\ppref_1}] = P[{\pref_{1d}} \knowing {\ppref_1}] r(b, {\pref_{1d}}) + P[{\pref_{2d}} \knowing {\ppref_1}] r(b, {\pref_{2d}}) + P[{\pref_{3d}} \knowing {\ppref_1}] r(b, {\pref_{3d}}) + P[{\pref_{1b}} \knowing {\ppref_1}] r(b, {\pref_{1b}}) + P[{\pref_{2b}} \knowing {\ppref_1}] r(b, {\pref_{2b}}) + P[{\pref_{3b}} \knowing {\ppref_1}] r(b, {\pref_{3b}}) 
 		= \frac{2}{15} 3 + \frac{1}{15} 2 + \frac{1}{15} 2 + \frac{3}{15} 2 + \frac{4}{15} 1 + \frac{4}{15} 1 = \frac{24}{15}$.
-		
-		This is equal to $\frac{6}{15} (2 + 1 + 1)$. How lucky.
+	}
+	\footnote{Example with $A = \emptyset$, $C = \set{c_1, c_2}$, $D = \set{d_1, d_2}$, ${\ppref_1} = \set{(b, c_1),\allowbreak (b, c_2), (c_1, c_2), (d_1, c_1), (d_2, c_2)}$.
+		Define ${\pref_1} = d_2, b, c_1, c_2$, ${\pref_2} = b, d_2, c_1, c_2$ and ${\pref_3} = b, c_1, d_2, c_2$ and,
+		for $i \in \intvl{1, 3}$, define ${\pref_{id}} = \set{{\pref_i} \subseteq {\pref} \in \linors[X'] \suchthat (d_1, b) \in {\pref}}$ and ${\pref_{ib}} = \set{{\pref_i} \subseteq {\pref} \in \linors[X'] \suchthat (b, d_1) \in {\pref}}$.
+
+		$E[r(b) \knowing {\ppref_1}] = P[{\pref_{1d}} \knowing {\ppref_1}] r(b, {\pref_{1d}}) + P[{\pref_{2d}} \knowing {\ppref_1}] r(b, {\pref_{2d}}) + P[{\pref_{3d}} \knowing {\ppref_1}] r(b, {\pref_{3d}}) + P[{\pref_{1b}} \knowing {\ppref_1}] r(b, {\pref_{1b}}) + P[{\pref_{2b}} \knowing {\ppref_1}] r(b, {\pref_{2b}}) + P[{\pref_{3b}} \knowing {\ppref_1}] r(b, {\pref_{3b}}) 
+		= \frac{2}{8} 3 + \frac{1}{8} 2 + \frac{1}{8} 2 + \frac{1}{8} 2 + \frac{2}{8} 1 + \frac{1}{8} 1 = \frac{15}{8}$.
 	}
 \end{proof}
 
