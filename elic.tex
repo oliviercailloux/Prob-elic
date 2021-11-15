@@ -1916,6 +1916,44 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 %\bibliography{bibl}
 
 \appendix
+\section{Proof of the XYZ claim}
+\begin{theorem}[XYZ]
+	Consider $b, d, z \in X$ and any poset ${\ppref} \in \POs$ such that $d \nppref b$. We have:
+	\begin{equation}
+		P(b \ppref z \knowing {\ppref}) ≤ P(b \ppref z \knowing {\ppref}, b \ppref d).
+	\end{equation}
+\end{theorem}
+\NewDocumentCommand{\join}{}{\sqcup}
+\NewDocumentCommand{\meet}{}{\sqcap}
+\begin{proof}[Rewrite of Shepp 1982]
+	Define the set $S = \intvl{0, n - 1}^X$ of scoring functions as the set of functions that assign an integer score to each object in $X$.
+	Define $S^\mathit{sat} \subseteq S$ as the set of scoring functions that satisfy $\ppref$, that is, that assign higher scores to better objects according to $\ppref$ ($x \ppref y ⇒ s(x) > s(y)$).
+	Define $S^\mathit{fav} \subseteq S^\mathit{sat}$ as the subset of functions that also satisfy $b \ppref z$, thus, $s(b) > s(z)$.
+	Define $S^\mathit{cond} \subseteq S^\mathit{sat}$ as the subset of functions that satisfy $\ppref$ and also $b \ppref d$, thus, $s(b) > s(d)$.
+	
+	Define $\tau: S → \intvl{-(n - 1), n - 1}^X$ as $t(s) = \set{(b, -s(b)} \cup \set{(x, s(x) - s(b) \suchthat b ≠ x \in X}$. 
+	As $\tau$ is invertible, $\tau$ is an injection, thus, the restriction of $\tau$ to $S^\mathit{sat}$ is a bijection from $S^\mathit{sat}$ onto $T = \tau(S^\mathit{sat})$. 
+	Compared to $s \in S^\mathit{sat}$, $t = \tau(s)$ negates the score of $b$ and associates each other object to its difference of score compared to $b$, that difference being positive iff the object is preferred to $b$ according to $s$.
+	Note that, given $t \in \intvl{-(n - 1), n - 1}^X$, and letting $s$ denote $\tau^{-1}(t)$, we have $t \in T ⇔ [\forall x \ppref y: s(x) - s(b) > s(y) - s(b)]$. Thus: 
+	\begin{equation}
+		\label{eq:tsat}
+		t \in T ⇔ [\forall b ≠ x \ppref y ≠ b: t(x) > t(y)] \land [\forall x \ppref b: t(x) > 0] \land [\forall x \pprefinv b: t(x) < 0].
+	\end{equation}
+	
+	Define a partial ordering $<^\mathit{p}$ over $T$ as the classical Pareto-dominance over functions: $t <^p t' ⇔ [t ≠ t'] \land [\forall x \in X: t(x) ≤ t(x)]$.
+	It follows that the least upper bound of $t$ and $t'$ in $<^\mathit{p}$ is the functional max, $\max \set{t, t'}$ (that is, the function that associates to each $x \in X$ the max of $t(x)$ and $t'(x)$), and similarly the greatest lower bound is $\min \set{t, t'}$.
+	Note that these operations, considered as binary operations on $T$, are internal (that is, given $t, t' \in T$, $\max \set{t, t'} \in T$ and $\min \set{t, t'} \in T$), as can be checked thanks to \cref{eq:tsat}.
+	Therefore, $<^\mathit{p}$ defines a lattice over $T$, with $\max$ as “join” and $\min$ as “meet” operations.
+	Furthermore, this lattice is distributive, meaning that $\max \set{t, \min \set{t', t^{\prime\prime}}} = \min \set{\max \set{t, t'}, \max \set{t, t^{\prime\prime}}}$.
+	
+	Note as well that going upwards in the lattice $<^\mathit{p}$ preserves the properties of being “fav”, in other words, $\forall t \in T^\mathit{fav}: t <^\mathit{p} t' ⇒ [\forall t' \in T: t' \in T^\mathit{fav}]$. Indeed, given any $t \in T$, $t \in T^\mathit{fav} ⇔ t(z) < 0$, and if $t <^\mathit{p} t'$, then $t(z) ≤ t'(z)$.
+	Similarly, going upwards in the lattice $<^\mathit{p}$ preserves the properties of being “cond”.
+	
+	We can now apply FKG, which states that if $<^\mathit{p}$ is a distributive lattice over $T$ and given $T^\mathit{fav}, T^\mathit{cond} \subseteq T$ such that $\forall t \in T^\mathit{fav}: t <^\mathit{p} t' ⇒ t' \in T^\mathit{fav}$, and similarly for $T^\mathit{cond}$; it holds that $\card{T^\mathit{fav}} × \card{T^\mathit{cond}} ≤ \card{(T^\mathit{fav} \cap T^\mathit{cond})} × \card{T}$.
+	
+	Rewriting, we obtain that $\frac{\card{T^\mathit{fav}}}{\card{T}} ≤ \frac{\card{(T^\mathit{fav} \cap T^\mathit{cond})}}{\card{T^\mathit{cond}}}$.
+\end{proof}
+
 \section{Numerical examples for bound on delta}
 (About \cref{th:boundDelta}.)
 
