@@ -1918,9 +1918,9 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 \appendix
 \section{Proof of the XYZ claim}
 \begin{theorem}[XYZ]
-	Consider $b, d, z \in X$ and any poset ${\ppref} \in \POs$ such that $d \nppref b$. We have:
+	Consider $b, d, z \in X$ and any poset ${\ppref} \in \POs$ such that $b \nppref d$. We have:
 	\begin{equation}
-		P(b \ppref z \knowing {\ppref}) ≤ P(b \ppref z \knowing {\ppref}, b \ppref d).
+		P(z \ppref b \knowing {\ppref}) ≤ P(z \ppref b \knowing {\ppref}, d \ppref b).
 	\end{equation}
 \end{theorem}
 \NewDocumentCommand{\join}{}{\sqcup}
@@ -1928,13 +1928,13 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 \begin{proof}[Rewrite of Shepp 1982]
 	Define the set $S = \intvl{0, n - 1}^X$ of scoring functions as the set of functions that assign an integer score to each object in $X$.
 	Define $S^\mathit{sat} \subseteq S$ as the set of scoring functions that satisfy $\ppref$, that is, that assign higher scores to better objects according to $\ppref$ ($x \ppref y ⇒ s(x) > s(y)$).
-	Define $S^\mathit{fav} \subseteq S^\mathit{sat}$ as the subset of functions that also satisfy $b \ppref z$, thus, $s(b) > s(z)$.
-	Define $S^\mathit{cond} \subseteq S^\mathit{sat}$ as the subset of functions that satisfy $\ppref$ and also $b \ppref d$, thus, $s(b) > s(d)$.
+	Define $S^\mathit{fav} \subseteq S^\mathit{sat}$ as the subset of functions that also satisfy $z \ppref b$, thus, $s(z) > s(b)$.
+	Define $S^\mathit{cond} \subseteq S^\mathit{sat}$ as the subset of functions that satisfy $\ppref$ and also $d \ppref b$, thus, $s(d) > s(b)$.
 	
 	Define $\tau: S → \intvl{-(n - 1), n - 1}^X$ as $t(s) = \set{(b, -s(b)} \cup \set{(x, s(x) - s(b) \suchthat b ≠ x \in X}$. 
+	Compared to $s \in S$, $t = \tau(s)$ negates the score of $b$ and associates each other object to its difference of score compared to $b$, that difference being positive iff the object is preferred to $b$ according to $s$.
 	As $\tau$ is invertible, $\tau$ is an injection, thus, the restriction of $\tau$ to $S^\mathit{sat}$ is a bijection from $S^\mathit{sat}$ onto $T = \tau(S^\mathit{sat})$. 
-	Compared to $s \in S^\mathit{sat}$, $t = \tau(s)$ negates the score of $b$ and associates each other object to its difference of score compared to $b$, that difference being positive iff the object is preferred to $b$ according to $s$.
-	Note that, given $t \in \intvl{-(n - 1), n - 1}^X$, and letting $s$ denote $\tau^{-1}(t)$, we have $t \in T ⇔ [\forall x \ppref y: s(x) - s(b) > s(y) - s(b)]$. Thus: 
+	Note that, given $t \in \tau(S)$, and letting $s \in S$ denote $\tau^{-1}(t)$, we have $t \in T ⇔ [\forall x \ppref y: s(x) - s(b) > s(y) - s(b)]$. Thus: 
 	\begin{equation}
 		\label{eq:tsat}
 		t \in T ⇔ [\forall b ≠ x \ppref y ≠ b: t(x) > t(y)] \land [\forall x \ppref b: t(x) > 0] \land [\forall x \pprefinv b: t(x) < 0].
@@ -1946,12 +1946,13 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	Therefore, $<^\mathit{p}$ defines a lattice over $T$, with $\max$ as “join” and $\min$ as “meet” operations.
 	Furthermore, this lattice is distributive, meaning that $\max \set{t, \min \set{t', t^{\prime\prime}}} = \min \set{\max \set{t, t'}, \max \set{t, t^{\prime\prime}}}$.
 	
-	Note as well that going upwards in the lattice $<^\mathit{p}$ preserves the properties of being “fav”, in other words, $\forall t \in T^\mathit{fav}: t <^\mathit{p} t' ⇒ [\forall t' \in T: t' \in T^\mathit{fav}]$. Indeed, given any $t \in T$, $t \in T^\mathit{fav} ⇔ t(z) < 0$, and if $t <^\mathit{p} t'$, then $t(z) ≤ t'(z)$.
-	Similarly, going upwards in the lattice $<^\mathit{p}$ preserves the properties of being “cond”.
+	Say that a set $T' \subseteq T$ is upwards-closed iff it is closed under upper contour sets, that is, $\forall t \in T': [\forall t' \in T: t <^\mathit{p} t' ⇒ t' \in T']$.
+	Note that $T^\mathit{fav}$ is upwards-closed. Indeed, given any $t \in T$, $t \in T^\mathit{fav} ⇔ t(z) > 0$, and if $t <^\mathit{p} t'$, then $t(z) ≤ t'(z)$; thus, $[t \in T^\mathit{fav} \land t <^\mathit{p} t'] ⇒ t' \in T^\mathit{fav}$.
+	Similarly, $T^\mathit{cond}$ is upwards-closed.
 	
-	We can now apply FKG, which states that if $<^\mathit{p}$ is a distributive lattice over $T$ and given $T^\mathit{fav}, T^\mathit{cond} \subseteq T$ such that $\forall t \in T^\mathit{fav}: t <^\mathit{p} t' ⇒ t' \in T^\mathit{fav}$, and similarly for $T^\mathit{cond}$; it holds that $\card{T^\mathit{fav}} × \card{T^\mathit{cond}} ≤ \card{(T^\mathit{fav} \cap T^\mathit{cond})} × \card{T}$.
+	We can now apply FKG, which implies that if $<^\mathit{p}$ is a distributive lattice over $T$ and given upwards-closed sets $T^\mathit{fav} \subseteq T$ and $T^\mathit{cond} \subseteq T$, it holds that $\frac{\card{T^\mathit{fav}}}{\card{T}} ≤ \frac{\card{(T^\mathit{fav} \cap T^\mathit{cond})}}{\card{T^\mathit{cond}}}$.
 	
-	Rewriting, we obtain that $\frac{\card{T^\mathit{fav}}}{\card{T}} ≤ \frac{\card{(T^\mathit{fav} \cap T^\mathit{cond})}}{\card{T^\mathit{cond}}}$.
+	TODO: conclude! And check use of $n$.
 \end{proof}
 
 \section{Numerical examples for bound on delta}
