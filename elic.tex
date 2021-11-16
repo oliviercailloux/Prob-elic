@@ -1955,6 +1955,25 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	TODO: conclude! And check use of $n$.
 \end{proof}
 
+\begin{theorem}[FKG binary]
+	Under suitable conditions (see above):
+	\begin{equation}
+		\frac{\card{(F \cap G)}}{\card{T}} ≥ \frac{\card{F}}{\card{T}} \frac{\card{G}}{\card{T}}.
+	\end{equation}
+ \end{theorem}
+ \begin{proof}
+ 	Define:
+ 	\begin{align}
+ 		\Omega & = (\card{T})^2 \left(\frac{\card{(F \cap G)}}{\card{T}} - \frac{\card{F}}{\card{T}} \frac{\card{G}}{\card{T}}\right)\\
+ 		& = \card{T} \card{(F \cap G)} - \card{F} \card{G}\\
+ 		& = \card{(F \cap G)} (\card{G} + \card{\overline{G}}) - (\card{(F \cap G)} + \card{(F \setminus G)}) \card{G}\\
+ 		& = \card{(F \cap G)} \card{\overline{G}} - \card{(F \setminus G)} \card{G}.
+ 	\end{align}
+ 	We need to show that $\Omega ≥ 0$. Let’s recur on the length of $T$. The singleton lattice has length $0$, assume $T$ has length at least $1$, thus, at least one atom $a$.
+ 	
+% 	Define $\Gamma_a = \overline{ucs(a)} \join a$.
+ \end{proof}
+
 \section{Numerical examples for bound on delta}
 (About \cref{th:boundDelta}.)
 
