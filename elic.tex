@@ -1940,7 +1940,9 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 		t \in T ⇔ [\forall b ≠ x \ppref y ≠ b: t(x) > t(y)] \land [\forall x \ppref b: t(x) > 0] \land [\forall x \pprefinv b: t(x) < 0].
 	\end{equation}
 	
-	Define a partial ordering $<^\mathit{p}$ over $T$ as the classical Pareto-dominance over functions: $t <^p t' ⇔ [t ≠ t'] \land [\forall x \in X: t(x) ≤ t(x)]$.
+	Define $T^\mathit{fav} = \tau(S^\mathit{fav}) \subseteq T$ and $T^\mathit{cond} = \tau(S^\mathit{cond}) \subseteq T$.
+	
+	Define a partial ordering $<^\mathit{p}$ over $T$ as the classical Pareto-dominance over functions: $t <^p t' ⇔ [t ≠ t'] \land [\forall x \in X: t(x) ≤ t'(x)]$.
 	It follows that the least upper bound of $t$ and $t'$ in $<^\mathit{p}$ is the functional max, $\max \set{t, t'}$ (that is, the function that associates to each $x \in X$ the max of $t(x)$ and $t'(x)$), and similarly the greatest lower bound is $\min \set{t, t'}$.
 	Note that these operations, considered as binary operations on $T$, are internal (that is, given $t, t' \in T$, $\max \set{t, t'} \in T$ and $\min \set{t, t'} \in T$), as can be checked thanks to \cref{eq:tsat}.
 	Therefore, $<^\mathit{p}$ defines a lattice over $T$, with $\max$ as “join” and $\min$ as “meet” operations.
@@ -1950,7 +1952,10 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	Note that $T^\mathit{fav}$ is upwards-closed. Indeed, given any $t \in T$, $t \in T^\mathit{fav} ⇔ t(z) > 0$, and if $t <^\mathit{p} t'$, then $t(z) ≤ t'(z)$; thus, $[t \in T^\mathit{fav} \land t <^\mathit{p} t'] ⇒ t' \in T^\mathit{fav}$.
 	Similarly, $T^\mathit{cond}$ is upwards-closed.
 	
-	We can now apply FKG, which implies that if $<^\mathit{p}$ is a distributive lattice over $T$ and given upwards-closed sets $T^\mathit{fav} \subseteq T$ and $T^\mathit{cond} \subseteq T$, it holds that $\frac{\card{T^\mathit{fav}}}{\card{T}} ≤ \frac{\card{(T^\mathit{fav} \cap T^\mathit{cond})}}{\card{T^\mathit{cond}}}$.
+	We can now apply FKG, which implies that if $<^\mathit{p}$ is a distributive lattice over $T$ and given upwards-closed sets $T^\mathit{fav} \subseteq T$ and $T^\mathit{cond} \subseteq T$, it holds that $\frac{\card{T^\mathit{fav}}}{\card{T}} ≤ \frac{\card{(T^\mathit{fav} \cap T^\mathit{cond})}}{\card{T^\mathit{cond}}}$. Equivalently (as $\tau$ is a bijection):
+	\begin{equation}
+		\frac{\card{S^\mathit{fav}}}{\card{S^\mathit{sat}}} ≤ \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond})}}{\card{S^\mathit{cond}}}.
+	\end{equation}
 	
 	TODO: conclude! And check use of $n$.
 \end{proof}
@@ -1973,6 +1978,137 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
  	
 % 	Define $\Gamma_a = \overline{ucs(a)} \join a$.
  \end{proof}
+
+\section{Example for XYZ}
+Consider ${\ppref} = \emptyset$ over $X = \set{b, d, z}$.
+
+Here is $S$:
+\begin{equation}
+	\begin{array}{l|*{27}c}
+		\toprule
+		& s_1 & s_2  & \multicolumn{2}{c}{…}\\
+		\midrule
+		b & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2\\
+		d & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2 & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2 & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2\\
+		z & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2\\
+		\bottomrule
+	\end{array}
+\end{equation}
+
+Here is $T$:
+{
+	\scriptsize
+	\hspace*{-4cm}
+	\begin{equation}
+		\mkern-180mu
+		\hfuzz=6cm
+		\begin{array}{l|*{27}r}
+			\toprule
+			& \multicolumn{2}{l}{\tau(s_1)} & \multicolumn{2}{c}{…}\\
+			\midrule
+			b & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -2 & -2 & -2 & -2 & -2 & -2 & -2 & -2 & -2\\
+			d & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2 & -1 & -1 & -1 & 0 & 0 & 0 & 1 & 1 & 1 & -2 & -2 & -2 & -1 & -1 & -1 & 0 & 0 & 0\\
+			z & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & -1 & 0 & 1 & -1 & 0 & 1 & -1 & 0 & 1 & -2 & -1 & 0 & -2 & -1 & 0 & -2 & -1 & 0\\
+			\mathit{fav} & & \checkmark & \checkmark &  & \checkmark & \checkmark & & \checkmark & \checkmark & & & \checkmark & & & \checkmark & & & \checkmark\\
+			\mathit{cond} & & & & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & & & & & & & \checkmark & \checkmark & \checkmark\\
+			\bottomrule
+		\end{array}
+	\end{equation}
+}
+
+The lattice $>^p$ is shown in \cref{fig:lat}.
+\begin{figure}
+	\begin{center}
+		\begin{tikzpicture}[every text node part/.style={align=center}, xscale = 2, yscale = 1.6]
+			\tikzstyle{fav} = [font = \bfseries]
+			\tikzstyle{cond} = [draw, rectangle]
+   			\path (1, 0) node[fav, cond] (022) {0\\2 2};
+			\path (0, -1) node[fav, cond] (012) {0\\1 2};
+			\path (2, -1) node[fav, cond] (021) {0\\2 1};
+			\path (0, -2) node[fav] (002) {0\\0 2};
+			\path (1, -2) node[fav, cond] (011) {0\\1 1};
+			\path (2, -2) node[cond] (020) {0\\2 0};
+			\path (0, -3) node[fav] (001) {0\\0 1};
+			\path (1, -3) node[fav, cond] (-111) {-1\\1 1};
+			\path (2, -3) node[cond] (010) {0\\1 0};
+			\path (0, -4) node[fav] (-101) {-1\\0 1};
+			\path (1, -4) node (000) {0\\0 0};
+			\path (2, -4) node[cond] (-110) {-1\\1 0};
+			\path (0, -5) node[fav] (-1-11) {-1\\-1 1};
+			\path (1, -5) node (-100) {-1\\0 0};
+			\path (2, -5) node[cond] (-11-1) {-1\\1 -1};
+			\path (0, -6) node (-1-10) {-1\\-1 0};
+			\path (1, -6) node (-200) {-2\\0 0};
+			\path (2, -6) node (-10-1) {-1\\0 -1};
+			\path (0, -7) node (-2-10) {-1\\-1 0};
+			\path (1, -7) node (-1-1-1) {-1\\-1 -1};
+			\path (2, -7) node (-20-1) {-2\\0 -1};
+			\path (0, -8) node (-2-20) {-2\\-2 0};
+			\path (1, -8) node (-2-1-1) {-2\\-1 -1};
+			\path (2, -8) node (-20-2) {-2\\0 -2};
+			\path (0, -9) node (-2-2-1) {-2\\-2 -1};
+			\path (2, -9) node (-2-1-2) {-2\\-1 -2};
+			\path (1, -10) node (-2-2-2) {-2\\-2 -2};
+			
+			\path[draw] (022) -- (012);
+			\path[draw] (022) -- (021);
+			
+			\path[draw] (012) -- (011);
+			\path[draw] (012) -- (002);
+			\path[draw] (021) -- (011);
+			\path[draw] (021) -- (020);
+
+			\path[draw] (002) -- (001);
+			\path[draw] (011) -- (-111);
+			\path[draw] (011) -- (010);
+			\path[draw] (011) -- (001);
+			\path[draw] (020) -- (010);
+
+			\path[draw] (001) -- (-101);
+			\path[draw] (001) -- (000);
+			\path[draw] (-111) -- (-101);
+			\path[draw] (-111) -- (-110);
+			\path[draw] (010) -- (000);
+			\path[draw] (010) -- (-110);
+
+			\path[draw] (-101) -- (-1-11);
+			\path[draw] (-101) -- (-100);
+			\path[draw] (000) -- (-100);
+			\path[draw] (-110) -- (-100);
+			\path[draw] (-110) -- (-11-1);
+
+			\path[draw] (-1-11) -- (-1-10);
+			\path[draw] (-100) -- (-1-10);
+			\path[draw] (-100) -- (-200);
+			\path[draw] (-100) -- (-10-1);
+			\path[draw] (-11-1) -- (-10-1);
+
+			\path[draw] (-1-10) -- (-2-10);
+			\path[draw] (-1-10) -- (-1-1-1);
+			\path[draw] (-200) -- (-2-10);
+			\path[draw] (-200) -- (-1-1-1);
+			\path[draw] (-200) -- (-20-1);
+			\path[draw] (-10-1) -- (-1-1-1);
+			\path[draw] (-10-1) -- (-20-1);
+
+			\path[draw] (-2-10) -- (-2-20);
+			\path[draw] (-2-10) -- (-2-1-1);
+			\path[draw] (-1-1-1) -- (-2-1-1);
+			\path[draw] (-20-1) -- (-2-1-1);
+			\path[draw] (-20-1) -- (-20-2);
+
+			\path[draw] (-2-20) -- (-2-2-1);
+			\path[draw] (-2-1-1) -- (-2-2-1);
+			\path[draw] (-2-1-1) -- (-2-1-2);
+			\path[draw] (-20-2) -- (-2-1-2);
+
+			\path[draw] (-2-2-1) -- (-2-2-2);
+			\path[draw] (-2-1-2) -- (-2-2-2);
+		\end{tikzpicture}
+	\end{center}
+	\caption{The lattice $>^p$ on $T$ (writing $t(b)$ then $t(d)$ $t(z)$; “fav” are bold; “cond” are rectangles)}
+	\label{fig:lat}
+\end{figure}
 
 \section{Numerical examples for bound on delta}
 (About \cref{th:boundDelta}.)
