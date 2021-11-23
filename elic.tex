@@ -1926,13 +1926,14 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 \NewDocumentCommand{\join}{}{\sqcup}
 \NewDocumentCommand{\meet}{}{\sqcap}
 \begin{proof}[Rewrite of Shepp 1982]
-	Define $S \subseteq \intvl{0, n - 1}^X$ as the set of functions that assign an integer score to each object in $X$ and that satisfy $\ppref$, that is, that assign higher scores to better objects according to $\ppref$ ($x \ppref y ⇒ s(x) > s(y)$).
-	Define $S^\mathit{fav} \subseteq S$ as the subset of functions that also satisfy $z \ppref b$, thus, $s(z) > s(b)$.
-	Define $S^\mathit{cond} \subseteq S$ as the subset of functions that satisfy $\ppref$ and also $d \ppref b$, thus, $s(d) > s(b)$.
+	Define the set $S = \intvl{0, n - 1}^X$ of scoring functions as the set of functions that assign an integer score to each object in $X$.
+	Define $S^\mathit{sat} \subseteq S$ as the set of scoring functions that satisfy $\ppref$, that is, that assign higher scores to better objects according to $\ppref$ ($x \ppref y ⇒ s(x) > s(y)$).
+	Define $S^\mathit{fav} \subseteq S^\mathit{sat}$ as the subset of functions that also satisfy $z \ppref b$, thus, $s(z) > s(b)$.
+	Define $S^\mathit{cond} \subseteq S^\mathit{sat}$ as the subset of functions that satisfy $\ppref$ and also $d \ppref b$, thus, $s(d) > s(b)$.
 	
 	Define $\tau: S → \intvl{-(n - 1), n - 1}^X$ as $t(s) = \set{(b, -s(b)} \cup \set{(x, s(x) - s(b) \suchthat b ≠ x \in X}$. 
 	Compared to $s \in S$, $t = \tau(s)$ negates the score of $b$ and associates each other object to its difference of score compared to $b$, that difference being positive iff the object is preferred to $b$ according to $s$.
-	As $\tau$ is invertible, $\tau$ is a bijection from $S$ onto $T = \tau(S)$. 
+	As $\tau$ is invertible, $\tau$ is an injection, thus, the restriction of $\tau$ to $S^\mathit{sat}$ is a bijection from $S^\mathit{sat}$ onto $T = \tau(S^\mathit{sat})$. 
 	Note that, given $t \in \tau(S)$, and letting $s \in S$ denote $\tau^{-1}(t)$, we have $t \in T ⇔ [\forall x \ppref y: s(x) - s(b) > s(y) - s(b)]$. Thus: 
 	\begin{equation}
 		\label{eq:tsat}
@@ -1953,7 +1954,7 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	
 	We can now apply FKG, which implies that if $<^\mathit{p}$ is a distributive lattice over $T$ and given upwards-closed sets $T^\mathit{fav} \subseteq T$ and $T^\mathit{cond} \subseteq T$, it holds that $\frac{\card{T^\mathit{fav}}}{\card{T}} ≤ \frac{\card{(T^\mathit{fav} \cap T^\mathit{cond})}}{\card{T^\mathit{cond}}}$. Equivalently (as $\tau$ is a bijection):
 	\begin{equation}
-		\frac{\card{S^\mathit{fav}}}{\card{S}} ≤ \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond})}}{\card{S^\mathit{cond}}}.
+		\frac{\card{S^\mathit{fav}}}{\card{S^\mathit{sat}}} ≤ \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond})}}{\card{S^\mathit{cond}}}.
 	\end{equation}
 	
 	TODO: conclude! And check use of $n$.
