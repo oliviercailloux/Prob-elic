@@ -1933,26 +1933,26 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	
 	Define $\tau: S → \intvl{-(n - 1), n - 1}^X$ as $t(s) = \set{(b, -s(b)} \cup \set{(x, s(x) - s(b) \suchthat b ≠ x \in X}$. 
 	Compared to $s \in S$, $t = \tau(s)$ negates the score of $b$ and associates each other object to its difference of score compared to $b$, that difference being positive iff the object is preferred to $b$ according to $s$.
-	As $\tau$ is invertible, $\tau$ is an injection, thus, the restriction of $\tau$ to $S^\mathit{sat}$ is a bijection from $S^\mathit{sat}$ onto $T = \tau(S^\mathit{sat})$. 
-	Note that, given $t \in \tau(S)$, and letting $s \in S$ denote $\tau^{-1}(t)$, we have $t \in T ⇔ [\forall x \ppref y: s(x) - s(b) > s(y) - s(b)]$. Thus: 
+	As $\tau$ is invertible, $\tau$ is an injection, thus, the restriction of $\tau$ to $S^\mathit{sat}$ is a bijection from $S^\mathit{sat}$ onto $T^\mathit{sat} = \tau(S^\mathit{sat})$. 
+	Note that, given $t \in \tau(S)$, and letting $s \in S$ denote $\tau^{-1}(t)$, we have $t \in T^\mathit{sat} ⇔ [\forall x \ppref y: s(x) - s(b) > s(y) - s(b)]$. Thus: 
 	\begin{equation}
 		\label{eq:tsat}
-		t \in T ⇔ [\forall b ≠ x \ppref y ≠ b: t(x) > t(y)] \land [\forall x \ppref b: t(x) > 0] \land [\forall x \pprefinv b: t(x) < 0].
+		t \in T^\mathit{sat} ⇔ [\forall b ≠ x \ppref y ≠ b: t(x) > t(y)] \land [\forall x \ppref b: t(x) > 0] \land [\forall x \pprefinv b: t(x) < 0].
 	\end{equation}
 	
-	Define $T^\mathit{fav} = \tau(S^\mathit{fav}) \subseteq T$ and $T^\mathit{cond} = \tau(S^\mathit{cond}) \subseteq T$.
+	Define $T^\mathit{fav} = \tau(S^\mathit{fav}) \subseteq T^\mathit{sat}$ and $T^\mathit{cond} = \tau(S^\mathit{cond}) \subseteq T^\mathit{sat}$.
 	
-	Define a partial ordering $<^\mathit{p}$ over $T$ as the classical Pareto-dominance over functions: $t <^p t' ⇔ [t ≠ t'] \land [\forall x \in X: t(x) ≤ t'(x)]$.
+	Define a partial ordering $<^\mathit{p}$ over $T^\mathit{sat}$ as the classical Pareto-dominance over functions: $t <^p t' ⇔ [t ≠ t'] \land [\forall x \in X: t(x) ≤ t'(x)]$.
 	It follows that the least upper bound of $t$ and $t'$ in $<^\mathit{p}$ is the functional max, $\max \set{t, t'}$ (that is, the function that associates to each $x \in X$ the max of $t(x)$ and $t'(x)$), and similarly the greatest lower bound is $\min \set{t, t'}$.
-	Note that these operations, considered as binary operations on $T$, are internal (that is, given $t, t' \in T$, $\max \set{t, t'} \in T$ and $\min \set{t, t'} \in T$), as can be checked thanks to \cref{eq:tsat}.
-	Therefore, $<^\mathit{p}$ defines a lattice over $T$, with $\max$ as “join” and $\min$ as “meet” operations.
+	Note that these operations, considered as binary operations on $T^\mathit{sat}$, are internal (that is, given $t, t' \in T^\mathit{sat}$, $\max \set{t, t'} \in T^\mathit{sat}$ and $\min \set{t, t'} \in T^\mathit{sat}$), as can be checked thanks to \cref{eq:tsat}.
+	Therefore, $<^\mathit{p}$ defines a lattice over $T^\mathit{sat}$, with $\max$ as “join” and $\min$ as “meet” operations.
 	Furthermore, this lattice is distributive, meaning that $\max \set{t, \min \set{t', t^{\prime\prime}}} = \min \set{\max \set{t, t'}, \max \set{t, t^{\prime\prime}}}$.
 	
-	Say that a set $T' \subseteq T$ is upwards-closed iff it is closed under upper contour sets, that is, $\forall t \in T': [\forall t' \in T: t <^\mathit{p} t' ⇒ t' \in T']$.
-	Note that $T^\mathit{fav}$ is upwards-closed. Indeed, given any $t \in T$, $t \in T^\mathit{fav} ⇔ t(z) > 0$, and if $t <^\mathit{p} t'$, then $t(z) ≤ t'(z)$; thus, $[t \in T^\mathit{fav} \land t <^\mathit{p} t'] ⇒ t' \in T^\mathit{fav}$.
+	Say that a set $T' \subseteq T^\mathit{sat}$ is upwards-closed iff it is closed under upper contour sets, that is, $\forall t \in T': [\forall t' \in T^\mathit{sat}: t <^\mathit{p} t' ⇒ t' \in T']$.
+	Note that $T^\mathit{fav}$ is upwards-closed. Indeed, given any $t \in T^\mathit{sat}$, $t \in T^\mathit{fav} ⇔ t(z) > 0$, and if $t <^\mathit{p} t'$, then $t(z) ≤ t'(z)$; thus, $[t \in T^\mathit{fav} \land t <^\mathit{p} t'] ⇒ t' \in T^\mathit{fav}$.
 	Similarly, $T^\mathit{cond}$ is upwards-closed.
 	
-	We can now apply FKG, which implies that if $<^\mathit{p}$ is a distributive lattice over $T$ and given upwards-closed sets $T^\mathit{fav} \subseteq T$ and $T^\mathit{cond} \subseteq T$, it holds that $\frac{\card{T^\mathit{fav}}}{\card{T}} ≤ \frac{\card{(T^\mathit{fav} \cap T^\mathit{cond})}}{\card{T^\mathit{cond}}}$. Equivalently (as $\tau$ is a bijection):
+	We can now apply FKG, which implies that if $<^\mathit{p}$ is a distributive lattice over $T^\mathit{sat}$ and given upwards-closed sets $T^\mathit{fav} \subseteq T^\mathit{sat}$ and $T^\mathit{cond} \subseteq T^\mathit{sat}$, it holds that $\frac{\card{T^\mathit{fav}}}{\card{T^\mathit{sat}}} ≤ \frac{\card{(T^\mathit{fav} \cap T^\mathit{cond})}}{\card{T^\mathit{cond}}}$. Equivalently (as $\tau$ is a bijection):
 	\begin{equation}
 		\frac{\card{S^\mathit{fav}}}{\card{S^\mathit{sat}}} ≤ \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond})}}{\card{S^\mathit{cond}}}.
 	\end{equation}
