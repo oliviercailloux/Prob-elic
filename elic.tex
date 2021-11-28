@@ -1963,11 +1963,6 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	
 	Because any linear order ${\pref} \in \linors$ is represented by exactly $\binom{N}{n}$ scoring functions that are all injective, with no function representing two distinct linear orders,
 	given any ${\ppref'} \in \POs$, $P({\ppref'}) = \frac{\card{\set{{\pref} \in \linors \suchthat {\pref} \supseteq {\ppref'}}}}{\card{\linors}} = \frac{\binom{N}{n} \card{\set{{\pref} \in \linors \suchthat {\pref} \supseteq {\ppref'}}}}{\binom{N}{n} \card{\linors}} = \frac{\card{(S^{\ppref'} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$.
-%	In particular, $P({\ppref}) = \frac{\card{(S^\mathit{sat} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$,
-%	$P({\ppref} \cup \set{(z, b)}) = \frac{\card{(S^\mathit{fav} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$,
-%	$P({\ppref} \cup \set{(d, b)}) = \frac{\card{(S^\mathit{cond} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$
-%	and
-%	$P({\ppref} \cup \set{(z, b), (d, b)}) = \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$.
 
 	Define $S^\mathit{inj} \subseteq S$ as the injective scoring functions. There are $\prod_{0 ≤ i ≤ n} (N - i)$ ways of associating to each of $n$ objects a number out of $N$ possible ones without repetition, hence, $\frac{\card{S}}{\card{S^\mathit{inj}}} = \frac{N^n}{\prod_{0 ≤ i ≤ n} (N - i)}$.
 	It follows that $\lim_{N → \infty} \frac{\card{S}}{\card{S^\mathit{inj}}} = 1$.
@@ -2036,10 +2031,20 @@ Here are $S$ and $T$ (using $\intvl{0, 2}$ as codomain instead of $\intvl{1, 3}$
 The lattice $>^p$ is shown in \cref{fig:lat}.
 \begin{figure}
 	\begin{center}
-		\begin{tikzpicture}[every text node part/.style={align=center}, xscale = 2, yscale = 1.6]
+		\begin{tikzpicture}[xscale = 2, yscale = 1.6, nodes = {execute at begin node=$, execute at end node=$}]
+			\tikzstyle{fav} = [font = \boldmath]
+			\tikzstyle{cond} = [draw, rectangle, inner xsep=1pt]
+   			\path (1, 0) node[fav, cond] (022) {
+				\setlength{\arraycolsep}{2pt}
+				\renewcommand{\arraystretch}{0.5}
+				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					2 & 2\\
+ 					\addlinespace[-2pt]
+ 				\end{array}
+   			};
+   			\tikzset{every text node part/.style={align=center}}
 			\tikzstyle{fav} = [font = \bfseries]
-			\tikzstyle{cond} = [draw, rectangle]
-   			\path (1, 0) node[fav, cond] (022) {0\\2 2};
 			\path (0, -1) node[fav, cond] (012) {0\\1 2};
 			\path (2, -1) node[fav, cond] (021) {0\\2 1};
 			\path (0, -2) node[fav] (002) {0\\0 2};
@@ -2219,8 +2224,9 @@ The compressed lattice $>^p$ is shown in \cref{fig:latCompressed}.
 		\begin{tikzpicture}[xscale = 5, yscale = 1.6, nodes = {execute at begin node=$, execute at end node=$}]
 			\tikzstyle{fav} = [font = \boldmath]
 			\tikzstyle{cond} = [draw, rectangle]
-   			\path (1, 0) node[fav, cond] (tinv022) {
- 				\begin{array}{cc}
+			\path (1, 0) node[fav, cond] (tinv022) {
+				\setlength{\arraycolsep}{1pt}
+				\begin{array}{cc}
  					\multicolumn{2}{c}{0}\\
  					2 & 2
  				\end{array}
