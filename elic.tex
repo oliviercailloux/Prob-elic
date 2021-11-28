@@ -1918,7 +1918,7 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 \appendix
 \section{Proof of the XYZ claim}
 \begin{theorem}[XYZ]
-	Consider $b, d, z \in X$ and any poset ${\ppref} \in \POs$ such that $b \nppref d$. We have:
+	Consider $b, d, z \in X$ and any poset ${\ppref} \in \POs$ such that $b ≠ d$ and $b \nppref d$. We have:
 	\begin{equation}
 		P(z \ppref b \knowing {\ppref}) ≤ P(z \ppref b \knowing {\ppref}, d \ppref b).
 	\end{equation}
@@ -1926,12 +1926,15 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 \NewDocumentCommand{\join}{}{\sqcup}
 \NewDocumentCommand{\meet}{}{\sqcap}
 \begin{proof}[Rewrite of Shepp 1982]
-	Define the set $S = \intvl{0, n - 1}^X$ of scoring functions as the set of functions that assign an integer score to each object in $X$.
-	Define $S^\mathit{sat} \subseteq S$ as the set of scoring functions that satisfy $\ppref$, that is, that assign higher scores to better objects according to $\ppref$ ($x \ppref y ⇒ s(x) > s(y)$).
-	Define $S^\mathit{fav} \subseteq S^\mathit{sat}$ as the subset of functions that also satisfy $z \ppref b$, thus, $s(z) > s(b)$.
-	Define $S^\mathit{cond} \subseteq S^\mathit{sat}$ as the subset of functions that satisfy $\ppref$ and also $d \ppref b$, thus, $s(d) > s(b)$.
+	Pick any integer $N ≥ n$.
+	Define the set $S = \intvl{1, N}^X$ of scoring functions as the set of functions that assign an integer score up to $N$ to each object in $X$.
+	Given any ${\ppref'} \in \POs$, 
+	define $S^{\ppref'} \subseteq S$ as the set of scoring functions that satisfy $\ppref'$, that is, that assign higher scores to better objects according to $\ppref'$ ($x \ppref' y ⇒ s(x) > s(y)$).
+	In particular, define $S^\mathit{sat} = S^{\ppref}$ as the set of scoring functions that satisfy $\ppref$, 
+	$S^\mathit{fav} = S^{{\ppref} \cup \set{(z, b)}} \subseteq S^\mathit{sat}$ as the subset of functions that also satisfy $z \ppref b$, thus, with $s(z) > s(b)$, and
+	$S^\mathit{cond} = S^{{\ppref} \cup \set{(d, b)}} \subseteq S^\mathit{sat}$ as the subset of functions that satisfy $\ppref$ and $d \ppref b$, thus, with $s(d) > s(b)$.
 	
-	Define $\tau: S → \intvl{-(n - 1), n - 1}^X$ as $t(s) = \set{(b, -s(b)} \cup \set{(x, s(x) - s(b) \suchthat b ≠ x \in X}$. 
+	Define $\tau: S → \intvl{-N, N}^X$ as $\tau(s) = \set{(b, -s(b)} \cup \set{(x, s(x) - s(b) \suchthat b ≠ x \in X}$. 
 	Compared to $s \in S$, $t = \tau(s)$ negates the score of $b$ and associates each other object to its difference of score compared to $b$, that difference being positive iff the object is preferred to $b$ according to $s$.
 	As $\tau$ is invertible, $\tau$ is an injection, thus, the restriction of $\tau$ to $S^\mathit{sat}$ is a bijection from $S^\mathit{sat}$ onto $T^\mathit{sat} = \tau(S^\mathit{sat})$. 
 	Note that, given $t \in \tau(S)$, and letting $s \in S$ denote $\tau^{-1}(t)$, we have $t \in T^\mathit{sat} ⇔ [\forall x \ppref y: s(x) - s(b) > s(y) - s(b)]$. Thus: 
@@ -1954,10 +1957,33 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	
 	We can now apply FKG, which implies that if $<^\mathit{p}$ is a distributive lattice over $T^\mathit{sat}$ and given upwards-closed sets $T^\mathit{fav} \subseteq T^\mathit{sat}$ and $T^\mathit{cond} \subseteq T^\mathit{sat}$, it holds that $\frac{\card{T^\mathit{fav}}}{\card{T^\mathit{sat}}} ≤ \frac{\card{(T^\mathit{fav} \cap T^\mathit{cond})}}{\card{T^\mathit{cond}}}$. Equivalently (as $\tau$ is a bijection):
 	\begin{equation}
+		\label{eq:Scomp}
 		\frac{\card{S^\mathit{fav}}}{\card{S^\mathit{sat}}} ≤ \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond})}}{\card{S^\mathit{cond}}}.
 	\end{equation}
+
+	Define $S^\mathit{inj} \subseteq S$ as the injective scoring functions. There are $\prod_{0 ≤ i ≤ n} (N - i)$ ways of associating to each of $n$ objects a number out of $N$ possible ones without repetition, hence, $\frac{\card{S^\mathit{inj}}}{\card{S}} = \frac{\prod_{0 ≤ i ≤ n} (N - i)}{N^n}$.
+	It follows that $\lim_{N → \infty} \frac{\card{S^\mathit{inj}}}{\card{S}} = 1$.
+	Define $S^\mathit{ties} = S \setminus S^\mathit{inj}$ as the non-injective scoring functions.
+	When $N$ grows,
+	$\frac{\card{S^\mathit{ties}}}{\card{S}} → 0$,
+	thus, $\forall V \subseteq S$, $\frac{\card{(V \cap S^\mathit{ties})}}{\card{S}} → 0$,
+	whence $\frac{\card{V}}{\card{S}} = \frac{\card{(V \cap S^\mathit{ties})} + \card{(V \cap S^\mathit{inj})}}{\card{S}} → \frac{\card{(V \cap S^\mathit{inj})}}{\card{S}}$.
 	
-	TODO: conclude! And check use of $n$.
+	It follows from this and \cref{eq:Scomp} that:
+	\begin{equation}
+		\label{eq:SinjComp}
+		\frac{\card{(S^\mathit{fav} \cap S^\mathit{inj})}}{\card{(S^\mathit{sat} \cap S^\mathit{inj})}} ≤ \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond} \cap S^\mathit{inj})}}{\card{(S^\mathit{cond} \cap S^\mathit{inj})}}.
+	\end{equation}
+	
+	Because any linear order ${\pref} \in \linors$ is represented by exactly $\binom{N}{n}$ scoring functions that are all injective, with no function representing two distinct linear orders,
+	given any ${\ppref'} \in \POs$, $P({\ppref'}) = \frac{\card{\set{{\pref} \in \linors \suchthat {\pref} \supseteq {\ppref'}}}}{\card{\linors}} = \frac{\binom{N}{n} \card{\set{{\pref} \in \linors \suchthat {\pref} \supseteq {\ppref'}}}}{\binom{N}{n} \card{\linors}} = \frac{\card{(S^{\ppref'} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$.
+	In particular, $P({\ppref}) = \frac{\card{(S^\mathit{sat} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$,
+	$P({\ppref} \cup \set{(z, b)}) = \frac{\card{(S^\mathit{fav} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$,
+	$P({\ppref} \cup \set{(d, b)}) = \frac{\card{(S^\mathit{cond} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$
+	and
+	$P({\ppref} \cup \set{(z, b), (d, b)}) = \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$.
+	
+	Multiplying both sides of \cref{eq:SinjComp} by $\frac{1 / \card{S^\mathit{inj}}}{1 / \card{S^\mathit{inj}}}$ and replacing by the corresponding probabilities permit to conclude.
 \end{proof}
 
 \begin{theorem}[FKG binary]
@@ -1980,30 +2006,23 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
  \end{proof}
 
 \section{Example for XYZ}
-Consider ${\ppref} = \emptyset$ over $X = \set{b, d, z}$.
+Consider ${\ppref} = \emptyset$ over $X = \set{b, d, z}$. Define $N = 3$.
 
-Here is $S$:
-\begin{equation}
-	\begin{array}{l|*{27}c}
-		\toprule
-		& s_1 & s_2  & \multicolumn{2}{c}{…}\\
-		\midrule
-		b & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2\\
-		d & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2 & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2 & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2\\
-		z & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2\\
-		\bottomrule
-	\end{array}
-\end{equation}
-
-Here is $T$:
+Here are $S$ and $T$ (using $\intvl{0, 2}$ as codomain instead of $\intvl{1, 3}$):
 {
 	\scriptsize
 	\hspace*{-4cm}
 	\begin{equation}
 		\mkern-180mu
 		\hfuzz=6cm
-		\begin{array}{l|*{27}r}
+		\begin{array}{l|*{27}c}
 			\toprule
+			& s_1 & s_2  & \multicolumn{2}{c}{…}\\
+			\midrule
+			b & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2\\
+			d & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2 & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2 & 0 & 0 & 0 & 1 & 1 & 1 & 2 & 2 & 2\\
+			z & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2\\
+			\midrule
 			& \multicolumn{2}{l}{\tau(s_1)} & \multicolumn{2}{c}{…}\\
 			\midrule
 			b & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -2 & -2 & -2 & -2 & -2 & -2 & -2 & -2 & -2\\
@@ -2040,7 +2059,7 @@ The lattice $>^p$ is shown in \cref{fig:lat}.
 			\path (0, -6) node (-1-10) {-1\\-1 0};
 			\path (1, -6) node (-200) {-2\\0 0};
 			\path (2, -6) node (-10-1) {-1\\0 -1};
-			\path (0, -7) node (-2-10) {-1\\-1 0};
+			\path (0, -7) node (-2-10) {-2\\-1 0};
 			\path (1, -7) node (-1-1-1) {-1\\-1 -1};
 			\path (2, -7) node (-20-1) {-2\\0 -1};
 			\path (0, -8) node (-2-20) {-2\\-2 0};
@@ -2104,10 +2123,303 @@ The lattice $>^p$ is shown in \cref{fig:lat}.
 
 			\path[draw] (-2-2-1) -- (-2-2-2);
 			\path[draw] (-2-1-2) -- (-2-2-2);
+
+   			\path (1, 0) ++(4, 0) node[fav, cond] (tinv022) {0\\2 2};
+			\path (0, -1) ++(4, 0) node[fav, cond] (tinv012) {0\\1 2};
+			\path (2, -1) ++(4, 0) node[fav, cond] (tinv021) {0\\2 1};
+			\path (0, -2) ++(4, 0) node[fav] (tinv002) {0\\0 2};
+			\path (1, -2) ++(4, 0) node[fav, cond] (tinv011) {0\\1 1};
+			\path (2, -2) ++(4, 0) node[cond] (tinv020) {0\\2 0};
+			\path (0, -3) ++(4, 0) node[fav] (tinv001) {0\\0 1};
+			\path (1, -3) ++(4, 0) node[fav, cond] (tinv-111) {1\\2 2};
+			\path (2, -3) ++(4, 0) node[cond] (tinv010) {0\\1 0};
+			\path (0, -4) ++(4, 0) node[fav] (tinv-101) {1\\1 2};
+			\path (1, -4) ++(4, 0) node (tinv000) {0\\0 0};
+			\path (2, -4) ++(4, 0) node[cond] (tinv-110) {1\\2 1};
+			\path (0, -5) ++(4, 0) node[fav] (tinv-1-11) {1\\0 2};
+			\path (1, -5) ++(4, 0) node (tinv-100) {1\\1 1};
+			\path (2, -5) ++(4, 0) node[cond] (tinv-11-1) {1\\2 0};
+			\path (0, -6) ++(4, 0) node (tinv-1-10) {1\\0 1};
+			\path (1, -6) ++(4, 0) node (tinv-200) {2\\2 2};
+			\path (2, -6) ++(4, 0) node (tinv-10-1) {1\\1 0};
+			\path (0, -7) ++(4, 0) node (tinv-2-10) {2\\1 2};
+			\path (1, -7) ++(4, 0) node (tinv-1-1-1) {1\\0 0};
+			\path (2, -7) ++(4, 0) node (tinv-20-1) {2\\2 1};
+			\path (0, -8) ++(4, 0) node (tinv-2-20) {2\\0 2};
+			\path (1, -8) ++(4, 0) node (tinv-2-1-1) {2\\1 1};
+			\path (2, -8) ++(4, 0) node (tinv-20-2) {2\\2 0};
+			\path (0, -9) ++(4, 0) node (tinv-2-2-1) {2\\0 1};
+			\path (2, -9) ++(4, 0) node (tinv-2-1-2) {2\\1 0};
+			\path (1, -10) ++(4, 0) node (tinv-2-2-2) {2\\0 0};
+			
+			\path[draw] (tinv022) -- (tinv012);
+			\path[draw] (tinv022) -- (tinv021);
+			
+			\path[draw] (tinv012) -- (tinv011);
+			\path[draw] (tinv012) -- (tinv002);
+			\path[draw] (tinv021) -- (tinv011);
+			\path[draw] (tinv021) -- (tinv020);
+
+			\path[draw] (tinv002) -- (tinv001);
+			\path[draw] (tinv011) -- (tinv-111);
+			\path[draw] (tinv011) -- (tinv010);
+			\path[draw] (tinv011) -- (tinv001);
+			\path[draw] (tinv020) -- (tinv010);
+
+			\path[draw] (tinv001) -- (tinv-101);
+			\path[draw] (tinv001) -- (tinv000);
+			\path[draw] (tinv-111) -- (tinv-101);
+			\path[draw] (tinv-111) -- (tinv-110);
+			\path[draw] (tinv010) -- (tinv000);
+			\path[draw] (tinv010) -- (tinv-110);
+
+			\path[draw] (tinv-101) -- (tinv-1-11);
+			\path[draw] (tinv-101) -- (tinv-100);
+			\path[draw] (tinv000) -- (tinv-100);
+			\path[draw] (tinv-110) -- (tinv-100);
+			\path[draw] (tinv-110) -- (tinv-11-1);
+
+			\path[draw] (tinv-1-11) -- (tinv-1-10);
+			\path[draw] (tinv-100) -- (tinv-1-10);
+			\path[draw] (tinv-100) -- (tinv-200);
+			\path[draw] (tinv-100) -- (tinv-10-1);
+			\path[draw] (tinv-11-1) -- (tinv-10-1);
+
+			\path[draw] (tinv-1-10) -- (tinv-2-10);
+			\path[draw] (tinv-1-10) -- (tinv-1-1-1);
+			\path[draw] (tinv-200) -- (tinv-2-10);
+			\path[draw] (tinv-200) -- (tinv-1-1-1);
+			\path[draw] (tinv-200) -- (tinv-20-1);
+			\path[draw] (tinv-10-1) -- (tinv-1-1-1);
+			\path[draw] (tinv-10-1) -- (tinv-20-1);
+
+			\path[draw] (tinv-2-10) -- (tinv-2-20);
+			\path[draw] (tinv-2-10) -- (tinv-2-1-1);
+			\path[draw] (tinv-1-1-1) -- (tinv-2-1-1);
+			\path[draw] (tinv-20-1) -- (tinv-2-1-1);
+			\path[draw] (tinv-20-1) -- (tinv-20-2);
+
+			\path[draw] (tinv-2-20) -- (tinv-2-2-1);
+			\path[draw] (tinv-2-1-1) -- (tinv-2-2-1);
+			\path[draw] (tinv-2-1-1) -- (tinv-2-1-2);
+			\path[draw] (tinv-20-2) -- (tinv-2-1-2);
+
+			\path[draw] (tinv-2-2-1) -- (tinv-2-2-2);
+			\path[draw] (tinv-2-1-2) -- (tinv-2-2-2);
 		\end{tikzpicture}
 	\end{center}
 	\caption{The lattice $>^p$ on $T$ (writing $t(b)$ then $t(d)$ $t(z)$; “fav” are bold; “cond” are rectangles)}
 	\label{fig:lat}
+\end{figure}
+
+The compressed lattice $>^p$ is shown in \cref{fig:latCompressed}.
+\begin{figure}
+	\begin{center}
+%		\scriptsize
+		\hspace*{-3cm}
+		\hfuzz=6cm
+		\begin{tikzpicture}[xscale = 5, yscale = 1.6, nodes = {execute at begin node=$, execute at end node=$}]
+			\tikzstyle{fav} = [font = \boldmath]
+			\tikzstyle{cond} = [draw, rectangle]
+   			\path (1, 0) node[fav, cond] (tinv022) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					2 & 2
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					1 & 1
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{1}\\
+ 					2 & 2
+ 				\end{array}
+   			};
+   			\path (0, -1) node[fav, cond] (tinv012) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					1 & 2
+ 				\end{array}
+   			};
+			\path (2, -1) node[fav, cond] (tinv021) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					2 & 1
+ 				\end{array}
+			};
+			\path (0, -2) node[fav] (tinv002) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					0 & 2
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					0 & 1
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{1}\\
+ 					1 & 2
+ 				\end{array}
+			};
+			\path (2, -2) node[cond] (tinv020) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					2 & 0
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					1 & 0
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{1}\\
+ 					2 & 1
+ 				\end{array}
+			};
+			\path (1, -4) node (tinv000) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{0}\\
+ 					0 & 0
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{1}\\
+ 					1 & 1
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					2 & 2
+ 				\end{array}
+			};
+			\path (0, -5) node[fav] (tinv-1-11) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{1}\\
+ 					0 & 2
+ 				\end{array}
+			};
+			\path (2, -5) node[cond] (tinv-11-1) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{1}\\
+ 					2 & 0
+ 				\end{array}
+			};
+			\path (0, -6) node (tinv-1-10) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{1}\\
+ 					0 & 1
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					0 & 2
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					1 & 2
+ 				\end{array}
+			};
+			\path (2, -6) node (tinv-10-1) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{1}\\
+ 					1 & 0
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					2 & 0
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					2 & 1
+ 				\end{array}
+			};
+			\path (1, -7) node (tinv-1-1-1) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{1}\\
+ 					0 & 0
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					0 & 0
+ 				\end{array}
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					1 & 1
+ 				\end{array}
+			};
+			\path (0, -9) node (tinv-2-2-1) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					0 & 1
+ 				\end{array}
+			};
+			\path (2, -9) node (tinv-2-1-2) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					1 & 0
+ 				\end{array}
+			};
+			\path (1, -10) node (tinv-2-2-2) {
+ 				\begin{array}{cc}
+ 					\multicolumn{2}{c}{2}\\
+ 					0 & 0
+ 				\end{array}
+			};
+%			
+%			\path[draw] (022) -- (012);
+%			\path[draw] (022) -- (021);
+%			
+%			\path[draw] (012) -- (011);
+%			\path[draw] (012) -- (002);
+%			\path[draw] (021) -- (011);
+%			\path[draw] (021) -- (020);
+%
+%			\path[draw] (002) -- (001);
+%			\path[draw] (011) -- (-111);
+%			\path[draw] (011) -- (010);
+%			\path[draw] (011) -- (001);
+%			\path[draw] (020) -- (010);
+%
+%			\path[draw] (001) -- (-101);
+%			\path[draw] (001) -- (000);
+%			\path[draw] (-111) -- (-101);
+%			\path[draw] (-111) -- (-110);
+%			\path[draw] (010) -- (000);
+%			\path[draw] (010) -- (-110);
+%
+%			\path[draw] (-101) -- (-1-11);
+%			\path[draw] (-101) -- (-100);
+%			\path[draw] (000) -- (-100);
+%			\path[draw] (-110) -- (-100);
+%			\path[draw] (-110) -- (-11-1);
+%
+%			\path[draw] (-1-11) -- (-1-10);
+%			\path[draw] (-100) -- (-1-10);
+%			\path[draw] (-100) -- (-200);
+%			\path[draw] (-100) -- (-10-1);
+%			\path[draw] (-11-1) -- (-10-1);
+%
+%			\path[draw] (-1-10) -- (-2-10);
+%			\path[draw] (-1-10) -- (-1-1-1);
+%			\path[draw] (-200) -- (-2-10);
+%			\path[draw] (-200) -- (-1-1-1);
+%			\path[draw] (-200) -- (-20-1);
+%			\path[draw] (-10-1) -- (-1-1-1);
+%			\path[draw] (-10-1) -- (-20-1);
+%
+%			\path[draw] (-2-10) -- (-2-20);
+%			\path[draw] (-2-10) -- (-2-1-1);
+%			\path[draw] (-1-1-1) -- (-2-1-1);
+%			\path[draw] (-20-1) -- (-2-1-1);
+%			\path[draw] (-20-1) -- (-20-2);
+%
+%			\path[draw] (-2-20) -- (-2-2-1);
+%			\path[draw] (-2-1-1) -- (-2-2-1);
+%			\path[draw] (-2-1-1) -- (-2-1-2);
+%			\path[draw] (-20-2) -- (-2-1-2);
+%
+%			\path[draw] (-2-2-1) -- (-2-2-2);
+%			\path[draw] (-2-1-2) -- (-2-2-2);
+		\end{tikzpicture}
+	\end{center}
+	\caption{The lattice $>^p$ on $T$ (writing $t(b)$ then $t(d)$ $t(z)$; “fav” are bold; “cond” are rectangles)}
+	\label{fig:latCompressed}
 \end{figure}
 
 \section{Numerical examples for bound on delta}
