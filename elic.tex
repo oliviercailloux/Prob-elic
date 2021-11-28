@@ -1960,30 +1960,28 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 		\label{eq:Scomp}
 		\frac{\card{S^\mathit{fav}}}{\card{S^\mathit{sat}}} ≤ \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond})}}{\card{S^\mathit{cond}}}.
 	\end{equation}
-
-	Define $S^\mathit{inj} \subseteq S$ as the injective scoring functions. There are $\prod_{0 ≤ i ≤ n} (N - i)$ ways of associating to each of $n$ objects a number out of $N$ possible ones without repetition, hence, $\frac{\card{S^\mathit{inj}}}{\card{S}} = \frac{\prod_{0 ≤ i ≤ n} (N - i)}{N^n}$.
-	It follows that $\lim_{N → \infty} \frac{\card{S^\mathit{inj}}}{\card{S}} = 1$.
-	Define $S^\mathit{ties} = S \setminus S^\mathit{inj}$ as the non-injective scoring functions.
-	When $N$ grows,
-	$\frac{\card{S^\mathit{ties}}}{\card{S}} → 0$,
-	thus, $\forall V \subseteq S$, $\frac{\card{(V \cap S^\mathit{ties})}}{\card{S}} → 0$,
-	whence $\frac{\card{V}}{\card{S}} = \frac{\card{(V \cap S^\mathit{ties})} + \card{(V \cap S^\mathit{inj})}}{\card{S}} → \frac{\card{(V \cap S^\mathit{inj})}}{\card{S}}$.
-	
-	It follows from this and \cref{eq:Scomp} that:
-	\begin{equation}
-		\label{eq:SinjComp}
-		\frac{\card{(S^\mathit{fav} \cap S^\mathit{inj})}}{\card{(S^\mathit{sat} \cap S^\mathit{inj})}} ≤ \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond} \cap S^\mathit{inj})}}{\card{(S^\mathit{cond} \cap S^\mathit{inj})}}.
-	\end{equation}
 	
 	Because any linear order ${\pref} \in \linors$ is represented by exactly $\binom{N}{n}$ scoring functions that are all injective, with no function representing two distinct linear orders,
 	given any ${\ppref'} \in \POs$, $P({\ppref'}) = \frac{\card{\set{{\pref} \in \linors \suchthat {\pref} \supseteq {\ppref'}}}}{\card{\linors}} = \frac{\binom{N}{n} \card{\set{{\pref} \in \linors \suchthat {\pref} \supseteq {\ppref'}}}}{\binom{N}{n} \card{\linors}} = \frac{\card{(S^{\ppref'} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$.
-	In particular, $P({\ppref}) = \frac{\card{(S^\mathit{sat} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$,
-	$P({\ppref} \cup \set{(z, b)}) = \frac{\card{(S^\mathit{fav} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$,
-	$P({\ppref} \cup \set{(d, b)}) = \frac{\card{(S^\mathit{cond} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$
-	and
-	$P({\ppref} \cup \set{(z, b), (d, b)}) = \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$.
+%	In particular, $P({\ppref}) = \frac{\card{(S^\mathit{sat} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$,
+%	$P({\ppref} \cup \set{(z, b)}) = \frac{\card{(S^\mathit{fav} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$,
+%	$P({\ppref} \cup \set{(d, b)}) = \frac{\card{(S^\mathit{cond} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$
+%	and
+%	$P({\ppref} \cup \set{(z, b), (d, b)}) = \frac{\card{(S^\mathit{fav} \cap S^\mathit{cond} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}}$.
+
+	Define $S^\mathit{inj} \subseteq S$ as the injective scoring functions. There are $\prod_{0 ≤ i ≤ n} (N - i)$ ways of associating to each of $n$ objects a number out of $N$ possible ones without repetition, hence, $\frac{\card{S}}{\card{S^\mathit{inj}}} = \frac{N^n}{\prod_{0 ≤ i ≤ n} (N - i)}$.
+	It follows that $\lim_{N → \infty} \frac{\card{S}}{\card{S^\mathit{inj}}} = 1$.
+	Define $S^\mathit{ties} = S \setminus S^\mathit{inj}$ as the non-injective scoring functions.
+	When $N$ grows,
+	$\frac{\card{S^\mathit{ties}}}{\card{S^\mathit{inj}}} = \frac{\card{S}}{\card{S^\mathit{inj}}} - 1 → 0$,
+	thus, given any ${\ppref'} \in \POs$, $\frac{\card{(S^{\ppref'} \cap S^\mathit{ties})}}{\card{S^\mathit{inj}}} → 0$.
 	
-	Multiplying both sides of \cref{eq:SinjComp} by $\frac{1 / \card{S^\mathit{inj}}}{1 / \card{S^\mathit{inj}}}$ and replacing by the corresponding probabilities permit to conclude.
+	It follows from this and the preceding paragraph that, given any ${\ppref'} \in \POs$, 
+	$\frac{\card{S^{\ppref'}}}{\card{S^\mathit{inj}}} = \frac{\card{(S^{\ppref'} \cap S^\mathit{ties})} + \card{(S^{\ppref'} \cap S^\mathit{inj})}}{\card{S^\mathit{inj}}} → P({\ppref'})$.
+	In particular, $\frac{\card{S^\mathit{fav}}}{\card{S^\mathit{sat}}} = \frac{\card{S^\mathit{fav}} / \card{S^\mathit{inj}}}{\card{S^\mathit{sat}} / \card{S^\mathit{inj}}} → \frac{P({\ppref} \cup \set{(z, b)})}{P({\ppref})}$ and
+	$\frac{\card{(S^\mathit{fav} \cap S^\mathit{cond})}}{\card{S^\mathit{cond}}} → \frac{P({\ppref} \cup \set{(z, b), (d, b)})}{P({\ppref} \cup \set{(d, b)})}$.
+	
+	Considering each side of \cref{eq:Scomp} as a sequence over $N$ and replacing by their respective limits permit to conclude.
 \end{proof}
 
 \begin{theorem}[FKG binary]
