@@ -1976,7 +1976,7 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	In particular, $\frac{\card{S^\mathit{fav}}}{\card{S^\mathit{sat}}} = \frac{\card{S^\mathit{fav}} / \card{S^\mathit{inj}}}{\card{S^\mathit{sat}} / \card{S^\mathit{inj}}} → \frac{P({\ppref} \cup \set{(z, b)})}{P({\ppref})}$ and
 	$\frac{\card{(S^\mathit{fav} \cap S^\mathit{cond})}}{\card{S^\mathit{cond}}} → \frac{P({\ppref} \cup \set{(z, b), (d, b)})}{P({\ppref} \cup \set{(d, b)})}$.
 	
-	Considering each side of \cref{eq:Scomp} as a sequence over $N$ and replacing by their respective limits permit to conclude.
+	Considering each side of \cref{eq:Scomp} as elements of a sequence over $N$ and replacing by the limits of the sequences permit to conclude.
 \end{proof}
 
 The length of a non-empty lattice is defined as the number of edges in the longest path, thus, a singleton lattice has length $0$.
@@ -2028,12 +2028,14 @@ The length of a non-empty lattice is defined as the number of edges in the longe
 	
 	Remains to show that $\frac{\card{(F \cap \ucsT)}}{\card{\ucsT}} ≥ \frac{\card{(F \cap \overline{\ucsT})}}{\card{\overline{\ucsT}}}$.
 	
-	Define $\Gamma = \overline{\overline{\ucsT} \join a}$. We have that $\Gamma$ is upwards-closed on $\ucsT$, in other words, $\forall x, y \in \ucsT$: $[y \latTinv x \land x \in \Gamma] ⇒ y \in \Gamma$, or still equivalently, $\forall x, y \in \ucsT$: $[y \latTinv x \land y \in \overline{\ucsT} \join a] ⇒ x \in \overline{\ucsT} \join a$. [TODO]
+	Define $\Gamma = \overline{\overline{\ucsT} \join a}$. We have that $\Gamma$ is upwards-closed on $\ucsT$, in other words, $\forall x, y \in \ucsT$: $[y \latTinv x \land x \in \Gamma] ⇒ y \in \Gamma$, or still equivalently, $\forall x, y \in \ucsT$: $[y \latTinv x \land y \in \overline{\ucsT} \join a] ⇒ x \in \overline{\ucsT} \join a$. The latter implication is seen to hold because, when the antecedent holds, $\exists u \notin \ucsT \suchthat y = u \join a$. From $u \notin \ucsT$, $u \not\latTeqinv a$. And as $x \in U$, $x \latTeqinv a$, which together with $y \latTinv x$ implies that $y \latTinv a$, thus $u \not\latTeq a$. From the distributivity of $\latT$, we also know that $x \meet (u \join a) = (x \meet u) \join (x \meet a)$. The left hand side equals $x \meet y = x$ and the right hand side equals $0 \join a = a$. Thus, $x = a = 0 \join a \in \overline{\ucsT} \join a$.
+	
 	We can again apply the recurrence hypothesis on $\ucsT$ (with the upwards closed sets $F$ and $\Gamma$), yielding $\frac{\card{(F \cap \Gamma \cap \ucsT)}}{\card{\ucsT}} ≥ \frac{\card{(F \cap \ucsT)}}{\card{\ucsT}} \frac{\card{(\Gamma \cap \ucsT)}}{\card{\ucsT}}$, equivalently, $\frac{\card{(F \cap (\overline{\ucsT} \join a) \cap \ucsT)}}{\card{\ucsT}} ≤ \frac{\card{(F \cap \ucsT)}}{\card{\ucsT}} \frac{\card{((\overline{\ucsT} \join a) \cap \ucsT)}}{\card{\ucsT}}$, and because $(\overline{\ucsT} \join a) \subseteq \ucsT$: $\frac{\card{(F \cap (\overline{\ucsT} \join a))}}{\card{\ucsT}} ≤ \frac{\card{(F \cap \ucsT)}}{\card{\ucsT}} \frac{\card{((\overline{\ucsT} \join a))}}{\card{\ucsT}}$.
 	Thus, $\frac{\card{(F \cap \ucsT)}}{\card{\ucsT}} ≥ \frac{\card{(F \cap (\overline{\ucsT} \join a))}}{\card{(\overline{\ucsT} \join a)}}$.
 	
-	Because $f(x) = x \join a$ defines a bijection from $\overline{\ucsT}$ to $(\overline{\ucsT} \join a)$ [TODO], $\card{\overline{\ucsT}} = \card{(\overline{\ucsT} \join a)}$; and $F \cap \overline{\ucsT} \subseteq F \cap (\overline{\ucsT} \join a)$ as $F$ is upwards-closed. 
-Therefore: $\frac{\card{(F \cap (\overline{\ucsT} \join a))}}{\card{(\overline{\ucsT} \join a)}} ≥ \frac{\card{(F \cap \overline{\ucsT})}}{\card{\overline{\ucsT}}}$.
+	Note that $f(x) = x \join a$ defines a bijection from $\overline{\ucsT}$ to $(\overline{\ucsT} \join a)$. To see that $f(x)$ is injective, consider $x_1, x_2 \in \overline{\ucsT}$ with $x_1 \join a = x_2 \join a$. Then, using $a \meet x_1 = a \meet x_2 = 0$ and the distributivity of $\latT$, $x_1 = x_1 \join 0 = x_1 \join (a \meet x_2) = (x_1 \join a) \meet (x_1 \join x_2) = (x_2 \join a) \meet (x_1 \join x_2) = x_2 \join (a \meet x_1) = x_2$.
+	
+	Finally, using $\card{\overline{\ucsT}} = \card{(\overline{\ucsT} \join a)}$ and the observation that $\card{(F \cap \overline{\ucsT})} ≤ \card{(F \cap (\overline{\ucsT} \join a))}$ as $F$ is upwards-closed: $\frac{\card{(F \cap (\overline{\ucsT} \join a))}}{\card{(\overline{\ucsT} \join a)}} ≥ \frac{\card{(F \cap \overline{\ucsT})}}{\card{\overline{\ucsT}}}$.
 \end{proof}
 
 \section{Example for XYZ}
@@ -2397,7 +2399,7 @@ The lattice $>^p$ is shown in \cref{fig:lat}.
  					0 & 0\\
  					\addlinespace[-2pt]
  				\end{array}
-   			};c
+   			};
 			\path (2, -4) ++(4, 0) node[cond] (tinv-110) {
 				\begin{array}{cc}
  					\multicolumn{2}{c}{1}\\
