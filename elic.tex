@@ -1934,7 +1934,7 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	$S^\mathit{fav} = S^{{\ppref} \cup \set{(z, b)}} \subseteq S^\mathit{sat}$ as the subset of functions that also satisfy $z \ppref b$, thus, with $s(z) > s(b)$, and
 	$S^\mathit{cond} = S^{{\ppref} \cup \set{(d, b)}} \subseteq S^\mathit{sat}$ as the subset of functions that satisfy $\ppref$ and $d \ppref b$, thus, with $s(d) > s(b)$.
 	
-	Define $\tau: S → \intvl{-N, N}^X$ as $\tau(s) = \set{(b, -s(b)} \cup \set{(x, s(x) - s(b) \suchthat b ≠ x \in X)}$. 
+	Define $\tau: S → \intvl{-N, N}^X$ as $\tau(s) = \set{(b, -s(b)} \cup \set{(x, s(x) - s(b) \suchthat x \in X \setminus \set{b})}$. 
 	Compared to $s \in S$, $t = \tau(s)$ negates the score of $b$ and associates each other object to its difference of score compared to $b$, that difference being positive iff the object is preferred to $b$ according to $s$.
 	As $\tau$ is invertible, $\tau$ is an injection, thus, the restriction of $\tau$ to $S^\mathit{sat}$ is a bijection from $S^\mathit{sat}$ onto $T^\mathit{sat} = \tau(S^\mathit{sat})$. 
 	Note that, given $t \in \tau(S)$, and letting $s \in S$ denote $\tau^{-1}(t)$, we have $t \in T^\mathit{sat} ⇔ [\forall x \ppref y: s(x) - s(b) > s(y) - s(b)]$. Thus: 
@@ -1945,7 +1945,7 @@ And $P(\ppref_2 \knowing \card{{\ppref_2}} = 3) = 2 \frac{2 (n - 2) 1/2}{(n - 2)
 	
 	Define $T^\mathit{fav} = \tau(S^\mathit{fav}) \subseteq T^\mathit{sat}$ and $T^\mathit{cond} = \tau(S^\mathit{cond}) \subseteq T^\mathit{sat}$.
 	
-	Define a partial ordering $<^\mathit{p}$ over $T^\mathit{sat}$ as the classical Pareto-dominance over functions: $t <^p t' ⇔ [t ≠ t'] \land [\forall x \in X: t(x) ≤ t'(x)]$.
+	Define the partial ordering $<^\mathit{p}$ over $T^\mathit{sat}$ as the classical Pareto-dominance over functions: $t <^p t' ⇔ [t ≠ t'] \land [\forall x \in X: t(x) ≤ t'(x)]$.
 	It follows that the least upper bound of $t$ and $t'$ in $<^\mathit{p}$ is the functional max, $\max \set{t, t'}$ (that is, the function that associates to each $x \in X$ the max of $t(x)$ and $t'(x)$), and similarly the greatest lower bound is $\min \set{t, t'}$.
 	Note that these operations, considered as binary operations on $T^\mathit{sat}$, are internal (that is, given $t, t' \in T^\mathit{sat}$, $\max \set{t, t'} \in T^\mathit{sat}$ and $\min \set{t, t'} \in T^\mathit{sat}$), as can be checked thanks to \cref{eq:tsat}.
 	Therefore, $<^\mathit{p}$ defines a lattice over $T^\mathit{sat}$, with $\max$ as “join” and $\min$ as “meet” operations.
@@ -2037,6 +2037,97 @@ The length of a non-empty lattice is defined as the number of edges in the longe
 	
 	Finally, using $\card{\overline{\ucsT}} = \card{(\overline{\ucsT} \join a)}$ and the observation that $\card{(F \cap \overline{\ucsT})} ≤ \card{(F \cap (\overline{\ucsT} \join a))}$ as $F$ is upwards-closed: $\frac{\card{(F \cap (\overline{\ucsT} \join a))}}{\card{(\overline{\ucsT} \join a)}} ≥ \frac{\card{(F \cap \overline{\ucsT})}}{\card{\overline{\ucsT}}}$.
 \end{proof}
+
+\section{Our case}
+We want to prove (for a start) that, given ${\ppref} = \set{(b, c)} \in \POs$ and $d, z \in X$:
+	\begin{equation}
+		P(z \ppref b \knowing {\ppref}) ≤ P(z \ppref b \knowing {\ppref}, d \ppref c).
+	\end{equation}
+
+Pick $N ≥ n$ and define $S^\mathit{sat} = S^{\ppref} \subseteq \intvl{1, N}^X$ and $S^\mathit{fav} = S^{{\ppref} \cup \set{(z, b)}} \subseteq \intvl{1, N}^X$ as previously. Any transformation $\tau: \intvl{1, N}^X → \intvl{-N, N}^X$ defines corresponding sets $T^\mathit{sat} = \tau(S^\mathit{sat})$ and $T^\mathit{fav} = \tau(S^\mathit{fav})$.
+Note that $\tau$ can be represented as an $n × n$ matrix.
+
+Let us search for a bijective transformation $\tau$ that satisfies the following requirements: the min and max internality and the fav and cond closure.
+
+One requirement is that min, max over $t$ functions are internal operations, thus (for max): $\forall s, s' \in S^\mathit{sat}: \max \set{\tau s, \tau s'} \in T^\mathit{sat}$.
+
+Neglecting for the moment $d$, consider $X = \set{b, c, z}$.
+Fix $\tau$, for example, to (describing it by row) $\tau_b = [1, 0, 1]$, $\tau_c = [2, 0, -1]$ and $\tau_z = [-1, 1, 1]$.
+Neglecting the chosen representation of scoring functions using the interval $\intvl{1, N}$, we might consider that $S^\mathit{sat} = \set{[x, x, y] + [e, 0, 0] \suchthat x, y \in \R, e \in \R^*_+}$.
+We obtain $T^\mathit{sat} = \set{\tau [x, x, y] + \tau [e, 0, 0]} = \set{[x + y, 2x - y, y] + [e, 2 e, -e]} = \set{[f, g, \frac{2f - g}{3}] + [0, 0, -e]} = \set{[f, 2f - 3h, h] + [0, -e, 0]}$.
+The transformation $\tau$ fails to satisfy the internal max requirement iff there exists $u = [u_1, u_2, u_3]$ such that $u \notin T^\mathit{sat}$ but $u = \max \set{t, t'}$ with $t, t' \in T^\mathit{sat}$.
+For example (random try), fix $u_1 = 5, u_2 = 7$. We see from the $[f, g, \frac{2f - g}{3}] + [0, 0, -e]$ description of $T^\mathit{sat}$ that $u_3 = 2$ (for example) leads to $u$ being not in the set, but $u_3 = 0$ (for example) is in the set. So fix $u = [5, 7, 2]$ and $' = [5, 7, 0]$. Remain to find $t' = [t'_1, t'_2, 2]$ with $t'_1 ≤ 5$ and $t'_2 ≤ 7$ and $t' \in T^\mathit{sat}$. We see from the $[f, 2f - 3h, h] + [0, -e, 0]$ description of $T^\mathit{sat}$ that fixing $t'_1 = 5$, with $h = 2$, we only have to pick $t'_2 ≤ 3$.
+
+On the other hand (still neglecting $d$), fix $\tau_b = [-1, 0, 0]$, $\tau_c = [-1, 1, 0]$ and $\tau_z = [-1, 0, 1]$. As this is the transformation of the proof, it should satisfy the internal max requirement.
+We obtain $T^\mathit{sat} = \set{[f, -e, g]}$.
+We see that $u = [u_1, u_2, u_3] \notin T^\mathit{sat}$ iff $u_2 ≥ 0$.
+Hence, $\nexists t, t' \in T^\mathit{sat}$ such that $u = \max \set{t, t'}$.
+
+We see that giving $\tau$ at least one row of the form $[\xi, -\xi, 0]$ suffices to satisfy the internal max requirement. And the internal min one, for the same reason.
+
+$T^\mathit{fav}$ must be upwards closed, that is: $\forall s, s' \in S^\mathit{sat}: [s(z) > s(b) \land \tau (s' - s) > 0] ⇒ s'(z) > s'(b)$. 
+Equivalently: $[s(b) < s(z) \land s'(z) ≤ s'(b)] ⇒ ¬[\tau(s' - s) > 0]$.
+Define $V = \set{(s' - s) \suchthat s, s' \in S^\mathit{sat} \land s'(z) ≤ s'(b) \land s(b) < s(z)}$.
+
+It follows that $V = \set{(s' - s) \suchthat s, s' \in S^\mathit{sat} \land s'(z) ≤ s'(b) \land - s(z) < - s(b)}$, which implies that $(s' - s)(z) < (s' - s)(b)$ and shows that $V \subseteq \set{v \in \intvl{-N, N}^X \suchthat v(z) < v(b)} = V'$.
+
+Neglecting for the moment $d$, consider $X = \set{b, c, z}$.
+Given any $v$ such that $v(z) < v(b)$, define $M = \max \set{v(b) + 2, \abs{v(c)} + 2, v(b) + 1 - v(c), v(z) + 1}$ and define $s'(b, c, z)$ as $(M, 1 + \max \set{v(c), 0}, M)$ and $s(b, c, z)$ as $(M - v(b), 1 - \min \set{v(c), 0}, M - v(z))$. This yields $v = s' - s$ and $s, s'$ are such that $s(b) > s(c)$ and $s'(b) > s'(c)$ and $s'(z) = s'(b)$ and $s(b) < s(z)$.
+
+This suggests that we require that $\forall v \in V': ¬[\tau v > 0]$.
+This requirement is satisfied when $\tau [x, y, x]$ contains one zero, thus, when $\tau$ has at least one row of the form $[\xi, 0, -\xi]$.
+
+Finally, we need $T^\mathit{cond}$ to be upwards closed, for which I suppose it suffices that $\forall v \suchthat v(d) < v(c): ¬[\tau v > 0]$.
+This requirement can be satisfied similarly.
+
+For $n = 4$, here is a suitable $\tau$.
+\begin{equation}
+	\begin{array}{lrrrr}
+		b & -1 & 1 & 0 & 0\\
+		c & -1 & 0 & 0 & 1\\
+		d & 0 & -1 & 1 & 0\\
+		z & 0 & 0 & 0 & 1\\
+	\end{array}
+\end{equation}
+
+%y 14 11
+%b 3  −3
+%z 1  −2
+%
+%1. max and min are internal
+%max(t, t') belong to Tsat.
+%
+%2. Tfav is upwards-closed
+%t in Tfav and smaller than t' => t' in Tfav
+%z >t b … ⇒ z >t' b
+%
+%z 4 5
+%b 3 7
+%
+%3. Tcond is upwards-closed
+%[s st d > b]
+%
+%HERE
+%
+%fav: z > b
+%cond: d > c
+%
+%z 32  33
+%b 30  39
+%
+%b −30 −39
+%z 2   −6
+%
+%W:
+%s(z) > s(b) and t' ≥ t ⇒ s'(z) > s'(b)
+%s(z) − s(b) > 0 and t' ≥ t ⇒ s'(z) − s'(b) > 0
+%s(z) − s(b) > 0 and s'(b) − s'(z) > 0 ⇒ ¬(t' ≥ t)
+%  s   s'
+%z 32  33
+%b 30  39
+%
+%t(b) = −s(b)
+%t(d) = s(d) − s(c)
 
 \section{Example for XYZ}
 Consider ${\ppref} = \emptyset$ over $X = \set{b, d, z}$. Define $N = 3$.
